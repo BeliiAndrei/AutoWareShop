@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru-RU">
 <head>
     <meta charset="utf-8">
@@ -94,7 +95,7 @@
                     <dl class="header-data__params">
                         <div class="header-data__param">
                             <dt class="header-data__property">Пункт разгрузки: </dt>
-                            <dd class="header-data__value">Мотехсавтозапчасти, Минская область, Минский р-н, Новодворский с/с, р-н д. Большое Стиклево, кор. №3</dd>
+                            <dd class="header-data__value">Autowares Shop, Кишинев, Studenților 9/9, кор. №3</dd>
                         </div>
                         <div class="header-data__param">
                             <dt class="header-data__property">Сальдо: </dt>
@@ -102,7 +103,7 @@
                         </div>
                         <div class="header-data__param">
                             <dt class="header-data__property">Договор: </dt>
-                            <dd class="header-data__value">Б/Н, от 16.03.2017, , Отсрочка 30 дней, 10 дней резерва</dd>
+                            <dd class="header-data__value">Б/Н, от 16.03.2025, , Отсрочка 30 дней, 10 дней резерва</dd>
                         </div>
                         <div class="header-data__param">
                             <dt class="header-data__property">Кредит / Остаток:</dt>
@@ -110,7 +111,7 @@
                         </div>
                         <div class="header-data__param">
                             <dt class="header-data__property">Способ получения: </dt>
-                            <dd class="header-data__value">Доставка, Минская область, Минский р-н, Новодворский с/с, р-н д. Большое Стиклево, кор. №3 </dd>
+                            <dd class="header-data__value">Доставка, Кишинев, Studenților 9/9, кор. №3 </dd>
                         </div>
                     </dl>
                     <div class="header-data__params-close js-params-trigger">
@@ -438,7 +439,7 @@
                         <dl class="mob-nav__params">
                             <div class="mob-nav__param">
                                 <dt class="mob-nav__property">Пункт разгрузки: </dt>
-                                <dd class="mob-nav__value">Мотехсавтозапчасти, Минская область, Минский р-н, Новодворский с/с, р-н д. Большое Стиклево, кор. №3</dd>
+                                <dd class="mob-nav__value">Autowares Shop, Кишинев, Studenților 9/9,  кор. №3</dd>
                             </div>
                             <div class="mob-nav__param">
                                 <dt class="mob-nav__property">Сальдо: </dt>
@@ -446,7 +447,7 @@
                             </div>
                             <div class="mob-nav__param">
                                 <dt class="mob-nav__property">Договор: </dt>
-                                <dd class="mob-nav__value">Б/Н, от 16.03.2017, , Отсрочка 30 дней, 10 дней резерва</dd>
+                                <dd class="mob-nav__value">Б/Н, от 16.03.2025, , Отсрочка 30 дней, 10 дней резерва</dd>
                             </div>
                             <div class="mob-nav__param">
                                 <dt class="mob-nav__property">Кредит / Остаток: </dt>
@@ -454,7 +455,7 @@
                             </div>
                             <div class="mob-nav__param">
                                 <dt class="mob-nav__property">Способ получения: </dt>
-                                <dd class="mob-nav__value">Доставка, Минская область, Минский р-н, Новодворский с/с, р-н д. Большое Стиклево, кор. №3 </dd>
+                                <dd class="mob-nav__value">Доставка, Кишинев, Studenților 9/9,  кор. №3</dd>
                             </div>
                         </dl>
                     </li>
@@ -463,8 +464,9 @@
         </div>
     </header>
 
-    @*Тут всавляется остальное содержимое*@
-    @RenderBody();
+    @*Сюда будет вставляться основное содержимое страниц*@
+    @RenderBody()
+    <p>Hello TMP</p>
 
     <footer class="footer js-footer-collapse">
         <div class="container-fluid">
@@ -583,50 +585,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer__main-col">
-                    <div class="footer-collapse">
-                        <div class="footer-collapse__title">
-                            Подпишитесь на нашу рассылку
-                            <svg class="icon icon-chevron-down footer-collapse__title-icon">
-                                <use href="assets/images/svg/symbol/sprite.svg#chevron-down"></use>
-                            </svg>
-                        </div>
-                        <div class="footer-collapse__body">
-                            <form class="footer-collapse__subscribe subscribe-widget" action="/" method="POST" name="subscribe">
-                                <div class="subscribe-widget__main">
-                                    <input class="subscribe-widget__input" type="email" name="email" placeholder="e-mail">
-                                    <input class="subscribe-widget__btn btn btn--dark" type="submit" name="send" value="Подписаться">
-                                </div>
-                                <div class="subscribe-widget__privacy checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="privacy" id="privacy-bottom">
-                                    <label class="checkbox-label__main" for="privacy-bottom">Да, я хочу получать информационные бюллетени по электронной почте со специальными предложениями. </label>
-                                </div>
-                                <p class="subscribe-widget__desc">Обратите внимание на нашу <a href="#" target="_blank">политику конфиденциальности</a>.</p>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="footer-collapse">
-                        <div class="footer-collapse__title">
-                            Способы оплаты
-                            <svg class="icon icon-chevron-down footer-collapse__title-icon">
-                                <use href="assets/images/svg/symbol/sprite.svg#chevron-down"></use>
-                            </svg>
-                        </div>
-                        <div class="footer-collapse__body">
-                            <ul class="footer-collapse__payments payments">
-                                <li class="payments__item">
-                                    <div class="payments__img-wrap"><img class="payments__img" src="assets/images/general/payment-1.svg" alt=""></div>
-                                </li>
-                                <li class="payments__item">
-                                    <div class="payments__img-wrap"><img class="payments__img" src="assets/images/general/payment-2.svg" alt=""></div>
-                                </li>
-                                <li class="payments__item">
-                                    <div class="payments__img-wrap"><img class="payments__img" src="assets/images/general/payment-3.svg" alt=""></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="footer__conclude">
@@ -679,7 +638,7 @@
     <script src="assets/js/libs.min.js"></script>
     <script src="https://unpkg.com/popper.js@1"></script>
     <script src="https://unpkg.com/tippy.js@5"></script>
-    @*<script src="assets/js/Modal.js"></script>*@
+    <script src="assets/js/Modal.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
