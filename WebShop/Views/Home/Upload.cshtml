@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+}
+
+<div class="container-fluid">
+    <ul class="breadcrumbs">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
+        <li class="breadcrumbs__item">Присадки к бензину</li>
+    </ul>
+    <div class="primary-layout">
+        <div class="primary-content">
+            <div class="sidebar">
+                <div class="category-nav d-none d-md-block">
+                    <ul class="category-nav__list">
+                        <li class="category-nav__item active"><a class="category-nav__link" href="#">Каталоги производителей</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Аккумуляторы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Газовые пружины</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Кузов/Оптика</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Мотор и сцепление</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">OEM Каталоги</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Система охлаждения</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Система очистки окон</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Тормозная система</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Фильтры и масла</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Шины и диски</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Электрика</a></li>
+                    </ul>
+                </div>
+            </div>
+            <main class="main-content">
+                <h1 class="main-title">Загрузка прайса / кроссов</h1>
+                <div class="upload-files">
+                    <form class="upload-file" action="/" method="POST" name="upload-file" enctype="multipart/form-data">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="upload-file__field">
+                                    <i class="fas fa-file-excel"></i>
+                                    <input class="upload-file__upload" type="file" id="upload-price-file" name="uploaded-file" multiple data-multiple-caption="{count} файлов выбрано">
+                                    <label class="upload-file__label" for="upload-price-file"><span>Выберите файл Excel</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="upload-file__btn btn btn--main" type="submit" value="Загрузить прайс лист">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="upload-file__example">Скачать пример <a href="#">прайс листа</a></div>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="upload-file" action="/" method="POST" name="upload-file" enctype="multipart/form-data">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="upload-file__field">
+                                    <i class="fas fa-file-excel"></i>
+                                    <input class="upload-file__upload" type="file" id="upload-cross-file" name="uploaded-file" multiple data-multiple-caption="{count} файлов выбрано">
+                                    <label class="upload-file__label" for="upload-cross-file"><span>Выберите файл Excel</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="upload-file__btn btn btn--main" type="submit" value="Загрузить кроссы">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="upload-file__example">Скачать пример <a href="#">кроссов</a></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="main-title">Скачать прайс лист</div>
+                <div class="table-responsive">
+                    <table class="prices-table table">
+                        <thead>
+                            <tr>
+                                <th>Дата обновления</th>
+                                <th>Описание</th>
+                                <th class="text-center">Скачать</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <time class="price-table-date" datetime="">21 января 2020</time>
+                                </td>
+                                <td>Электронный каталог Танавто 2020</td>
+                                <td>
+                                    <a href="#" download>
+                                        <i class="fas fa-file-excel"></i>
+                                        <svg class="icon icon-arrow-down">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <time class="price-table-date" datetime="">24 октября 2019</time>
+                                </td>
+                                <td>Электронный каталог Танавто 2019</td>
+                                <td>
+                                    <a href="#" download>
+                                        <i class="fas fa-file-excel"></i>
+                                        <svg class="icon icon-arrow-down">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <time class="price-table-date" datetime="">14 апреля 2019</time>
+                                </td>
+                                <td>Электронный каталог Танавто 2019</td>
+                                <td>
+                                    <a href="#" download>
+                                        <i class="fas fa-file-excel"></i>
+                                        <svg class="icon icon-arrow-down">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <time class="price-table-date" datetime="">17 декабря 2018</time>
+                                </td>
+                                <td>Электронный каталог Танавто 2018</td>
+                                <td>
+                                    <a href="#" download>
+                                        <i class="fas fa-file-excel"></i>
+                                        <svg class="icon icon-arrow-down">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+

@@ -318,6 +318,30 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\MainPage.cshtml" />
+    <Content Include="Views\Home\Upload.cshtml" />
+    <Content Include="Views\Home\Payment.cshtml" />
+    <Content Include="Views\Home\Basket_step_4.cshtml" />
+    <Content Include="Views\Home\Basket_step_3.cshtml" />
+    <Content Include="Views\Home\Basket_step_2.cshtml" />
+    <Content Include="Views\Home\Basket_step_1.cshtml" />
+    <Content Include="Views\Home\Orders.cshtml" />
+    <Content Include="Views\Home\Match_vincode.cshtml" />
+    <Content Include="Views\Home\Profile_user.cshtml" />
+    <Content Include="Views\Home\Select_car.cshtml" />
+    <Content Include="Views\Home\Sto.cshtml" />
+    <Content Include="Views\Home\Error_404.cshtml" />
+    <Content Include="Views\Home\Error_500.cshtml" />
+    <Content Include="Views\Home\About_1.cshtml" />
+    <Content Include="Views\Home\About_2.cshtml" />
+    <Content Include="Views\Home\Empty_basket.cshtml" />
+    <Content Include="Views\Home\Authorisation.cshtml" />
+    <Content Include="Views\Home\Vacation.cshtml" />
+    <Content Include="Views\Home\Card.cshtml" />
+    <Content Include="Views\Home\Catalog_brands.cshtml" />
+    <Content Include="Views\Home\News.cshtml" />
+    <Content Include="Views\Home\Registration.cshtml" />
+    <Content Include="Views\Home\Search_result.cshtml" />
+    <Content Include="Views\Home\Faq.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

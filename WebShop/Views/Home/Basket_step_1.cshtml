@@ -1,0 +1,340 @@
+﻿
+@{
+    ViewBag.Title = "Basket_step_1";
+}
+
+<div class="container-fluid">
+    <ul class="breadcrumbs">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
+        <li class="breadcrumbs__item">Присадки к бензину</li>
+    </ul>
+    <div class="primary-layout">
+        <div class="primary-content">
+            <div class="sidebar">
+                <div class="category-nav d-none d-md-block">
+                    <ul class="category-nav__list">
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Корзина</a></li>
+                        <li class="category-nav__item active"><a class="category-nav__link" href="#">Заказы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Оплата</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Акт сверки</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Клиенты</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Профиль</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">VIN запросы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Мероприятия</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Акции</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Управление пользователями</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Регистрация пользователей</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Статистика доступа</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Контент групп</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Управление сайтом</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Загрузка прайса/кроссов</a></li>
+                    </ul>
+                </div>
+            </div>
+            <main class="main-content">
+                <h1 class="main-title">Заказ<span>№ 00000154705@19</span></h1>
+                <div class="order-steps-wrap text-center">
+                    <ul class="order-steps">
+                        <li class="order-steps__item is-current">
+                            <svg class="icon icon-shopping-cart order-steps__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#shopping-cart"></use>
+                            </svg><span class="order-steps__title">Корзина</span>
+                        </li>
+                        <li class="order-steps__item">
+                            <svg class="icon icon-wallet-strong order-steps__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#wallet-strong"></use>
+                            </svg><span class="order-steps__title">Оплата</span>
+                        </li>
+                        <li class="order-steps__item">
+                            <svg class="icon icon-lorry order-steps__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#lorry"></use>
+                            </svg><span class="order-steps__title">Доставка</span>
+                        </li>
+                        <li class="order-steps__item">
+                            <svg class="icon icon-confirmation order-steps__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#confirmation"></use>
+                            </svg><span class="order-steps__title">Завершение</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="orders-list">
+                    <header class="orders-list__header">
+                        <div class="orders-list__heading">Детали заказа</div>
+                    </header>
+                    <div class="table-responsive d-none d-md-block">
+                        <table class="orders-list__table">
+                            <thead class="orders-list__thead">
+                                <tr class="orders-list__tr">
+                                    <th class="orders-list__th">
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="is-opt-1" id="opt-1">
+                                            <label class="checkbox-label__main" for="opt-1"></label>
+                                        </div>Номер
+                                    </th>
+                                    <th class="orders-list__th">Наименование</th>
+                                    <th class="orders-list__th">Цена за ед.</th>
+                                    <th class="orders-list__th">К-во</th>
+                                    <th class="orders-list__th">Сумма Руб</th>
+                                    <th class="orders-list__th">Склад</th>
+                                </tr>
+                            </thead>
+                            <tbody class="orders-list__tbody">
+                                <tr class="orders-list__tr">
+                                    <td class="orders-list__td">
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="is-opt-2" id="opt-2">
+                                            <label class="checkbox-label__main" for="opt-2"></label>
+                                        </div><a class="orders-list__order-number" href="#">00000157556@19</a>
+                                    </td>
+                                    <td class="orders-list__td">
+                                        <div class="orders-list__product-brand">Бренд: <a href="#">ARECA</a></div>
+                                        <div class="orders-list__product-heading"><a href="#">ARECA F4000 5W40 SN 8x1L</a></div>
+                                    </td>
+                                    <td class="orders-list__td"><span class="orders-list__price">2 297,00</span></td>
+                                    <td class="orders-list__td"><span class="orders-list__amount">1 шт.</span></td>
+                                    <td class="orders-list__td">
+                                        <div class="orders-list__total-price">2 297,<span class="orders-list__total-price-currency">00</span></div>
+                                    </td>
+                                    <td class="orders-list__td"><span class="orders-list__stock">Орбита" г. Караганда</span></td>
+                                </tr>
+                                <tr class="orders-list__tr">
+                                    <td class="orders-list__td">
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="is-opt-3" id="opt-3">
+                                            <label class="checkbox-label__main" for="opt-3"></label>
+                                        </div><a class="orders-list__order-number" href="#">00000157556@19</a>
+                                    </td>
+                                    <td class="orders-list__td">
+                                        <div class="orders-list__product-brand">Бренд: <a href="#">ARECA</a></div>
+                                        <div class="orders-list__product-heading"><a href="#">ARECA F4000 5W40 SN 8x1L</a></div>
+                                    </td>
+                                    <td class="orders-list__td"><span class="orders-list__price">2 297,00</span></td>
+                                    <td class="orders-list__td"><span class="orders-list__amount">1 шт.</span></td>
+                                    <td class="orders-list__td">
+                                        <div class="orders-list__total-price">2 297,<span class="orders-list__total-price-currency">00</span></div>
+                                    </td>
+                                    <td class="orders-list__td"><span class="orders-list__stock">Орбита" г. Караганда</span></td>
+                                </tr>
+                                <tr class="orders-list__tr">
+                                    <td class="orders-list__td">
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="is-opt-4" id="opt-4">
+                                            <label class="checkbox-label__main" for="opt-4"></label>
+                                        </div><a class="orders-list__order-number" href="#">00000157556@19</a>
+                                    </td>
+                                    <td class="orders-list__td">
+                                        <div class="orders-list__product-brand">Бренд: <a href="#">ARECA</a></div>
+                                        <div class="orders-list__product-heading"><a href="#">ARECA F4000 5W40 SN 8x1L</a></div>
+                                    </td>
+                                    <td class="orders-list__td"><span class="orders-list__price">2 297,00</span></td>
+                                    <td class="orders-list__td"><span class="orders-list__amount">1 шт.</span></td>
+                                    <td class="orders-list__td">
+                                        <div class="orders-list__total-price">2 297,<span class="orders-list__total-price-currency">00</span></div>
+                                    </td>
+                                    <td class="orders-list__td"><span class="orders-list__stock">Орбита" г. Караганда</span></td>
+                                </tr>
+                                <tr class="orders-list__tr">
+                                    <td class="orders-list__td">
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="is-opt-5" id="opt-5">
+                                            <label class="checkbox-label__main" for="opt-5"></label>
+                                        </div><a class="orders-list__order-number" href="#">00000157556@19</a>
+                                    </td>
+                                    <td class="orders-list__td">
+                                        <div class="orders-list__product-brand">Бренд: <a href="#">ARECA</a></div>
+                                        <div class="orders-list__product-heading"><a href="#">ARECA F4000 5W40 SN 8x1L</a></div>
+                                    </td>
+                                    <td class="orders-list__td"><span class="orders-list__price">2 297,00</span></td>
+                                    <td class="orders-list__td"><span class="orders-list__amount">1 шт.</span></td>
+                                    <td class="orders-list__td">
+                                        <div class="orders-list__total-price">2 297,<span class="orders-list__total-price-currency">00</span></div>
+                                    </td>
+                                    <td class="orders-list__td"><span class="orders-list__stock">Орбита" г. Караганда</span></td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="orders-list__tfoot orders-list__tfoot--white">
+                                <tr class="orders-list__tr">
+                                    <td class="orders-list__td" colspan="6">
+                                        <div class="orders-list__footer-summary">
+                                            <a class="btn btn--reverse" href="#">Удалить</a>
+                                            <textarea class="orders-list__control-message" placeholder="Комментарий к заказу" rows="1" name="order-message"></textarea>
+                                            <div class="footer-summary-price">
+                                                <div class="footer-summary-price__title">Сумма к оплате</div>
+                                                <div class="footer-summary-price__value">2 297 <span>Руб</span></div>
+                                            </div><a class="btn btn--main" href="#">Перейти к оплате<i class="fas fa-chevron-circle-right"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="orders-list__mob d-md-none">
+                        <header class="orders-list__mob-header">
+                            <div class="orders-list__mob-heading">
+                                <div class="checkbox-label">
+                                    <input class="checkbox-label__input" type="checkbox" name="is-opt-6" id="opt-6">
+                                    <label class="checkbox-label__main" for="opt-6"></label>
+                                </div>Номер
+                            </div>
+                            <div class="orders-list__mob-heading">Сумма Руб</div>
+                        </header>
+                        <div class="orders-list__mob-order is-opened">
+                            <div class="orders-list__mob-side">
+                                <div class="checkbox-label">
+                                    <input class="checkbox-label__input" type="checkbox" name="is-opt-7" id="opt-7">
+                                    <label class="checkbox-label__main" for="opt-7"></label>
+                                </div>
+                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2019</span></div>
+                            </div>
+                            <div class="orders-list__mob-side">
+                                <div class="orders-list__mob-price"><span>2 297</span>,00</div>
+                                <button class="orders-list__mob-toggle">
+                                    <svg class="icon icon-chevron-down orders-list__mob-toggle-icon">
+                                        <use href="~/assets/images/svg/symbol/sprite.svg#chevron-down"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="orders-list__mob-more">
+                                <dl class="orders-mob__params">
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Название</dt>
+                                        <dd class="orders-mob__param-definition"><a href="#">ARECA F4000 5W40 SN 8x1L</a></dd>
+                                    </div>
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Склад</dt>
+                                        <dd class="orders-mob__param-definition">Орбита" г. Караганда</dd>
+                                    </div>
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Бренд </dt>
+                                        <dd class="orders-mob__param-definition"><a href="#">ARECA</a></dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="orders-list__mob-order">
+                            <div class="orders-list__mob-side">
+                                <div class="checkbox-label">
+                                    <input class="checkbox-label__input" type="checkbox" name="is-opt-8" id="opt-8">
+                                    <label class="checkbox-label__main" for="opt-8"></label>
+                                </div>
+                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2019</span></div>
+                            </div>
+                            <div class="orders-list__mob-side">
+                                <div class="orders-list__mob-price"><span>2 297</span>,00</div>
+                                <button class="orders-list__mob-toggle">
+                                    <svg class="icon icon-chevron-down orders-list__mob-toggle-icon">
+                                        <use href="~/assets/images/svg/symbol/sprite.svg#chevron-down"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="orders-list__mob-more">
+                                <dl class="orders-mob__params">
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Название</dt>
+                                        <dd class="orders-mob__param-definition"><a href="#">ARECA F4000 5W40 SN 8x1L</a></dd>
+                                    </div>
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Склад</dt>
+                                        <dd class="orders-mob__param-definition">Орбита" г. Караганда</dd>
+                                    </div>
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Бренд </dt>
+                                        <dd class="orders-mob__param-definition"><a href="#">ARECA</a></dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="orders-list__mob-order">
+                            <div class="orders-list__mob-side">
+                                <div class="checkbox-label">
+                                    <input class="checkbox-label__input" type="checkbox" name="is-opt-9" id="opt-9">
+                                    <label class="checkbox-label__main" for="opt-9"></label>
+                                </div>
+                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2019</span></div>
+                            </div>
+                            <div class="orders-list__mob-side">
+                                <div class="orders-list__mob-price"><span>2 297</span>,00</div>
+                                <button class="orders-list__mob-toggle">
+                                    <svg class="icon icon-chevron-down orders-list__mob-toggle-icon">
+                                        <use href="~/assets/images/svg/symbol/sprite.svg#chevron-down"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="orders-list__mob-more">
+                                <dl class="orders-mob__params">
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Название</dt>
+                                        <dd class="orders-mob__param-definition"><a href="#">ARECA F4000 5W40 SN 8x1L</a></dd>
+                                    </div>
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Склад</dt>
+                                        <dd class="orders-mob__param-definition">Орбита" г. Караганда</dd>
+                                    </div>
+                                    <div class="orders-mob__param">
+                                        <dt class="orders-mob__param-term">Бренд </dt>
+                                        <dd class="orders-mob__param-definition"><a href="#">ARECA</a></dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                        <footer class="orders-list__mob-footer">
+                            <p class="orders-list__mob-summary-payment">Сумма к оплате</p>
+                            <div class="orders-list__mob-total-price"><span class="orders-list__mob-total">2 297</span> Руб</div>
+                            <textarea class="orders-list__mob-message" placeholder="Комментарий к заказу" rows="2" name="order-message"></textarea>
+                        </footer>
+                        <div class="orders-list__mob-controls">
+                            <div class="row">
+                                <div class="col-4"><a class="btn btn--reverse" href="#">Удалить</a></div>
+                                <div class="col-8"><a class="btn btn--main" href="#">Перейти к оплате<i class="fas fa-chevron-circle-right"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="manual-params manual-params--bigger">
+                        <dl class="manual-params__param">
+                            <dt class="manual-params__value">Склад отгрузки</dt>
+                            <dd class="manual-params__property">Группа Алматы</dd>
+                        </dl>
+                        <dl class="manual-params__param">
+                            <dt class="manual-params__value">Заказ доступен с</dt>
+                            <dd class="manual-params__property">06 Ноября 2019 / 14:11</dd>
+                        </dl>
+                        <dl class="manual-params__param">
+                            <dt class="manual-params__value">Отсрочка платежа, дней</dt>
+                            <dd class="manual-params__property">30 дней</dd>
+                        </dl>
+                        <dl class="manual-params__param">
+                            <dt class="manual-params__value">Форма оплаты</dt>
+                            <dd class="manual-params__property">Безналичный</dd>
+                        </dl>
+                        <dl class="manual-params__param">
+                            <dt class="manual-params__value">Тип доставки</dt>
+                            <dd class="manual-params__property">Доставка автотранспортом</dd>
+                        </dl>
+                        <dl class="manual-params__param">
+                            <dt class="manual-params__value">Адрес доставки</dt>
+                            <dd class="manual-params__property">Республика Казахстан, Алматы, ул.Толеби, дом № 94/10</dd>
+                        </dl>
+                        <dl class="manual-params__param">
+                            <dt class="manual-params__value">Комментарий</dt>
+                            <dd class="manual-params__property">Привезите пж в офис</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="basket-info">
+                    <p>Информацию о состоянии Вашего заказа вы сможете узнавать на странице <a href="#">Мой кабинет</a> во вкладке <a href="#">Заказы</a>.</p>
+                </div>
+                <div class="notification">
+                    <svg class="icon icon-information notification__icon">
+                        <use href="~/assets/images/svg/symbol/sprite.svg#information"></use>
+                    </svg>
+                    <div class="notification__body">
+                        <div class="notification__title">Внимание!!!</div>
+                        <div class="notification__desc">Убедительная просьба в течение 3-х дней с момента получения товара проверять наличие и внешнее состояние (целостность, деформация и т.д.) По истечению 3-х дней с момента получения товара претензии по внешнему виду и состоянию товара не принимаются! Возврат товара осуществляется в течении 14 рабочих дней, при условии сохранения товарного вида (не распространяется на заказные позиции). Техническая неисправность товара оформляется Актом Рекламации с момента обнаружения дефекта!</div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "Registration";
+}
+
+<div class="container-fluid">
+    <ul class="breadcrumbs breadcrumbs--no-gutters">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Авторизация</a></li>
+        <li class="breadcrumbs__item">Регистрация</li>
+    </ul>
+</div>
+<div class="inner-section">
+    <div class="inner-section__main inner-section__main--wider">
+        <div class="inner-section__header">
+            <h1 class="inner-section__heading">Регистрация</h1><a class="inner-section__link" href="#">Вход в систему</a>
+        </div>
+        <div class="inner-section__body inner-section__body--no-gutters">
+            <div class="reg-form-wrap">
+                <form class="main-form" method="POST" action="/" name="auth-form">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                <label class="main-form__label" for="user-name">Ваше имя <span>*</span>:</label>
+                                <input class="main-form__input" type="name" name="user-name" id="user-name">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                <label class="main-form__label" for="user-lastname">Фамилия <span>*</span>:</label>
+                                <input class="main-form__input" type="text" lastname="user-lastname" id="user-lastname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                <div class="radio-label">
+                                    <input class="radio-label__input" type="radio" name="user-role" value="user-role-1" id="u-rl-1">
+                                    <label class="radio-label__main" for="u-rl-1">Я физическое лицо</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                <div class="radio-label">
+                                    <input class="radio-label__input" type="radio" name="user-role" checked value="user-role-2" id="u-rl-2">
+                                    <label class="radio-label__main" for="u-rl-2">Я юридическое лицо</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="extra-fields">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="main-form__field">
+                                    <label class="main-form__label" for="company-name">Юридическое название компании <span>*</span>:</label>
+                                    <input class="main-form__input" type="text" name="company-name" id="company-name">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="main-form__field">
+                                    <label class="main-form__label" for="u-code-id">BIN / INN <span>*</span>:</label>
+                                    <input class="main-form__input" type="text" name="u-code-id" id="u-code-id">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="main-form__field">
+                                    <label class="main-form__label" for="u-bill">Расчетный счет:</label>
+                                    <input class="main-form__input" type="text" name="u-bill" id="u-bill">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="main-form__field">
+                                    <label class="main-form__label" for="u-bank-id">Код банка:</label>
+                                    <input class="main-form__input" type="text" name="u-bank-id" id="u-bank-id">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main-form__field">
+                            <label class="main-form__label" for="u-company-address">Юридический адрес:</label>
+                            <input class="main-form__input" type="text" name="u-company-address" id="u-company-address">
+                        </div>
+                    </div>
+                    <div class="main-form__field">
+                        <label class="main-form__label" for="user-email">Email (используется как логин) <span>*</span>:</label>
+                        <input class="main-form__input" type="email" name="user-email" id="user-email">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                <label class="main-form__label" for="user-password">Пароль <span>*</span>:</label>
+                                <input class="main-form__input" type="password" name="user-password" id="user-password">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="main-form__field error">
+                                <label class="main-form__label" for="user-password-verify">Пароль еще раз <span>*</span>:</label>
+                                <input class="main-form__input" type="password" name="user-password-verify" id="user-password-verify"><small class="error__desc">Пароли не совпадают</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                <label class="main-form__label" for="user-mob-phone">Телефон мобильный <span>*</span>:</label>
+                                <input class="main-form__input" type="tel" name="user-mob-phone" id="user-mob-phone" placeholder="+373">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                <label class="main-form__label" for="user-phone">Телефон стационарный:</label>
+                                <input class="main-form__input" type="tel" name="user-phone" id="user-phone" placeholder="+373">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                <label class="main-form__label" for="user-location">Город <span>*</span>:</label>
+                                <select class="js-select-default" name="user-location" id="user-location">
+                                    <option value="opt-1">Мун.Кишинев</option>
+                                    <option value="opt-2">Бельцы</option>
+                                    <option value="opt-3">Окница</option>
+                                    <option value="opt-4">Оргеев</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-6"> -->
+                        <!-- <div class="main-form__field"> -->
+                        <!-- <label class="main-form__label" for="user-city">Город:</label> -->
+                        <!-- <input class="main-form__input" type="text" name="user-city" id="user-city"> -->
+                        <!-- </div> -->
+                        <!-- </div> -->
+                    </div>
+                </form>
+                <div class="main-form__footer">
+                    <div class="main-form__field">
+                        <div class="checkbox-label">
+                            <input class="checkbox-label__input" type="checkbox" name="is-privacy" id="privacy">
+                            <label class="checkbox-label__main" for="privacy">Я ознакомлен и принимаю условия пользовательского соглашения, договора публичной оферты и регламента гарантии / <a href="#">Подробнее</a></label>
+                        </div>
+                    </div>
+                    <!-- <div class="main-form__field"> -->
+                    <!-- <div class="checkbox-label"> -->
+                    <!-- <input class="checkbox-label__input" type="checkbox" name="is-subscribe" id="subscribe" checked> -->
+                    <!-- <label class="checkbox-label__main" for="subscribe">Подписаться на информацию о новинках, предложениях и акциях</label> -->
+                    <!-- </div> -->
+                    <!-- </div> -->
+                    <div class="main-form__field main-form__field--flex">
+                        <span>Каптча</span>
+                        <input class="main-form__btn btn btn--main" name="send-data" value="Зарегистрироваться">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Matchvincode";
+}
+
+<div class="container-fluid">
+    <ul class="breadcrumbs">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
+        <li class="breadcrumbs__item">Присадки к бензину</li>
+    </ul>
+    <main>
+        <div class="primary-layout">
+            <h1 class="main-title">Подбор по вин коду</h1>
+            <div class="vincode-section">
+                <div class="vincode-section__form">
+                    <article class="type-section">
+                        <div class="type-section__type">
+                            <div class="type-section__icon-wrap">
+                                <svg class="icon icon-car-code type-section__icon">
+                                    <use href="~/assets/images/svg/symbol/sprite.svg#car-code"></use>
+                                </svg>
+                            </div>
+                            <form class="type-section__figcaption" action="/" method="GET" name="search-by-code">
+                                <div class="type-section__title">Подбор по <span class="type-section__title-entity">вин коду</span></div>
+                                <div class="type-section__form">
+                                    <div class="type-section__field">
+                                        <input class="type-section__input" type="text" size="17" maxlength="17" placeholder="VIN код (17 символов)">
+                                        <button class="type-section__submit" type="submit" name="send-data">
+                                            <svg class="icon icon-search type-section__submit-icon">
+                                                <use href="~/assets/images/svg/symbol/sprite.svg#search"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </article>
+                </div>
+                <div class="vincode-section__data">
+                    <div class="brand-info">
+                        <div class="brand-info__logo">
+                            <div class="brand-info__img-wrap"><img class="brand-info__img img-responsive" src="~/assets/images/content/toyota.png" alt=""></div>
+                        </div>
+                        <div class="brand-info__params">
+                            <dl class="brand-info__param">
+                                <div class="brand-info__param-wrap">
+                                    <dt class="brand-info__param-dt">Марка:</dt>
+                                    <dd class="brand-info__param-dd"><a href="#">Toyota</a></dd>
+                                </div>
+                                <div class="brand-info__param-wrap">
+                                    <dt class="brand-info__param-dt">Модель:</dt>
+                                    <dd class="brand-info__param-dd"><a href="#">PRIUS (ZVW30L-AHXGBA)</a></dd>
+                                </div>
+                            </dl>
+                        </div>
+                        <div class="brand-info__more"><a class="btn btn--main" href="#">Каталоги запчастей</a></div>
+                    </div>
+                    <div class="params">
+                        <div class="params__main-wrap">
+                            <div class="params__heading">Информация по авто</div>
+                            <dl class="params__deflist">
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Марка авто</dt>
+                                    <dd class="params__descdetail">TOYOTA</dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Модель авто:</dt>
+                                    <dd class="params__descdetail">PRIUS (ZVW30L-AHXGBA)</dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Дата выпуска:</dt>
+                                    <dd class="params__descdetail">12.2011</dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Цвет:</dt>
+                                    <dd class="params__descdetail">070</dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Цвет салона:</dt>
+                                    <dd class="params__descdetail">LB10</dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Описание:</dt>
+                                    <dd class="params__descdetail">ZVW30prod</dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Period:</dt>
+                                    <dd class="params__descdetail">04.2009 - 11.2015</dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Опции:</dt>
+                                    <dd class="params__descdetail"><span>— / —</span></dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">АКПП/МКПП:</dt>
+                                    <dd class="params__descdetail">AUTOMATIC TRANSMISSION</dd>
+                                </div>
+                                <div class="params__wrap">
+                                    <dt class="params__descterm">Комплектация:</dt>
+                                    <dd class="params__descdetail">G TYPE</dd>
+                                </div>
+                                <div class="params__wrap is-hidden">
+                                    <dt class="params__descterm">Тип трансмиссии:</dt>
+                                    <dd class="params__descdetail">ONTINUOUSLY VARIABLE TRANSMISSION</dd>
+                                </div>
+                                <div class="params__wrap is-hidden">
+                                    <dt class="params__descterm">Двигатель:</dt>
+                                    <dd class="params__descdetail">(2ZRFXE) 1800CC 16-VALVE DOHC EFI</dd>
+                                </div>
+                                <div class="params__wrap is-hidden">
+                                    <dt class="params__descterm">Рынок сбыта:</dt>
+                                    <dd class="params__descdetail">UNITED STATES OF AMERICA</dd>
+                                </div>
+                            </dl><a class="params__btn btn btn--main" href="#">Показать все</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

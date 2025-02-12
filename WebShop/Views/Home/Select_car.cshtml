@@ -1,0 +1,323 @@
+﻿
+@{
+    ViewBag.Title = "Select_car";
+}
+
+<div class="container-fluid">
+    <ul class="breadcrumbs breadcrumbs--no-gutters">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Авторизация</a></li>
+        <li class="breadcrumbs__item">Регистрация</li>
+    </ul>
+</div>
+<div class="inner-section inner-section--mod">
+    <div class="container-fluid">
+        <div class="inner-section__header">
+            <h1 class="inner-section__heading">Подбор по автомобилю</h1><a href="#"><img class="inner-section__header-img" src="~/assets/images/general/tecdoc.png" width="45" height="45"></a>
+        </div>
+        <div class="inner-section__body inner-section__body--no-gutters">
+            <div class="tabs-section">
+                <div class="tabs">
+                    <div class="tabs__header">
+                        <ul class="tabs__list">
+                            <li class="tabs__item"><a class="tabs__link is-active" href="#section-1">Легковые</a></li>
+                            <li class="tabs__item"><a class="tabs__link" href="#section-2">Грузовые</a></li>
+                        </ul>
+                    </div>
+                    <div class="tabs__panes">
+                        <div class="tabs__tab-pane is-active">
+                            <div class="tabs__accordeon-body">
+                                <div class="tabs__accordeon-wrap">
+                                    <div class="car-selection js-car-selection-type-1">
+                                        <div class="car-selection__field">
+                                            <select class="js-select-car" name="car-brand">
+                                                <option placeholder>Выберите марку</option>
+                                                <option value="Toyota">Toyota</option>
+                                                <option value="Mazda">Mazda</option>
+                                                <option value="BMW">BMW</option>
+                                                <option value="Nissan">Nissan</option>
+                                                <option value="Audi">Audi</option>
+                                            </select>
+                                        </div>
+                                        <div class="car-selection__field">
+                                            <select class="js-select-car" name="car-model">
+                                                <option placeholder>Выберите модель</option>
+                                                <option value="Land-Cruiser">Land Cruiser (_J12_)</option>
+                                                <option value="A6">A6</option>
+                                                <option value="Romero">Romero</option>
+                                            </select>
+                                        </div>
+                                        <div class="car-selection__field">
+                                            <select class="js-select-car" name="car-fuel">
+                                                <option placeholder>Тип топлива</option>
+                                                <option value="type-1">Дизель</option>
+                                                <option value="type-2">Газ</option>
+                                                <option value="type-3">Бензин</option>
+                                            </select>
+                                        </div>
+                                        <div class="car-selection__field">
+                                            <select class="js-select-car" name="car-year">
+                                                <option placeholder>Год выпуска</option>
+                                                <option value="years-set-1">1990-2000</option>
+                                                <option value="years-set-2">2000-2010</option>
+                                                <option value="years-set-3">2010-2020</option>
+                                                <option value="years-set-4">2020-2030</option>
+                                                <option value="years-set-5">2030-2040</option>
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input class="car-selection__input" type="text" name="param-1" placeholder="Объем">
+                                                <div class="checkbox-label">
+                                                    <input class="checkbox-label__input" type="checkbox" name="is-opt-1" id="opt-1">
+                                                    <label class="checkbox-label__main" for="opt-1">+/- 10%</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="car-selection__power">
+                                                    <input class="car-selection__input" type="text" name="param-2" placeholder="Мощность">
+                                                    <select class="js-select-default">
+                                                        <option value="set-1">кВт</option>
+                                                        <option value="set-2">вт</option>
+                                                        <option value="set-3">кВт</option>
+                                                        <option value="set-4">вт</option>
+                                                    </select>
+                                                </div>
+                                                <div class="checkbox-label">
+                                                    <input class="checkbox-label__input" type="checkbox" name="is-opt-2" id="opt-2">
+                                                    <label class="checkbox-label__main" for="opt-2">+/- 10%</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inner-section__type-img-wrap"><img class="inner-section__type-img img-responsive" src="~/assets/images/general/car-type.png" width="600" height="400"></div>
+                            </div>
+                        </div>
+                        <div class="tabs__tab-pane">
+                            <div class="tabs__accordeon-body">
+                                <div class="tabs__accordeon-wrap">
+                                    <div class="car-selection js-car-selection-type-2">
+                                        <div class="car-selection__field">
+                                            <select class="js-select-truck" name="car-brand">
+                                                <option placeholder>Выберите марку</option>
+                                                <option value="Toyota">Toyota</option>
+                                                <option value="Mazda">Mazda</option>
+                                                <option value="BMW">BMW</option>
+                                                <option value="Nissan">Nissan</option>
+                                                <option value="Audi">Audi</option>
+                                            </select>
+                                        </div>
+                                        <div class="car-selection__field">
+                                            <select class="js-select-truck" name="car-model">
+                                                <option placeholder>Выберите модель</option>
+                                                <option value="Land-Cruiser">Land Cruiser (_J12_)</option>
+                                                <option value="A6">A6</option>
+                                                <option value="Romero">Romero</option>
+                                            </select>
+                                        </div>
+                                        <div class="car-selection__field">
+                                            <select class="js-select-truck" name="car-fuel">
+                                                <option placeholder>Тип топлива</option>
+                                                <option value="type-1">Дизель</option>
+                                                <option value="type-2">Газ</option>
+                                                <option value="type-3">Бензин</option>
+                                            </select>
+                                        </div>
+                                        <div class="car-selection__field">
+                                            <select class="js-select-truck" name="car-year">
+                                                <option placeholder>Год выпуска</option>
+                                                <option value="years-set-1">1990-2000</option>
+                                                <option value="years-set-2">2000-2010</option>
+                                                <option value="years-set-3">2010-2020</option>
+                                                <option value="years-set-4">2020-2030</option>
+                                                <option value="years-set-5">2030-2040</option>
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input class="car-selection__input" type="text" name="param-1" placeholder="Объем">
+                                                <div class="checkbox-label">
+                                                    <input class="checkbox-label__input" type="checkbox" name="is-opt-3" id="opt-3">
+                                                    <label class="checkbox-label__main" for="opt-3">+/- 10%</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="car-selection__power">
+                                                    <input class="car-selection__input" type="text" name="param-2" placeholder="Мощность">
+                                                    <select class="js-select-default">
+                                                        <option value="set-1">кВт</option>
+                                                        <option value="set-2">вт</option>
+                                                        <option value="set-3">кВт</option>
+                                                        <option value="set-4">вт</option>
+                                                    </select>
+                                                </div>
+                                                <div class="checkbox-label">
+                                                    <input class="checkbox-label__input" type="checkbox" name="is-opt-4" id="opt-4">
+                                                    <label class="checkbox-label__main" for="opt-4">+/- 10%</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inner-section__type-img-wrap"><img class="inner-section__type-img img-responsive" src="~/assets/images/general/truck-type.png"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><a href="#"><img class="inner-section__brand-img" src="~/assets/images/general/tecdoc.png" width="65" height="65"></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card-specification-section card-specification-section--offset">
+        <div class="table-responsive d-none d-md-block">
+            <table class="spec-table spec-table--inner">
+                <thead class="spec-table__thead">
+                    <tr class="spec-table__tr">
+                        <th class="spec-table__th">Модель / Двигатель</th>
+                        <th class="spec-table__th">Код двигателя</th>
+                        <th class="spec-table__th">Года выпуска</th>
+                        <th class="spec-table__th">Мощность, кВт</th>
+                        <th class="spec-table__th">Мощность, л.с.</th>
+                        <th class="spec-table__th">Объем, см3</th>
+                        <th class="spec-table__th">Тип кузова</th>
+                    </tr>
+                </thead>
+                <tbody class="spec-table__tbody">
+                    <tr class="spec-table__tr">
+                        <td class="spec-table__td">
+                            <div class="spec-table__title"><a class="spec-table__title-model" href="#">Toyota Land Cruiser (j120) 3.4</a></div>
+                        </td>
+                        <td class="spec-table__td"><span class="spec-table__engine">— / —</span></td>
+                        <td class="spec-table__td">2002 - 2004</td>
+                        <td class="spec-table__td">136</td>
+                        <td class="spec-table__td">185</td>
+                        <td class="spec-table__td">3378</td>
+                        <td class="spec-table__td">
+                            <div class="spec-table__type">Вездеход, закрытый<i class="tooltip fas fa-info" data-tippy-content="Какая-то подсказка о возврате и обмене товара"></i></div>
+                        </td>
+                    </tr>
+                    <tr class="spec-table__tr">
+                        <td class="spec-table__td">
+                            <div class="spec-table__title"><a class="spec-table__title-model" href="#">Toyota Land Cruiser (j120) 4.0 3.0 D-4D (KDJ120, KDJ150, KDJ125)</a></div>
+                        </td>
+                        <td class="spec-table__td"><span class="spec-table__engine">— / —</span></td>
+                        <td class="spec-table__td">2002 - 2004</td>
+                        <td class="spec-table__td">145</td>
+                        <td class="spec-table__td">90</td>
+                        <td class="spec-table__td">3378</td>
+                        <td class="spec-table__td">
+                            <div class="spec-table__type">Вездеход, закрытый<i class="tooltip fas fa-info" data-tippy-content="Какая-то подсказка о возврате и обмене товара"></i></div>
+                        </td>
+                    </tr>
+                    <tr class="spec-table__tr">
+                        <td class="spec-table__td">
+                            <div class="spec-table__title"><a class="spec-table__title-model" href="#">Toyota Land Cruiser (j120) 3.4</a></div>
+                        </td>
+                        <td class="spec-table__td"><span class="spec-table__engine">— / —</span></td>
+                        <td class="spec-table__td">2002 - 2004</td>
+                        <td class="spec-table__td">136</td>
+                        <td class="spec-table__td">185</td>
+                        <td class="spec-table__td">3378</td>
+                        <td class="spec-table__td">
+                            <div class="spec-table__type">Вездеход, закрытый<i class="tooltip fas fa-info" data-tippy-content="Какая-то подсказка о возврате и обмене товара"></i></div>
+                        </td>
+                    </tr>
+                    <tr class="spec-table__tr">
+                        <td class="spec-table__td">
+                            <div class="spec-table__title"><a class="spec-table__title-model" href="#">Toyota Land Cruiser (j120) 4.0 3.0 D-4D (KDJ120, KDJ150, KDJ125)</a></div>
+                        </td>
+                        <td class="spec-table__td"><span class="spec-table__engine">— / —</span></td>
+                        <td class="spec-table__td">2002 - 2004</td>
+                        <td class="spec-table__td">145</td>
+                        <td class="spec-table__td">90</td>
+                        <td class="spec-table__td">3378</td>
+                        <td class="spec-table__td">
+                            <div class="spec-table__type">Вездеход, закрытый<i class="tooltip fas fa-info" data-tippy-content="Какая-то подсказка о возврате и обмене товара"></i></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="spec d-md-none">
+            <div class="spec__title">Модель / Двигатель</div>
+            <div class="spec__product is-open">
+                <div class="spec__heading">Антифриз -37°C 5L (102928) Motul</div>
+                <div class="spec__detail">
+                    <dl class="spec__params">
+                        <dt class="spec__property">Код двигателя</dt>
+                        <dt class="spec__value">— / —</dt>
+                        <dt class="spec__property">Года выпуска</dt>
+                        <dt class="spec__value">2002 - 2004</dt>
+                        <dt class="spec__property">Мощность, кВт</dt>
+                        <dt class="spec__value">136</dt>
+                        <dt class="spec__property">Мощность, л.с.</dt>
+                        <dt class="spec__value">185</dt>
+                        <dt class="spec__property">Объем, см3</dt>
+                        <dt class="spec__value">3378</dt>
+                        <dt class="spec__property">Тип кузова</dt>
+                        <dt class="spec__value">Вездеход, закрытый</dt>
+                    </dl><a class="spec__params-more" href="#">Подробнаяя информация</a>
+                </div>
+            </div>
+            <div class="spec__product">
+                <div class="spec__heading">Toyota Land Cruiser (j120) 4.0 3.0 D-4D (KDJ120, KDJ150, KDJ125)</div>
+                <div class="spec__detail">
+                    <dl class="spec__params">
+                        <dt class="spec__property">Код двигателя</dt>
+                        <dt class="spec__value">— / —</dt>
+                        <dt class="spec__property">Года выпуска</dt>
+                        <dt class="spec__value">2002 - 2004</dt>
+                        <dt class="spec__property">Мощность, кВт</dt>
+                        <dt class="spec__value">145</dt>
+                        <dt class="spec__property">Мощность, л.с.</dt>
+                        <dt class="spec__value">90</dt>
+                        <dt class="spec__property">Объем, см3</dt>
+                        <dt class="spec__value">3378</dt>
+                        <dt class="spec__property">Тип кузова</dt>
+                        <dt class="spec__value">Вездеход, закрытый</dt>
+                    </dl><a class="spec__params-more" href="#">Подробнаяя информация</a>
+                </div>
+            </div>
+            <div class="spec__product">
+                <div class="spec__heading">Антифриз -37°C 5L (102928) Motul</div>
+                <div class="spec__detail">
+                    <dl class="spec__params">
+                        <dt class="spec__property">Код двигателя</dt>
+                        <dt class="spec__value">— / —</dt>
+                        <dt class="spec__property">Года выпуска</dt>
+                        <dt class="spec__value">2002 - 2004</dt>
+                        <dt class="spec__property">Мощность, кВт</dt>
+                        <dt class="spec__value">136</dt>
+                        <dt class="spec__property">Мощность, л.с.</dt>
+                        <dt class="spec__value">185</dt>
+                        <dt class="spec__property">Объем, см3</dt>
+                        <dt class="spec__value">3378</dt>
+                        <dt class="spec__property">Тип кузова</dt>
+                        <dt class="spec__value">Вездеход, закрытый</dt>
+                    </dl><a class="spec__params-more" href="#">Подробнаяя информация</a>
+                </div>
+            </div>
+            <div class="spec__product">
+                <div class="spec__heading">Toyota Land Cruiser (j120) 4.0 3.0 D-4D (KDJ120, KDJ150, KDJ125)</div>
+                <div class="spec__detail">
+                    <dl class="spec__params">
+                        <dt class="spec__property">Код двигателя</dt>
+                        <dt class="spec__value">— / —</dt>
+                        <dt class="spec__property">Года выпуска</dt>
+                        <dt class="spec__value">2002 - 2004</dt>
+                        <dt class="spec__property">Мощность, кВт</dt>
+                        <dt class="spec__value">145</dt>
+                        <dt class="spec__property">Мощность, л.с.</dt>
+                        <dt class="spec__value">90</dt>
+                        <dt class="spec__property">Объем, см3</dt>
+                        <dt class="spec__value">3378</dt>
+                        <dt class="spec__property">Тип кузова</dt>
+                        <dt class="spec__value">Вездеход, закрытый</dt>
+                    </dl><a class="spec__params-more" href="#">Подробнаяя информация</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

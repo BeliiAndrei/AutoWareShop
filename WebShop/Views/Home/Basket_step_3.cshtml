@@ -1,0 +1,424 @@
+﻿
+@{
+    ViewBag.Title = "Basket_step_3";
+}
+<div class="container-fluid">
+    <ul class="breadcrumbs">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
+        <li class="breadcrumbs__item">Присадки к бензину</li>
+    </ul>
+    <div class="primary-layout">
+        <div class="primary-content">
+            <div class="sidebar">
+                <div class="category-nav d-none d-md-block">
+                    <ul class="category-nav__list">
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Корзина</a></li>
+                        <li class="category-nav__item active"><a class="category-nav__link" href="#">Заказы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Оплата</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Акт сверки</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Клиенты</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Профиль</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">VIN запросы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Мероприятия</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Акции</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Управление пользователями</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Регистрация пользователей</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Статистика доступа</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Контент групп</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Управление сайтом</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Загрузка прайса/кроссов</a></li>
+                    </ul>
+                </div>
+            </div>
+            <main class="main-content">
+                <h1 class="main-title">Заказ<span>№ 00000154705@19</span></h1>
+                <div class="order-steps-wrap text-center">
+                    <ul class="order-steps">
+                        <li class="order-steps__item">
+                            <svg class="icon icon-shopping-cart order-steps__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#shopping-cart"></use>
+                            </svg><span class="order-steps__title">Корзина</span>
+                        </li>
+                        <li class="order-steps__item">
+                            <svg class="icon icon-wallet-strong order-steps__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#wallet-strong"></use>
+                            </svg><span class="order-steps__title">Оплата</span>
+                        </li>
+                        <li class="order-steps__item is-current">
+                            <svg class="icon icon-lorry order-steps__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#lorry"></use>
+                            </svg><span class="order-steps__title">Доставка</span>
+                        </li>
+                        <li class="order-steps__item">
+                            <svg class="icon icon-confirmation order-steps__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#confirmation"></use>
+                            </svg><span class="order-steps__title">Завершение</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tabs-section">
+                    <div class="tabs tabs--secondary">
+                        <div class="tabs__header">
+                            <ul class="tabs__list">
+                                <li class="tabs__item"><a class="tabs__link is-active" href="#section-1">Доставка на адрес</a></li>
+                                <li class="tabs__item"><a class="tabs__link" href="#section-2">Самовывоз</a></li>
+                            </ul>
+                            <div class="tabs__panes">
+                                <div class="tabs__tab-pane is-active">
+                                    <form class="delivery-opt" name="delivery-control" action="/" method="POST">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="delivery-opt__field">
+                                                    <label class="delivery-opt__label" for="delivery-type">Тип доставки</label>
+                                                    <select class="js-select-default" id="delivery-type" name="delivery-type">
+                                                        <option value="delivery-type-1">Доставка автотранспортом</option>
+                                                        <option value="delivery-type-2">Самовывоз</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="delivery-opt__field">
+                                                    <label class="delivery-opt__label">Желаемая дата доставки</label>
+                                                    <div class="radio-labels">
+                                                        <div class="radio-label">
+                                                            <input class="radio-label__input" type="radio" name="delivery-date" value="delivery-date-1" checked id="dlv-opt-1">
+                                                            <label class="radio-label__main" for="dlv-opt-1">07 ноября</label>
+                                                        </div>
+                                                        <div class="radio-label">
+                                                            <input class="radio-label__input" type="radio" name="delivery-date" value="delivery-date-2" id="dlv-opt-2">
+                                                            <label class="radio-label__main" for="dlv-opt-2">08 ноября</label>
+                                                        </div>
+                                                        <div class="radio-label">
+                                                            <input class="radio-label__input" type="radio" name="delivery-date" value="delivery-date-3" id="dlv-opt-3">
+                                                            <label class="radio-label__main" for="dlv-opt-3">09 ноября</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 align-self-end">
+                                                <input class="btn btn--main" type="submit" name="send-data" value="Добавить адрес">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="radio-option">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="radio-opt active">
+                                                    <div class="radio-opt__user-data">
+                                                        <dl class="manual-params">
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Область</dt>
+                                                                <dd class="manual-params__property">Алматинская область</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Город</dt>
+                                                                <dd class="manual-params__property">Алма-Аты</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Район</dt>
+                                                                <dd class="manual-params__property">Алатауский район</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Улица</dt>
+                                                                <dd class="manual-params__property">ул.Толеби</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Дом / Номер</dt>
+                                                                <dd class="manual-params__property">94/10</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Квартира</dt>
+                                                                <dd class="manual-params__property">24</dd>
+                                                            </div>
+                                                        </dl>
+                                                        <div class="radio-opt__comment">
+                                                            <span class="radio-opt__comment-title">Комментарий:</span>
+                                                            <p class="radio-opt__comment-desc">Лорем ипсум долор сит амет, ан цлита албуц иус сит, цум вирис нусяуам сцрибентур ад,</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="radio-opt__footer">
+                                                        <div class="radio-label">
+                                                            <input class="radio-label__input" type="radio" name="delivery-opt" value="delivery-location-1" checked id="opt-1">
+                                                            <label class="radio-label__main" for="opt-1">Доставить на этот адрес</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="radio-opt">
+                                                    <div class="radio-opt__user-data">
+                                                        <dl class="manual-params">
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Область</dt>
+                                                                <dd class="manual-params__property">Алматинская область</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Город</dt>
+                                                                <dd class="manual-params__property">Алма-Аты</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Район</dt>
+                                                                <dd class="manual-params__property">Алатауский район</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Улица</dt>
+                                                                <dd class="manual-params__property">ул.Толеби</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Дом / Номер</dt>
+                                                                <dd class="manual-params__property">94/10</dd>
+                                                            </div>
+                                                            <div class="manual-params__param">
+                                                                <dt class="manual-params__value">Квартира</dt>
+                                                                <dd class="manual-params__property">— / —</dd>
+                                                            </div>
+                                                        </dl>
+                                                        <div class="radio-opt__comment">
+                                                            <span class="radio-opt__comment-title">Комментарий:</span>
+                                                            <p class="radio-opt__comment-desc">— / —</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="radio-opt__footer">
+                                                        <div class="radio-label">
+                                                            <input class="radio-label__input" type="radio" name="delivery-opt" value="delivery-location-2" id="opt-2">
+                                                            <label class="radio-label__main" for="opt-2">Доставить на этот адрес</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form class="add-address" method="POST" action="/" name="add-address">
+                                        <div class="row">
+                                            <div class="col-12 col-md-4">
+                                                <div class="add-address__field">
+                                                    <label class="add-address__label" for="user-region">Область <span>*</span></label>
+                                                    <select class="js-select-default" id="user-region" name="user-region">
+                                                        <option value="user-reg-1">Алматинская область</option>
+                                                        <option value="user-reg-2">Краснодарская область</option>
+                                                        <option value="user-reg-3">Будапештская область</option>
+                                                        <option value="user-reg-4">Билефильдская область</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="add-address__field">
+                                                    <label class="add-address__label" for="user-city-location">Город <span>*</span></label>
+                                                    <select class="js-select-default" id="user-city-location" name="user-city-location">
+                                                        <option value="user-city-loc-1">г. Алматы</option>
+                                                        <option value="user-city-loc-2">г. Краснодар</option>
+                                                        <option value="user-city-loc-3">г. Будапешт</option>
+                                                        <option value="user-city-loc-4">г. Билефильд</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="add-address__field">
+                                                    <label class="add-address__label" for="user-district">Район <span>*</span></label>
+                                                    <select class="js-select-default" id="user-district" name="user-district">
+                                                        <option value="user-district-1">Алатауский район</option>
+                                                        <option value="user-district-2">Краснодарский район</option>
+                                                        <option value="user-district-3">Будапештский район</option>
+                                                        <option value="user-district-4">Билефильдский район</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="add-address__field">
+                                                    <label class="add-address__label" for="user-street">Улица <span>*</span></label>
+                                                    <input class="add-address__input" type="text" name="user-street" id="user-street">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-2">
+                                                <div class="add-address__field">
+                                                    <label class="add-address__label" for="user-house">Дом <span>*</span></label>
+                                                    <input class="add-address__input" type="text" name="user-house" id="user-house">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-2">
+                                                <div class="add-address__field">
+                                                    <label class="add-address__label" for="user-building">Строение</label>
+                                                    <input class="add-address__input" type="text" name="user-building" id="user-building">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-2">
+                                                <div class="add-address__field">
+                                                    <label class="add-address__label" for="user-box">Блок</label>
+                                                    <input class="add-address__input" type="text" name="user-box" id="user-box">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-2">
+                                                <div class="add-address__field">
+                                                    <label class="add-address__label" for="user-flat">Квартира</label>
+                                                    <input class="add-address__input" type="text" name="user-flat" id="user-flat">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-8">
+                                                <div class="add-address__field">
+                                                    <textarea class="add-address__msg" row="1" name="user-message" placeholder="Комментарий"></textarea>
+                                                    <div class="add-address__symb-left">Осталось <span class="add-address__symb-left-amount">100</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="text-center">
+                                                    <input class="btn btn--reverse" type="submit" name="send-data" value="Добавить адрес">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tabs__tab-pane">
+                                    <div class="location-desc">
+                                        <p>Для того, чтобы забрать свой заказ, Вам нужно явиться в наше представительство по адресу, указанному ниже.</p>
+                                        <p>Просим обратить внимание на время, с которого будет доступен заказ.</p><strong>Ближайшие рабочие дни</strong>
+                                        <p>07 Ноября / 08 Ноября / 09 Ноября</p>
+                                    </div>
+                                    <div class="location">
+                                        <div class="location__places">
+                                            <div class="location__place"><img class="location__place-img" src="~/assets/images/general/garage-location-1.jpg" alt="location"></div>
+                                            <div class="location__place"><img class="location__place-img" src="~/assets/images/general/garage-location-map.jpg" alt="location"></div>
+                                        </div>
+                                        <div class="location__details">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="location__detail">
+                                                        <div class="location__detail-heading">Адрес</div>
+                                                        <div class="location__detail-desc">MD-2059, Молдова, г. Кишинев, ул. Петрикань, 17</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="location__detail">
+                                                        <div class="location__detail-heading">Телефоны</div>
+                                                        <dl>
+                                                            <dt>Администрация</dt>
+                                                            <dd><a href="tel:+37322815400">/+373 22/ 815-400</a></dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="location__detail">
+                                                        <div class="location__detail-heading">График работы</div>
+                                                        <dl>
+                                                            <dt>Пн-Пт     </dt>
+                                                            <dd>с 8:00 до 18:00</dd>
+                                                            <dt>Суббота</dt>
+                                                            <dd>с 8:00 до 15:00</dd>
+                                                            <dt>Воскресенье</dt>
+                                                            <dd>выходной</dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-footer d-none d-md-flex">
+                    <a class="btn btn--reverse" href="#">Назад</a>
+                    <textarea class="order-footer__message" placeholder="Комментарий к заказу" rows="1" name="order-message"></textarea>
+                    <div class="footer-summary-price">
+                        <div class="footer-summary-price__title">Сумма к оплате</div>
+                        <div class="footer-summary-price__value">2 297 <span>Руб</span></div>
+                    </div><a class="btn btn--main" href="#">Перейти к оплате<i class="fas fa-chevron-circle-right"></i></a>
+                </div>
+                <div class="order-mob-footer d-md-none">
+                    <footer class="order-mob-footer__main">
+                        <p class="order-mob-footer__payment">Сумма к оплате</p>
+                        <div class="order-mob-footer__total-price"><span class="order-mob-footer__total-price-value">2 297</span> Руб</div>
+                        <textarea class="order-mob-footer__message" placeholder="Комментарий к заказу" rows="2" name="order-message"></textarea>
+                    </footer>
+                    <div class="order-mob-footer__controls">
+                        <div class="row">
+                            <div class="col-4"><a class="btn btn--reverse" href="#">Назад</a></div>
+                            <div class="col-8"><a class="btn btn--main" href="#">Перейти к оплате<i class="fas fa-chevron-circle-right"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+                <form class="add-address add-address--mob d-md-none" method="POST" action="/" name="add-address">
+                    <div class="payment-section__heading">Добавление адреса</div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="add-address__field">
+                                <label class="add-address__label" for="user-region-2">Область <span>*</span></label>
+                                <select class="js-select-default" id="user-region-2" name="user-region">
+                                    <option value="user-reg-1">Алматинская область</option>
+                                    <option value="user-reg-2">Краснодарская область</option>
+                                    <option value="user-reg-3">Будапештская область</option>
+                                    <option value="user-reg-4">Билефильдская область</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="add-address__field">
+                                <label class="add-address__label" for="user-city-location-2">Город <span>*</span></label>
+                                <select class="js-select-default" id="user-city-location-2" name="user-city-location">
+                                    <option value="user-city-loc-1">г. Алматы</option>
+                                    <option value="user-city-loc-2">г. Краснодар</option>
+                                    <option value="user-city-loc-3">г. Будапешт</option>
+                                    <option value="user-city-loc-4">г. Билефильд</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="add-address__field">
+                                <label class="add-address__label" for="user-district-2">Район <span>*</span></label>
+                                <select class="js-select-default" id="user-district-2" name="user-district">
+                                    <option value="user-district-1">Алатауский район</option>
+                                    <option value="user-district-2">Краснодарский район</option>
+                                    <option value="user-district-3">Будапештский район</option>
+                                    <option value="user-district-4">Билефильдский район</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="add-address__field">
+                                <label class="add-address__label" for="user-street-2">Улица <span>*</span></label>
+                                <input class="add-address__input" type="text" name="user-street" id="user-street-2">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="add-address__field">
+                                <label class="add-address__label" for="user-house-2">Дом <span>*</span></label>
+                                <input class="add-address__input" type="text" name="user-house" id="user-house-2">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="add-address__field">
+                                <label class="add-address__label" for="user-building-2">Строение</label>
+                                <input class="add-address__input" type="text" name="user-building" id="user-building-2">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="add-address__field">
+                                <label class="add-address__label" for="user-box-2">Блок</label>
+                                <input class="add-address__input" type="text" name="user-box" id="user-box-2">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="add-address__field">
+                                <label class="add-address__label" for="user-flat-2">Квартира</label>
+                                <input class="add-address__input" type="text" name="user-flat" id="user-flat-2">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="add-address__field">
+                                <textarea class="add-address__msg" row="1" name="user-message" placeholder="Комментарий"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-center">
+                                <input class="btn btn--reverse" type="submit" name="send-data" value="Добавить адрес">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
+</div>
+
