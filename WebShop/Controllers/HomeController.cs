@@ -14,6 +14,10 @@ namespace WebShop.Controllers
             return View();
         }
 
+        public ActionResult MainPage()
+        {
+            return View();
+        }
         [HttpPost]
         public ActionResult Do ()
         {
