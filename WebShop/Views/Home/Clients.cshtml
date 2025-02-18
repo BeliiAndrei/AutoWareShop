@@ -1,0 +1,400 @@
+
+@{
+    ViewBag.Title = "Clients";
+}
+
+
+<div class="container-fluid">
+    <ul class="breadcrumbs">
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
+        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
+        <li class="breadcrumbs__item">Присадки к бензину</li>
+    </ul>
+    <div class="primary-layout">
+        <div class="primary-content">
+            <div class="sidebar">
+                <div class="category-nav d-none d-md-block">
+                    <ul class="category-nav__list">
+                        <a class="category-nav__title h3 important" href="#">Акции</a>
+                        <li class="category-nav__title h3">Оплата и заказы</li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Корзина</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Заказы</a></li>
+                        <li class="category-nav__title h3">Мой кабинет</li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Акт сверки</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Клиенты</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Профиль</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">VIN запросы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Мероприятия</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Акции</a></li>
+                        <li class="category-nav__title h3">Инструменты</li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Управление пользователями</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Регистрация пользователей</a></li>
+                        <li class="category-nav__item active"><a class="category-nav__link" href="#">Статистика доступа</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Контент групп</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="#">Управление сайтом</a></li>
+                    </ul>
+                </div>
+            </div>
+            <main class="main-content">
+                <div class="main-heading">
+                    <div class="main-heading__text">Клиенты</div>
+                    <div class="main-heading__link-wrap"><a class="main-heading__link" href="#">Кирюхина Татьяна</a></div>
+                </div>
+                <div class="client-options">
+                    <div class="row">
+                        <div class="col-6 col-sm-3">
+                            <a class="client-option" href="#">
+                                <figure class="client-option__main">
+                                    <div class="client-option__img-wrap">
+                                        <svg class="icon icon-key client-option__img">
+                                            <use href="assets/images/svg/symbol/sprite.svg#key"></use>
+                                        </svg>
+                                    </div>
+                                    <figcaption class="client-option__heading">Ключевой доступ</figcaption>
+                                </figure>
+                            </a>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <a class="client-option" href="#">
+                                <figure class="client-option__main">
+                                    <div class="client-option__img-wrap">
+                                        <svg class="icon icon-contacts client-option__img">
+                                            <use href="assets/images/svg/symbol/sprite.svg#contacts"></use>
+                                        </svg>
+                                    </div>
+                                    <figcaption class="client-option__heading">Просмотр всех заказов клиента</figcaption>
+                                </figure>
+                            </a>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <a class="client-option" href="#">
+                                <figure class="client-option__main">
+                                    <div class="client-option__img-wrap">
+                                        <svg class="icon icon-file client-option__img">
+                                            <use href="assets/images/svg/symbol/sprite.svg#file"></use>
+                                        </svg>
+                                    </div>
+                                    <figcaption class="client-option__heading">Доступ к актам сверки</figcaption>
+                                </figure>
+                            </a>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <a class="client-option" href="#">
+                                <figure class="client-option__main">
+                                    <div class="client-option__img-wrap">
+                                        <svg class="icon icon-shopping-cart client-option__img">
+                                            <use href="assets/images/svg/symbol/sprite.svg#shopping-cart"></use>
+                                        </svg>
+                                    </div>
+                                    <figcaption class="client-option__heading">Может делать заказ</figcaption>
+                                </figure>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="client-detail">
+                    <div class="client-detail__header">
+                        <div class="client-detail__heading">Адреса доставок</div><a class="client-detail__btn btn btn--main" href="#">Добавить адрес доставки</a>
+                    </div>
+                    <form class="add-address" method="POST" action="/" name="add-address">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="add-address__field">
+                                    <label class="add-address__label" for="user-region">Область <span>*</span></label>
+                                    <select class="js-select-default" id="user-region" name="user-region">
+                                        <option value="user-reg-1">Алматинская область</option>
+                                        <option value="user-reg-2">Краснодарская область</option>
+                                        <option value="user-reg-3">Будапештская область</option>
+                                        <option value="user-reg-4">Билефильдская область</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="add-address__field">
+                                    <label class="add-address__label" for="user-city-location">Город <span>*</span></label>
+                                    <select class="js-select-default" id="user-city-location" name="user-city-location">
+                                        <option value="user-city-loc-1">г. Алматы</option>
+                                        <option value="user-city-loc-2">г. Краснодар</option>
+                                        <option value="user-city-loc-3">г. Будапешт</option>
+                                        <option value="user-city-loc-4">г. Билефильд</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="add-address__field">
+                                    <label class="add-address__label" for="user-district">Район <span>*</span></label>
+                                    <select class="js-select-default" id="user-district" name="user-district">
+                                        <option value="user-district-1">Алатауский район</option>
+                                        <option value="user-district-2">Краснодарский район</option>
+                                        <option value="user-district-3">Будапештский район</option>
+                                        <option value="user-district-4">Билефильдский район</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="add-address__field">
+                                    <label class="add-address__label" for="user-street">Улица <span>*</span></label>
+                                    <input class="add-address__input" type="text" name="user-street" id="user-street">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <div class="add-address__field">
+                                    <label class="add-address__label" for="user-house">Дом <span>*</span></label>
+                                    <input class="add-address__input" type="text" name="user-house" id="user-house">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <div class="add-address__field">
+                                    <label class="add-address__label" for="user-building">Строение</label>
+                                    <input class="add-address__input" type="text" name="user-building" id="user-building">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <div class="add-address__field">
+                                    <label class="add-address__label" for="user-box">Блок</label>
+                                    <input class="add-address__input" type="text" name="user-box" id="user-box">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <div class="add-address__field">
+                                    <label class="add-address__label" for="user-flat">Квартира</label>
+                                    <input class="add-address__input" type="text" name="user-flat" id="user-flat">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="add-address__field">
+                                    <textarea class="add-address__msg" row="1" name="user-message" placeholder="Комментарий"></textarea>
+                                    <div class="add-address__symb-left">Осталось <span class="add-address__symb-left-amount">100</span></div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="text-center">
+                                    <input class="btn btn--reverse" type="submit" name="send-data" value="Добавить адрес">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Город</th>
+                                    <th>Улица</th>
+                                    <th class="text-center">Дом</th>
+                                    <th class="text-center">Кв.</th>
+                                    <th>Комментарий</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="address-check">
+                                            <div class="checkbox-label">
+                                                <input class="checkbox-label__input" type="checkbox" name="is-loc-1" id="loc-1">
+                                                <label class="checkbox-label__main" for="loc-1"></label>
+                                            </div>Алматы
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="user-address">ул.Толеби</div>
+                                    </td>
+                                    <td class="text-center">94/10</td>
+                                    <td class="text-center"><span class="noset">— / —</span></td>
+                                    <td>
+                                        <div class="user-edit-wrap">
+                                            <p class="user-comment">Лорем ипсум долор сит амет, ин сцрипта тамяуам нострум сеа.</p>
+                                            <ul class="user-controls">
+                                                <li>
+                                                    <a class="user-status-edit" href="#">
+                                                        <svg class="icon icon-pen">
+                                                            <use href="assets/images/svg/symbol/sprite.svg#pen"></use>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="user-status-remove" href="#">
+                                                        <svg class="icon icon-close">
+                                                            <use href="assets/images/svg/symbol/sprite.svg#close"></use>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="address-check">
+                                            <div class="checkbox-label">
+                                                <input class="checkbox-label__input" type="checkbox" checked name="is-loc-2" id="loc-2">
+                                                <label class="checkbox-label__main" for="loc-2"></label>
+                                            </div>Киргизский<small class="district">Каркаралинский район</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="user-address">ул.Толеби</div>
+                                    </td>
+                                    <td class="text-center">94/10</td>
+                                    <td class="text-center"><span class="noset">— / —</span></td>
+                                    <td>
+                                        <div class="user-edit-wrap">
+                                            <p class="user-comment">Лорем ипсум долор сит амет, ин сцрипта тамяуам нострум сеа.</p>
+                                            <ul class="user-controls">
+                                                <li>
+                                                    <a class="user-status-edit" href="#">
+                                                        <svg class="icon icon-pen">
+                                                            <use href="assets/images/svg/symbol/sprite.svg#pen"></use>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="user-status-remove" href="#">
+                                                        <svg class="icon icon-close">
+                                                            <use href="assets/images/svg/symbol/sprite.svg#close"></use>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="client-detail">
+                    <div class="client-detail__header">
+                        <div class="client-detail__heading">
+                            Представительства
+                            <div class="client-detail__link-wrap"><a class="client-detail__link" href="#">Кирюхина Татьяна</a></div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ФИО</th>
+                                    <th>Контакты (Email, Телефон)</th>
+                                    <th class="text-center">
+                                        <svg class="icon icon-key">
+                                            <use href="assets/images/svg/symbol/sprite.svg#key"></use>
+                                        </svg>
+                                    </th>
+                                    <th class="text-center">
+                                        <svg class="icon icon-contacts">
+                                            <use href="assets/images/svg/symbol/sprite.svg#contacts"></use>
+                                        </svg>
+                                    </th>
+                                    <th class="text-center">
+                                        <svg class="icon icon-file">
+                                            <use href="assets/images/svg/symbol/sprite.svg#file"></use>
+                                        </svg>
+                                    </th>
+                                    <th class="text-center">
+                                        <svg class="icon icon-shopping-cart">
+                                            <use href="assets/images/svg/symbol/sprite.svg#shopping-cart"></use>
+                                        </svg>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Администратор Webmall</td>
+                                    <td>
+                                        <ul class="client-detail-contacts">
+                                            <li> <a href="tel:+123, 037312312"><i class="fas fa-phone-alt"></i> 123, 037312312</a></li>
+                                            <li> <a href="mailto:root@webmall.md"><i class="fas fa-envelope"></i> root@webmall.md</a></li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="opt-1" id="opt-1">
+                                            <label class="checkbox-label__main" for="opt-1"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" checked name="is-opt-2" id="opt-2">
+                                            <label class="checkbox-label__main" for="opt-2"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="is-opt-3" id="opt-3">
+                                            <label class="checkbox-label__main" for="opt-3"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="is-opt-4" id="opt-4">
+                                            <label class="checkbox-label__main" for="opt-4"></label>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="user-status-remove" href="#">
+                                            <svg class="icon icon-close">
+                                                <use href="assets/images/svg/symbol/sprite.svg#close"></use>
+                                            </svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Кирюхина Татьяна</td>
+                                    <td>
+                                        <ul class="client-detail-contacts">
+                                            <li><a href="mailto:tatiana@Motex.kz"><i class="fas fa-envelope"></i> tatiana@Motex.kz</a></li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" checked name="opt-5" id="opt-5">
+                                            <label class="checkbox-label__main" for="opt-5"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" checked name="is-opt-6" id="opt-6">
+                                            <label class="checkbox-label__main" for="opt-6"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" checked name="is-opt-7" id="opt-7">
+                                            <label class="checkbox-label__main" for="opt-7"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" checked name="is-opt-8" id="opt-8">
+                                            <label class="checkbox-label__main" for="opt-8"></label>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="user-status-remove" href="#">
+                                            <svg class="icon icon-close">
+                                                <use href="assets/images/svg/symbol/sprite.svg#close"></use>
+                                            </svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="client-request">
+                        <form class="client-request__form" action="/" method="POST" name="client-request">
+                            <label class="client-request__heading" for="code-request">Запрос на представительство</label>
+                            <div class="client-request__field">
+                                <input class="client-request__input" type="text" name="user-code" id="code-request" placeholder="Код клиента">
+                            </div>
+                            <div class="client-request__submit">
+                                <input class="client-request__btn btn btn--main" type="submit" value="Отправить запрос" name="send-data">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>

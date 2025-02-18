@@ -1,0 +1,456 @@
+﻿ <header class="header">
+    <div class="header-top-area">
+        <div class="container-fluid">
+            <div class="header-top-area-main">
+                <button class="navigation-trigger js-dropdown-toggle d-md-none">
+                    <svg class="icon icon-menu-dots navigation-trigger__icon">
+                        <use href="~/assets/images/svg/symbol/sprite.svg#menu-dots"></use>
+                    </svg>
+                </button>
+                <div class="header__informers d-none d-md-flex">
+                    <div class="header__informer">Кишинев, улица Studenților 9/9, <br> торгово-складской комплекс №1.</div>
+                    <div class="header__informer">График работы: <br> 8.00 - 19.00 понедельник - суббота</div>
+                </div>
+                <div class="tiny-contacts">
+                    <a class="tiny-contacts__wrap" href="tel:+375173620202">
+                        <svg class="icon icon-phone-call tiny-contacts__icon">
+                            <use href="~/assets/images/svg/symbol/sprite.svg#phone-call"></use>
+                        </svg><span class="tiny-contacts__phone">+373 79-637-411</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-main">
+        <div class="container-fluid">
+            <div class="header-main__body">
+                <div class="logo">
+                    <a href="@Url.Action("MainPage", "Home")" class="logo__wrap">
+                        <img class="logo__img img-responsive" src="~/assets/images/general/logo.png" alt="AutoWares" width="155" height="60" />
+                    </a>
+                </div>
+                <nav class="section-nav d-none d-md-block">
+                    <ul class="section-nav__list">
+                        <li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Акции</span></a></li>
+                        <li class="section-nav__item has-dropdown">
+                            <a class="section-nav__link" href="#"><span class="section-nav__text">Оплата </span></a>
+                        </li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Доставка</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Admin_pan", "Home")""><span class="section-nav__text">Админ Панель</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("News", "Home")"><span class="section-nav__text">Новости</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Контакты</span></a></li>
+                        <a class="section-nav__link js-params-trigger" href="#">
+                            <svg class="icon icon-informer section-nav__icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#informer"></use>
+                            </svg><span class="section-nav__text">Информация о клиенте</span>
+                        </a>
+                    </ul>
+                </nav>
+                <div class="authorize">
+                    <ul class="authorize__list">
+                        <li class="authorize__item">
+                            <a class="authorize__link authorize__link--login" href="#">
+                                <svg class="icon icon-login authorize__icon">
+                                    <use href="~/assets/images/svg/symbol/sprite.svg#login"></use>
+                                </svg> Вход
+                            </a>
+                        </li>
+                        <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Authorisation", "Home")">Регистрация</a></li>                     
+                    </ul>
+                    <div class="authorize__dropdown">
+                        <div class="authorize__dropdown-body">
+                            <form class="auth-form" method="POST" action="/" name="auth-form">
+                                <div class="auth-form__field">
+                                    <input class="auth-form__input" type="email" name="user-email" placeholder="E-mail">
+                                </div>
+                                <div class="auth-form__field">
+                                    <input class="auth-form__input" type="password" name="user-password" placeholder="Пароль">
+                                </div>
+                                <div class="auth-form__field">
+                                    <div class="auth-form__checkbox checkbox-label">
+                                        <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
+                                        <label class="checkbox-label__main" for="remember">Запомнить</label>
+                                    </div>
+                                    <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-data">
+        <div class="container-fluid">
+            <div class="header-data__main">
+                <dl class="header-data__params">
+                    <div class="header-data__param">
+                        <dt class="header-data__property">Пункт разгрузки: </dt>
+                        <dd class="header-data__value">Autowares Shop, Кишинев, Studenților 9/9, кор. №3</dd>
+                    </div>
+                    <div class="header-data__param">
+                        <dt class="header-data__property">Сальдо: </dt>
+                        <dd class="header-data__value">-32 669.20 Задолженность нормальная/просроченная: 32 669.20  / 0.00  </dd>
+                    </div>
+                    <div class="header-data__param">
+                        <dt class="header-data__property">Договор: </dt>
+                        <dd class="header-data__value">Б/Н, от 16.03.2025, , Отсрочка 30 дней, 10 дней резерва</dd>
+                    </div>
+                    <div class="header-data__param">
+                        <dt class="header-data__property">Кредит / Остаток:</dt>
+                        <dd class="header-data__value">82 300.00  / 48 671.13 </dd>
+                    </div>
+                    <div class="header-data__param">
+                        <dt class="header-data__property">Способ получения: </dt>
+                        <dd class="header-data__value">Доставка, Кишинев, Studenților 9/9, кор. №3 </dd>
+                    </div>
+                </dl>
+                <div class="header-data__params-close js-params-trigger">
+                    <svg class="icon icon-close header-data__params-close-icon">
+                        <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-meta-area">
+        <div class="container-fluid">
+            <div class="header-meta-area__body">
+                <div class="logo">
+                    <span class="logo__wrap"><img class="logo__img img-responsive" src="~/assets/images/general/logo.png" alt="AutoWares" width="155" height="60" /></span>
+                </div>
+                <button class="catalog-nav-toggle d-md-none">
+                    <svg class="icon icon-burger catalog-nav-toggle__icon">
+                        <use href="~/assets/images/svg/symbol/sprite.svg#burger"></use>
+                    </svg>Каталог
+                </button>
+                <nav class="main-nav">
+                    <ul class="main-nav__point-container">
+                        <li class="main-nav__point-item">
+                            <a class="main-nav__point-link" href="@Url.Action("Catalog", "Home")"">
+                                <svg class="icon icon-burger main-nav__icon">
+                                    <use href="~/assets/images/svg/symbol/sprite.svg#burger"></use>
+                                </svg>Каталог товаров
+                                <div class="main-nav__close-nav-wrap">
+                                    <svg class="icon icon-close main-nav__close-nav">
+                                        <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                    </svg>
+                                </div>
+                            </a>
+                            <ul class="main-nav__container">
+                                <li class="main-nav__item">
+                                    <a class="main-nav__link" href="#">
+                                        Автозапчасти
+                                        <svg class="icon icon-chevron-right main-nav--icon">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#chevron-right"></use>
+                                        </svg>
+                                    </a>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Моторное масло</a></li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="#">Трансмиссионная жидкость</a>
+                                            <ul class="main-nav__tertiary-container">
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Мелкая фасовка</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Крупная фасовка</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="main-nav__item"><a class="main-nav__link" href="#">Шины</a></li>
+                                <li class="main-nav__item">
+                                    <a class="main-nav__link" href="#">
+                                        Аккумуляторы
+                                        <svg class="icon icon-chevron-right main-nav--icon">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#chevron-right"></use>
+                                        </svg>
+                                    </a>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Моторное масло</a></li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="#">Трансмиссионная жидкость</a>
+                                            <ul class="main-nav__tertiary-container">
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Мелкая фасовка</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Крупная фасовка</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Охлаждающая жидкость</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Автохимия</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Смазки узлов</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Прочие смазывающие жидкости</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Фильтра</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Автозапчасти</a></li>
+                                    </ul>
+                                </li>
+                                <li class="main-nav__item"><a class="main-nav__link" href="#">Все для шиномонтажа</a></li>
+                                <li class="main-nav__item">
+                                    <a class="main-nav__link" href="#">
+                                        Масла и смазки
+                                        <svg class="icon icon-chevron-right main-nav--icon">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#chevron-right"></use>
+                                        </svg>
+                                    </a>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Моторное масло</a></li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="#">Трансмиссионная жидкость</a>
+                                            <ul class="main-nav__tertiary-container">
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Мелкая фасовка</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Крупная фасовка</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Трансмиссионная жидкость</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Крупная фасовка</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Охлаждающая жидкость</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Автохимия</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Смазки узлов</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Прочие смазывающие жидкости</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Фильтра</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Автозапчасти</a></li>
+                                    </ul>
+                                </li>
+                                <li class="main-nav__item"><a class="main-nav__link" href="#">Жидкости технические</a></li>
+                                <li class="main-nav__item">
+                                    <a class="main-nav__link" href="#">
+                                        Автохимия
+                                        <svg class="icon icon-chevron-right main-nav--icon">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#chevron-right"></use>
+                                        </svg>
+                                    </a>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="#">Система маслянная</a>
+                                            <ul class="main-nav__tertiary-container">
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система охлаждения</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система кондиционирования</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система выхлопных газов</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="#">Система топливная</a>
+                                            <ul class="main-nav__tertiary-container">
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители инжектора</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители карбюратора</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители дизельных форсунок</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Присадки к дизтопливу</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Антигели и размораживатели для дизтоплива</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система охлаждения</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система кондиционирования</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система охлаждения</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система кондиционирования</a></li>
+                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система выхлопных газов</a></li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="#">Система маслянная</a>
+                                            <ul class="main-nav__tertiary-container">
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система охлаждения</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система кондиционирования</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система выхлопных газов</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="#">Система топливная</a>
+                                            <ul class="main-nav__tertiary-container">
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители инжектора</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители карбюратора</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители дизельных форсунок</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Присадки к дизтопливу</a></li>
+                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Антигели и размораживатели для дизтоплива</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="main-nav__item"><a class="main-nav__link" href="#">Автокосметика</a></li>
+                                <li class="main-nav__item"><a class="main-nav__link" href="#">Аксессуары</a></li>
+                                <li class="main-nav__item"><a class="main-nav__link" href="#">Автоэлектроника</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <button class="search-form-toggle">
+                    <svg class="icon icon-search search-form-toggle__icon">
+                        <use href="~/assets/images/svg/symbol/sprite.svg#search"></use>
+                    </svg>
+                </button>
+                <form class="search-form" method="GET" action="/" name="search-form">
+                    <div class="search-form__field search-form__field--choices">
+                        <select class="js-select-default">
+                            <option value="common">Поиск по артикулу</option>
+                            <option value="section">Поиск по VIN</option>
+                            <option value="number">По номеру детали</option>
+                        </select>
+                    </div>
+                    <div class="search-form__field search-form__field--input">
+                        <input class="search-form__input" type="search" name="search-field" placeholder="Номер детали. например “gbl199”">
+                        <button class="search-form__submit" type="submit" name="send-data">
+                            <svg class="icon icon-magnifying-zoom-glass search-form__submit-icon">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#magnifying-zoom-glass"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                <div class="header__meta-link">
+                    <a class="brand-catalogs header-meta-area__brand-catalogs" href="#">
+                        <svg class="icon icon-warehouse brand-catalogs__icon">
+                            <use href="~/assets/images/svg/symbol/sprite.svg#warehouse"></use>
+                        </svg><span class="brand-catalogs__title">Гараж</span>
+                    </a>
+                </div>
+                <div class="header-utilities">
+                    <div class="header-utility">
+                        <div class="header-utility__main">
+                            <a class="header-utility__link" href="@Url.Action("Empty_basket", "Home")">
+                                <svg class="icon icon-shopping-cart-main header-utility__icon">
+                                    <use href="~/assets/images/svg/symbol/sprite.svg#shopping-cart-main"></use>
+                                </svg><span class="header-utility__count">(34)</span>
+                            </a>
+                            <div class="header-utility__dropdown">
+                                <div class="header-utility__dropdown-header">
+                                    <div class="header-utility__dropdown-title">Ваша корзина</div>
+                                    <div class="header-utility__dropdown-close">
+                                        <svg class="icon icon-close header-utility__dropdown-close">
+                                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="header-utility__dropdown-body js-custom-scroll">
+                                    <table class="dropdown-products">
+                                        <tbody class="dropdown-products__tbody">
+                                            <tr class="dropdown-products__tr">
+                                                <td class="dropdown-products__td"><a class="dropdown-products__img-wrap" href="#"><img class="dropdown-products__img" src="~/assets/images/content/product-img-1.jpg" alt="Product"></a></td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__title" href="#"> <span class="dropdown-products__title-text">Присадки в топливную систему для бензина 500ML</span></a>
+                                                    <div class="dropdown-products__price"><span class="dropdown-products__price-base">x1</span><span class="dropdown-products__price-total">1,523 лей</span></div>
+                                                </td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__remove" href="#">
+                                                        <svg class="icon icon-close dropdown-products__remove-icon">
+                                                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                                        </svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr class="dropdown-products__tr">
+                                                <td class="dropdown-products__td"><a class="dropdown-products__img-wrap" href="#"><img class="dropdown-products__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a></td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__title" href="#"> <span class="dropdown-products__title-text">Очистители топливной системы</span></a>
+                                                    <div class="dropdown-products__price"><span class="dropdown-products__price-base">x3</span><span class="dropdown-products__price-total">30 лей</span></div>
+                                                </td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__remove" href="#">
+                                                        <svg class="icon icon-close dropdown-products__remove-icon">
+                                                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                                        </svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr class="dropdown-products__tr">
+                                                <td class="dropdown-products__td"><a class="dropdown-products__img-wrap" href="#"><img class="dropdown-products__img" src="~/assets/images/content/product-img-3.jpg" alt="Product"></a></td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__title" href="#"> <span class="dropdown-products__title-text">Присадки в топливную систему для бензина 500ML</span></a>
+                                                    <div class="dropdown-products__price"><span class="dropdown-products__price-base">x1</span><span class="dropdown-products__price-total">1,523 лей</span></div>
+                                                </td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__remove" href="#">
+                                                        <svg class="icon icon-close dropdown-products__remove-icon">
+                                                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                                        </svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr class="dropdown-products__tr">
+                                                <td class="dropdown-products__td"><a class="dropdown-products__img-wrap" href="#"><img class="dropdown-products__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a></td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__title" href="#"> <span class="dropdown-products__title-text">Очистители топливной системы</span></a>
+                                                    <div class="dropdown-products__price"><span class="dropdown-products__price-base">x3</span><span class="dropdown-products__price-total">30 лей</span></div>
+                                                </td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__remove" href="#">
+                                                        <svg class="icon icon-close dropdown-products__remove-icon">
+                                                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                                        </svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr class="dropdown-products__tr">
+                                                <td class="dropdown-products__td"><a class="dropdown-products__img-wrap" href="#"><img class="dropdown-products__img" src="~/assets/images/content/product-img-2.jpg" alt="Product"></a></td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__title" href="#"> <span class="dropdown-products__title-text">Присадки в топливную систему для бензина 500ML</span></a>
+                                                    <div class="dropdown-products__price"><span class="dropdown-products__price-base">x1</span><span class="dropdown-products__price-total">1,523 лей</span></div>
+                                                </td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__remove" href="#">
+                                                        <svg class="icon icon-close dropdown-products__remove-icon">
+                                                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                                        </svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr class="dropdown-products__tr">
+                                                <td class="dropdown-products__td"><a class="dropdown-products__img-wrap" href="#"><img class="dropdown-products__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a></td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__title" href="#"> <span class="dropdown-products__title-text">Очистители топливной системы</span></a>
+                                                    <div class="dropdown-products__price"><span class="dropdown-products__price-base">x3</span><span class="dropdown-products__price-total">30 лей</span></div>
+                                                </td>
+                                                <td class="dropdown-products__td">
+                                                    <a class="dropdown-products__remove" href="#">
+                                                        <svg class="icon icon-close dropdown-products__remove-icon">
+                                                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                                        </svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="header-utility__dropdown-footer text-center"><a class="header-utility__dropdown-footer-btn btn btn--main" href="#">Перейти в корзину</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mob-nav d-md-none">
+        <nav class="mob-nav__nav">
+            <ul class="mob-nav__list">
+                <li class="mob-nav__item"><a class="mob-nav__link" href="#">Акции</a></li>
+                <li class="mob-nav__item">
+                    <a class="mob-nav__link has-dropdown" href="#"><span class="mob-nav__link-text">Оплата </span><i class="fa fa-chevron-down"></i></a>
+                </li>
+                <li class="mob-nav__item"><a class="mob-nav__link" href="#">Доставка</a></li>
+                <li class="mob-nav__item"><a class="mob-nav__link" href="@Url.Action("News", "Home")">Новости</a></li>
+                <li class="mob-nav__item"><a class="mob-nav__link" href="#">Контакты</a></li>
+                <li class="mob-nav__item">
+                    <span class="mob-nav__link js-params-trigger">
+                        <svg class="icon icon-informer mob-nav__icon">
+                            <use href="~/assets/images/svg/symbol/sprite.svg#informer"></use>
+                        </svg><span class="mob-nav__text">Информация о клиенте</span>
+                    </span>
+                    <dl class="mob-nav__params">
+                        <div class="mob-nav__param">
+                            <dt class="mob-nav__property">Пункт разгрузки: </dt>
+                            <dd class="mob-nav__value">Autowares Shop, Кишинев, Studenților 9/9,  кор. №3</dd>
+                        </div>
+                        <div class="mob-nav__param">
+                            <dt class="mob-nav__property">Сальдо: </dt>
+                            <dd class="mob-nav__value">-32 669.20 Задолженность нормальная/просроченная: 32 669.20  / 0.00 </dd>
+                        </div>
+                        <div class="mob-nav__param">
+                            <dt class="mob-nav__property">Договор: </dt>
+                            <dd class="mob-nav__value">Б/Н, от 16.03.2025, , Отсрочка 30 дней, 10 дней резерва</dd>
+                        </div>
+                        <div class="mob-nav__param">
+                            <dt class="mob-nav__property">Кредит / Остаток: </dt>
+                            <dd class="mob-nav__value">82 300.00  / 48 671.13 </dd>
+                        </div>
+                        <div class="mob-nav__param">
+                            <dt class="mob-nav__property">Способ получения: </dt>
+                            <dd class="mob-nav__value">Доставка, Кишинев, Studenților 9/9,  кор. №3</dd>
+                        </div>
+                    </dl>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

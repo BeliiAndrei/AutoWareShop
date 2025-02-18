@@ -132,7 +132,18 @@ namespace WebShop.Controllers
         {
             return View();
         }
-
+        public ActionResult Clients()
+        {
+            return View();
+        }
+        public ActionResult Admin_pan()
+        {
+            return View();
+        }
+        public ActionResult Catalog()
+        {
+            return View();
+        }
         public ActionResult Vacation()
         {
             return View();
