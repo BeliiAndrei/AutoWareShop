@@ -4,32 +4,21 @@
 }
 
 <div class="container-fluid">
-    <ul class="breadcrumbs">
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
-        <li class="breadcrumbs__item">Присадки к бензину</li>
-    </ul>
+
     <div class="primary-layout">
         <div class="primary-content">
             <div class="sidebar">
                 <div class="category-nav d-none d-md-block">
                     <ul class="category-nav__list">
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Корзина</a></li>
-                        <li class="category-nav__item active"><a class="category-nav__link" href="#">Заказы</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Оплата</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Акт сверки</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Клиенты</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Профиль</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">VIN запросы</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Мероприятия</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Акции</a></li>
+                        <li class="category-nav__item active"><a class="category-nav__link" href="@Url.Action("Basket_step_1", "Home")">Корзина</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Home")">Заказы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Payment", "Home")">Оплата</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Profile_user", "Home")">Профиль</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "Home")">Акции</a></li>
                         <li class="category-nav__item"><a class="category-nav__link" href="#">Управление пользователями</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Регистрация пользователей</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Статистика доступа</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Контент групп</a></li>
+                        @*<li class="category-nav__item"><a class="category-nav__link" href="#">Регистрация пользователей</a></li>*@
                         <li class="category-nav__item"><a class="category-nav__link" href="#">Управление сайтом</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Загрузка прайса/кроссов</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Upload", "Home")">Загрузка прайса/кроссов</a></li>
                     </ul>
                 </div>
             </div>
@@ -76,7 +65,7 @@
                                     <th class="orders-list__th">Наименование</th>
                                     <th class="orders-list__th">Цена за ед.</th>
                                     <th class="orders-list__th">К-во</th>
-                                    <th class="orders-list__th">Сумма Руб</th>
+                                    <th class="orders-list__th">Сумма (лей)</th>
                                     <th class="orders-list__th">Склад</th>
                                 </tr>
                             </thead>
@@ -97,7 +86,7 @@
                                     <td class="orders-list__td">
                                         <div class="orders-list__total-price">2 297,<span class="orders-list__total-price-currency">00</span></div>
                                     </td>
-                                    <td class="orders-list__td"><span class="orders-list__stock">Орбита" г. Караганда</span></td>
+                                    <td class="orders-list__td"><span class="orders-list__stock">Кишинев</span></td>
                                 </tr>
                                 <tr class="orders-list__tr">
                                     <td class="orders-list__td">
@@ -115,7 +104,7 @@
                                     <td class="orders-list__td">
                                         <div class="orders-list__total-price">2 297,<span class="orders-list__total-price-currency">00</span></div>
                                     </td>
-                                    <td class="orders-list__td"><span class="orders-list__stock">Орбита" г. Караганда</span></td>
+                                    <td class="orders-list__td"><span class="orders-list__stock">Кишинев</span></td>
                                 </tr>
                                 <tr class="orders-list__tr">
                                     <td class="orders-list__td">
@@ -133,7 +122,7 @@
                                     <td class="orders-list__td">
                                         <div class="orders-list__total-price">2 297,<span class="orders-list__total-price-currency">00</span></div>
                                     </td>
-                                    <td class="orders-list__td"><span class="orders-list__stock">Орбита" г. Караганда</span></td>
+                                    <td class="orders-list__td"><span class="orders-list__stock">Кишинев</span></td>
                                 </tr>
                                 <tr class="orders-list__tr">
                                     <td class="orders-list__td">
@@ -151,7 +140,7 @@
                                     <td class="orders-list__td">
                                         <div class="orders-list__total-price">2 297,<span class="orders-list__total-price-currency">00</span></div>
                                     </td>
-                                    <td class="orders-list__td"><span class="orders-list__stock">Орбита" г. Караганда</span></td>
+                                    <td class="orders-list__td"><span class="orders-list__stock">Кишинев</span></td>
                                 </tr>
                             </tbody>
                             <tfoot class="orders-list__tfoot orders-list__tfoot--white">
@@ -162,8 +151,8 @@
                                             <textarea class="orders-list__control-message" placeholder="Комментарий к заказу" rows="1" name="order-message"></textarea>
                                             <div class="footer-summary-price">
                                                 <div class="footer-summary-price__title">Сумма к оплате</div>
-                                                <div class="footer-summary-price__value">2 297 <span>Руб</span></div>
-                                            </div><a class="btn btn--main" href="#">Перейти к оплате<i class="fas fa-chevron-circle-right"></i></a>
+                                                <div class="footer-summary-price__value">2 297 * ... <span>Лей</span></div>
+                                            </div><a class="btn btn--main" href="@Url.Action("Basket_step_2", "Home")">Далее<i class="fas fa-chevron-circle-right"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -178,7 +167,7 @@
                                     <label class="checkbox-label__main" for="opt-6"></label>
                                 </div>Номер
                             </div>
-                            <div class="orders-list__mob-heading">Сумма Руб</div>
+                            <div class="orders-list__mob-heading">Сумма Лей</div>
                         </header>
                         <div class="orders-list__mob-order is-opened">
                             <div class="orders-list__mob-side">
@@ -186,7 +175,7 @@
                                     <input class="checkbox-label__input" type="checkbox" name="is-opt-7" id="opt-7">
                                     <label class="checkbox-label__main" for="opt-7"></label>
                                 </div>
-                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2019</span></div>
+                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2025</span></div>
                             </div>
                             <div class="orders-list__mob-side">
                                 <div class="orders-list__mob-price"><span>2 297</span>,00</div>
@@ -204,7 +193,7 @@
                                     </div>
                                     <div class="orders-mob__param">
                                         <dt class="orders-mob__param-term">Склад</dt>
-                                        <dd class="orders-mob__param-definition">Орбита" г. Караганда</dd>
+                                        <dd class="orders-mob__param-definition">Кишинев</dd>
                                     </div>
                                     <div class="orders-mob__param">
                                         <dt class="orders-mob__param-term">Бренд </dt>
@@ -219,7 +208,7 @@
                                     <input class="checkbox-label__input" type="checkbox" name="is-opt-8" id="opt-8">
                                     <label class="checkbox-label__main" for="opt-8"></label>
                                 </div>
-                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2019</span></div>
+                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2025</span></div>
                             </div>
                             <div class="orders-list__mob-side">
                                 <div class="orders-list__mob-price"><span>2 297</span>,00</div>
@@ -237,7 +226,7 @@
                                     </div>
                                     <div class="orders-mob__param">
                                         <dt class="orders-mob__param-term">Склад</dt>
-                                        <dd class="orders-mob__param-definition">Орбита" г. Караганда</dd>
+                                        <dd class="orders-mob__param-definition">Кишинев</dd>
                                     </div>
                                     <div class="orders-mob__param">
                                         <dt class="orders-mob__param-term">Бренд </dt>
@@ -252,7 +241,7 @@
                                     <input class="checkbox-label__input" type="checkbox" name="is-opt-9" id="opt-9">
                                     <label class="checkbox-label__main" for="opt-9"></label>
                                 </div>
-                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2019</span></div>
+                                <div class="orders-list__mob-order-number-wrap"><a class="orders-list__mob-order-number" href="#">00000157556@19</a><span class="orders-list__mob-order-date">24 октября 2025</span></div>
                             </div>
                             <div class="orders-list__mob-side">
                                 <div class="orders-list__mob-price"><span>2 297</span>,00</div>
@@ -270,7 +259,7 @@
                                     </div>
                                     <div class="orders-mob__param">
                                         <dt class="orders-mob__param-term">Склад</dt>
-                                        <dd class="orders-mob__param-definition">Орбита" г. Караганда</dd>
+                                        <dd class="orders-mob__param-definition">Кишинев</dd>
                                     </div>
                                     <div class="orders-mob__param">
                                         <dt class="orders-mob__param-term">Бренд </dt>
@@ -281,49 +270,20 @@
                         </div>
                         <footer class="orders-list__mob-footer">
                             <p class="orders-list__mob-summary-payment">Сумма к оплате</p>
-                            <div class="orders-list__mob-total-price"><span class="orders-list__mob-total">2 297</span> Руб</div>
+                            <div class="orders-list__mob-total-price"><span class="orders-list__mob-total">2 297</span> Лей</div>
                             <textarea class="orders-list__mob-message" placeholder="Комментарий к заказу" rows="2" name="order-message"></textarea>
                         </footer>
                         <div class="orders-list__mob-controls">
                             <div class="row">
                                 <div class="col-4"><a class="btn btn--reverse" href="#">Удалить</a></div>
-                                <div class="col-8"><a class="btn btn--main" href="#">Перейти к оплате<i class="fas fa-chevron-circle-right"></i></a></div>
+                                <div class="col-8"><a class="btn btn--main" href="@Url.Action("Basket_step_2", "Home")">Далее<i class="fas fa-chevron-circle-right"></i></a></div>
                             </div>
                         </div>
                     </div>
-                    <div class="manual-params manual-params--bigger">
-                        <dl class="manual-params__param">
-                            <dt class="manual-params__value">Склад отгрузки</dt>
-                            <dd class="manual-params__property">Группа Алматы</dd>
-                        </dl>
-                        <dl class="manual-params__param">
-                            <dt class="manual-params__value">Заказ доступен с</dt>
-                            <dd class="manual-params__property">06 Ноября 2019 / 14:11</dd>
-                        </dl>
-                        <dl class="manual-params__param">
-                            <dt class="manual-params__value">Отсрочка платежа, дней</dt>
-                            <dd class="manual-params__property">30 дней</dd>
-                        </dl>
-                        <dl class="manual-params__param">
-                            <dt class="manual-params__value">Форма оплаты</dt>
-                            <dd class="manual-params__property">Безналичный</dd>
-                        </dl>
-                        <dl class="manual-params__param">
-                            <dt class="manual-params__value">Тип доставки</dt>
-                            <dd class="manual-params__property">Доставка автотранспортом</dd>
-                        </dl>
-                        <dl class="manual-params__param">
-                            <dt class="manual-params__value">Адрес доставки</dt>
-                            <dd class="manual-params__property">Республика Казахстан, Алматы, ул.Толеби, дом № 94/10</dd>
-                        </dl>
-                        <dl class="manual-params__param">
-                            <dt class="manual-params__value">Комментарий</dt>
-                            <dd class="manual-params__property">Привезите пж в офис</dd>
-                        </dl>
-                    </div>
+                    
                 </div>
                 <div class="basket-info">
-                    <p>Информацию о состоянии Вашего заказа вы сможете узнавать на странице <a href="#">Мой кабинет</a> во вкладке <a href="#">Заказы</a>.</p>
+                    <p>Информацию о состоянии Вашего заказа вы сможете узнавать во вкладке <a href="@Url.Action("Orders", "Home")">Заказы</a>.</p>
                 </div>
                 <div class="notification">
                     <svg class="icon icon-information notification__icon">
