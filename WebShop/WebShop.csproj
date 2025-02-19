@@ -328,7 +328,6 @@
     <Content Include="assets\fonts\lg.woff" />
     <None Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\MainPage.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
@@ -360,6 +359,7 @@
     <Content Include="Views\Home\Clients.cshtml" />
     <Content Include="Views\Home\Admin_pan.cshtml" />
     <Content Include="Views\Home\Catalog.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
