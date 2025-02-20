@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewBag.Title = "Payment";
+}
+
+<main class="main-content">
+    <div class="main-heading">
+        <h1 class="main-heading__text">Оплата</h1>
+        <div class="main-heading__link-wrap"> <strong>текущая задолженность<span>0 Лей</span></strong></div>
+    </div>
+    <form class="payment-form" action="/" method="POST" name="payment-form">
+        <div class="payment-form__fields">
+            <div class="payment-form__field">
+                <div class="payment-form__helper">Введите данные для оплаты</div>
+            </div>
+            <div class="payment-form__field">
+                <input class="payment-form__input" type="email" name="user-email" placeholder="Email плательщика">
+            </div>
+            <div class="payment-form__field payment-form__field--currency">
+                <input class="payment-form__input" type="text" name="user-price" placeholder="Сумма к оплате"><span class="payment-form__currency">Лей</span>
+            </div>
+            <div class="payment-form__field">
+                <input class="payment-form__btn btn btn--main" type="submit" name="send-data" value="Оплатить">
+            </div>
+        </div>
+    </form>
+</main>

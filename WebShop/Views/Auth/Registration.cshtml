@@ -3,17 +3,10 @@
     ViewBag.Title = "Registration";
 }
 
-<div class="container-fluid">
-    <ul class="breadcrumbs breadcrumbs--no-gutters">
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Авторизация</a></li>
-        <li class="breadcrumbs__item">Регистрация</li>
-    </ul>
-</div>
 <div class="inner-section">
     <div class="inner-section__main inner-section__main--wider">
         <div class="inner-section__header">
-            <h1 class="inner-section__heading">Регистрация</h1><a class="inner-section__link" href="#">Вход в систему</a>
+            <h1 class="inner-section__heading">Регистрация</h1><a class="inner-section__link" href="@Url.Action("Authorisation","Auth")">Вход в систему</a>
         </div>
         <div class="inner-section__body inner-section__body--no-gutters">
             <div class="reg-form-wrap">
@@ -22,7 +15,7 @@
                         <div class="col-sm-6">
                             <div class="main-form__field">
                                 <label class="main-form__label" for="user-name">Ваше имя <span>*</span>:</label>
-                                <input class="main-form__input" type="name" name="user-name" id="user-name">
+                                <input class="main-form__input" type="text" name="user-name" id="user-name">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -128,12 +121,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-6"> -->
-                        <!-- <div class="main-form__field"> -->
-                        <!-- <label class="main-form__label" for="user-city">Город:</label> -->
-                        <!-- <input class="main-form__input" type="text" name="user-city" id="user-city"> -->
-                        <!-- </div> -->
-                        <!-- </div> -->
                     </div>
                 </form>
                 <div class="main-form__footer">
@@ -143,12 +130,6 @@
                             <label class="checkbox-label__main" for="privacy">Я ознакомлен и принимаю условия пользовательского соглашения, договора публичной оферты и регламента гарантии / <a href="#">Подробнее</a></label>
                         </div>
                     </div>
-                    <!-- <div class="main-form__field"> -->
-                    <!-- <div class="checkbox-label"> -->
-                    <!-- <input class="checkbox-label__input" type="checkbox" name="is-subscribe" id="subscribe" checked> -->
-                    <!-- <label class="checkbox-label__main" for="subscribe">Подписаться на информацию о новинках, предложениях и акциях</label> -->
-                    <!-- </div> -->
-                    <!-- </div> -->
                     <div class="main-form__field main-form__field--flex">
                         <span>Каптча</span>
                         <input class="main-form__btn btn btn--main" name="send-data" value="Зарегистрироваться">

@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewBag.Title = "Empty_basket";
+}
+<main class="main-content">
+    <h1 class="main-title">Корзина</h1>
+    <div class="order-steps-wrap text-center">
+        <ul class="order-steps">
+            <li class="order-steps__item is-current">
+                <svg class="icon icon-shopping-cart order-steps__icon">
+                    <use href="~/assets/images/svg/symbol/sprite.svg#shopping-cart"></use>
+                </svg><span class="order-steps__title">Корзина</span>
+            </li>
+            <li class="order-steps__item">
+                <svg class="icon icon-wallet-strong order-steps__icon">
+                    <use href="~/assets/images/svg/symbol/sprite.svg#wallet-strong"></use>
+                </svg><span class="order-steps__title">Оплата</span>
+            </li>
+            <li class="order-steps__item">
+                <svg class="icon icon-lorry order-steps__icon">
+                    <use href="~/assets/images/svg/symbol/sprite.svg#lorry"></use>
+                </svg><span class="order-steps__title">Доставка</span>
+            </li>
+            <li class="order-steps__item">
+                <svg class="icon icon-confirmation order-steps__icon">
+                    <use href="~/assets/images/svg/symbol/sprite.svg#confirmation"></use>
+                </svg><span class="order-steps__title">Завершение</span>
+            </li>
+        </ul>
+    </div>
+    <div class="empty-basket text-center">
+        <header class="orders-list__header">
+            <div class="orders-list__heading">Ваша корзина пуста</div>
+        </header>
+        <div class="empty-basket__img-wrap"><img class="empty-basket__img img-responsive" src="~/assets/images/general/basket-default.png" alt=""></div><a class="empty-basket__btn btn btn--main" href="@Url.Action("MainPage","Home")">Перейти на главную</a>
+    </div>
+</main>

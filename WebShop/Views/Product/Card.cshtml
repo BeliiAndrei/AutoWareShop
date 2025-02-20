@@ -1,15 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "Card";
+    ViewBag.Title = "ProductCard";
 }
 
 <div class="container-fluid">
-    <ul class="breadcrumbs">
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
-        <li class="breadcrumbs__item">Присадки к бензину</li>
-    </ul>
     <main>
         <div class="primary-layout">
             <div class="product-main-section">
@@ -64,7 +58,6 @@
                             </header>
                             <div class="product-main__subhelpers">
                                 <div class="product-header__brand"><a class="product-header__brand-link" href="#"><img class="product-header__brand-img" src="@Url.Content("~/assets/images/content/filtron.png")" alt="Brand"></a></div>
-                                @*<div class="product-main__subhelpers-links"><a class="product-main__subhelpers-link" href="#section-2">Спецификации <i class="fas fa-chevron-down"></i></a><a class="product-main__subhelpers-link" href="#section-1">Аналоги <i class="fas fa-chevron-down"></i></a></div>*@
                             </div>
                             <div class="product-main__details">
                                 <div class="product-main__params-wrap">
@@ -87,10 +80,6 @@
                                         <div class="product-main__price-heading">Цена</div>
                                         <div class="product-main__main-price-value">1 325 лей</div>
                                     </div>
-                                    @*<div class="product-main__retail-price">
-                                            <div class="product-main__price-heading">Розница</div>
-                                            <div class="product-main__retail-price-value">8 023 127 лей</div>
-                                        </div>*@
                                 </div>
                                 <div class="product-main__controls">
                                     <div class="product-main__control product-main__control--counter">
@@ -137,18 +126,6 @@
                             </div>
                         </div>
                     </div>
-                    @*<div class="col-12 col-sm-6 col-md-3">
-                            <div class="card-feature">
-                                <div class="card-feature__icon-wrap">
-                                    <svg class="icon icon-secure-shield card-feature__icon">
-                                        <use href="~/assets/images/svg/symbol/sprite.svg#secure-shield"></use>
-                                    </svg>
-                                </div>
-                                <div class="card-feature__body">
-                                    <p class="card-feature__desc">Гарантия правильного подбора<i class="card-feature__tooltip fas fa-info"><small class="card-feature__tooltip-body">Какая-то подсказка о гарантии правильного выбора</small></i></p>
-                                </div>
-                            </div>
-                        </div>*@
                     <div class="col-12 col-sm-6 col-md-3">
                         <div class="card-feature">
                             <div class="card-feature__icon-wrap">

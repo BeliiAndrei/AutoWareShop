@@ -31,31 +31,27 @@
                 </div>
                 <nav class="section-nav d-none d-md-block">
                     <ul class="section-nav__list">
-                        <li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Акции</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Search_result", "CatalogSearch")"><span class="section-nav__text">Акции</span></a></li>
                         <li class="section-nav__item has-dropdown">
-                            <a class="section-nav__link" href="#"><span class="section-nav__text">Оплата </span></a>
+                            <a class="section-nav__link" href="@Url.Action("Payment", "BasketPayment")"><span class="section-nav__text">Оплата </span></a>
                         </li>
-                        <li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Доставка</span></a></li>
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Admin_pan", "Home")""><span class="section-nav__text">Админ Панель</span></a></li>
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("News", "Home")"><span class="section-nav__text">Новости</span></a></li>
-                        <li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Контакты</span></a></li>
-                        <a class="section-nav__link js-params-trigger" href="#">
-                            <svg class="icon icon-informer section-nav__icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#informer"></use>
-                            </svg><span class="section-nav__text">Информация о клиенте</span>
-                        </a>
+                        @*<li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Доставка</span></a></li>*@
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Admin_pan", "Admin")"><span class="section-nav__text">Админ Панель</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("News", "Informational")"><span class="section-nav__text">Новости</span></a></li>
+                        @*<li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Контакты</span></a></li>*@
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Profile_user", "Profile")"><span class="section-nav__text">Профиль</span></a></li>
                     </ul>
                 </nav>
                 <div class="authorize">
                     <ul class="authorize__list">
                         <li class="authorize__item">
-                            <a class="authorize__link authorize__link--login" href="#">
+                            <a class="authorize__link authorize__link--login" href="@Url.Action("Authorisation", "Auth")">
                                 <svg class="icon icon-login authorize__icon">
                                     <use href="~/assets/images/svg/symbol/sprite.svg#login"></use>
                                 </svg> Вход
                             </a>
                         </li>
-                        <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Authorisation", "Home")">Регистрация</a></li>                     
+                        <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Registration", "Auth")">Регистрация</a></li>                     
                     </ul>
                     <div class="authorize__dropdown">
                         <div class="authorize__dropdown-body">
@@ -80,44 +76,11 @@
             </div>
         </div>
     </div>
-    <div class="header-data">
-        <div class="container-fluid">
-            <div class="header-data__main">
-                <dl class="header-data__params">
-                    <div class="header-data__param">
-                        <dt class="header-data__property">Пункт разгрузки: </dt>
-                        <dd class="header-data__value">Autowares Shop, Кишинев, Studenților 9/9, кор. №3</dd>
-                    </div>
-                    <div class="header-data__param">
-                        <dt class="header-data__property">Сальдо: </dt>
-                        <dd class="header-data__value">-32 669.20 Задолженность нормальная/просроченная: 32 669.20  / 0.00  </dd>
-                    </div>
-                    <div class="header-data__param">
-                        <dt class="header-data__property">Договор: </dt>
-                        <dd class="header-data__value">Б/Н, от 16.03.2025, , Отсрочка 30 дней, 10 дней резерва</dd>
-                    </div>
-                    <div class="header-data__param">
-                        <dt class="header-data__property">Кредит / Остаток:</dt>
-                        <dd class="header-data__value">82 300.00  / 48 671.13 </dd>
-                    </div>
-                    <div class="header-data__param">
-                        <dt class="header-data__property">Способ получения: </dt>
-                        <dd class="header-data__value">Доставка, Кишинев, Studenților 9/9, кор. №3 </dd>
-                    </div>
-                </dl>
-                <div class="header-data__params-close js-params-trigger">
-                    <svg class="icon icon-close header-data__params-close-icon">
-                        <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="header-meta-area">
         <div class="container-fluid">
             <div class="header-meta-area__body">
                 <div class="logo">
-                    <span class="logo__wrap"><img class="logo__img img-responsive" src="~/assets/images/general/logo.png" alt="AutoWares" width="155" height="60" /></span>
+                    <a href="@Url.Action("MainPage", "Home")"><span class="logo__wrap"><img class="logo__img img-responsive" src="~/assets/images/general/logo.png" alt="AutoWares" width="155" height="60" /></span></a>
                 </div>
                 <button class="catalog-nav-toggle d-md-none">
                     <svg class="icon icon-burger catalog-nav-toggle__icon">
@@ -127,7 +90,7 @@
                 <nav class="main-nav">
                     <ul class="main-nav__point-container">
                         <li class="main-nav__point-item">
-                            <a class="main-nav__point-link" href="@Url.Action("Catalog", "Home")"">
+                            <a class="main-nav__point-link" href="@Url.Action("Catalog", "CatalogSearch")">
                                 <svg class="icon icon-burger main-nav__icon">
                                     <use href="~/assets/images/svg/symbol/sprite.svg#burger"></use>
                                 </svg>Каталог товаров
@@ -299,7 +262,7 @@
                 <div class="header-utilities">
                     <div class="header-utility">
                         <div class="header-utility__main">
-                            <a class="header-utility__link" href="@Url.Action("Empty_basket", "Home")">
+                            <a class="header-utility__link" href="@Url.Action("Empty_basket", "BasketPayment")">
                                 <svg class="icon icon-shopping-cart-main header-utility__icon">
                                     <use href="~/assets/images/svg/symbol/sprite.svg#shopping-cart-main"></use>
                                 </svg><span class="header-utility__count">(34)</span>
@@ -414,12 +377,12 @@
     <div class="mob-nav d-md-none">
         <nav class="mob-nav__nav">
             <ul class="mob-nav__list">
-                <li class="mob-nav__item"><a class="mob-nav__link" href="#">Акции</a></li>
+                <li class="mob-nav__item"><a class="mob-nav__link" href="@Url.Action("Search_result", "CatalogSearch")">Акции</a></li>
                 <li class="mob-nav__item">
-                    <a class="mob-nav__link has-dropdown" href="#"><span class="mob-nav__link-text">Оплата </span><i class="fa fa-chevron-down"></i></a>
+                    <a class="mob-nav__link has-dropdown" href="@Url.Action("Payment", "BasketPayment")"><span class="mob-nav__link-text">Оплата </span><i class="fa fa-chevron-down"></i></a>
                 </li>
-                <li class="mob-nav__item"><a class="mob-nav__link" href="#">Доставка</a></li>
-                <li class="mob-nav__item"><a class="mob-nav__link" href="@Url.Action("News", "Home")">Новости</a></li>
+                @*<li class="mob-nav__item"><a class="mob-nav__link" href="#">Доставка</a></li>*@
+                <li class="mob-nav__item"><a class="mob-nav__link" href="@Url.Action("News", "Informational")">Новости</a></li>
                 <li class="mob-nav__item"><a class="mob-nav__link" href="#">Контакты</a></li>
                 <li class="mob-nav__item">
                     <span class="mob-nav__link js-params-trigger">

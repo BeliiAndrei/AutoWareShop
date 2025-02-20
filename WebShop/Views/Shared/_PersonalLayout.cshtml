@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var isAdmin = true;
+}
+
+@section Styles {
+    @RenderSection("Styles", false)
+}
+<div class="container-fluid">
+
+    <div class="primary-layout">
+        <div class="primary-content">
+            <div class="sidebar">
+                <div class="category-nav d-none d-md-block">
+                    <ul class="category-nav__list">
+                        <li class="category-nav__item active"><a class="category-nav__link" href="@Url.Action("Basket_step_1", "BasketPayment")">Корзина</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Profile")">Заказы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Payment", "BasketPayment")">Оплата</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Profile_user", "Profile")">Профиль</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "CatalogSearch")">Акции</a></li>
+                        @if (isAdmin)
+                        {
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Clients", "Admin")">Управление пользователями</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="#">Регистрация пользователей</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="#">Управление сайтом</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

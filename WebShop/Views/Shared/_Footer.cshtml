@@ -12,10 +12,10 @@
                     <div class="footer-collapse__body">
                         <nav class="footer-collapse_nav">
                             <ul class="footer-collapse__list">
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("Vacation", "Home")">Работа и карьера</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Бонусная программа</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Спонсорство</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Партнерство </a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("Vacation", "Informational")">Работа и карьера</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("About_2", "Informational")">О нас</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("News", "Informational")">Новости </a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("About_1", "Informational")">Миссия и философия </a></li>
                             </ul>
                         </nav>
                     </div>
@@ -32,13 +32,9 @@
                     <div class="footer-collapse__body">
                         <nav class="footer-collapse_nav">
                             <ul class="footer-collapse__list">
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Центр помощи</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Блог</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Руководства по ремонту автомобилей и видеоуроки</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Примечания по утилизации отработанного масла</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Условия</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Право на отказ</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Защита данных</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("Faq", "Informational")">Частые вопросы</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("Faq", "Informational")">Как пользоваться сайтом</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("Profile_user", "Profile")">Персональный кабинет</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -55,38 +51,12 @@
                     <div class="footer-collapse__body">
                         <nav class="footer-collapse_nav">
                             <ul class="footer-collapse__list">
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Оплата</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Перевозка</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("Payment", "BasketPayment")">Оплата</a></li>
                                 <li class="footer-collapse__item"><a class="footer-collapse__link js-callback-popup-trigger" href="#">Связаться с нами</a></li>
                                 <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Возврат</a></li>
                                 <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Обменять товар</a></li>
                             </ul>
                         </nav>
-                    </div>
-                    <div class="footer-popup">
-                        <div class="footer-popup__header">
-                            <div class="footer-popup__heading">Свяжитесь с нами</div><span class="footer-popup__close">
-                                <svg class="icon icon-close footer-popup__close-icon">
-                                    <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="footer-popup__main">
-                            <form class="footer-popup__form" action="/" method="POST" name="callback">
-                                <div class="footer-popup__cols">
-                                    <div class="footer-popup__field">
-                                        <input class="footer-popup__input input" type="text" name="username" placeholder="Ваше имя">
-                                    </div>
-                                    <div class="footer-popup__field">
-                                        <input class="footer-popup__input input" type="email" name="email" placeholder="Ваш e-mail">
-                                    </div>
-                                </div>
-                                <div class="footer-popup__field">
-                                    <textarea class="footer-popup__textarea textarea" name="question" placeholder="Ваш вопрос"></textarea>
-                                </div>
-                                <input class="footer-popup__btn btn btn--main" type="submit" name="send" value="Задать вопрос">
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -123,7 +93,7 @@
             <div class="row align-items-center">
                 <div class="col-md-4">
                     <div class="footer__socials">
-                        <div class="logo footer__logo"><span class="logo__wrap"><img class="logo__img img-responsive" src="~/assets/images/general/footer-logo.png" alt="Motex" width="110" height="45"></span></div>
+                        <a href="@Url.Action("MainPage", "Home")"><div class="logo footer__logo"><span class="logo__wrap"><img class="logo__img img-responsive" src="~/assets/images/general/footer-logo.png" alt="Motex" width="110" height="45"></span></div></a>
                         <ul class="soc">
                             <li class="soc__item">
                                 <a class="soc__link" href="#">

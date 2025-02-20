@@ -3,17 +3,10 @@
     ViewBag.Title = "Authorisation";
 }
 
-<div class="container-fluid">
-    <ul class="breadcrumbs breadcrumbs--no-gutters">
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Авторизация</a></li>
-        <li class="breadcrumbs__item">Регистрация</li>
-    </ul>
-</div>
 <div class="inner-section">
     <div class="inner-section__main">
         <div class="inner-section__header">
-            <h1 class="inner-section__heading">Авторизация</h1><a class="inner-section__link" href="#">Регистрация</a>
+            <h1 class="inner-section__heading">Авторизация</h1><a class="inner-section__link" href="@Url.Action("Registration","Auth")">Регистрация</a>
         </div>
         <div class="inner-section__body">
             <div class="authorize-social">
