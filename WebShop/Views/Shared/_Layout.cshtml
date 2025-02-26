@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="keywords" content="">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    @*@Styles.Render("~/bundles/bootstrap/css")*@
     @Styles.Render("~/assets/css/all")
     @RenderSection("Styles", false)
 
@@ -16,15 +15,12 @@
 
     @Html.Partial("_Header")
 
-    @*Сюда будет вставляться основное содержимое страниц*@
     @RenderBody()
 
     @Html.Partial("_Footer")
 
-    @*<script src="~/assets/js/libs.min.js"></script>*@
     <script src="https://unpkg.com/popper.js@1"></script>
     <script src="https://unpkg.com/tippy.js@5"></script>
-    @*@Scripts.Render("~/bundles/bootstrap/js")*@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/assets/js/all")
     @RenderSection("Scripts", required: false)
