@@ -1,14 +1,15 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "ProductCard";
 }
+
+@model WebShop.Models.ProductCardViewModel 
 
 <div class="container-fluid">
     <main>
         <div class="primary-layout">
             <div class="product-main-section">
                 <header class="product-header d-md-none">
-                    <h1 class="product-header__heading">Фильтр масляный Filtron OP525</h1><span class="product-header__type">Filtron OP525</span>
+                    <h1 class="product-header__heading">@Model.ProductName</h1><span class="product-header__type">@Model.BrandName</span>
                 </header>
                 <div class="product-main-promo">
                     <div class="product-main-promo__main">
@@ -54,19 +55,19 @@
                     <div class="row">
                         <div class="col-12 col-md-6 col-xl-8">
                             <header class="product-header d-none d-md-block">
-                                <div class="product-header__heading">Фильтр масляный Filtron OP525</div><span class="product-header__type">Filtron OP525</span>
+                                <div class="product-header__heading">@Model.ProductName</div><span class="product-header__type">@Model.BrandName</span>
                             </header>
                             <div class="product-main__subhelpers">
-                                <div class="product-header__brand"><a class="product-header__brand-link" href="#"><img class="product-header__brand-img" src="@Url.Content("~/assets/images/content/filtron.png")" alt="Brand"></a></div>
+                                <div class="product-header__brand"><a class="product-header__brand-link" href="@Model.BrandImage"><img class="product-header__brand-img" src="@Url.Content("~/assets/images/content/filtron.png")" alt="Brand"></a></div>
                             </div>
                             <div class="product-main__details">
                                 <div class="product-main__params-wrap">
                                     <dl class="product-main__params">
                                         <dt class="product-main__property"><span>Артикул</span></dt>
-                                        <dd class="product-main__value">0P525</dd>
+                                        <dd class="product-main__value">@Model.Article</dd>
 
                                         <dt class="product-main__property"><span>Код</span></dt>
-                                        <dd class="product-main__value">465907</dd>
+                                        <dd class="product-main__value">@Model.Code</dd>
                                     </dl>
                                 </div>
 
@@ -78,7 +79,7 @@
                                 <div class="product-main__prices">
                                     <div class="product-main__main-price">
                                         <div class="product-main__price-heading">Цена</div>
-                                        <div class="product-main__main-price-value">1 325 лей</div>
+                                        <div class="product-main__main-price-value">@Model.Price лей</div>
                                     </div>
                                 </div>
                                 <div class="product-main__controls">
@@ -86,11 +87,23 @@
                                         <div class="counter">
                                             <button class="counter__btn counter--remove">-</button>
                                             <input class="counter__field" type="tel" name="quantity" readonly value="1">
+                                            @*@if(Model.Quantity > )*@
                                             <button class="counter__btn counter--add">+</button>
                                         </div>
                                     </div>
-                                    <div class="product-main__control product-main__control--instock success">В наличии <span>374 шт.</span></div>
-                                </div><a class="product-main__buy btn btn--main" href="#" data-modal-win-trigger="add" onclick="alert('Товар добавлен в корзину')">В корзину</a>
+                                    @if (Model.Quantity > 0)
+                                    {
+                                        <div class="product-main__control product-main__control--instock success">В наличии: <span>@Model.Quantity шт</span></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="product-main__control product-main__control--instock fail"> Нет в наличии</div>
+                                    }
+                                </div>
+                                @if (Model.Quantity > 0)
+                                {
+                                    <a class="product-main__buy btn btn--main" href="#" data-modal-win-trigger="add" onclick="alert('Товар добавлен в корзину')">В корзину</a>
+                                }
                             </div>
                         </div>
                     </div>

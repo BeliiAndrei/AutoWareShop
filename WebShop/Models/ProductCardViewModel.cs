@@ -9,12 +9,13 @@ namespace WebShop.Models
     public class ProductCardViewModel
     {
         public string ProductName { get; set; }
-        public string ProduserName { get; set; }
+        public string BrandName { get; set; }
         public decimal Price { get; set; }
-        public static int Quantity {get; set;}
+        public int Quantity {get; set;}
         public long Code { get; set; }
         public string Article { get; set;}
         public List<string> Images { get; set; }
+        public string BrandImage { get; set; }
         public List<ProductCardViewModel> Analogues { get; set; }
         public List<Pair> Specifications { get; set; }
         public ApplicabilityCharacteristics Applicability { get; set; }
