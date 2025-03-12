@@ -15,13 +15,17 @@
                     <div class="product-main-promo__main">
                         <div class="js-promo-main swiper-container">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-1.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-1.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-1.jpg")"></a></div>
+                                @foreach (var img in Model.Images)
+                                {
+                                    <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-1.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-" + img + ".jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-" + img + ".jpg")"></a></div>
+                                }
+                                @*<div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-1.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-1.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-1.jpg")"></a></div>
                                 <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-7.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-7.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-7.jpg")"></a></div>
                                 <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-6.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-6.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-6.jpg")"></a></div>
                                 <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-4.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-4.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-4.jpg")"></a></div>
                                 <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-5.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-5.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-5.jpg")"></a></div>
                                 <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-2.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-2.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-2.jpg")"></a></div>
-                                <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-3.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-3.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-3.jpg")"></a></div>
+                                <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-3.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-3.jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-3.jpg")"></a></div>*@
                             </div>
                         </div>
                         <div class="product-main-promo__pagination"></div>
@@ -29,6 +33,10 @@
                     <div class="product-main-promo__thumbs">
                         <div class="js-thumbs-list swiper-container">
                             <div class="swiper-wrapper">
+                                @foreach (var img in Model.Images)
+                                {
+                                    @*<div class="swiper-slide"><span class="product-main-promo__thumb"><img class="product-main-promo__thumb-img img-responsive" src="~/assets/images/content/product-main-promo-thumb-1.jpg" alt="Product Thumb"></span></div>*@
+                                }
                                 <div class="swiper-slide"><span class="product-main-promo__thumb"><img class="product-main-promo__thumb-img img-responsive" src="~/assets/images/content/product-main-promo-thumb-1.jpg" alt="Product Thumb"></span></div>
                                 <div class="swiper-slide"><span class="product-main-promo__thumb"><img class="product-main-promo__thumb-img img-responsive" src="~/assets/images/content/product-main-promo-thumb-7.jpg" alt="Product Thumb"></span></div>
                                 <div class="swiper-slide"><span class="product-main-promo__thumb"><img class="product-main-promo__thumb-img img-responsive" src="~/assets/images/content/product-main-promo-thumb-6.jpg" alt="Product Thumb"></span></div>
@@ -498,7 +506,7 @@
                             </div>
                             <div class="tabs__tab-pane">
                                 <div class="tabs__accordeon-toggle">Описание</div>
-                                <p> Тут будет какой-то текст с подробным описанием товара с карточки.</p>
+                                <p> @Model.Description</p>
                             </div>
                         </div>
                     </div>

@@ -63,7 +63,7 @@
             <div class="footer__main-col">
                 <div class="footer-collapse">
                     <div class="footer-collapse__title">
-                        Лучшие продукты
+                        Наши предложения
                         <svg class="icon icon-chevron-down footer-collapse__title-icon">
                             <use href="~/assets/images/svg/symbol/sprite.svg#chevron-down"></use>
                         </svg>
@@ -71,21 +71,18 @@
                     <div class="footer-collapse__body">
                         <nav class="footer-collapse_nav">
                             <ul class="footer-collapse__list">
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Освещение</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Амортизаторы</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Комплект сцепления</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Колесные подшипники</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Уход за автомобилем</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Купить по производителю</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Купить по модели</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Поиск моделей автомобилей</a></li>
-                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="#">Производитель автозапчастей</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="?search-field=освещение&send-data=">Освещение</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="?search-field=амортизаторы&send-data=">Амортизаторы</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="?search-field=комплект+сцепления&send-data=">Комплект сцепления</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="?search-field=колесные+подшипники&send-data=">Колесные подшипники</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="?search-field=уход+за+автомобилем&send-data=">Уход за автомобилем</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("Catalog_brands", "CatalogSearch")">Купить по производителю</a></li>
+                                <li class="footer-collapse__item"><a class="footer-collapse__link" href="@Url.Action("Select_car", "CatalogSearch")">Купить по модели</a></li>
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="footer__conclude">
