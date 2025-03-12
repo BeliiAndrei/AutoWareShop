@@ -1,4 +1,8 @@
-﻿ <header class="header">
+﻿@{ 
+    bool isAdmin = true;
+}
+  
+<header class="header">
     <div class="header-top-area">
         <div class="container-fluid">
             <div class="header-top-area-main">
@@ -12,7 +16,7 @@
                     <div class="header__informer">График работы: <br> 8.00 - 19.00 понедельник - суббота</div>
                 </div>
                 <div class="tiny-contacts">
-                    <a class="tiny-contacts__wrap" href="tel:+375173620202">
+                    <a class="tiny-contacts__wrap" href="tel:+37379637411">
                         <svg class="icon icon-phone-call tiny-contacts__icon">
                             <use href="~/assets/images/svg/symbol/sprite.svg#phone-call"></use>
                         </svg><span class="tiny-contacts__phone">+373 79-637-411</span>
@@ -32,13 +36,12 @@
                 <nav class="section-nav d-none d-md-block">
                     <ul class="section-nav__list">
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Search_result", "CatalogSearch")"><span class="section-nav__text">Акции</span></a></li>
-                        <li class="section-nav__item has-dropdown">
-                            <a class="section-nav__link" href="@Url.Action("Payment", "BasketPayment")"><span class="section-nav__text">Оплата </span></a>
-                        </li>
-                        @*<li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Доставка</span></a></li>*@
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Admin_pan", "Admin")"><span class="section-nav__text">Админ Панель</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Payment", "BasketPayment")"><span class="section-nav__text">Оплата </span></a></li>
+                        @if (isAdmin) { 
+                            <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Admin_pan", "Admin")"><span class="section-nav__text">Админ Панель</span></a></li>
+                        }
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("News", "Informational")"><span class="section-nav__text">Новости</span></a></li>
-                        @*<li class="section-nav__item"><a class="section-nav__link" href="#"><span class="section-nav__text">Контакты</span></a></li>*@
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Sto", "OtherServices")"><span class="section-nav__text">СТО</span></a></li>
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Profile_user", "Profile")"><span class="section-nav__text">Профиль</span></a></li>
                     </ul>
                 </nav>
@@ -253,19 +256,20 @@
                     </div>
                 </form>
                 <div class="header__meta-link">
-                    <a class="brand-catalogs header-meta-area__brand-catalogs" href="#">
+                    <a class="brand-catalogs header-meta-area__brand-catalogs" href="@Url.Action("Select_car", "CatalogSearch")">
                         <svg class="icon icon-warehouse brand-catalogs__icon">
                             <use href="~/assets/images/svg/symbol/sprite.svg#warehouse"></use>
                         </svg><span class="brand-catalogs__title">Гараж</span>
                     </a>
                 </div>
                 <div class="header-utilities">
+
                     <div class="header-utility">
                         <div class="header-utility__main">
-                            <a class="header-utility__link" href="@Url.Action("Empty_basket", "BasketPayment")">
+                            <a class="header-utility__link" href="@Url.Action("Basket_step_1", "BasketPayment")">
                                 <svg class="icon icon-shopping-cart-main header-utility__icon">
                                     <use href="~/assets/images/svg/symbol/sprite.svg#shopping-cart-main"></use>
-                                </svg><span class="header-utility__count">(34)</span>
+                                </svg><span class="header-utility__count">(12)</span>
                             </a>
                             <div class="header-utility__dropdown">
                                 <div class="header-utility__dropdown-header">

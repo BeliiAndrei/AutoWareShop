@@ -47,7 +47,7 @@
     <section class="news-section news-section--column section">
         <div class="container-fluid">
             <div class="news-section__area">
-                <div class="news-section__title section__heading"><a href="#">Новости</a></div>
+                <div class="news-section__title section__heading"><a href="@Url.Action("News", "Informational")">Новости</a></div>
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
                         <article class="news">
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="news-section__area">
-                <div class="news-section__title section__heading"><a href="#">Акции</a></div>
+                <div class="news-section__title section__heading"><a href="@Url.Action("Catalog", "CatalogSearch")">Акции</a></div>
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
                         <article class="news">
@@ -235,6 +235,8 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="categories__heading section__heading"><a href="@Url.Action("Catalog_brands", "CatalogSearch")">Каталог брендов</a></div>
                 </div>
             </div>
         </div>
