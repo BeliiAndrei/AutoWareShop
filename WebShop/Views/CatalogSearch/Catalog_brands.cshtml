@@ -1,286 +1,268 @@
 ﻿
 @{
-    ViewBag.Title = "Catalog_brands";
+    ViewBag.Title = "Каталог производителей";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="primary-layout">
-        <div class="primary-content">
-            <div class="sidebar">
-                <div class="category-nav d-none d-md-block">
-                    <ul class="category-nav__list">
-                        <li class="category-nav__item active"><a class="category-nav__link" href="@Url.Action("Basket_step_1", "Home")">Корзина</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Home")">Заказы</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Payment", "Home")">Оплата</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Profile_user", "Home")">Профиль</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "Home")">Акции</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Управление пользователями</a></li>
-                        @*<li class="category-nav__item"><a class="category-nav__link" href="#">Регистрация пользователей</a></li>*@
-                        <li class="category-nav__item"><a class="category-nav__link" href="#">Управление сайтом</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Upload", "Home")">Загрузка прайса/кроссов</a></li>
-                    </ul>
-                </div>
-            </div>
-            <main class="main-content">
-                <h1 class="main-title">Каталоги производителей</h1>
-                <div class="table-responsive">
-                    <table class="brands-table table">
-                        <thead>
-                            <tr>
-                                <th>Бренд</th>
-                                <th>Описание</th>
-                                <th class="text-center">Скачать</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Bosal</strong></td>
-                                <td>Универсальная линейка товаров Bosal</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20Bosal.pdf" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Bosal</strong></td>
-                                <td>Электронный каталог Bosal</td>
-                                <td>
-                                    <a href="http://www.catalogue.bosal.com/pages/exh_cartype_search.php?make=AUDI&model=80&body=Saloon&cartype=&fuel=B&year=96&search=Search" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Bosal</strong></td>
-                                <td>Стенд Bosal</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/stend%20Bosal.pdf" target="_blank">
-                                        <svg class="icon icon-arrow-down">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            @*<use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>*@
-                            <tr>
-                                <td><strong>Cardex</strong></td>
-                                <td>Электронный каталог Cardex</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/Catalogue_Other%20PMC%20brand_2011.pdf" target="_blank">
-                                        <svg class="icon icon-file-pdf">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Dayco</strong></td>
-                                <td>Электронный каталог Dayco</td>
-                                <td>
-                                    <a href="https://www.daycoaftermarket.com/ru/catalog/" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Delphi</strong></td>
-                                <td>Электронный каталог</td>
-                                <td>
-                                    <a href="https://www.delphiautoparts.com/en-gb/catalogue" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Delphi</strong></td>
-                                <td>Электронный каталог Delphi</td>
-                                <td>
-                                    <a href="https://www.delphiautoparts.com/en-gb/catalogue?make=&model=&engine=&year=&vehicle=&product=" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td><strong>Denso</strong></td>
-                                <td>Denso - системы кондиционирования</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/Denso-1-april-2013_ua_sss.pdf" target="_blank">
-                                        <svg class="icon icon-file-pdf">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Denso</strong></td>
-                                <td>Электронный каталог Denso</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/Cabin_air_filter.pdf" download>
-                                        <svg class="icon icon-arrow-down">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>EPS/Facet</strong></td>
-                                <td>Электронный каталог EPS/Facet</td>
-                                <td>
-                                    <a href="http://www.facet.it/db_comp/catalogo/catalogo.asp" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Febest</strong></td>
-                                <td>Электронный каталог FEBEST</td>
-                                <td>
-                                    <a href="https://febest.de/index.php?page=catalog" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Federal Mogul</strong></td>
-                                <td>Электронный каталог Federal Mogul</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/CV%202019-2021.pdf" download>
-                                        <svg class="icon icon-arrow-down">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Filtron</strong></td>
-                                <td>Электронный каталог Filtron</td>
-                                <td>
-                                    <a href="https://ru.filtron.eu/index.php/cat/view/cars?cat=10" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Gart</strong></td>
-                                <td>Электронный каталог Gart</td>
-                                <td>
-                                    <a href="@Url.Action("MainPage", "Home")">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Gart</strong></td>
-                                <td>Электронный каталог Gart</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/Gart%20catalogo%20Cabina%202011.pdf" download>
-                                        <svg class="icon icon-arrow-down">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Gates Europe</strong></td>
-                                <td>Электронный каталог Gates Europe</td>
-                                <td>
-                                    <a href="https://www.gates-online.com/GatesEU/ru/RU/adirect/gateu1?cmd=webcatselector&messageType=webcatselector&NewLocale=ru_RU&entryPoint=adirect" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Gates USA</strong></td>
-                                <td>Электронный каталог Gates USA</td>
-                                <td>
-                                    <a href="https://www.gates.com/part_locator/index.cfm?location_id=3002" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>JanMor</strong></td>
-                                <td>Электронный каталог Janmor</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/janmor.pdf" download>
-                                        <svg class="icon icon-arrow-down">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Japanparts</strong></td>
-                                <td>Электронный каталог Japanparts</td>
-                                <td>
-                                    <a href="https://japanparts.it/top-search.jsp?key=vehicle" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>KAYABA</strong></td>
-                                <td>Электронный каталог KAYABA</td>
-                                <td>
-                                    <a href="http://ows-cdn.tecdoc.net/kyb/home.jsp?server=7&time=29/11/2016-16:40:33#9f0a7faf39ddd73a2e22f14a94f205fa" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mann</strong></td>
-                                <td>Электронный каталог Mann</td>
-                                <td>
-                                    <a href="https://www.mann-filter.com/de-de/katalog.html" target="_blank">
-                                        <svg class="icon icon-globe">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Metalcaucho</strong></td>
-                                <td>Электронный каталог Metalcaucho (on-line)</td>
-                                <td>
-                                    <a href="https://automall.md/Files/0/RU%202012%204.8.2.pdf" target="_blank">
-                                        <svg class="icon icon-file-pdf">
-                                            <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </main>
-        </div>
+<main class="main-content">
+    <h1 class="main-title">Каталоги производителей</h1>
+    <div class="table-responsive">
+        <table class="brands-table table">
+            <thead>
+                <tr>
+                    <th>Бренд</th>
+                    <th>Описание</th>
+                    <th class="text-center">Скачать</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Bosal</strong></td>
+                    <td>Универсальная линейка товаров Bosal</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20Bosal.pdf" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Bosal</strong></td>
+                    <td>Электронный каталог Bosal</td>
+                    <td>
+                        <a href="http://www.catalogue.bosal.com/pages/exh_cartype_search.php?make=AUDI&model=80&body=Saloon&cartype=&fuel=B&year=96&search=Search" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Bosal</strong></td>
+                    <td>Стенд Bosal</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/stend%20Bosal.pdf" target="_blank">
+                            <svg class="icon icon-arrow-down">
+                                <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                @*<use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>*@
+                <tr>
+                    <td><strong>Cardex</strong></td>
+                    <td>Электронный каталог Cardex</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/Catalogue_Other%20PMC%20brand_2011.pdf" target="_blank">
+                            <svg class="icon icon-file-pdf">
+                                <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Dayco</strong></td>
+                    <td>Электронный каталог Dayco</td>
+                    <td>
+                        <a href="https://www.daycoaftermarket.com/ru/catalog/" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Delphi</strong></td>
+                    <td>Электронный каталог</td>
+                    <td>
+                        <a href="https://www.delphiautoparts.com/en-gb/catalogue" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Delphi</strong></td>
+                    <td>Электронный каталог Delphi</td>
+                    <td>
+                        <a href="https://www.delphiautoparts.com/en-gb/catalogue?make=&model=&engine=&year=&vehicle=&product=" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Denso</strong></td>
+                    <td>Denso - системы кондиционирования</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/Denso-1-april-2013_ua_sss.pdf" target="_blank">
+                            <svg class="icon icon-file-pdf">
+                                <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Denso</strong></td>
+                    <td>Электронный каталог Denso</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/Cabin_air_filter.pdf" download>
+                            <svg class="icon icon-arrow-down">
+                                <use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>EPS/Facet</strong></td>
+                    <td>Электронный каталог EPS/Facet</td>
+                    <td>
+                        <a href="http://www.facet.it/db_comp/catalogo/catalogo.asp" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Febest</strong></td>
+                    <td>Электронный каталог FEBEST</td>
+                    <td>
+                        <a href="https://febest.de/index.php?page=catalog" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Federal Mogul</strong></td>
+                    <td>Электронный каталог Federal Mogul</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/CV%202019-2021.pdf" download>
+                            <svg class="icon icon-arrow-down">
+                                <use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Filtron</strong></td>
+                    <td>Электронный каталог Filtron</td>
+                    <td>
+                        <a href="https://ru.filtron.eu/index.php/cat/view/cars?cat=10" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Gart</strong></td>
+                    <td>Электронный каталог Gart</td>
+                    <td>
+                        <a href="@Url.Action("MainPage", "Home")">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Gart</strong></td>
+                    <td>Электронный каталог Gart</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/Gart%20catalogo%20Cabina%202011.pdf" download>
+                            <svg class="icon icon-arrow-down">
+                                <use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Gates Europe</strong></td>
+                    <td>Электронный каталог Gates Europe</td>
+                    <td>
+                        <a href="https://www.gates-online.com/GatesEU/ru/RU/adirect/gateu1?cmd=webcatselector&messageType=webcatselector&NewLocale=ru_RU&entryPoint=adirect" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Gates USA</strong></td>
+                    <td>Электронный каталог Gates USA</td>
+                    <td>
+                        <a href="https://www.gates.com/part_locator/index.cfm?location_id=3002" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>JanMor</strong></td>
+                    <td>Электронный каталог Janmor</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/janmor.pdf" download>
+                            <svg class="icon icon-arrow-down">
+                                <use href="/assets/images/svg/symbol/sprite.svg#arrow-down"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Japanparts</strong></td>
+                    <td>Электронный каталог Japanparts</td>
+                    <td>
+                        <a href="https://japanparts.it/top-search.jsp?key=vehicle" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>KAYABA</strong></td>
+                    <td>Электронный каталог KAYABA</td>
+                    <td>
+                        <a href="http://ows-cdn.tecdoc.net/kyb/home.jsp?server=7&time=29/11/2016-16:40:33#9f0a7faf39ddd73a2e22f14a94f205fa" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Mann</strong></td>
+                    <td>Электронный каталог Mann</td>
+                    <td>
+                        <a href="https://www.mann-filter.com/de-de/katalog.html" target="_blank">
+                            <svg class="icon icon-globe">
+                                <use href="/assets/images/svg/symbol/sprite.svg#globe"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Metalcaucho</strong></td>
+                    <td>Электронный каталог Metalcaucho (on-line)</td>
+                    <td>
+                        <a href="https://automall.md/Files/0/RU%202012%204.8.2.pdf" target="_blank">
+                            <svg class="icon icon-file-pdf">
+                                <use href="/assets/images/svg/symbol/sprite.svg#file-pdf"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
+</main>
+

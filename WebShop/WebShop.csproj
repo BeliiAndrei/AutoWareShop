@@ -317,6 +317,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductCardViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -380,8 +381,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Scripts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebShop.BusinessLogic\WebShop.BusinessLogic.csproj">
+      <Project>{b7902a8e-91cd-4e46-bf72-a97672b1db68}</Project>
+      <Name>WebShop.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebShop.Domain\WebShop.Domain.csproj">
+      <Project>{4e29c0f1-9a77-4e76-bb33-6e785da45563}</Project>
+      <Name>WebShop.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

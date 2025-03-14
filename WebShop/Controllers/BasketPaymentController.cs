@@ -10,6 +10,9 @@ namespace WebShop.Controllers
     {
         public ActionResult Basket_step_1()
         {
+            int productCount = 12; //передавать количество в дальнейшем из бэка. Сейчас число тестовое
+            if(productCount == 0)
+                return RedirectToAction("Empty_basket");
             return View();
         }
         public ActionResult Basket_step_2()
