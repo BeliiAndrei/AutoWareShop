@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Basket\Basket.cs" />
     <Compile Include="Delivery\DeliveryLocation.cs" />
+    <Compile Include="News\News.cs" />
     <Compile Include="Order\Order.cs" />
     <Compile Include="Payment\ReceiptToPay.cs" />
     <Compile Include="Product\ProductDTO.cs" />

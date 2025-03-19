@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebShop.BusinessLogic.Core
+namespace WebShop.Domain.News
 {
-
-    //Это точно тут должно быть? Мне кажется что это в Domain, но раз ты добавлял, то тебе виднее.
     public class News
     {
         public DateTime CreationDate { get; set; }

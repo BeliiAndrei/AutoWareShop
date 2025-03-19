@@ -10,5 +10,7 @@ namespace WebShop.BusinessLogic.Interfaces
     public interface IPaymnet
     {
         ReceiptToPay GetReceiptToPayByUserId(int uId);
+        string GetPaymentMethod();
     }
+    
 }
