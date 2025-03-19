@@ -41,13 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLogic\NewsBL.cs" />
     <Compile Include="BLogic\PaymentBL.cs" />
     <Compile Include="BLogic\ProductBL.cs" />
     <Compile Include="BLogic\UserBL.cs" />
     <Compile Include="BusinessLogic.cs" />
     <Compile Include="Core\AdminApi.cs" />
+    <Compile Include="Core\News.cs" />
     <Compile Include="Core\ProductApi.cs" />
     <Compile Include="Core\UserApi.cs" />
+    <Compile Include="Interfaces\INews.cs" />
     <Compile Include="Interfaces\IPaymnet.cs" />
     <Compile Include="Interfaces\IPruoduct.cs" />
     <Compile Include="Interfaces\ISession.cs" />
