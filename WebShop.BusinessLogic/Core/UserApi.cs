@@ -25,7 +25,7 @@ namespace WebShop.BusinessLogic.Core
             return true;
         }
 
-        public string AuthentificateUserAction(UserAuthAction auth)
+        public string AuthentificateUserAction(UserPhyAuthAction auth)
         {
 
 

@@ -6,7 +6,35 @@ using System.Threading.Tasks;
 
 namespace WebShop.BusinessLogic.Core
 {
-    class AdminApi
+    public class AdminApi
     {
+        internal bool GetAllUsers()
+        {
+            return true;
+        }
+        internal bool RegisterUser()
+        {
+            return true;
+        }
+        internal bool EditUser()
+        {
+            return true;
+        }
+        internal bool EditProduct()
+        {
+            return true;
+        }
+        internal bool DeleteUser()
+        {
+            return true;
+        }
+        internal bool DeleteProduct()
+        {
+            return true;
+        }
+        internal bool AddProduct()
+        {
+            return true;
+        }
     }
 }
