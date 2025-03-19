@@ -29,5 +29,20 @@ namespace WebShop.BusinessLogic
         {
             return new PaymentBL();
         }
+
+        public IBasket GetBasketBL()
+        {
+            return new BasketBL();
+        }
+
+        public IDelivery GetDeliveryBL()
+        {
+            return new DeliveryBL();
+        }
+
+        public IOrder GetOrderBL()
+        {
+            return new OrderBL();
+        }
     }
 }

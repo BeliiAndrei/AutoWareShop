@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLogic\BasketBL.cs" />
+    <Compile Include="BLogic\DeliveryBL.cs" />
     <Compile Include="BLogic\OrderBL.cs" />
     <Compile Include="BLogic\PaymentBL.cs" />
     <Compile Include="BLogic\ProductBL.cs" />
