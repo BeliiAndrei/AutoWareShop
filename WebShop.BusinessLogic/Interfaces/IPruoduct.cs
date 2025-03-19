@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebShop.BusinessLogic
+namespace WebShop.BusinessLogic.Interfaces
 {
-    class ProductBL
+    public interface IProduct
     {
+        bool IsProductValid(int id);
     }
 }

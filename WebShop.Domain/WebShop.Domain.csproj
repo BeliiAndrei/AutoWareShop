@@ -41,7 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Payment\ReceiptToPay.cs" />
+    <Compile Include="Product\ProductDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\Auth\UserLegalAuthAction.cs" />
+    <Compile Include="User\Auth\UserPhyAuthAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebShop.Helpers\WebShop.Helpers.csproj">

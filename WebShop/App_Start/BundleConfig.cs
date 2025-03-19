@@ -15,12 +15,18 @@ namespace WebShop
                 "~/assets/js/main.js"
             ));
 
+            //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            //    "~/scripts/jquery-{version}.js",
+            //    //"~/scripts/btclr.js",
+            //    "~/scripts/jquery-migrate-{version}.js"
+            //    //"~/scripts/jquery-ui-{version}.js"
+            //    ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/scripts/jquery-{version}.js",
+                "~/scripts/jquery-3.6.0.js",
                 //"~/scripts/btclr.js",
-                "~/scripts/jquery-migrate-{version}.js"
-                //"~/scripts/jquery-ui-{version}.js"
-                ));
+                "~/scripts/jquery-migrate-3.3.2.js"
+                //"~/scripts/jquery-ui-1.12.1.js"
+            ));
 
             #endregion
 
