@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLogic\BasketBL.cs" />
+    <Compile Include="BLogic\OrderBL.cs" />
     <Compile Include="BLogic\PaymentBL.cs" />
     <Compile Include="BLogic\ProductBL.cs" />
     <Compile Include="BLogic\UserBL.cs" />
@@ -48,12 +50,15 @@
     <Compile Include="Core\AdminApi.cs" />
     <Compile Include="Core\ProductApi.cs" />
     <Compile Include="Core\UserApi.cs" />
+    <Compile Include="Interfaces\IBasket.cs" />
+    <Compile Include="Interfaces\IDelivery.cs" />
+    <Compile Include="Interfaces\IOrder.cs" />
     <Compile Include="Interfaces\IPaymnet.cs" />
     <Compile Include="Interfaces\IPruoduct.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionBL.cs" />
+    <Compile Include="BLogic\SessionBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebShop.Domain\WebShop.Domain.csproj">

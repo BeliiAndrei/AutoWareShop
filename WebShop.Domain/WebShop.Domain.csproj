@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Basket\Basket.cs" />
+    <Compile Include="Delivery\DeliveryLocation.cs" />
+    <Compile Include="Order\Order.cs" />
     <Compile Include="Payment\ReceiptToPay.cs" />
     <Compile Include="Product\ProductDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,5 +55,6 @@
       <Name>WebShop.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
