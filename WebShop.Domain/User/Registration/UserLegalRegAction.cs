@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebShop.Domain.User.Auth
 {
-    public class UserPhyAuthAction
+    public class UserLegalRegAction
     {
         public string UserName { get; set; }
         public string UserLastName { get; set; }
@@ -16,9 +16,12 @@ namespace WebShop.Domain.User.Auth
         public string PocketPhoneNumber { get; set; }
         public string StationPhoneNumber { get; set; }
         public string City { get; set; }
+        public string CompanyName { get; set; }
+        public ulong BINorINN { get; set; }
+        public ulong CurrentAccount { get; set; }
+        public ulong BankCode { get; set; }
+        public ulong LegalAddress { get; set; }
         public DateTime LoginTime { get; set; }
-
-
 
 
     }

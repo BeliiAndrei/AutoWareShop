@@ -2,68 +2,37 @@
 @{
     ViewBag.Title = "Authorisation";
 }
-
+@model WebShop.Models.UserLogin
 <div class="inner-section">
     <div class="inner-section__main">
         <div class="inner-section__header">
             <h1 class="inner-section__heading">Авторизация</h1><a class="inner-section__link" href="@Url.Action("Registration","Auth")">Регистрация</a>
         </div>
         <div class="inner-section__body">
-            <div class="authorize-social">
-                <div class="authorize-social__heading">Войти через социальные сети</div>
-                <ul class="soc">
-                    <li class="soc__item">
-                        <a class="soc__link soc__link--gg" href="#">
-                            <svg class="icon icon-google soc__icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#google"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="soc__item">
-                        <a class="soc__link soc__link--fb" href="#">
-                            <svg class="icon icon-facebook-f soc__icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#facebook-f"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="soc__item">
-                        <a class="soc__link soc__link--tw" href="#">
-                            <svg class="icon icon-twitter soc__icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#twitter"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="soc__item">
-                        <a class="soc__link soc__link--yt" href="#">
-                            <svg class="icon icon-youtube soc__icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#youtube"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="soc__item soc__item--expand">
-                        <a class="soc__link" href="#">
-                            <svg class="icon icon-plus soc__icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#plus"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="soc__item" style="display: none">
-                        <a class="soc__link soc__link--mail" href="#">
-                            <svg class="icon icon-mail soc__icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#mail"></use>
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <form class="main-form" method="POST" action="/" name="auth-form">
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("TryToLogIn", "Auth", FormMethod.Post, new { @id = "LoginForm", @class = "main-form" }))
+            {
+                @Html.AntiForgeryToken()
                 <div class="main-form__field">
-                    <label class="main-form__label" for="user-email">Ваш E-mail:</label>
-                    <input class="main-form__input" type="email" name="user-email" id="user-email">
+                    @Html.LabelFor(m => m.Email, "Email", new { @class = "main-form__label" })
+                    @Html.TextBoxFor(m => m.Email, new
+               {
+                   placeholder = "example@gmail.com",
+                   title = "Введите свой Email",
+                   value = "",
+                   @class = "main-form__input"
+               })
                 </div>
                 <div class="main-form__field">
-                    <label class="main-form__label" for="user-psw">Пароль <span>*</span>:</label>
-                    <input class="main-form__input" type="password" name="user-psw" id="user-psw">
+                    @Html.LabelFor(m => m.Password, "Пароль", new { @class = "main-form__label" })
+                    @Html.TextBoxFor(m => m.Password, new
+               {
+                   type = "password",
+                   title = "Введите пароль тут",
+                   placeholder = "****",
+                   value = "",
+                   @class = "main-form__input",
+               })
                 </div>
                 <div class="main-form__field main-form__field--flex">
                     <div class="main-form__checkbox checkbox-label">
@@ -74,7 +43,7 @@
                 <div class="main-form__footer text-center">
                     <input class="main-form__btn btn btn--main btn--upper" type="submit" value="Войти">
                 </div>
-            </form>
+            }
         </div>
     </div>
 </div>

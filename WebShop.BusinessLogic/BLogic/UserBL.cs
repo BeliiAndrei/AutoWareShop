@@ -11,7 +11,7 @@ namespace WebShop.BusinessLogic.BLogic
 {
     public class UserBL : UserApi, IUser
     {
-        public string AuthentificateUser(UserPhyAuthAction auth)
+        public string AuthentificateUser(UserPhyRegAction auth)
         {
             return AuthentificateUserAction(auth);
         }
