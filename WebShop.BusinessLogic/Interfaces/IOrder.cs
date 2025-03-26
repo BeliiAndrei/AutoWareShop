@@ -8,7 +8,7 @@ using WebShop.Domain.Product;
 
 namespace WebShop.BusinessLogic.Interfaces
 {
-    interface IOrder
+    public interface IOrder
     {
         Order CreateNewOrder(List <ProductDTO> selectedProducts);
 

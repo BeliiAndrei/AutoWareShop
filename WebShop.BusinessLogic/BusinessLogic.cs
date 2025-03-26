@@ -8,9 +8,9 @@ using WebShop.BusinessLogic.Interfaces;
 
 namespace WebShop.BusinessLogic
 {
-    class BusinessLogic
+    public class BusinessLogic
     {
-        public static ISession GetSessionBL()
+        public ISession GetSessionBL()
         {
             return new SessionBL();
         }
