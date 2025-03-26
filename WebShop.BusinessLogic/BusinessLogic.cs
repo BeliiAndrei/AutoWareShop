@@ -8,9 +8,9 @@ using WebShop.BusinessLogic.Interfaces;
 
 namespace WebShop.BusinessLogic
 {
-    class BusinessLogic
+    public class BusinessLogic
     {
-        public static ISession GetSessionBL()
+        public ISession GetSessionBL()
         {
             return new SessionBL();
         }
@@ -28,6 +28,21 @@ namespace WebShop.BusinessLogic
         public IPaymnet GetPaymnetBl()
         {
             return new PaymentBL();
+        }
+
+        public IBasket GetBasketBL()
+        {
+            return new BasketBL();
+        }
+
+        public IDelivery GetDeliveryBL()
+        {
+            return new DeliveryBL();
+        }
+
+        public IOrder GetOrderBL()
+        {
+            return new OrderBL();
         }
     }
 }

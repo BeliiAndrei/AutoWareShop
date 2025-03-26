@@ -9,7 +9,7 @@ namespace WebShop.BusinessLogic.Interfaces
 {
     public interface IUser
     {
-        string AuthentificateUser(UserPhyAuthAction auth);
+        string AuthentificateUser(UserPhyRegAction auth);
         int GetUserIdBySessionKey(string sessionKey);
         bool IsSessionValid(string key);
     }

@@ -12,6 +12,11 @@ namespace WebShop.BusinessLogic.BLogic
 {
     public class PaymentBL : UserApi, IPaymnet
     {
+        public string GetPaymentMethod()
+        {
+            throw new NotImplementedException();
+        }
+
         public ReceiptToPay GetReceiptToPayByUserId(int uId)
         {
             return GetReceiptToPayByUserIdAction(uId);
