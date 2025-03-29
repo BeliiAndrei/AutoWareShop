@@ -4,9 +4,51 @@
     ViewBag.Title = "All users";
 }
 
+@model List<WebShop.Models.UserInfoModel>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
 <main class="main-content">
     <div class="main-heading">
         <div class="main-heading__text">Клиенты</div>
     </div>
     <h2>Тут будет выводится список всех пользователей</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Email</th>
+                <th>Телефон</th>
+                <th>Роль</th>
+                <th>Баланс</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.UserLastName</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.Role</td>
+                    <td>@user.Balance.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </main>

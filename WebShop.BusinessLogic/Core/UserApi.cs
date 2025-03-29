@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Auth;
+using WebShop.Domain.User.Registration;
 
 namespace WebShop.BusinessLogic.Core
 {
@@ -20,19 +21,65 @@ namespace WebShop.BusinessLogic.Core
             using (var db = new UserContext())
             {
                 user = db.Users.FirstOrDefault(u => u.Email == data.Email);
+                
             }
+            if (user.Password != data.Password)
+                return new UserLoginResponse
+                {
+                    Status = false,
+                    StatusMsg = "Wrong Password"
+                };
             if (user != null)
                 return new UserLoginResponse
                 {
                     Status = true,
                     StatusMsg = "UserFound"
-                }; //tmp solution to end work for today
+                };
             return new UserLoginResponse
             {
                 Status = false,
                 StatusMsg = "UserNotFound"
             };
 
+        }
+
+        internal UserRegistrationResponse UserRegistrationAction(UserRegistrationData data)
+        {
+            using (var db = new UserContext())
+            {
+                var user = new UserDBTable
+                {
+                    Username = data.UserName,
+                    Usersurname = data.UserLastName,
+                    Password = data.Password,
+                    Email = data.Email,
+                    PhoneNumber = data.PhoneNumber,
+                    LoginTime = DateTime.Now,
+                    Level = Domain.Enumerables.UserRole.User
+                };
+
+                db.Users.Add(user);
+                db.SaveChanges(); // Сохранение изменений в БД
+
+                // Проверка: Поиск пользователя в БД
+                var savedUser = db.Users.FirstOrDefault(u => u.Id == user.Id);
+                if (savedUser != null)
+                {
+                    return new UserRegistrationResponse
+                    {
+                        Status = true,
+                        StatusMsg = "User added successfully"
+                    };
+                }
+                else
+                {
+                    return new UserRegistrationResponse
+                    {
+                        Status = false,
+                        StatusMsg = "Something went wrong. User was not found after creation attempt"
+                    };
+                }
+            }
         }
 
 
@@ -45,16 +92,6 @@ namespace WebShop.BusinessLogic.Core
         public bool IsProductValidAction(int id)
         {
             return true;
-        }
-
-        public string AuthentificateUserAction(UserPhyRegAction auth)
-        {
-
-
-
-
-
-            return "";
         }
 
         internal int GetUserIdBySessionKeyAction(string sessionKey)

@@ -26,10 +26,9 @@ namespace WebShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TryToLogIn(UserLogin loginData)
+        public ActionResult TryToLogIn(UserLoginModel loginData)
         {
-            //if (ModelState.IsValid)
-            if(true)
+            if (ModelState.IsValid)
             {
                 UserLoginData data = new UserLoginData
                 {
@@ -53,6 +52,38 @@ namespace WebShop.Controllers
         public ActionResult Registration()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterNewUser(UserRegistrationData registerData)
+        {
+            if(registerData.Password != registerData.RePassword)
+            {
+                return View("Registration");
+            }
+            if (ModelState.IsValid)
+            {
+                UserRegistrationData data = new UserRegistrationData
+                {
+                    UserName = registerData.UserName,
+                    UserLastName = registerData.UserLastName,
+                    Password = registerData.Password,
+                    RePassword = registerData.RePassword,
+                    Email = registerData.Email,
+                    PhoneNumber = registerData.PhoneNumber,
+                    RegisterTime = DateTime.Now,
+                };
+                var userRegister = _session.UserRegistration(data);
+                if (userRegister.Status == true)
+                    return View("../Home/MainPage");
+                else
+                {
+                    Console.WriteLine(userRegister.StatusMsg);
+                    return View("Registration");
+                }
+            }
+            return View("Registration");
         }
     }
 }

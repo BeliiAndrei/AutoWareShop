@@ -6,13 +6,14 @@ using System.Web;
 
 namespace WebShop.Models
 {
-    public class UserLogin
+    public class UserLoginModel
     {
         [Required(ErrorMessage = "Укажите Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Введите пароль")]
-        [Range(0, 100, ErrorMessage = "Минимум 4 символа в пароле")]
+        //[Range(0, 100, ErrorMessage = "Минимум 4 символа в пароле")]
+        [MinLength(4, ErrorMessage = "Минимум 4 символа в пароле")]
         public string Password { get; set; }
     }
 }

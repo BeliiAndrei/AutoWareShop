@@ -59,11 +59,11 @@
     <Compile Include="Payment\ReceiptToPay.cs" />
     <Compile Include="Product\ProductDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User\Auth\UserDBTable.cs" />
+    <Compile Include="User\Registration\UserRegistrationResponse.cs" />
+    <Compile Include="User\UserDBTable.cs" />
     <Compile Include="User\Auth\UserLoginData.cs" />
     <Compile Include="User\Auth\UserLoginResponse.cs" />
-    <Compile Include="User\Registration\UserLegalRegAction.cs" />
-    <Compile Include="User\Registration\UserPhyRegAction.cs" />
+    <Compile Include="User\Registration\UserRegistrationData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebShop.Helpers\WebShop.Helpers.csproj">

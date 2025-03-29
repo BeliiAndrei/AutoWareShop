@@ -38,16 +38,7 @@ namespace WebShop.Domain.User.Auth
         [Required]
         [Display(Name = "PhoneNumber")]
         [StringLength(12)]
-        public string MobilePhoneNumber { get; set; }
-
-        [Display(Name = "HomePhoneNumber")]
-        [StringLength(12)]
-        public string HomePhoneNumber { get; set; }
-
-        [Required]
-        [Display(Name = "City")]
-        [StringLength(30)]
-        public string City { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Display(Name = "LoginTime")]
         [DataType(DataType.Date)]

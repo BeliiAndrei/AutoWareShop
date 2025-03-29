@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebShop.BusinessLogic.DBModel;
+using WebShop.Domain.User.Auth;
 
 namespace WebShop.BusinessLogic.Core
 {
     public class AdminApi
     {
-        internal bool GetAllUsers()
+        public AdminApi() { }
+        public List<UserDBTable> GetAllUsers()
         {
-            return true;
+            using (var db = new UserContext())
+            {
+                return db.Users.ToList();
+            }
         }
         internal bool RegisterUser()
         {
