@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WebShop.Models
+﻿namespace WebShop.Domain.User.Admin
 {
-    public class UserInfoModel
+    public class UserInfo
     {
         public string UserName { get; set; }
         public string UserLastName { get; set; }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.Domain.User.Auth;
 
@@ -26,6 +23,7 @@ namespace WebShop.BusinessLogic.Core
         {
             return true;
         }
+
         internal bool EditProduct()
         {
             return true;

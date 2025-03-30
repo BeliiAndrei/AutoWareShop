@@ -10,9 +10,11 @@ namespace WebShop.Controllers
 {
     public class AdminController : Controller
     {
+        IAdmin _admin;
         public AdminController() 
         {
             var bl = new BusinessLogic.BusinessLogic();
+            _admin = bl.GetAdminBl();
         }
         // GET: Admin
         public ActionResult Admin_pan()
@@ -22,21 +24,10 @@ namespace WebShop.Controllers
 
         public ActionResult Clients()
         {
-            var action = new BusinessLogic.Core.AdminApi();
-            var users = action.GetAllUsers();
-            var usersList = new List<UserInfoModel>();
-            foreach (var u in users)
-            {
-                UserInfoModel m = new UserInfoModel();
-                m.UserName = u.Username;
-                m.UserLastName = u.Usersurname;
-                m.Email = u.Email;
-                m.PhoneNumber = u.PhoneNumber;
-                m.Balance = 0;
-                m.Role = u.Level.ToString();
-                usersList.Add(m);
-            }
-            return View(usersList);
+            //var action = new BusinessLogic.Core.AdminApi();
+
+            var users = _admin.GetUsersList(); // action.GetAllUsers();
+            return View(users);
         }
     }
 }
