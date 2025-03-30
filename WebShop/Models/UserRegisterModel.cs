@@ -32,5 +32,7 @@ namespace WebShop.Models
         [Required(ErrorMessage = "Укажите Email")]
         [MaxLength(12, ErrorMessage = "Максимум 12 символов в номере телефона")]
         public string PhoneNumber { get; set; }
+
+        public string Role { get; set; } 
     }
 }

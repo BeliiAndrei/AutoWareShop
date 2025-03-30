@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.User.Auth;
 using WebShop.Models;
-using WebShop.BusinessLogic;
+using WebShop.Domain.User.Registration;
 namespace WebShop.Controllers
 {
     public class AuthController : Controller

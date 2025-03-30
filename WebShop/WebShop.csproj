@@ -375,12 +375,13 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Admin\Clients.cshtml" />
-    <Content Include="Views\Admin\Admin_pan.cshtml" />
+    <Content Include="Views\Admin\ClientProfile.cshtml" />
     <Content Include="Views\CatalogSearch\Catalog.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_PersonalLayout.cshtml" />
     <Content Include="Views\BasketPayment\Basket_step_1.cshtml" />
     <Content Include="Views\Shared\_InfoLayout.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

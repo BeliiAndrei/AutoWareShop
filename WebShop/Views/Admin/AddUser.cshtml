@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Регистрация пользователя";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+
+}
+@model WebShop.Models.UserRegisterModel
+
+<div class="inner-section__body inner-section__body--no-gutters">
+    <div class="main-heading">
+        <div class="main-heading__text">Добавление пользователя</div>
+    </div>
+    <div class="reg-form-wrap">
+        @Html.ValidationSummary(true)
+        @using (Html.BeginForm("RegisterUser", "Admin", FormMethod.Post, new { @id = "LoginForm", @class = "main-form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.UserName, "Имя", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.UserName, new
+                   {
+                       title = "Введите ваше имя",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.UserLastName, "Фамилия", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.UserLastName, new
+                   {
+                       title = "Введите ваше имя",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Email, "Email", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Email, new
+                   {
+                       type = "email",
+                       placeholder = "example@gmail.com",
+                       title = "Email (используется как логин)",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Password, "Пароль", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Password, new
+                   {
+                       type = "password",
+                       placeholder = "****",
+                       title = "Введите пароль",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.PhoneNumber, "Телефон мобильный", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.PhoneNumber, new
+                   {
+                       type = "tel",
+                       placeholder = "+373",
+                       title = "Телефон мобильный",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Role, "Роль", new { @class = "main-form__label" })
+                        @Html.DropDownListFor(
+                            m => m.Role,
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Value = "User", Text = "Пользователь", Selected = Model.Role == "User" },
+                                new SelectListItem { Value = "Admin", Text = "Администратор", Selected = Model.Role == "Admin" }
+                            },
+                            new { @class = "main-form__input" }
+                        )
+                    </div>
+
+                </div>
+            </div>
+           
+            <div class="main-form__field main-form__field--flex">
+                <input class="main-form__btn btn btn--main" type="submit" name="send-data" value="Зарегистрировать">
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "ClientProfile";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+}
+
+@model WebShop.Domain.User.Admin.UserInfo
+
+<main class="main-content">
+    @if (TempData["SuccessMessage"] != null)
+    {
+
+        <div class="alert alert-success" role="alert" style="color:red">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    <h1 class="main-title">Профиль</h1>
+    <form action="UserProfileEdit" method="POST" name="user-profile-edit">
+        <div class="section-area">
+            <div class="section-area__heading">Личные данные</div>
+            <div class="manual-params manual-params--bigger" id="user-info-section">
+                <dl class="manual-params__param">
+                    <dt class="manual-params__value">Имя</dt>
+                    <dd class="manual-params__property">
+                        <input type="text" name="UserName" value="@Model.UserName" class="form-control" readonly>
+                    </dd>
+                </dl>
+                <dl class="manual-params__param">
+                    <dt class="manual-params__value">Фамилия</dt>
+                    <dd class="manual-params__property">
+                        <input type="text" name="UserLastName" value="@Model.UserLastName" class="form-control" readonly>
+                    </dd>
+                </dl>
+                <dl class="manual-params__param">
+                    <dt class="manual-params__value">Email</dt>
+                    <dd class="manual-params__property">
+                        <input type="email" name="Email" value="@Model.Email" class="form-control" readonly>
+                    </dd>
+                </dl>
+                <dl class="manual-params__param">
+                    <dt class="manual-params__value">Телефон</dt>
+                    <dd class="manual-params__property">
+                        <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" readonly>
+                    </dd>
+                </dl>
+                <dl class="manual-params__param">
+                    <dt class="manual-params__value">Баланс</dt>
+                    <dd class="manual-params__property">
+                        <input type="text" name="Balance" value="@Model.Balance" class="form-control" readonly>
+                    </dd>
+                </dl>
+                <dl class="manual-params__param">
+                    <dt class="manual-params__value">Роль</dt>
+                    <dd class="manual-params__property">@Model.Role</dd>
+                </dl>
+                <div class="manual-params__edit" id="edit-button">
+                    <input type="button" class="btn--main btn" name="edit" value="Редактировать">
+                </div>
+            </div>
+            <br />
+            <div class="section-area">
+                <div class="section-area__heading">Роли в системе</div>
+                <div class="section-area__bordered">
+                    <div class="row">
+                        <div class="col-sm-12" id="radio-roles">
+                            <div class="radio-label">
+                                <input class="radio-label__input" type="radio" name="role" id="role-user" value="User"
+                                       @(Model.Role == "User" ? "checked" : "")>
+                                <label class="radio-label__main" for="role-user">Пользователь</label>
+                            </div>
+
+                            <div class="radio-label">
+                                <input class="radio-label__input" type="radio" name="role" id="role-admin" value="Admin"
+                                       @(Model.Role == "Admin" ? "checked" : "")>
+                                <label class="radio-label__main" for="role-admin">Администратор</label>
+                            </div>
+
+                            <div class="radio-label">
+                                <input class="radio-label__input" type="radio" name="role" id="role-blocked" value="Banned"
+                                       @(Model.Role == "Banned" ? "checked" : "")>
+                                <label class="radio-label__main" for="role-blocked">Заблокировать</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="section-area__summary">
+                <a class="section-area__summary-cancel" href="@Url.Action("ClientProfile","Admin", new {userId = Model.Id})"><i class="fa fa-times-circle"></i> Отмена</a>
+                <input class="btn btn--main" type="submit" name="send-data" value="Сохранить изменения" style="display: none;">
+            </div>
+        </div>
+    </form>
+    <div class="section-area__heading">Заказы</div>
+    <div class="table-responsive">
+        <table></table>
+    </div>
+</main>
+@section Scripts{
+    <script>
+        document.getElementById("edit-button").addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const inputs = document.querySelectorAll("#user-info-section input");
+            inputs.forEach(input => input.removeAttribute("readonly"));
+
+            document.querySelector(".section-area__summary input[type='submit']").style.display = "inline-block";
+            this.style.display = "none";
+        });
+        document.getElementById("radio-roles").addEventListener("click", function (e) {
+            document.querySelector(".section-area__summary input[type='submit']").style.display = "inline-block";
+        });
+    </script>
+}

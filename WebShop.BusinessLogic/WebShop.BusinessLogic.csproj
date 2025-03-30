@@ -110,12 +110,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202503291827409_InitialCreate.resx">
       <DependentUpon>202503291827409_InitialCreate.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202503291836104_Test added.resx">
       <DependentUpon>202503291836104_Test added.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202503291844287_TestRemoved.resx">
       <DependentUpon>202503291844287_TestRemoved.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
