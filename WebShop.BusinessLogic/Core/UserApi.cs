@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebShop.BusinessLogic.DBModel;
+using WebShop.Domain.Enumerables;
 using WebShop.Domain.Product;
+using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
+using WebShop.Domain.User.Modify;
 using WebShop.Domain.User.Registration;
 
 namespace WebShop.BusinessLogic.Core
@@ -33,7 +33,16 @@ namespace WebShop.BusinessLogic.Core
                 return new UserLoginResponse
                 {
                     Status = true,
-                    StatusMsg = "UserFound"
+                    StatusMsg = "UserFound",
+                    UserInfo = new UserInfo
+                    {
+                        Id = user.Id,
+                        UserName = user.Username,
+                        UserLastName = user.Usersurname,
+                        Email = user.Email,
+                        PhoneNumber = user.PhoneNumber,
+                        Role = user.Level.ToString()
+                    }
                 };
             return new UserLoginResponse
             {
@@ -82,7 +91,43 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
+        internal UserDBTable EditUserProfileAction(UserInfo data)
+        {
+            using (var db = new UserContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id == data.Id); // или u.Email == model.Email
+                if (user == null)
+                {
+                    return null;
+                }
 
+                // Обновляем поля пользователя
+                user.Username = data.UserName;
+                user.Usersurname = data.UserLastName;
+                user.PhoneNumber = data.PhoneNumber;
+                user.Email = data.Email;
+
+                // Сохраняем изменения в базе данных
+                db.SaveChanges();
+
+                return user;
+            };
+        }
+
+        public bool ChangePasswordInDBAction(ChangePasswordClass pass)
+        {
+            using (var db = new UserContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == pass.Id);
+                if (user == null)
+                    return false;
+                if (user.Password != pass.OldPassword)
+                    return false;
+                user.Password = pass.NewPassword;
+                db.SaveChanges();
+                return true;
+            }
+        }
         public bool IsSessionValidAction(string key)
         {
             if (string.IsNullOrEmpty(key)) return false;
@@ -94,13 +139,13 @@ namespace WebShop.BusinessLogic.Core
             return true;
         }
 
-        internal int GetUserIdBySessionKeyAction(string sessionKey)
+        internal UserInfo GetUserIdBySessionKeyAction(string sessionKey)
         {
 
 
             //select from db 
 
-            return 1;
+            return null;
 
         }
 

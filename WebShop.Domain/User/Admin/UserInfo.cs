@@ -1,4 +1,6 @@
-﻿namespace WebShop.Domain.User.Admin
+﻿using System;
+
+namespace WebShop.Domain.User.Admin
 {
     public class UserInfo
     {
@@ -9,5 +11,6 @@
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
         public decimal Balance { get; set; }
+
     }
 }
