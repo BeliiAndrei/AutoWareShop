@@ -56,6 +56,13 @@ namespace WebShop.BusinessLogic.Core
         {
             using (var db = new UserContext())
             {
+                var isSuchEmail = db.Users.FirstOrDefault(u => u.Email == data.Email);
+                if(isSuchEmail != null)
+                    return new UserRegistrationResponse
+                    {
+                        Status = false,
+                        StatusMsg = "Such Email already exists"
+                    };
                 var user = new UserDBTable
                 {
                     Username = data.UserName,

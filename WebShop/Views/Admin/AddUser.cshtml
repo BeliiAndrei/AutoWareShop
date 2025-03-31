@@ -7,6 +7,13 @@
 @model WebShop.Models.UserRegisterModel
 
 <div class="inner-section__body inner-section__body--no-gutters">
+    @if (TempData["Message"] != null)
+    {
+
+        <div class="alert alert-success" role="alert" style="color:red">
+            @TempData["Message"]
+        </div>
+    }
     <div class="main-heading">
         <div class="main-heading__text">Добавление пользователя</div>
     </div>
@@ -97,7 +104,7 @@
 
                 </div>
             </div>
-           
+
             <div class="main-form__field main-form__field--flex">
                 <input class="main-form__btn btn btn--main" type="submit" name="send-data" value="Зарегистрировать">
             </div>

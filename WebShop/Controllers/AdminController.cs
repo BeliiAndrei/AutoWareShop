@@ -73,9 +73,11 @@ namespace WebShop.Controllers
                 }
                 else
                 {
+                    TempData["Message"] = userRegister.StatusMsg;
                     return RedirectToAction("AddUser");
                 }
             }
+            TempData["Message"] = "Something went wrong";
             return RedirectToAction("AddUser");
         }
 

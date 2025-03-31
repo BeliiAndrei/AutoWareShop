@@ -5,6 +5,13 @@
 @model WebShop.Models.UserLoginModel
 <div class="inner-section">
     <div class="inner-section__main">
+        @if (TempData["Message"] != null)
+        {
+
+            <div class="alert alert-success" role="alert" style="color:red">
+                @TempData["Message"]
+            </div>
+        }
         <div class="inner-section__header">
             <h1 class="inner-section__heading">Авторизация</h1><a class="inner-section__link" href="@Url.Action("Registration","Auth")">Регистрация</a>
         </div>

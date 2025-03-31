@@ -51,10 +51,11 @@ namespace WebShop.Controllers
                 }
                 else
                 {
-                    Console.WriteLine(userLoginResponse.StatusMsg);
+                    TempData["Message"] = userLoginResponse.StatusMsg;
                     return View("Authorisation");
                 }
             }
+            TempData["Message"] = "Something went wrong";
             return View("Authorisation");
 
         }
@@ -69,6 +70,7 @@ namespace WebShop.Controllers
         {
             if (registerData.Password != registerData.RePassword)
             {
+                TempData["Message"] = "Пароли не совпаают";
                 return View("Registration");
             }
             if (ModelState.IsValid)
@@ -88,10 +90,11 @@ namespace WebShop.Controllers
                     return View("../Home/MainPage");
                 else
                 {
-                    Console.WriteLine(userRegister.StatusMsg);
+                    TempData["Message"] = userRegister.StatusMsg;
                     return View("Registration");
                 }
             }
+            TempData["Message"] = "Something went wrong";
             return View("Registration");
         }
     }

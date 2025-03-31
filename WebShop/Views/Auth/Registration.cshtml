@@ -6,6 +6,13 @@
 
 <div class="inner-section">
     <div class="inner-section__main inner-section__main--wider">
+        @if (TempData["Message"] != null)
+        {
+
+            <div class="alert alert-success" role="alert" style="color:red">
+                @TempData["Message"]
+            </div>
+        }
         <div class="inner-section__header">
             <h1 class="inner-section__heading">Регистрация</h1><a class="inner-section__link" href="@Url.Action("Authorisation","Auth")">Вход в систему</a>
         </div>
