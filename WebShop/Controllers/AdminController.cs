@@ -13,10 +13,12 @@ namespace WebShop.Controllers
     public class AdminController : Controller
     {
         IAdmin _admin;
+        IProduct _product;
         public AdminController() 
         {
             var bl = new BusinessLogic.BusinessLogic();
             _admin = bl.GetAdminBl();
+            _product = bl.GetProductBl();
         }
         [HttpGet]
         public ActionResult ClientProfile()
@@ -76,5 +78,30 @@ namespace WebShop.Controllers
             }
             return RedirectToAction("AddUser");
         }
+
+        public ActionResult Products()
+        {
+            var Images = new List<string>();
+            Images.Add("1");
+            Images.Add("7");
+            Images.Add("6");
+            Images.Add("4");
+            Images.Add("5");
+            Images.Add("2");
+            Images.Add("3");
+            var products = _product.CreateNewProduct(new Domain.Product.ProductDBTable
+            {
+                Quantity = 10,
+                Price = 500,
+                Name = "Фильтр масляный",
+                Producer = "Filtron",
+                Article = "OP525",
+                ImagesLinks = Images,
+                Description = "Ма́сляный фи́льтр — устройство, предназначенное для удаления загрязнений " +
+                "из моторных, компрессорных, турбинных, трансмиссионных, смазочных масел, гидравлических жидкостей (жидкость для автоматической коробки перемены передач, жидкость для гидравлического усилителя рулевого управления) и др.",
+            });
+            return View();
+        }
+
     }
 }

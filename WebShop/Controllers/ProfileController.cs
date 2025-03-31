@@ -35,10 +35,11 @@ namespace WebShop.Controllers
 
         public ActionResult SaveProfile(UserInfo edited)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View("ClientProfile", edited);
-            //}
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = "Введённые данные некорректны";
+                return View("ClientProfile", edited);
+            }
             var user = _user.EditUserProfile(edited);
             TempData["Message"] = "Изменения успешно сохранены.";
             Session["User"] = user;

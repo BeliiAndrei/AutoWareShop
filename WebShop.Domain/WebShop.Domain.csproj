@@ -57,6 +57,7 @@
     <Compile Include="News\News.cs" />
     <Compile Include="Order\Order.cs" />
     <Compile Include="Payment\ReceiptToPay.cs" />
+    <Compile Include="Product\ProductDBTable.cs" />
     <Compile Include="Product\ProductDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Admin\UserInfo.cs" />
@@ -76,6 +77,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Product\Admin\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
