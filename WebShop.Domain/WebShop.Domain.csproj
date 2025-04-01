@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Basket\Basket.cs" />
     <Compile Include="Delivery\DeliveryLocation.cs" />
+    <Compile Include="Enumerables\ProductStatus.cs" />
     <Compile Include="Enumerables\UserRole.cs" />
     <Compile Include="News\News.cs" />
     <Compile Include="Order\Order.cs" />

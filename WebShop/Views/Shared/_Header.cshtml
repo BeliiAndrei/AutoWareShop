@@ -1,11 +1,16 @@
 ﻿@{
-    bool isAdmin = true;
+    var role = HttpContext.Current.Session["User"] is WebShop.Domain.User.Admin.UserInfo user && user.Role != null
+    ? user.Role
+    : string.Empty;
+    var isAdmin = role == "Admin" ? true : false;
+    var isBanned = role == "Banned" ? true : false;
 }
 
 <header class="header">
     <div class="header-top-area">
         <div class="container-fluid">
             <div class="header-top-area-main">
+
                 <button class="navigation-trigger js-dropdown-toggle d-md-none">
                     <svg class="icon icon-menu-dots navigation-trigger__icon">
                         <use href="~/assets/images/svg/symbol/sprite.svg#menu-dots"></use>
@@ -15,6 +20,12 @@
                     <div class="header__informer">Кишинев, улица Studenților 9/9, <br> торгово-складской комплекс №1.</div>
                     <div class="header__informer">График работы: <br> 8.00 - 19.00 понедельник - суббота</div>
                 </div>
+                @if (isBanned)
+                {
+                    <div class="alert alert-danger" role="alert" style="color:red">
+                        Ваш аккаунт заблокирован! Обратитесь к администратору для разблокировки, иначе вы не сможете полноценно пользоватьсяс нашими услугами.
+                    </div>
+                }
                 <div class="tiny-contacts">
                     <a class="tiny-contacts__wrap" href="tel:+37379637411">
                         <svg class="icon icon-phone-call tiny-contacts__icon">

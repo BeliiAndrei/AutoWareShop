@@ -87,6 +87,14 @@
     <Compile Include="Migrations\202503291844287_TestRemoved.Designer.cs">
       <DependentUpon>202503291844287_TestRemoved.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202503312004449_AddProductTable.cs" />
+    <Compile Include="Migrations\202503312004449_AddProductTable.Designer.cs">
+      <DependentUpon>202503312004449_AddProductTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202503312010063_AddProductDBTables.cs" />
+    <Compile Include="Migrations\202503312010063_AddProductDBTables.Designer.cs">
+      <DependentUpon>202503312010063_AddProductDBTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLogic\SessionBL.cs" />
@@ -120,6 +128,12 @@
     <EmbeddedResource Include="Migrations\202503291844287_TestRemoved.resx">
       <DependentUpon>202503291844287_TestRemoved.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503312004449_AddProductTable.resx">
+      <DependentUpon>202503312004449_AddProductTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503312010063_AddProductDBTables.resx">
+      <DependentUpon>202503312010063_AddProductDBTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
