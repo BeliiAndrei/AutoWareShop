@@ -75,27 +75,20 @@
     <Compile Include="Interfaces\IPruoduct.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="Interfaces\IUser.cs" />
-    <Compile Include="Migrations\202503291827409_InitialCreate.cs" />
-    <Compile Include="Migrations\202503291827409_InitialCreate.Designer.cs">
-      <DependentUpon>202503291827409_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\ProductContextMigrations\202504011848180_InitialUserMigration.cs" />
+    <Compile Include="Migrations\ProductContextMigrations\202504011848180_InitialUserMigration.Designer.cs">
+      <DependentUpon>202504011848180_InitialUserMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202503291836104_Test added.cs" />
-    <Compile Include="Migrations\202503291836104_Test added.Designer.cs">
-      <DependentUpon>202503291836104_Test added.cs</DependentUpon>
+    <Compile Include="Migrations\ProductContextMigrations\202504011913010_AddImageString.cs" />
+    <Compile Include="Migrations\ProductContextMigrations\202504011913010_AddImageString.Designer.cs">
+      <DependentUpon>202504011913010_AddImageString.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202503291844287_TestRemoved.cs" />
-    <Compile Include="Migrations\202503291844287_TestRemoved.Designer.cs">
-      <DependentUpon>202503291844287_TestRemoved.cs</DependentUpon>
+    <Compile Include="Migrations\ProductContextMigrations\ProductContextConfiguration.cs" />
+    <Compile Include="Migrations\UserContextMigrations\202504011856244_InitialUserMigration.cs" />
+    <Compile Include="Migrations\UserContextMigrations\202504011856244_InitialUserMigration.Designer.cs">
+      <DependentUpon>202504011856244_InitialUserMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202503312004449_AddProductTable.cs" />
-    <Compile Include="Migrations\202503312004449_AddProductTable.Designer.cs">
-      <DependentUpon>202503312004449_AddProductTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202503312010063_AddProductDBTables.cs" />
-    <Compile Include="Migrations\202503312010063_AddProductDBTables.Designer.cs">
-      <DependentUpon>202503312010063_AddProductDBTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\UserContextMigrations\UserContextConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLogic\SessionBL.cs" />
   </ItemGroup>
@@ -117,23 +110,14 @@
     <Folder Include="DBModel\Seed\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202503291827409_InitialCreate.resx">
-      <DependentUpon>202503291827409_InitialCreate.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Migrations\ProductContextMigrations\202504011848180_InitialUserMigration.resx">
+      <DependentUpon>202504011848180_InitialUserMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202503291836104_Test added.resx">
-      <DependentUpon>202503291836104_Test added.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Migrations\ProductContextMigrations\202504011913010_AddImageString.resx">
+      <DependentUpon>202504011913010_AddImageString.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202503291844287_TestRemoved.resx">
-      <DependentUpon>202503291844287_TestRemoved.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202503312004449_AddProductTable.resx">
-      <DependentUpon>202503312004449_AddProductTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202503312010063_AddProductDBTables.resx">
-      <DependentUpon>202503312010063_AddProductDBTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\UserContextMigrations\202504011856244_InitialUserMigration.resx">
+      <DependentUpon>202504011856244_InitialUserMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

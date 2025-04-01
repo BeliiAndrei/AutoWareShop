@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.Domain.Product;
+using WebShop.Domain.Product.Admin;
 
 namespace WebShop.BusinessLogic.Interfaces
 {
     public interface IProduct
     {
-        bool IsProductValid(int id);
+        ProductActionResponse CreateNewProduct (ProductDTO data);
+        ProductDTO ModifyProduct (ProductDTO data);
 
-        bool CreateNewProduct (ProductDBTable data);
+        List<ProductDTO> GetProductsList();
+        ProductDTO GetProductById (int id);
     }
 }

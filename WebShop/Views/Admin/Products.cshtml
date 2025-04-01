@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+}
+
+@model List<WebShop.Domain.Product.ProductDTO>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .details-button {
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .details-button:hover {
+            background-color: #45a049;
+        }
+
+    .status-icon {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .status-hidden {
+        background-color: red;
+    }
+
+    .status-shown {
+        background-color: green;
+    }
+
+    .status-bonus {
+        background-color: gold;
+    }
+</style>
+
+<main class="main-content">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" role="alert" style="color:red">
+            @TempData["Message"]
+        </div>
+    }
+    <div class="main-heading">
+        <div class="main-heading__text">Управление товарами</div>
+    </div>
+    <a href="@Url.Action("AddProduct", "Admin")"><input type="button" class="btn--main btn" value="Добавить товар" /></a>
+    <h2>Список товаров</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Производитель</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Статус</th>
+                <th>Артикул</th>
+                <th>Количество</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Producer</td>
+                    <td>@product.Category</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>
+                        @if (product.Status ==WebShop.Domain.Enumerables.ProductStatus.hidden)
+                        {
+                            <div>
+                                <span class="status-icon status-hidden"></span>Скрыт
+                            </div>
+                        }
+                        else if (product.Status == WebShop.Domain.Enumerables.ProductStatus.shown)
+                        {
+                            <div>
+                                <span class="status-icon status-shown"></span>Отображён
+                            </div>
+                        }
+                        else if (product.Status == WebShop.Domain.Enumerables.ProductStatus.bonus)
+                        {
+                            <div>
+                                <span class="status-icon status-bonus"></span>Бонусный
+                            </div>
+                        }
+                    </td>
+                    <td>@product.Article</td>
+                    <td>@product.Quantity</td>
+                    <td>
+                        <form action="@Url.Action("ProductDetails", "Admin", new { productId = product.Id })" method="post">
+                            <button type="submit" class="details-button">Подробнее</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>
+

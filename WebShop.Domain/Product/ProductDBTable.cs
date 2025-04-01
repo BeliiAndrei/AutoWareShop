@@ -21,7 +21,7 @@ namespace WebShop.Domain.Product
         public string Producer { get; set; }
 
         [Display(Name = "Images")]
-        public List<string> ImagesLinks { get; set; }
+        public string ImageString { get; set; }
 
         [Display(Name = "Price")]
         public decimal Price { get; set; }

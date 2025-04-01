@@ -7,13 +7,13 @@ namespace WebShop.BusinessLogic.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class TestRemoved : IMigrationMetadata
+    public sealed partial class InitialUserMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(TestRemoved));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialUserMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202503291844287_TestRemoved"; }
+            get { return "202504011856244_InitialUserMigration"; }
         }
         
         string IMigrationMetadata.Source

@@ -78,7 +78,7 @@ namespace WebShop.BusinessLogic.Core
                 }
             }
         }
-        public void EditUser(UserDBTable user)
+        internal void EditUser(UserDBTable user)
         {
             using (var db = new UserContext())
             {

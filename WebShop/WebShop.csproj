@@ -383,6 +383,8 @@
     <Content Include="Views\BasketPayment\Basket_step_1.cshtml" />
     <Content Include="Views\Shared\_InfoLayout.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Views\Admin\Products.cshtml" />
+    <Content Include="Views\Admin\AddProduct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

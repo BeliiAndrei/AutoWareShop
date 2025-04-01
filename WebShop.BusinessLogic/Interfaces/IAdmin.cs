@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Registration;
 
@@ -7,6 +8,7 @@ namespace WebShop.BusinessLogic.Interfaces
     public interface IAdmin
     {
         List<UserInfo> GetUsersList();
+        //List<ProductDTO> GetProductsList()
         UserInfo GetUserById(int id);
         UserInfo UpdateUser(UserInfo oldUser);
         UserRegistrationResponse RegisterUser(UserRegistrationData newUser);

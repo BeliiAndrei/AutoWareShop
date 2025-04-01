@@ -14,7 +14,7 @@ namespace WebShop.Models
         public int Quantity {get; set;}
         public long Code { get; set; }
         public string Article { get; set;}
-        public List<string> Images { get; set; }
+        public string Image { get; set; }
         public string BrandImage { get; set; }
         public List<ProductCardViewModel> Analogues { get; set; }
         public List<Pair> Specifications { get; set; }
