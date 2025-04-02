@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.DBModel.Seed;
 using WebShop.Domain.Enumerables;
 using WebShop.Domain.Product;
 using WebShop.Domain.Product.Admin;
-using WebShop.Domain.User.Auth;
 
 namespace WebShop.BusinessLogic.Core
 {

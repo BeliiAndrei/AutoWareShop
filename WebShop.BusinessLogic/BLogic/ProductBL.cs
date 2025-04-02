@@ -48,6 +48,8 @@ namespace WebShop.BusinessLogic.BLogic
             product.Price = productFromDB.Price;
             product.Quantity = productFromDB.Quantity;
             product.Article = productFromDB.Article;
+            product.ImageNumber = productFromDB.ImageString;
+            product.Status = productFromDB.Status;
             return product;
         }
 

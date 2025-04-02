@@ -4,6 +4,8 @@
     : string.Empty;
     var isAdmin = role == "Admin" ? true : false;
     var isBanned = role == "Banned" ? true : false;
+    var name = HttpContext.Current.Session["User"] is WebShop.Domain.User.Admin.UserInfo u && u.UserName != null
+    ? u.UserName : string.Empty;
 }
 
 <header class="header">
@@ -102,7 +104,11 @@
                 }
                 else
                 {
-                    <a class="auth-form__btn btn btn--main" name="log-out" href="@Url.Action("LogOut", "Auth")">Выйти</a>
+
+                    <a class="auth-form__btn btn btn--main" name="log-out" href="@Url.Action("LogOut", "Auth")">
+                        <div class="logged-in__username">@name</div>
+                        Выйти
+                    </a>
                 }
             </div>
         </div>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using WebShop.BusinessLogic.DBModel;
-using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
 using WebShop.Domain.User.Registration;
 

@@ -127,6 +127,11 @@ namespace WebShop.Controllers
             }
             return View(product);
         }
+        [HttpGet]
+        public ActionResult ProductProfile()
+        {
+            return RedirectToActionPermanent("Products");
+        }
 
         [HttpPost]
         public ActionResult ProductProfileEdit(ProductDTO model)
