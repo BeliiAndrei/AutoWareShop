@@ -57,40 +57,53 @@
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("ProfileUser", "Profile")"><span class="section-nav__text">Профиль</span></a></li>
                     </ul>
                 </nav>
-                <div class="authorize">
-                    <ul class="authorize__list">
-                        <li class="authorize__item">
-                            <a class="authorize__link authorize__link--login" href="@Url.Action("Authorisation", "Auth")">
-                                <svg class="icon icon-login authorize__icon">
-                                    <use href="~/assets/images/svg/symbol/sprite.svg#login"></use>
-                                </svg> Вход
-                            </a>
-                        </li>
-                        <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Registration", "Auth")">Регистрация</a></li>
-                    </ul>
-                    <div class="authorize__dropdown">
-                        <div class="authorize__dropdown-body">
-                            @Html.ValidationSummary(true)
-                            @using (Html.BeginForm("TryToLogIn", "Auth", FormMethod.Post, new { @id = "LoginForm", @class = "auth-form" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="auth-form__field">
-                                    <input class="auth-form__input" type="email" name="Email" placeholder="E-mail">
-                                </div>
-                                <div class="auth-form__field">
-                                    <input class="auth-form__input" type="password" name="Password" placeholder="Пароль">
-                                </div>
-                                <div class="auth-form__field">
-                                    <div class="auth-form__checkbox checkbox-label">
-                                        <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
-                                        <label class="checkbox-label__main" for="remember">Запомнить</label>
-                                    </div>
-                                    <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти">
-                                </div>
-                            }
+                @if (HttpContext.Current.Session["User"] == null)
+                {
+                    <div class="authorize">
+                        <ul class="authorize__list">
+                            <li class="authorize__item">
+                                <a class="authorize__link authorize__link--login" href="@Url.Action("Authorisation", "Auth")">
+                                    <svg class="icon icon-login authorize__icon">
+                                        <use href="~/assets/images/svg/symbol/sprite.svg#login"></use>
+                                    </svg> Вход
+                                </a>
+                            </li>
+                            <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Registration", "Auth")">Регистрация</a></li>
+                        </ul>
+
+
+                        <div class="authorize__dropdown">
+                            <div class="authorize__dropdown-body">
+                                @if (HttpContext.Current.Session["User"] == null)
+                                {
+                                    @Html.ValidationSummary(true)
+                                    using (Html.BeginForm("TryToLogIn", "Auth", FormMethod.Post, new { @id = "LoginForm", @class = "auth-form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="auth-form__field">
+                                            <input class="auth-form__input" type="email" name="Email" placeholder="E-mail">
+                                        </div>
+                                        <div class="auth-form__field">
+                                            <input class="auth-form__input" type="password" name="Password" placeholder="Пароль">
+                                        </div>
+                                        <div class="auth-form__field">
+                                            <div class="auth-form__checkbox checkbox-label">
+                                                <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
+                                                <label class="checkbox-label__main" for="remember">Запомнить</label>
+                                            </div>
+                                            <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти">
+                                        </div>
+                                    }
+                                }
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <a class="auth-form__btn btn btn--main" name="log-out" href="@Url.Action("LogOut", "Auth")">Выйти</a>
+                }
             </div>
         </div>
     </div>

@@ -97,5 +97,11 @@ namespace WebShop.Controllers
             TempData["Message"] = "Something went wrong";
             return View("Registration");
         }
+
+        public ActionResult LogOut()
+        {
+            Session["User"] = null;
+            return RedirectToAction("MainPage", "Home");
+        }
     }
 }
