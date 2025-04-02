@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebShop.BusinessLogic.Core;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.User.Auth;
+using WebShop.Domain.User.Registration;
 
 namespace WebShop.BusinessLogic
 {
@@ -14,6 +15,11 @@ namespace WebShop.BusinessLogic
         public UserLoginResponse UserLogin(UserLoginData data)
         {
             return UserLoginAction(data);
+        }
+
+        public UserRegistrationResponse UserRegistration(UserRegistrationData data)
+        {
+            return UserRegistrationAction(data);
         }
     }
 }

@@ -324,8 +324,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\ProductCardViewModel.cs" />
-    <Compile Include="Models\UserLogin.cs" />
+    <Compile Include="Models\UserLoginModel.cs" />
+    <Compile Include="Models\UserRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -355,7 +357,7 @@
     <Content Include="Views\BasketPayment\Basket_step_2.cshtml" />
     <Content Include="Views\Profile\Orders.cshtml" />
     <Content Include="Views\CatalogSearch\Match_vincode.cshtml" />
-    <Content Include="Views\Profile\Profile_user.cshtml" />
+    <Content Include="Views\Profile\ProfileUser.cshtml" />
     <Content Include="Views\CatalogSearch\Select_car.cshtml" />
     <Content Include="Views\OtherServices\Sto.cshtml" />
     <Content Include="Views\Error\Error_404.cshtml" />
@@ -374,12 +376,16 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Admin\Clients.cshtml" />
-    <Content Include="Views\Admin\Admin_pan.cshtml" />
+    <Content Include="Views\Admin\ClientProfile.cshtml" />
     <Content Include="Views\CatalogSearch\Catalog.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_PersonalLayout.cshtml" />
     <Content Include="Views\BasketPayment\Basket_step_1.cshtml" />
     <Content Include="Views\Shared\_InfoLayout.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Views\Admin\Products.cshtml" />
+    <Content Include="Views\Admin\AddProduct.cshtml" />
+    <Content Include="Views\Admin\ProductProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -4,9 +4,76 @@
     ViewBag.Title = "All users";
 }
 
+@model List<WebShop.Domain.User.Admin.UserInfo>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+    .details-button {
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .details-button:hover {
+        background-color: #45a049;
+    }
+</style>
 <main class="main-content">
+    @if (TempData["Message"] != null)
+    {
+
+        <div class="alert alert-success" role="alert" style="color:red">
+            @TempData["Message"]
+        </div>
+    }
     <div class="main-heading">
-        <div class="main-heading__text">Клиенты</div>
+        <div class="main-heading__text">Клиенты. Управление пользователями</div>
     </div>
-    <h2>Тут будет выводится список всех пользователей</h2>
+    <a href="@Url.Action("AddUser", "Admin")"><input type="button" class="btn--main btn" value="Добавить пользователя" /></a>
+    <h2>Список пользователей</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Email</th>
+                <th>Телефон</th>
+                <th>Роль</th>
+                <th>Баланс</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.UserLastName</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.Role</td>
+                    <td>@user.Balance.ToString("C")</td>
+                    <td>
+                        <form action="@Url.Action("ClientProfile", "Admin", new { userId = user.Id })" method="post">
+                            <button type="submit" class="details-button">Подробнее</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </main>

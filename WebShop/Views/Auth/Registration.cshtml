@@ -1,140 +1,120 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Registration";
 }
 
+@model WebShop.Models.UserRegisterModel
+
 <div class="inner-section">
     <div class="inner-section__main inner-section__main--wider">
+        @if (TempData["Message"] != null)
+        {
+
+            <div class="alert alert-success" role="alert" style="color:red">
+                @TempData["Message"]
+            </div>
+        }
         <div class="inner-section__header">
             <h1 class="inner-section__heading">Регистрация</h1><a class="inner-section__link" href="@Url.Action("Authorisation","Auth")">Вход в систему</a>
         </div>
         <div class="inner-section__body inner-section__body--no-gutters">
             <div class="reg-form-wrap">
-                <form class="main-form" method="POST" action="/" name="auth-form">
+                @Html.ValidationSummary(true)
+                @Html.ValidationMessageFor(m => m.Password)
+                @using (Html.BeginForm("RegisterNewUser", "Auth", FormMethod.Post, new { @id = "LoginForm", @class = "main-form" }))
+                {
+                    @Html.AntiForgeryToken()
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="main-form__field">
-                                <label class="main-form__label" for="user-name">Ваше имя <span>*</span>:</label>
-                                <input class="main-form__input" type="text" name="user-name" id="user-name">
+                                @Html.LabelFor(m => m.UserName, "Ваше имя", new { @class = "main-form__label" })
+                                @Html.TextBoxFor(m => m.UserName, new
+                                    {
+                                        title = "Введите ваше имя",
+                                        value = "",
+                                        @class = "main-form__input"
+                                    })
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="main-form__field">
-                                <label class="main-form__label" for="user-lastname">Фамилия <span>*</span>:</label>
-                                <input class="main-form__input" type="text" lastname="user-lastname" id="user-lastname">
+                                @Html.LabelFor(m => m.UserLastName, "Фамилия", new { @class = "main-form__label" })
+                                @Html.TextBoxFor(m => m.UserLastName, new
+                                    {
+                                        title = "Введите ваше имя",
+                                        value = "",
+                                        @class = "main-form__input"
+                                    })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Email, "Email", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Email, new
+                   {
+                       type = "email",
+                       placeholder = "example@gmail.com",
+                       title = "Email (используется как логин)",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                @Html.LabelFor(m => m.Password, "Пароль", new { @class = "main-form__label" })
+                                @Html.TextBoxFor(m => m.Password, new
+                           {
+                               type = "password",
+                               placeholder = "****",
+                               title = "Введите пароль",
+                               value = "",
+                               @class = "main-form__input"
+                           })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="main-form__field">
+                                @*error  добавить в имя класса при ошибке чтобы подстветить красным поле*@
+                                @Html.LabelFor(m => m.RePassword, "Пароль ещё раз", new { @class = "main-form__label" })
+                                @Html.TextBoxFor(m => m.RePassword, new
+                           {
+                               type = "password",
+                               placeholder = "****",
+                               title = "Введите пароль ещё раз",
+                               value = "",
+                               @class = "main-form__input"
+                           })
+                                <small class="error__desc">Пароли не совпадают</small>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="main-form__field">
-                                <div class="radio-label">
-                                    <input class="radio-label__input" type="radio" name="user-role" value="user-role-1" id="u-rl-1">
-                                    <label class="radio-label__main" for="u-rl-1">Я физическое лицо</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="main-form__field">
-                                <div class="radio-label">
-                                    <input class="radio-label__input" type="radio" name="user-role" checked value="user-role-2" id="u-rl-2">
-                                    <label class="radio-label__main" for="u-rl-2">Я юридическое лицо</label>
-                                </div>
+                                @Html.LabelFor(m => m.PhoneNumber, "Телефон мобильный", new { @class = "main-form__label" })
+                                @Html.TextBoxFor(m => m.PhoneNumber, new
+                           {
+                               type = "tel",
+                               placeholder = "+373",
+                               title = "Телефон мобильный",
+                               value = "",
+                               @class = "main-form__input"
+                           })
                             </div>
                         </div>
                     </div>
-                    <div class="extra-fields">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="main-form__field">
-                                    <label class="main-form__label" for="company-name">Юридическое название компании <span>*</span>:</label>
-                                    <input class="main-form__input" type="text" name="company-name" id="company-name">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="main-form__field">
-                                    <label class="main-form__label" for="u-code-id">BIN / INN <span>*</span>:</label>
-                                    <input class="main-form__input" type="text" name="u-code-id" id="u-code-id">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="main-form__field">
-                                    <label class="main-form__label" for="u-bill">Расчетный счет:</label>
-                                    <input class="main-form__input" type="text" name="u-bill" id="u-bill">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="main-form__field">
-                                    <label class="main-form__label" for="u-bank-id">Код банка:</label>
-                                    <input class="main-form__input" type="text" name="u-bank-id" id="u-bank-id">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="main-form__footer">
                         <div class="main-form__field">
-                            <label class="main-form__label" for="u-company-address">Юридический адрес:</label>
-                            <input class="main-form__input" type="text" name="u-company-address" id="u-company-address">
-                        </div>
-                    </div>
-                    <div class="main-form__field">
-                        <label class="main-form__label" for="user-email">Email (используется как логин) <span>*</span>:</label>
-                        <input class="main-form__input" type="email" name="user-email" id="user-email">
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="main-form__field">
-                                <label class="main-form__label" for="user-password">Пароль <span>*</span>:</label>
-                                <input class="main-form__input" type="password" name="user-password" id="user-password">
+                            <div class="checkbox-label">
+                                <input class="checkbox-label__input" type="checkbox" name="is-privacy" id="privacy">
+                                <label class="checkbox-label__main" for="privacy">Я ознакомлен и принимаю условия пользовательского соглашения, договора публичной оферты и регламента гарантии / <a href="https://www.iubenda.com/en/help/2859-terms-and-conditions-when-are-they-needed">Подробнее</a></label>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="main-form__field error">
-                                <label class="main-form__label" for="user-password-verify">Пароль еще раз <span>*</span>:</label>
-                                <input class="main-form__input" type="password" name="user-password-verify" id="user-password-verify"><small class="error__desc">Пароли не совпадают</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="main-form__field">
-                                <label class="main-form__label" for="user-mob-phone">Телефон мобильный <span>*</span>:</label>
-                                <input class="main-form__input" type="tel" name="user-mob-phone" id="user-mob-phone" placeholder="+373">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="main-form__field">
-                                <label class="main-form__label" for="user-phone">Телефон стационарный:</label>
-                                <input class="main-form__input" type="tel" name="user-phone" id="user-phone" placeholder="+373">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="main-form__field">
-                                <label class="main-form__label" for="user-location">Город <span>*</span>:</label>
-                                <select class="js-select-default" name="user-location" id="user-location">
-                                    <option value="opt-1">Мун.Кишинев</option>
-                                    <option value="opt-2">Бельцы</option>
-                                    <option value="opt-3">Окница</option>
-                                    <option value="opt-4">Оргеев</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div class="main-form__footer">
-                    <div class="main-form__field">
-                        <div class="checkbox-label">
-                            <input class="checkbox-label__input" type="checkbox" name="is-privacy" id="privacy">
-                            <label class="checkbox-label__main" for="privacy">Я ознакомлен и принимаю условия пользовательского соглашения, договора публичной оферты и регламента гарантии / <a href="#">Подробнее</a></label>
                         </div>
                     </div>
                     <div class="main-form__field main-form__field--flex">
-                        <span>Каптча</span>
-                        <input class="main-form__btn btn btn--main" name="send-data" value="Зарегистрироваться">
+                        <input class="main-form__btn btn btn--main" type="submit" name="send-data" value="Зарегистрироваться">
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>

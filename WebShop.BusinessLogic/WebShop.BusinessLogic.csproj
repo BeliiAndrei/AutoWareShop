@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLogic\AdminBL.cs" />
     <Compile Include="BLogic\BasketBL.cs" />
     <Compile Include="BLogic\DeliveryBL.cs" />
     <Compile Include="BLogic\OrderBL.cs" />
@@ -63,7 +64,9 @@
     <Compile Include="Core\News.cs" />
     <Compile Include="Core\ProductApi.cs" />
     <Compile Include="Core\UserApi.cs" />
+    <Compile Include="DBModel\ProductContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
+    <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\IBasket.cs" />
     <Compile Include="Interfaces\IDelivery.cs" />
     <Compile Include="Interfaces\IOrder.cs" />
@@ -72,6 +75,20 @@
     <Compile Include="Interfaces\IPruoduct.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="Interfaces\IUser.cs" />
+    <Compile Include="Migrations\ProductContextMigrations\202504011848180_InitialUserMigration.cs" />
+    <Compile Include="Migrations\ProductContextMigrations\202504011848180_InitialUserMigration.Designer.cs">
+      <DependentUpon>202504011848180_InitialUserMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ProductContextMigrations\202504011913010_AddImageString.cs" />
+    <Compile Include="Migrations\ProductContextMigrations\202504011913010_AddImageString.Designer.cs">
+      <DependentUpon>202504011913010_AddImageString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ProductContextMigrations\ProductContextConfiguration.cs" />
+    <Compile Include="Migrations\UserContextMigrations\202504011856244_InitialUserMigration.cs" />
+    <Compile Include="Migrations\UserContextMigrations\202504011856244_InitialUserMigration.Designer.cs">
+      <DependentUpon>202504011856244_InitialUserMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\UserContextMigrations\UserContextConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLogic\SessionBL.cs" />
   </ItemGroup>
@@ -91,6 +108,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DBModel\Seed\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\ProductContextMigrations\202504011848180_InitialUserMigration.resx">
+      <DependentUpon>202504011848180_InitialUserMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ProductContextMigrations\202504011913010_AddImageString.resx">
+      <DependentUpon>202504011913010_AddImageString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\UserContextMigrations\202504011856244_InitialUserMigration.resx">
+      <DependentUpon>202504011856244_InitialUserMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

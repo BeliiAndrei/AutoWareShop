@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
+using WebShop.Domain.User.Registration;
+using WebShop.Domain.User.Modify;
 
 namespace WebShop.BusinessLogic.Interfaces
 {
     public interface IUser
     {
-        string AuthentificateUser(UserPhyRegAction auth);
+        UserLoginResponse UserLoginAction(UserLoginData data);
+        UserRegistrationResponse UserRegistrationAction(UserRegistrationData data);
+        UserInfo EditUserProfile(UserInfo data);
+        bool ChangePasswordInDB(ChangePasswordClass pass);
         int GetUserIdBySessionKey(string sessionKey);
         bool IsSessionValid(string key);
+        //UserRegistrationResponse UserRegistrationAction(UserLoginData data);
+        UserInfo GetUserInfoById(int id);
     }
 }

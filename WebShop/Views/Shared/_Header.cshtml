@@ -1,11 +1,16 @@
-﻿@{ 
-    bool isAdmin = true;
+﻿@{
+    var role = HttpContext.Current.Session["User"] is WebShop.Domain.User.Admin.UserInfo user && user.Role != null
+    ? user.Role
+    : string.Empty;
+    var isAdmin = role == "Admin" ? true : false;
+    var isBanned = role == "Banned" ? true : false;
 }
-  
+
 <header class="header">
     <div class="header-top-area">
         <div class="container-fluid">
             <div class="header-top-area-main">
+
                 <button class="navigation-trigger js-dropdown-toggle d-md-none">
                     <svg class="icon icon-menu-dots navigation-trigger__icon">
                         <use href="~/assets/images/svg/symbol/sprite.svg#menu-dots"></use>
@@ -15,6 +20,12 @@
                     <div class="header__informer">Кишинев, улица Studenților 9/9, <br> торгово-складской комплекс №1.</div>
                     <div class="header__informer">График работы: <br> 8.00 - 19.00 понедельник - суббота</div>
                 </div>
+                @if (isBanned)
+                {
+                    <div class="alert alert-danger" role="alert" style="color:red">
+                        Ваш аккаунт заблокирован! Обратитесь к администратору для разблокировки, иначе вы не сможете полноценно пользоватьсяс нашими услугами.
+                    </div>
+                }
                 <div class="tiny-contacts">
                     <a class="tiny-contacts__wrap" href="tel:+37379637411">
                         <svg class="icon icon-phone-call tiny-contacts__icon">
@@ -37,45 +48,62 @@
                     <ul class="section-nav__list">
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Search_result", "CatalogSearch")"><span class="section-nav__text">Акции</span></a></li>
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Payment", "BasketPayment")"><span class="section-nav__text">Оплата </span></a></li>
-                        @if (isAdmin) { 
-                            <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Admin_pan", "Admin")"><span class="section-nav__text">Админ Панель</span></a></li>
+                        @if (isAdmin)
+                        {
+                            <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Clients", "Admin")"><span class="section-nav__text">Админ Панель</span></a></li>
                         }
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("News", "Informational")"><span class="section-nav__text">Новости</span></a></li>
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Sto", "OtherServices")"><span class="section-nav__text">СТО</span></a></li>
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Profile_user", "Profile")"><span class="section-nav__text">Профиль</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("ProfileUser", "Profile")"><span class="section-nav__text">Профиль</span></a></li>
                     </ul>
                 </nav>
-                <div class="authorize">
-                    <ul class="authorize__list">
-                        <li class="authorize__item">
-                            <a class="authorize__link authorize__link--login" href="@Url.Action("Authorisation", "Auth")">
-                                <svg class="icon icon-login authorize__icon">
-                                    <use href="~/assets/images/svg/symbol/sprite.svg#login"></use>
-                                </svg> Вход
-                            </a>
-                        </li>
-                        <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Registration", "Auth")">Регистрация</a></li>                     
-                    </ul>
-                    <div class="authorize__dropdown">
-                        <div class="authorize__dropdown-body">
-                            <form class="auth-form" method="POST" action="/" name="auth-form">
-                                <div class="auth-form__field">
-                                    <input class="auth-form__input" type="email" name="user-email" placeholder="E-mail">
-                                </div>
-                                <div class="auth-form__field">
-                                    <input class="auth-form__input" type="password" name="user-password" placeholder="Пароль">
-                                </div>
-                                <div class="auth-form__field">
-                                    <div class="auth-form__checkbox checkbox-label">
-                                        <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
-                                        <label class="checkbox-label__main" for="remember">Запомнить</label>
-                                    </div>
-                                    <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти">
-                                </div>
-                            </form>
+                @if (HttpContext.Current.Session["User"] == null)
+                {
+                    <div class="authorize">
+                        <ul class="authorize__list">
+                            <li class="authorize__item">
+                                <a class="authorize__link authorize__link--login" href="@Url.Action("Authorisation", "Auth")">
+                                    <svg class="icon icon-login authorize__icon">
+                                        <use href="~/assets/images/svg/symbol/sprite.svg#login"></use>
+                                    </svg> Вход
+                                </a>
+                            </li>
+                            <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Registration", "Auth")">Регистрация</a></li>
+                        </ul>
+
+
+                        <div class="authorize__dropdown">
+                            <div class="authorize__dropdown-body">
+                                @if (HttpContext.Current.Session["User"] == null)
+                                {
+                                    @Html.ValidationSummary(true)
+                                    using (Html.BeginForm("TryToLogIn", "Auth", FormMethod.Post, new { @id = "LoginForm", @class = "auth-form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="auth-form__field">
+                                            <input class="auth-form__input" type="email" name="Email" placeholder="E-mail">
+                                        </div>
+                                        <div class="auth-form__field">
+                                            <input class="auth-form__input" type="password" name="Password" placeholder="Пароль">
+                                        </div>
+                                        <div class="auth-form__field">
+                                            <div class="auth-form__checkbox checkbox-label">
+                                                <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
+                                                <label class="checkbox-label__main" for="remember">Запомнить</label>
+                                            </div>
+                                            <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти">
+                                        </div>
+                                    }
+                                }
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <a class="auth-form__btn btn btn--main" name="log-out" href="@Url.Action("LogOut", "Auth")">Выйти</a>
+                }
             </div>
         </div>
     </div>

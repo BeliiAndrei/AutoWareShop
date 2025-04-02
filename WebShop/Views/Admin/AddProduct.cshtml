@@ -1,0 +1,110 @@
+﻿@model WebShop.Domain.Product.ProductDTO
+
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewBag.Title = "Добавление товара";
+}
+
+<div class="inner-section__body inner-section__body--no-gutters">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" role="alert" style="color:red">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="main-heading">
+        <div class="main-heading__text">Добавить новый продукт</div>
+    </div>
+
+    <div class="section-area">
+        <div class="section-area__heading">Основная информация о продукте</div>
+
+        @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.Name, "Название продукта")
+                        @Html.TextBoxFor(m => m.Name, new { @class = "section-area__input" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.Producer, "Производитель")
+                        @Html.TextBoxFor(m => m.Producer, new { @class = "section-area__input" })
+                        @Html.ValidationMessageFor(m => m.Producer)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.Description, "Описание")
+                        @Html.TextAreaFor(m => m.Description, new { @class = "section-area__input" })
+                        @Html.ValidationMessageFor(m => m.Description)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.Category, "Категория")
+                        @Html.TextBoxFor(m => m.Category, new { @class = "section-area__input" })
+                        @Html.ValidationMessageFor(m => m.Category)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.Price, "Цена")
+                        @Html.TextBoxFor(m => m.Price, new { @class = "section-area__input", type = "number" })
+                        @Html.ValidationMessageFor(m => m.Price)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.Status, "Статус")
+                        @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(WebShop.Domain.Enumerables.ProductStatus))), new { @class = "section-area__input" })
+                        @Html.ValidationMessageFor(m => m.Status)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.Article, "Артикул")
+                        @Html.TextBoxFor(m => m.Article, new { @class = "section-area__input" })
+                        @Html.ValidationMessageFor(m => m.Article)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.Quantity, "Количество")
+                        @Html.TextBoxFor(m => m.Quantity, new { @class = "section-area__input", type = "number" })
+                        @Html.ValidationMessageFor(m => m.Quantity)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="section-area__field">
+                        @Html.LabelFor(m => m.ImageNumber, "Номер картинки (строка)")
+                        @Html.TextBoxFor(m => m.ImageNumber, new { @class = "section-area__input" })
+                        @Html.ValidationMessageFor(m => m.ImageNumber)
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-area__field">
+                <input type="submit" class="btn--main btn" value="Добавить продукт" />
+            </div>
+        }
+    </div>
+</div>

@@ -44,5 +44,10 @@ namespace WebShop.BusinessLogic
         {
             return new OrderBL();
         }
+
+        public IAdmin GetAdminBl()
+        {
+            return new AdminBL();
+        }
     }
 }
