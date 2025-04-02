@@ -1,0 +1,101 @@
+﻿@model WebShop.Domain.Product.ProductDTO
+
+@{
+    ViewBag.Title = "Редактировать продукт";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+
+}
+
+<div class="container-fluid">
+    <div class="main-content">
+        @if (TempData["Message"] != null)
+        {
+
+            <div class="alert alert-success" role="alert" style="color:red">
+                @TempData["Message"]
+            </div>
+        }
+        <div class="primary-layout">
+            <div class="product-main-section">
+                <div class="product-main">
+                    <div class="row">
+                        <div class="col-12">
+                            <header class="product-header">
+                                <h1>Редактировать продукт</h1>
+                            </header>
+
+                            @using (Html.BeginForm("ProductProfileEdit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Name, "Название продукта")
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Producer, "Бренд")
+                                            @Html.TextBoxFor(m => m.Producer, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Article, "Артикул")
+                                            @Html.TextBoxFor(m => m.Article, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Status, "Статус")
+                                            @Html.DropDownListFor(m => m.Status, new SelectList(new[]
+                                            {
+                                                new SelectListItem { Value = "shown", Text = "Показан" },
+                                                new SelectListItem { Value = "hidden", Text = "Скрыт" },
+                                                new SelectListItem { Value = "bonus", Text = "Бонус" }
+                                            }, "Value", "Text", Model.Status), new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Price, "Цена")
+                                            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Quantity, "Количество")
+                                            @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", type = "number" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Description, "Описание")
+                                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 4 })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.ImageNumber, "Номер изображения")
+                                    @Html.TextBoxFor(m => m.ImageNumber, new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Сохранить изменения" class="btn--main btn" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,6 +19,23 @@ namespace WebShop.BusinessLogic.BLogic
             return CreateNewProductAction(data);
         }
 
+        public ProductDTO GetProductByArticle(string art)
+        {
+            var p = GetProductByArticleAction(art);
+            ProductDTO m = new ProductDTO();
+            m.Id = p.Id;
+            m.Name = p.Name;
+            m.Producer = p.Producer;
+            m.Article = p.Article;
+            m.Price = p.Price;
+            m.Category = p.Category;
+            m.Status = p.Status;
+            m.Quantity = p.Quantity;
+            m.ImageNumber = p.ImageString;
+            m.Description = p.Description;
+            return m;
+        }
+
         public ProductDTO GetProductById(int id)
         {
             var productFromDB = GetProductByIdAction(id);

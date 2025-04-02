@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
@@ -114,6 +115,29 @@ namespace WebShop.Controllers
                 TempData["Message"] = response.StatusMsg;
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult ProductProfile(int productId)
+        {
+            var product = _product.GetProductById(productId);
+            if (product == null)
+            {
+                return View("../Error/Error_500");
+            }
+            return View(product);
+        }
+
+        [HttpPost]
+        public ActionResult ProductProfileEdit(ProductDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("ProductProfile", model);
+            }
+            var product = _product.ModifyProduct(model);
+            TempData["Message"] = "Изменения успешно сохранены.";
+            return View("ProductProfile", product);
         }
 
     }
