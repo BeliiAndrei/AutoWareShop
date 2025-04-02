@@ -103,5 +103,10 @@ namespace WebShop.Controllers
             Session["User"] = null;
             return RedirectToAction("MainPage", "Home");
         }
+
+        public ActionResult Delivery()
+        {
+            return View();
+        }
     }
-}
+    }

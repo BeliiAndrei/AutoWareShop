@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.Domain;
+using WebShop.Domain.Delivery.Admin;
 
-namespace WebShop.BusinessLogic.Interfaces
-{
-    public interface IDelivery
+namespace WebShop.BusinessLogic.Interfaces { 
+
+public interface IDelivery
     {
-        void SetDeliveryInfo();
-        void EditDeliveryInfo(DeliveryLocation delivery);
-        void DeleteDeliveryInfo(DeliveryLocation delivery);
-        void GetDeliveryInfo(int userId);
+
+        DeliveryLocation EditDeliveryInfo(DeliveryLocation newDelivery);
+        DeliveryLocation DeleteDeliveryInfo();
+        void GetDeliveryInfo(DeliveryLocation newDelivery);
     }
 }

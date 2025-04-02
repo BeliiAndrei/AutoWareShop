@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebShop.Domain
+namespace WebShop.Domain.Delivery.Admin
 {
     public class DeliveryLocation
     {

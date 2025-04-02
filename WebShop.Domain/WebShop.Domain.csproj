@@ -52,7 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basket\Basket.cs" />
-    <Compile Include="Delivery\DeliveryLocation.cs" />
+    <Compile Include="Delivery\Admin\DeliveryLocation.cs" />
+    <Compile Include="Delivery\DeliveryLocationDBTable.cs" />
     <Compile Include="Enumerables\ProductStatus.cs" />
     <Compile Include="Enumerables\UserRole.cs" />
     <Compile Include="News\Admin\News.cs" />
