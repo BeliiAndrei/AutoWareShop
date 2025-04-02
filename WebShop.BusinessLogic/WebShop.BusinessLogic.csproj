@@ -61,9 +61,10 @@
     <Compile Include="BLogic\UserBL.cs" />
     <Compile Include="BusinessLogic.cs" />
     <Compile Include="Core\AdminApi.cs" />
-    <Compile Include="Core\News.cs" />
+    <Compile Include="Core\NewsApi.cs" />
     <Compile Include="Core\ProductApi.cs" />
     <Compile Include="Core\UserApi.cs" />
+    <Compile Include="DBModel\NewsContext.cs" />
     <Compile Include="DBModel\ProductContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
     <Compile Include="Interfaces\IAdmin.cs" />

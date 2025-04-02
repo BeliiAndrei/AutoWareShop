@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
+using WebShop.Domain.News;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Registration;
@@ -16,12 +18,90 @@ namespace WebShop.Controllers
     {
         IAdmin _admin;
         IProduct _product;
-        public AdminController() 
+        INews _news;
+
+        public AdminController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _admin = bl.GetAdminBl();
             _product = bl.GetProductBl();
+            _news = bl.GetNewsBl();
         }
+
+        [HttpGet]
+        public ActionResult ManageNews()
+        {
+            var model = new NewsDBTable();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult GetNewsList()
+        {
+            var newsList = _news.GetNewsList();
+            return View("NewsList", newsList);
+        }
+
+        [HttpPost]
+        public ActionResult GetNewsByIdAction(int id)
+        {
+            var news = _news.GetNewsByIdAction(id);
+            if (news == null)
+            {
+                return View("../Error/Error_500");
+            }
+            return View("EditNews", news);
+        }
+
+
+        [HttpPost]
+        public ActionResult AddNews(FormCollection form)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = "Введённые данные некорректны";
+                return View("ManageNews");
+            }
+
+            var newNews = new NewsDBTable
+            {
+                Title = form["Title"],
+                Content = form["Content"],
+                Author = form["Author"],
+                Category = form["Category"],
+                Tags = form["Tags"],
+                PublishedDate = DateTime.Now,
+                ImageString = form["ImageString"]
+            };
+
+            try
+            {
+                _news.CreateNews(newNews);
+                TempData["Message"] = "Новость успешно создана.";
+                return RedirectToAction("ManageNews");
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var error in validationErrors.ValidationErrors)
+                    {
+                        Console.WriteLine($"Property: {error.PropertyName}, Error: {error.ErrorMessage}");
+                    }
+                }
+                TempData["Message"] = "Ошибка создания новости. Проверьте введенные данные.";
+                return View("ManageNews", newNews);
+            }
+        }
+
+        //[HttpPost]
+        //public ActionResult DeleteNews(int id)
+        //{
+        //    _news.DeleteNews(id);
+        //    TempData["Message"] = "Новость успешно удалена.";
+        //    return RedirectToAction("ManageNews");
+        //}
+
         [HttpGet]
         public ActionResult ClientProfile()
         {
@@ -52,7 +132,7 @@ namespace WebShop.Controllers
 
         public ActionResult Clients()
         {
-            var users = _admin.GetUsersList(); 
+            var users = _admin.GetUsersList();
             return View(users);
         }
 
@@ -99,13 +179,13 @@ namespace WebShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddProduct(ProductDTO model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 TempData["Message"] = "Введённые данные некорректны";
                 return View();
             }
             var response = _product.CreateNewProduct(model);
-            if(response.Status == true)
+            if (response.Status == true)
             {
                 TempData["Message"] = response.StatusMsg;
                 return RedirectToAction("Products");

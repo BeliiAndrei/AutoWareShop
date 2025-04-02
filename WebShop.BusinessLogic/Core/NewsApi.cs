@@ -4,27 +4,21 @@ using System.Linq;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.News;
-using WebShop.BusinessLogic.Core;
 
-
-namespace WebShop.BusinessLogic.BLogic
+namespace WebShop.BusinessLogic.Core
 {
-    internal class NewsBL: NewsApi, INews
+    public class NewsApi 
     {
         public List<NewsDBTable> GetNewsList()
         {
             using (var context = new NewsContext())
-            {
                 return context.News.ToList();
-            }
         }
 
         public NewsDBTable GetNewsByIdAction(int id)
         {
             using (var context = new NewsContext())
-            {
-                return context.News.FirstOrDefault(news => news.Id == id);
-            }
+                return context.News.Find(id);
         }
 
         public NewsDBTable UpdateNews(NewsDBTable updatedNews)
@@ -45,6 +39,18 @@ namespace WebShop.BusinessLogic.BLogic
             using (var context = new NewsContext())
             {
                 context.News.Add(newNews);
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteNews(int id)
+        {
+            using (var context = new NewsContext())
+            {
+                var news = context.News.Find(id);
+                if (news == null) return;
+
+                context.News.Remove(news);
                 context.SaveChanges();
             }
         }

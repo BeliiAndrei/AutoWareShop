@@ -19,6 +19,10 @@ namespace WebShop.BusinessLogic
         {
             return new UserBL();
         }
+        public INews GetNewsBl()
+        {
+            return new NewsBL();
+        }
 
         public IProduct GetProductBl()
         {
