@@ -38,7 +38,7 @@ namespace WebShop.Controllers
         [HttpPost]
         public ActionResult GetNewsList()
         {
-            var newsList = _news.GetNewsList();
+            var newsList = _news.GetAllNews();
             return View("NewsList", newsList);
         }
 

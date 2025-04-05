@@ -12,10 +12,12 @@ namespace WebShop.BusinessLogic.Core
         public List<NewsDBTable> GetNewsList()
         {
             using (var context = new NewsContext())
+            {
                 return context.News.ToList();
+            }
         }
 
-        public NewsDBTable GetNewsByIdAction(int id)
+        public NewsDBTable GetNewsById(int id)
         {
             using (var context = new NewsContext())
                 return context.News.Find(id);

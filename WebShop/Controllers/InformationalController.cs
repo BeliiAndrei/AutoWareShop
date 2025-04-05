@@ -48,8 +48,8 @@ namespace WebShop.Controllers
         [HttpPost]
         public ActionResult GetNewsList()
         {
-            var newsList = _news.GetNewsList(); // Получаем список новостей
-            return View("NewsList", newsList);  // Передаем в представление NewsList
+            var newsList = _news.GetAllNews(); 
+            return View("NewsList", newsList);  
         }
 
     }
