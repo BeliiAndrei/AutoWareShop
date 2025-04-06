@@ -5,30 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using WebShop.BusinessLogic.Core;
 using WebShop.BusinessLogic.Interfaces;
+using WebShop.Domain.Basket;
 using WebShop.Domain.Product;
 
 namespace WebShop.BusinessLogic.BLogic
 {
     public class BasketBL : UserApi, IBasket
     {
-        public void AddToBasket(ProductDTO product)
+        public BasketActionResponse AddToBasket(int userId, int productId, int quantity)
         {
-            throw new NotImplementedException();
+            return AddToBasketAction(userId, productId, quantity);
         }
 
-        public void DecrementProductCount(int productId, uint currentCount)
+        public List<BasketDTO> GetAllProductsInCart(int userId)
         {
-            throw new NotImplementedException();
+            return GetAllProductsInBasketAction(userId);
         }
 
-        public List<ProductDTO> GetAllProductsInCart(int userId)
+        public int GetBasketSize(int userId)
         {
-            throw new NotImplementedException();
-        }
-
-        public void IncrementProductCount(int productId, uint currentCount)
-        {
-            throw new NotImplementedException();
+            return GetBasketSizeAction(userId);
         }
 
         public void RemoveAll()
@@ -36,9 +32,17 @@ namespace WebShop.BusinessLogic.BLogic
             throw new NotImplementedException();
         }
 
-        public void RemoveFromBasket(int productId, uint count)
+        public BasketActionResponse RemoveFromBasket(List<string> productIdsAsString, int userId)
         {
-            throw new NotImplementedException();
+            List<int> productIds = new List<int>();
+            foreach (string productId in productIdsAsString)
+            {
+                if (int.TryParse(productId, out int id))
+                {
+                    productIds.Add(id);
+                }
+            }
+            return RemoveFromBasketAction(productIds, userId);
         }
     }
 }

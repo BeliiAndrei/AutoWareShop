@@ -13,10 +13,12 @@ namespace WebShop.Controllers
 
         //public System.Web.SessionState.HttpSessionState Session_user { get; }
         private readonly ISession _session;
+        private readonly IBasket _basket;
         public AuthController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _session = bl.GetSessionBL();
+            _basket = bl.GetBasketBL();
         }
 
         // GET: Auth
@@ -27,7 +29,7 @@ namespace WebShop.Controllers
         public void StoreUserInSession(UserInfo user)
         {
             Session["User"] = user;
-            //var test = Session["User"];
+            Session["BasketCount"] = _basket.GetBasketSize(user.Id);
         }
 
         [HttpPost]
@@ -101,6 +103,7 @@ namespace WebShop.Controllers
         public ActionResult LogOut()
         {
             Session["User"] = null;
+            Session["BasketCount"] = null;
             return RedirectToAction("MainPage", "Home");
         }
     }

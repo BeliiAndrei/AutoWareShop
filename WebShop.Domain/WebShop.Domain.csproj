@@ -51,7 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Basket\Basket.cs" />
+    <Compile Include="Basket\BasketActionResponse.cs" />
+    <Compile Include="Basket\BasketBDTables.cs" />
+    <Compile Include="Basket\BasketDTO.cs" />
     <Compile Include="Delivery\DeliveryLocation.cs" />
     <Compile Include="Enumerables\ProductStatus.cs" />
     <Compile Include="Enumerables\UserRole.cs" />

@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using WebShop.Domain.Basket;
 using WebShop.Domain.Product;
 
 namespace WebShop.BusinessLogic.Interfaces
 {
     public interface IBasket
     {
-        List<ProductDTO> GetAllProductsInCart(int userId);
-        void RemoveFromBasket(int productId, uint count);
-        void AddToBasket(ProductDTO product);
-        void IncrementProductCount(int productId, uint currentCount);
-        void DecrementProductCount(int productId, uint currentCount);
+        List<BasketDTO> GetAllProductsInCart(int userId);
+        int GetBasketSize(int userId);
+        BasketActionResponse RemoveFromBasket(List <string> productIds, int userId);
+        BasketActionResponse AddToBasket(int userId, int productId, int quantity);
+
         void RemoveAll();
 
     }

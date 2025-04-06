@@ -23,6 +23,8 @@ namespace WebShop.BusinessLogic.BLogic
         {
             var p = GetProductByArticleAction(art);
             ProductDTO m = new ProductDTO();
+            if (p == null)
+                return null;
             m.Id = p.Id;
             m.Name = p.Name;
             m.Producer = p.Producer;

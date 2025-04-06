@@ -85,22 +85,5 @@ namespace WebShop.BusinessLogic.Core
                 db.SaveChanges();
             }
         }
-
-        internal bool EditProduct()
-        {
-            return true;
-        }
-        internal bool DeleteUser()
-        {
-            return true;
-        }
-        internal bool DeleteProduct()
-        {
-            return true;
-        }
-        internal bool AddProduct()
-        {
-            return true;
-        }
     }
 }

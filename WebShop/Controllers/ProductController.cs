@@ -22,6 +22,8 @@ namespace WebShop.Controllers
         public ActionResult Card(string article)
         {
             var item = _product.GetProductByArticle(article);
+            if (item == null)
+                return RedirectToAction("Error_404", "Error");
             ProductCardViewModel product = new ProductCardViewModel();
             product.Article = article;
             product.ProductName = item.Name;
@@ -30,6 +32,7 @@ namespace WebShop.Controllers
             product.Price = item.Price;
             product.Description = item.Description;
             product.Quantity = item.Quantity;
+            product.Code = item.Id;
             return View(product);
         }
     }

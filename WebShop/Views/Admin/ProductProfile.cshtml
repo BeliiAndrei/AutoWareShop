@@ -72,7 +72,7 @@
                                         @Html.LabelFor(m => m.Price, "Цена")
                                         <input class="form-control" data-val="true" data-val-number="The field Price must be a number." 
                                                data-val-required="Требуется поле Price." 
-                                               id="Price" name="Price" type="number" value="@Model.Price.ToString(CultureInfo.InvariantCulture)">
+                                               id="Price" name="Price" type="number" step="any" value="@Model.Price.ToString(CultureInfo.InvariantCulture)">
 
                                    @*     @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", value = Model.Price.ToString(CultureInfo.InvariantCulture) })*@
                                     </div>
@@ -89,12 +89,20 @@
                                 @Html.LabelFor(m => m.Description, "Описание")
                                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 4 })
                             </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.ImageNumber, "Номер изображения")
-                                @Html.TextBoxFor(m => m.ImageNumber, new { @class = "form-control" })
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.ImageNumber, "Номер изображения")
+                                        @Html.TextBoxFor(m => m.ImageNumber, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Category, "Категория")
+                                        @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+                                    </div>
+                                </div>
                             </div>
-
                             <div class="form-group">
                                 <input type="submit" value="Сохранить изменения" class="btn--main btn" />
                             </div>
