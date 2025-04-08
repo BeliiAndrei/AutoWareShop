@@ -65,38 +65,6 @@ namespace WebShop.BusinessLogic.BLogic
             List<ProductDTO> products = new List<ProductDTO>();
             foreach (var p in productsFromDB)
             {
-                if (p.Status != ProductStatus.hidden)
-                {
-                    var product = new ProductDTO
-                    {
-                        Name = p.Name,
-                        Producer = p.Producer,
-                        Description = p.Description,
-                        Category = p.Category,
-                        Price = p.Price,
-                        Quantity = p.Quantity,
-                        Article = p.Article,
-                        Id = p.Id,
-                        ImageNumber = p.ImageString,
-                        Status = p.Status
-                    };
-                    products.Add(product);
-                }
-            }
-            return products;
-        }
-        public List<ProductDTO> GetProductsBySearchString(string search_string)
-        {
-            var productsFromDB = GetProductsBySearchStringAction(search_string);
-            return FormList(productsFromDB);
-        }
-
-        public List<ProductDTO> GetProductsList()
-        {
-            var productsFromDB = GetAllProducts();
-            List<ProductDTO> products = new List<ProductDTO>();
-            foreach (var p in productsFromDB)
-            {
                 var product = new ProductDTO
                 {
                     Name = p.Name,
@@ -113,6 +81,16 @@ namespace WebShop.BusinessLogic.BLogic
                 products.Add(product);
             }
             return products;
+        }
+        public List<ProductDTO> GetProductsBySearchString(string search_string)
+        {
+            var productsFromDB = GetProductsBySearchStringAction(search_string);
+            return FormList(productsFromDB);
+        }
+
+        public List<ProductDTO> GetProductsList()
+        {
+            return FormList(GetAllProducts());
         }
 
         public ProductDTO ModifyProduct(ProductDTO oldProduct)

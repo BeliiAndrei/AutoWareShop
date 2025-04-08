@@ -43,27 +43,29 @@ namespace WebShop.Controllers
             return RedirectToAction("Error_500", "Error");
         }
 
-        public ActionResult Search_result(string Path_Category, string Path_Subcategory, string Result_SearchString = "")
+        public ActionResult Search_result(string Path_Category, string Path_Subcategory, string Result_SearchString = "", int page = 1)
         {
             SearchModel viewModel;
             if (Path_Category != null || Path_Subcategory != null)
             {
                 var result = _product.GetProductsByCategory(Path_Subcategory);
-                viewModel = FormViewModel(result, 1, Result_SearchString);
+                viewModel = FormViewModel(result, page, Result_SearchString);
                 viewModel.Path = new SearchPath
                 {
                     Category = Path_Category,
                     Subcategory = Path_Subcategory
                 };
-                //viewModel.Path.Category = Path_Category;
-                //viewModel.Path.Subcategory = Path_Subcategory;
                 return View(viewModel);
             }
             if(Result_SearchString !="")
             {
                 var result = _product.GetProductsBySearchString(Result_SearchString);
-                viewModel = FormViewModel(result, 1, Result_SearchString);
+                viewModel = FormViewModel(result, page, Result_SearchString);
                 return View(viewModel);
+            }
+            if(page != 1)
+            {
+                //return View(model);
             }
             return RedirectToAction("Error_500", "Error");
         }
@@ -82,7 +84,8 @@ namespace WebShop.Controllers
                     Description = p.Description,
                     Image = p.ImageNumber,
                     Price = p.Price,
-                    Quantity = p.Quantity
+                    Quantity = p.Quantity,
+                    Status = p.Status.ToString()
                 };
                 productsForView.Add(product);
             }
@@ -92,7 +95,7 @@ namespace WebShop.Controllers
                 SearchString = Result_SearchString,
                 TotalCount = products.Count()
             };
-            int pageSize = 15;   // количество элементов на странице
+            int pageSize = 1;   // количество элементов на странице
             var count = searchResult.TotalCount;
             var items = searchResult.Products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             searchResult.Products = items;

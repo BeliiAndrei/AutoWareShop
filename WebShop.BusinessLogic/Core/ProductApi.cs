@@ -80,7 +80,7 @@ namespace WebShop.BusinessLogic.Core
                 using (var db = new ProductContext())
                 {
                     return db.Products
-                             .Where(p => p.Category == category)
+                             .Where(p => p.Category == category && p.Status != ProductStatus.hidden)
                              .ToList();
                 }
             }
@@ -97,7 +97,8 @@ namespace WebShop.BusinessLogic.Core
                 using (var db = new ProductContext())
                 {
                     return db.Products
-                             .Where(p => p.Name.Contains(searchString) || p.Producer.Contains(searchString))
+                             .Where(p => (p.Name.Contains(searchString) || p.Producer.Contains(searchString))
+                                         && p.Status != ProductStatus.hidden)
                              .ToList();
                 }
             }

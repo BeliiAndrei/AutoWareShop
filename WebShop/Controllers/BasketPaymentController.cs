@@ -71,7 +71,8 @@ namespace WebShop.Controllers
                     Article = product.Product.Article,
                     Price = product.Product.Price,
                     Quantity = product.Quantity,
-                    Code = product.Product.Id
+                    Code = product.Product.Id,
+                    Status = product.Product.Status.ToString()
                     
                 };
                 basket.ProductsInBasket.Add(p);
