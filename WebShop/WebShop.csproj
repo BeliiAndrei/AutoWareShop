@@ -328,6 +328,10 @@
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\DecimalModelBinder.cs" />
     <Compile Include="Models\ProductCardViewModel.cs" />
+    <Compile Include="Models\Search\PageInfo.cs" />
+    <Compile Include="Models\Search\SearchModel.cs" />
+    <Compile Include="Models\Search\SearchPath.cs" />
+    <Compile Include="Models\Search\SearchResult.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

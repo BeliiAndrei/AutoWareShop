@@ -25,7 +25,7 @@
                             <h1>Редактировать продукт</h1>
                         </header>
                         <div class="swiper-wrapper" style="width:180px; height:180px">
-                            <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-1.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-" + Model.ImageNumber + ".jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-" + Model.ImageNumber + ".jpg")"></a></div>
+                            <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-" + Model.ImageNumber + ".jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-" + Model.ImageNumber + ".jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-" + Model.ImageNumber + ".jpg")"></a></div>
                         </div>
                         @using (Html.BeginForm("ProductProfileEdit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {

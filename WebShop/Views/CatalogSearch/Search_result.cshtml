@@ -2,16 +2,18 @@
 @{
     ViewBag.Title = "Search_result";
 }
-
+@model WebShop.Models.Search.SearchModel
 <div class="container-fluid">
-    <ul class="breadcrumbs">
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
-        <li class="breadcrumbs__item">Присадки к бензину</li>
-    </ul>
+    @if (Model.Path != null)
+    {
+        <ul class="breadcrumbs">
+            <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="@Url.Action("MainPage", "Home")">Главная</a></li>
+            <li class="breadcrumbs__item">@Model.Path.Category</li>
+            <li class="breadcrumbs__item">@Model.Path.Subcategory</li>
+        </ul>
+    }
     <div class="primary-layout">
-        <h1 class="main-title">Результат поиска &quot;op525&quot; <small>найдено 100 товаров</small></h1>
+        <h1 class="main-title">@if (Model.Result.SearchString != "") { <div>Результат поиска &quot;@Model.Result.SearchString&quot; </div>} <small>Найдено @Model.Result.TotalCount товар(ов)</small></h1>
         <div class="primary-content">
             <div class="sidebar">
                 <div class="category-nav d-none d-md-block">

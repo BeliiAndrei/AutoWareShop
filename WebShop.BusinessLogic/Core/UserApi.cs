@@ -133,7 +133,8 @@ namespace WebShop.BusinessLogic.Core
                     return new UserRegistrationResponse
                     {
                         Status = true,
-                        StatusMsg = "User added successfully"
+                        StatusMsg = "User added successfully",
+                        User = savedUser
                     };
                 }
                 else
@@ -336,13 +337,7 @@ namespace WebShop.BusinessLogic.Core
             };
         }
 
-        public bool IsSessionValidAction(string key)
-        {
-            if (string.IsNullOrEmpty(key)) return false;
-            return true;
-        }
-
-        public bool IsProductValidAction(int id)
+        internal bool IsProductValidAction(int id)
         {
             return true;
         }

@@ -12,8 +12,6 @@ namespace WebShop.BusinessLogic.Interfaces
         UserInfo EditUserProfile(UserInfo data);
         bool ChangePasswordInDB(ChangePasswordClass pass);
         int GetUserIdBySessionKey(string sessionKey);
-        bool IsSessionValid(string key);
-        //UserRegistrationResponse UserRegistrationAction(UserLoginData data);
         UserInfo GetUserInfoById(int id);
     }
 }

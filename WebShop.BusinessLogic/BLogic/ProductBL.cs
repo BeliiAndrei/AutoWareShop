@@ -55,26 +55,64 @@ namespace WebShop.BusinessLogic.BLogic
             return product;
         }
 
+        public List<ProductDTO> GetProductsByCategory(string category)
+        {
+            var productsFromDB = GetProductsByCategoryAction(category);
+            return FormList(productsFromDB);
+        }
+        public List<ProductDTO> FormList(List<ProductDBTable> productsFromDB)
+        {
+            List<ProductDTO> products = new List<ProductDTO>();
+            foreach (var p in productsFromDB)
+            {
+                if (p.Status != ProductStatus.hidden)
+                {
+                    var product = new ProductDTO
+                    {
+                        Name = p.Name,
+                        Producer = p.Producer,
+                        Description = p.Description,
+                        Category = p.Category,
+                        Price = p.Price,
+                        Quantity = p.Quantity,
+                        Article = p.Article,
+                        Id = p.Id,
+                        ImageNumber = p.ImageString,
+                        Status = p.Status
+                    };
+                    products.Add(product);
+                }
+            }
+            return products;
+        }
+        public List<ProductDTO> GetProductsBySearchString(string search_string)
+        {
+            var productsFromDB = GetProductsBySearchStringAction(search_string);
+            return FormList(productsFromDB);
+        }
+
         public List<ProductDTO> GetProductsList()
         {
             var productsFromDB = GetAllProducts();
-            var productsList = new List<ProductDTO>();
+            List<ProductDTO> products = new List<ProductDTO>();
             foreach (var p in productsFromDB)
             {
-                ProductDTO m = new ProductDTO();
-                m.Id = p.Id;
-                m.Name = p.Name;
-                m.Producer = p.Producer;
-                m.Article = p.Article;
-                m.Price = p.Price;
-                m.Category = p.Category;
-                m.Status = p.Status;
-                m.Quantity = p.Quantity;
-                m.ImageNumber = p.ImageString;
-                m.Description = p.Description;
-                productsList.Add(m);
+                var product = new ProductDTO
+                {
+                    Name = p.Name,
+                    Producer = p.Producer,
+                    Description = p.Description,
+                    Category = p.Category,
+                    Price = p.Price,
+                    Quantity = p.Quantity,
+                    Article = p.Article,
+                    Id = p.Id,
+                    ImageNumber = p.ImageString,
+                    Status = p.Status
+                };
+                products.Add(product);
             }
-            return productsList;
+            return products;
         }
 
         public ProductDTO ModifyProduct(ProductDTO oldProduct)
@@ -89,6 +127,8 @@ namespace WebShop.BusinessLogic.BLogic
             product.Price = oldProduct.Price;
             product.Quantity = oldProduct.Quantity;
             product.Article = oldProduct.Article;
+            product.ImageString = oldProduct.ImageNumber;
+            product.Status = oldProduct.Status;
             EditProduct(product);
             return GetProductById(product.Id);
         }

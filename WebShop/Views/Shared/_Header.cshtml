@@ -129,142 +129,67 @@
                 <nav class="main-nav">
                     <ul class="main-nav__point-container">
                         <li class="main-nav__point-item">
-                            <a class="main-nav__point-link" href="@Url.Action("Catalog", "CatalogSearch")">
+                            <a class="main-nav__point-link" href="/CatalogSearch/Catalog">
                                 <svg class="icon icon-burger main-nav__icon">
-                                    <use href="~/assets/images/svg/symbol/sprite.svg#burger"></use>
+                                    <use href="/assets/images/svg/symbol/sprite.svg#burger"></use>
                                 </svg>Каталог товаров
                                 <div class="main-nav__close-nav-wrap">
                                     <svg class="icon icon-close main-nav__close-nav">
-                                        <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
+                                        <use href="/assets/images/svg/symbol/sprite.svg#close"></use>
                                     </svg>
                                 </div>
-                            </a>
-                            <ul class="main-nav__container">
+                            </a>                            <ul class="main-nav__container">
                                 <li class="main-nav__item">
-                                    <a class="main-nav__link" href="#">
-                                        Автозапчасти
-                                        <svg class="icon icon-chevron-right main-nav--icon">
-                                            <use href="~/assets/images/svg/symbol/sprite.svg#chevron-right"></use>
-                                        </svg>
-                                    </a>
+                                    <span class="main-nav__link">Масла и смазки</span>
                                     <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Моторное масло</a></li>
                                         <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="#">Трансмиссионная жидкость</a>
-                                            <ul class="main-nav__tertiary-container">
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Мелкая фасовка</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Крупная фасовка</a></li>
-                                            </ul>
+                                            <a class="main-nav__sub-link"
+                                               href="@Url.Action("Search_result", "CatalogSearch", new {
+                                   Path_Category = "Масла и смазки",
+                                   Path_Subcategory = "Моторное масло",
+                                   Result_SearchString = ""
+                               })">
+                                                Моторное масло
+                                            </a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link"
+                                               href="@Url.Action("Search_result", "CatalogSearch", new {
+                                   Path_Category = "Масла и смазки",
+                                   Path_Subcategory = "Трансмиссионная жидкость",
+                                   Result_SearchString = ""
+                               })">
+                                                Трансмиссионная жидкость
+                                            </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="main-nav__item"><a class="main-nav__link" href="#">Шины</a></li>
+
                                 <li class="main-nav__item">
-                                    <a class="main-nav__link" href="#">
-                                        Аккумуляторы
-                                        <svg class="icon icon-chevron-right main-nav--icon">
-                                            <use href="~/assets/images/svg/symbol/sprite.svg#chevron-right"></use>
-                                        </svg>
-                                    </a>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Моторное масло</a></li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="#">Трансмиссионная жидкость</a>
-                                            <ul class="main-nav__tertiary-container">
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Мелкая фасовка</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Крупная фасовка</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Охлаждающая жидкость</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Автохимия</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Смазки узлов</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Прочие смазывающие жидкости</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Фильтра</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Автозапчасти</a></li>
-                                    </ul>
-                                </li>
-                                <li class="main-nav__item"><a class="main-nav__link" href="#">Все для шиномонтажа</a></li>
-                                <li class="main-nav__item">
-                                    <a class="main-nav__link" href="#">
-                                        Масла и смазки
-                                        <svg class="icon icon-chevron-right main-nav--icon">
-                                            <use href="~/assets/images/svg/symbol/sprite.svg#chevron-right"></use>
-                                        </svg>
-                                    </a>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Моторное масло</a></li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="#">Трансмиссионная жидкость</a>
-                                            <ul class="main-nav__tertiary-container">
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Мелкая фасовка</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Крупная фасовка</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Трансмиссионная жидкость</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Крупная фасовка</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Охлаждающая жидкость</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Автохимия</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Смазки узлов</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Прочие смазывающие жидкости</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Фильтра</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Автозапчасти</a></li>
-                                    </ul>
-                                </li>
-                                <li class="main-nav__item"><a class="main-nav__link" href="#">Жидкости технические</a></li>
-                                <li class="main-nav__item">
-                                    <a class="main-nav__link" href="#">
-                                        Автохимия
-                                        <svg class="icon icon-chevron-right main-nav--icon">
-                                            <use href="~/assets/images/svg/symbol/sprite.svg#chevron-right"></use>
-                                        </svg>
-                                    </a>
+                                    <span class="main-nav__link">Автохимия</span>
                                     <ul class="main-nav__sub-container">
                                         <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="#">Система маслянная</a>
-                                            <ul class="main-nav__tertiary-container">
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система охлаждения</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система кондиционирования</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система выхлопных газов</a></li>
-                                            </ul>
+                                            <a class="main-nav__sub-link"
+                                               href="@Url.Action("Search_result", "CatalogSearch", new {
+                                   Path_Category = "Автохимия",
+                                   Path_Subcategory = "Очистители инжектора",
+                                   Result_SearchString = ""
+                               })">
+                                                Очистители инжектора
+                                            </a>
                                         </li>
                                         <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="#">Система топливная</a>
-                                            <ul class="main-nav__tertiary-container">
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители инжектора</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители карбюратора</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители дизельных форсунок</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Присадки к дизтопливу</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Антигели и размораживатели для дизтоплива</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система охлаждения</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система кондиционирования</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система охлаждения</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система кондиционирования</a></li>
-                                        <li class="main-nav__sub-item"><a class="main-nav__sub-link" href="#">Система выхлопных газов</a></li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="#">Система маслянная</a>
-                                            <ul class="main-nav__tertiary-container">
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система охлаждения</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система кондиционирования</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Система выхлопных газов</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="#">Система топливная</a>
-                                            <ul class="main-nav__tertiary-container">
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители инжектора</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители карбюратора</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Очистители дизельных форсунок</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Присадки к дизтопливу</a></li>
-                                                <li class="main-nav__tertiary-item"><a class="main-nav__tertiary-link" href="#">Антигели и размораживатели для дизтоплива</a></li>
-                                            </ul>
+                                            <a class="main-nav__sub-link"
+                                               href="@Url.Action("Search_result", "CatalogSearch", new {
+                                   Path_Category = "Автохимия",
+                                   Path_Subcategory = "Присадки к дизтопливу",
+                                   Result_SearchString = ""
+                               })">
+                                                Присадки к дизтопливу
+                                            </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="main-nav__item"><a class="main-nav__link" href="#">Автокосметика</a></li>
-                                <li class="main-nav__item"><a class="main-nav__link" href="#">Аксессуары</a></li>
-                                <li class="main-nav__item"><a class="main-nav__link" href="#">Автоэлектроника</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -274,16 +199,16 @@
                         <use href="~/assets/images/svg/symbol/sprite.svg#search"></use>
                     </svg>
                 </button>
-                <form class="search-form" method="GET" action="~/Product/Card" name="search-form">
+                <form class="search-form" method="GET" action="@Url.Action("SearchMethod", "CatalogSearch")" name="search-form">
                     <div class="search-form__field search-form__field--choices">
-                        <select class="js-select-default">
-                            <option value="common">Поиск по артикулу</option>
-                            <option value="section">Поиск по VIN</option>
-                            <option value="number">По номеру детали</option>
+                        <select class="js-select-default" name="searchType">
+                            <option value="article">Поиск по артикулу</option>
+                            <option value="name">Поиск по названию</option>
+                            @*<option value="number">По номеру детали</option>*@
                         </select>
                     </div>
                     <div class="search-form__field search-form__field--input">
-                        <input class="search-form__input"  type="search" name="article" placeholder="Номер детали. например “gbl199”">
+                        <input class="search-form__input"  type="search" name="value" placeholder="Артикул детали. Например “gbl199”">
                         <button class="search-form__submit" type="submit" @*name="send-data"*@>
                             <svg class="icon icon-magnifying-zoom-glass search-form__submit-icon">
                                 <use href="~/assets/images/svg/symbol/sprite.svg#magnifying-zoom-glass"></use>

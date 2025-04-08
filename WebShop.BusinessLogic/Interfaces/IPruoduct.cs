@@ -16,6 +16,8 @@ namespace WebShop.BusinessLogic.Interfaces
         List<ProductDTO> GetProductsList();
         ProductDTO GetProductById (int id);
         ProductDTO GetProductByArticle(string art);
+        List<ProductDTO> GetProductsByCategory(string category);
+        List<ProductDTO> GetProductsBySearchString(string search_string);
 
     }
 }

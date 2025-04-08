@@ -19,13 +19,13 @@ namespace WebShop.Controllers
             _product = bl.GetProductBl();
         }
         // GET: Product
-        public ActionResult Card(string article)
+        public ActionResult Card(string value)
         {
-            var item = _product.GetProductByArticle(article);
-            if (item == null)
+            var item = _product.GetProductByArticle(value);
+            if (item == null || item.Status == Domain.Enumerables.ProductStatus.hidden)
                 return RedirectToAction("Error_404", "Error");
             ProductCardViewModel product = new ProductCardViewModel();
-            product.Article = article;
+            product.Article = value;
             product.ProductName = item.Name;
             product.BrandName = item.Producer;
             product.Image = item.ImageNumber;
