@@ -17,8 +17,8 @@ namespace WebShop.Models
 
         public string Tags { get; set; }
 
-        public string ImageString { get; set; }
-
+        public byte[] ImageData { get; set; }
+        public string ImageMimeType { get; set; }
 
     }
 }

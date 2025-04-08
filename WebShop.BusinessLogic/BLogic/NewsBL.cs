@@ -6,8 +6,7 @@ using WebShop.Domain.News;
 using WebShop.BusinessLogic.Core;
 using System.Data.Entity.Migrations;
 using System;
-using WebShop.Domain.News.Image;
-
+using WebShop.Domain.User.Auth;
 namespace WebShop.BusinessLogic.BLogic
 {
     internal class NewsBL : NewsApi, INews
@@ -59,9 +58,9 @@ namespace WebShop.BusinessLogic.BLogic
         return true;
         }
 
-        private NewsDBTable MapToDB(News news)
+        private NewsDBTab MapToDB(News news)
         {
-            return new NewsDBTable
+            return new NewsDBTab
             {
                 Id = news.Id,
                 Title = news.Title,
@@ -69,16 +68,13 @@ namespace WebShop.BusinessLogic.BLogic
                 Author = news.Author,
                 Category = news.Category,
                 Tags = news.Tags,
-                Images = news.Images?.Select(img => new NewsImage
-                {
-                    ContentType = img.ContentType,
-                    ImageData = Convert.FromBase64String(img.Base64Data) // преобразование из base64 в byte[]
-                }).ToList()
+                ImageData = news.ImageData,
+                ImageMimeType = news.ImageMimeType
+
             };
         }
 
-        // Преобразование из NewsDBTable (Entity) в News (DTO)
-        private News MapToNews(NewsDBTable db)
+        private News MapToNews(NewsDBTab db)
         {
             return new News
             {
@@ -88,12 +84,8 @@ namespace WebShop.BusinessLogic.BLogic
                 Author = db.Author,
                 Category = db.Category,
                 Tags = db.Tags,
-                Images = db.Images?.Select(img => new NewsImageDto
-                {
-                    Id = img.Id,
-                    ContentType = img.ContentType,
-                    Base64Data = Convert.ToBase64String(img.ImageData) // преобразование из byte[] в base64
-                }).ToList()
+                ImageData = db.ImageData,
+                ImageMimeType = db.ImageMimeType
             };
         }
     }

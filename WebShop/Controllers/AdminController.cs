@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.News;
-using WebShop.Domain.News.Image;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Registration;
@@ -38,78 +37,22 @@ namespace WebShop.Controllers
 
         }
 
-        //[HttpPost]
-        //public ActionResult News(News RegNews)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        bool v = _news.CreateNews(RegNews);
-
-        //        TempData["Message"] = "Succes";
-        //        return RedirectToAction("News");
-        //    }
-        //    TempData["Message"] = "Something went wrong";
-        //    return RedirectToAction("News");
-        //}
-
-
         [HttpPost]
-        public ActionResult News(News RegNews, IEnumerable<HttpPostedFileBase> Images)
+        public ActionResult News(News RegNews)
         {
-           
-                // Обработка файлов
-                var imageList = new List<NewsImage>();
+            if (ModelState.IsValid)
+            {
+                bool v = _news.CreateNews(RegNews);
 
-                if (Images != null)
-                {
-                    foreach (var file in Images)
-                    {
-                        if (file != null && file.ContentLength > 0)
-                        {
-                            // Считывание изображения в байтовый массив
-                            byte[] imageData;
-                            using (var reader = new System.IO.BinaryReader(file.InputStream))
-                            {
-                                imageData = reader.ReadBytes(file.ContentLength);
-                            }
-
-                            var newsImage = new NewsImage
-                            {
-                                ImageData = imageData,
-                                ContentType = file.ContentType,
-                            };
-
-                            imageList.Add(newsImage);
-                        }
-                    }
-
-                    // Добавляем изображения к новости
-                    RegNews.Images = imageList.Select(img => new NewsImageDto
-                    {
-                        Id = img.Id,
-                        ContentType = img.ContentType,
-                        Base64Data = Convert.ToBase64String(img.ImageData)
-                    }).ToList();
-                }
-
-                // Важно: сначала сохраняем новость, чтобы иметь ID, затем сохраняем изображения
-                bool isSuccess = _news.CreateNews(RegNews);
-
-                if (isSuccess)
-                {
-                    TempData["Message"] = "Success";
-                    return RedirectToAction("News");
-                }
-                else
-                {
-                    TempData["Message"] = "Something went wrong";
-                    return RedirectToAction("News");
-                }
-            
-
-            //TempData["Message"] = "Invalid form data";
-            //return RedirectToAction("News");
+                TempData["Message"] = "Succes";
+                return RedirectToAction("News");
+            }
+            TempData["Message"] = "Something went wrong";
+            return RedirectToAction("News");
         }
+
+
+
 
 
 

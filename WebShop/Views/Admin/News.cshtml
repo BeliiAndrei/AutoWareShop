@@ -83,8 +83,13 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="main-form__field">
-                        @Html.Label("Images", "Фото", new { @class = "main-form__label" })
-                        <input type="file" name="Images" multiple class="main-form__input" />
+                        @Html.LabelFor(m => m.ImageData, "Фото", new { @class = "main-form__label" })
+                        <input type="file"
+                               name="imageFile"
+                               title="Добавить фото"
+                               class="main-form__input"
+                               accept="image/*" />
+                        @Html.ValidationMessageFor(m => m.ImageData, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>

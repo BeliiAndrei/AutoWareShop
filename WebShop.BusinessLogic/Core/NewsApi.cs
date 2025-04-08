@@ -11,23 +11,23 @@ namespace WebShop.BusinessLogic.Core
 {
     public class NewsApi 
     {
-        public List<NewsDBTable> GetNewsListAPI()
+        public List<NewsDBTab> GetNewsListAPI()
         {
             using (var context = new NewsContext())
             {
-                return context.News.Include(n => n.Images).ToList();
+                return context.News.ToList();
             }
         }
 
-        public NewsDBTable GetNewsByIdAPI(int id)
+        public NewsDBTab GetNewsByIdAPI(int id)
         {
             using (var context = new NewsContext())
             {
-                return context.News.Include(n => n.Images).FirstOrDefault(n => n.Id == id);
+                return context.News.FirstOrDefault(n => n.Id == id);
             }
         }
 
-        public NewsDBTable UpdateNewsAPI(News updatedNews)
+        public NewsDBTab UpdateNewsAPI(News updatedNews)
         {
             using (var context = new NewsContext())
             {
@@ -40,7 +40,7 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
-        public void CreateNewsAPI(NewsDBTable newNews)
+        public void CreateNewsAPI(NewsDBTab newNews)
         {
             using (var context = new NewsContext())
             {

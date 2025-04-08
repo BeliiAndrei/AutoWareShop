@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using WebShop.Domain.News.Image;
-
-
+using System.Data.Entity;
 
 namespace WebShop.Domain.News
-
 {
-    public class NewsDBTable
+    public class NewsDBTab
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -32,7 +28,10 @@ namespace WebShop.Domain.News
         [Display(Name = "Tags")]
         public string Tags { get; set; }
 
-        [Display(Name = "Image")]
-        public ICollection<NewsImage> Images { get; set; }
+        [Display(Name = "Изображение")]
+        public byte[] ImageData { get; set; }
+
+        [Display(Name = "Тип изображения")]
+        public string ImageMimeType { get; set; }
     }
 }

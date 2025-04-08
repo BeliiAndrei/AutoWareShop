@@ -60,8 +60,7 @@
     <Compile Include="Enumerables\ProductStatus.cs" />
     <Compile Include="Enumerables\UserRole.cs" />
     <Compile Include="News\Admin\News.cs" />
-    <Compile Include="News\Image\NewsImage.cs" />
-    <Compile Include="News\NewsDBtable.cs" />
+    <Compile Include="News\NewsDBTab.cs" />
     <Compile Include="Order\Order.cs" />
     <Compile Include="Payment\ReceiptToPay.cs" />
     <Compile Include="Product\Admin\ProductActionResponse.cs" />
