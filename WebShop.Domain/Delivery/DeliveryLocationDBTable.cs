@@ -30,8 +30,8 @@ namespace WebShop.Domain.Delivery
         public uint? Apartment { get; set; } // Не всегда есть квартира
 
         [StringLength(500)]
-        public string Comment { get; set; }
 
+        public string Comment { get; set; }
         public bool IsSelfDelivery { get; set; }
     }
 }

@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -57,6 +60,7 @@
     <Compile Include="Enumerables\ProductStatus.cs" />
     <Compile Include="Enumerables\UserRole.cs" />
     <Compile Include="News\Admin\News.cs" />
+    <Compile Include="News\Image\NewsImage.cs" />
     <Compile Include="News\NewsDBtable.cs" />
     <Compile Include="Order\Order.cs" />
     <Compile Include="Payment\ReceiptToPay.cs" />

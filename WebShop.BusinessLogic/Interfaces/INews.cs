@@ -10,6 +10,6 @@ namespace WebShop.BusinessLogic.Interfaces
         List<News> GetAllNews();
         News GetNewsByIdAction(int id);
         bool UpdateNews(News updatedNews);
-        NewsDBTable CreateNews(NewsDBTable newNews);
+        bool CreateNews(News newNews);
     }
 }

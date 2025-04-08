@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using WebShop.Domain.Enumerables;
-using System;
+using WebShop.Domain.News.Image;
+
+
 
 namespace WebShop.Domain.News
+
 {
     public class NewsDBTable
     {
@@ -14,7 +16,7 @@ namespace WebShop.Domain.News
 
         [Required]
         [Display(Name = "Title")]
-        [StringLength(100, MinimumLength = 5, ErrorMessage = "Title cannot be longer than 100 characters.")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Title cannot be longer than 100 characters.")]
         public string Title { get; set; }
 
         [Required]
@@ -24,16 +26,13 @@ namespace WebShop.Domain.News
         [Display(Name = "Content")]
         public string Content { get; set; }
 
-        [Display(Name = "Published Date")]
-        public DateTime PublishedDate { get; set; }
-
         [Display(Name = "Category")]
         public string Category { get; set; }
 
-        [Display(Name = "Image")]
-        public string ImageString { get; set; }
-
         [Display(Name = "Tags")]
         public string Tags { get; set; }
+
+        [Display(Name = "Image")]
+        public ICollection<NewsImage> Images { get; set; }
     }
 }

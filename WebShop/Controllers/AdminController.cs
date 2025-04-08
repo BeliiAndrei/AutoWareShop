@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.News;
+using WebShop.Domain.News.Image;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Registration;
@@ -27,80 +28,115 @@ namespace WebShop.Controllers
             _product = bl.GetProductBl();
             _news = bl.GetNewsBl();
         }
-
+        ///////////////////////////////////////////////////////////////////////////////////////
         [HttpGet]
-        public ActionResult ManageNews()
+        public ActionResult News()
         {
-            var model = new NewsDBTable();
+
+            var model = new NewsViewModel();
             return View(model);
-        }
 
-        [HttpPost]
-        public ActionResult GetNewsList()
-        {
-            var newsList = _news.GetAllNews();
-            return View("NewsList", newsList);
-        }
-
-        [HttpPost]
-        public ActionResult GetNewsByIdAction(int id)
-        {
-            var news = _news.GetNewsByIdAction(id);
-            if (news == null)
-            {
-                return View("../Error/Error_500");
-            }
-            return View("EditNews", news);
-        }
-
-
-        [HttpPost]
-        public ActionResult AddNews(FormCollection form)
-        {
-            if (!ModelState.IsValid)
-            {
-                TempData["Message"] = "Введённые данные некорректны";
-                return View("ManageNews");
-            }
-
-            var newNews = new NewsDBTable
-            {
-                Title = form["Title"],
-                Content = form["Content"],
-                Author = form["Author"],
-                Category = form["Category"],
-                Tags = form["Tags"],
-                PublishedDate = DateTime.Now,
-                ImageString = form["ImageString"]
-            };
-
-            try
-            {
-                _news.CreateNews(newNews);
-                TempData["Message"] = "Новость успешно создана.";
-                return RedirectToAction("ManageNews");
-            }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (var validationErrors in ex.EntityValidationErrors)
-                {
-                    foreach (var error in validationErrors.ValidationErrors)
-                    {
-                        Console.WriteLine($"Property: {error.PropertyName}, Error: {error.ErrorMessage}");
-                    }
-                }
-                TempData["Message"] = "Ошибка создания новости. Проверьте введенные данные.";
-                return View("ManageNews", newNews);
-            }
         }
 
         //[HttpPost]
-        //public ActionResult DeleteNews(int id)
+        //public ActionResult News(News RegNews)
         //{
-        //    _news.DeleteNews(id);
-        //    TempData["Message"] = "Новость успешно удалена.";
-        //    return RedirectToAction("ManageNews");
+        //    if (ModelState.IsValid)
+        //    {
+        //        bool v = _news.CreateNews(RegNews);
+
+        //        TempData["Message"] = "Succes";
+        //        return RedirectToAction("News");
+        //    }
+        //    TempData["Message"] = "Something went wrong";
+        //    return RedirectToAction("News");
         //}
+
+
+        [HttpPost]
+        public ActionResult News(News RegNews, IEnumerable<HttpPostedFileBase> Images)
+        {
+           
+                // Обработка файлов
+                var imageList = new List<NewsImage>();
+
+                if (Images != null)
+                {
+                    foreach (var file in Images)
+                    {
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            // Считывание изображения в байтовый массив
+                            byte[] imageData;
+                            using (var reader = new System.IO.BinaryReader(file.InputStream))
+                            {
+                                imageData = reader.ReadBytes(file.ContentLength);
+                            }
+
+                            var newsImage = new NewsImage
+                            {
+                                ImageData = imageData,
+                                ContentType = file.ContentType,
+                            };
+
+                            imageList.Add(newsImage);
+                        }
+                    }
+
+                    // Добавляем изображения к новости
+                    RegNews.Images = imageList.Select(img => new NewsImageDto
+                    {
+                        Id = img.Id,
+                        ContentType = img.ContentType,
+                        Base64Data = Convert.ToBase64String(img.ImageData)
+                    }).ToList();
+                }
+
+                // Важно: сначала сохраняем новость, чтобы иметь ID, затем сохраняем изображения
+                bool isSuccess = _news.CreateNews(RegNews);
+
+                if (isSuccess)
+                {
+                    TempData["Message"] = "Success";
+                    return RedirectToAction("News");
+                }
+                else
+                {
+                    TempData["Message"] = "Something went wrong";
+                    return RedirectToAction("News");
+                }
+            
+
+            //TempData["Message"] = "Invalid form data";
+            //return RedirectToAction("News");
+        }
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////
+
+
+        [HttpPost]
+        public ActionResult RegisterUser(UserRegistrationData registerData)
+        {
+            if (ModelState.IsValid)
+            {
+                var userRegister = _admin.RegisterUser(registerData);
+                TempData["Message"] = userRegister.StatusMsg;
+                if (userRegister.Status == true)
+                {
+                    return RedirectToAction("Clients");
+                }
+                else
+                {
+                    TempData["Message"] = userRegister.StatusMsg;
+                    return RedirectToAction("AddUser");
+                }
+            }
+            TempData["Message"] = "Something went wrong";
+            return RedirectToAction("AddUser");
+        }
+
 
         [HttpGet]
         public ActionResult ClientProfile()
@@ -135,33 +171,14 @@ namespace WebShop.Controllers
             var users = _admin.GetUsersList();
             return View(users);
         }
-
+        [HttpGet]
         public ActionResult AddUser()
         {
             var model = new UserRegisterModel();
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult RegisterUser(UserRegistrationData registerData)
-        {
-            if (ModelState.IsValid)
-            {
-                var userRegister = _admin.RegisterUser(registerData);
-                TempData["Message"] = userRegister.StatusMsg;
-                if (userRegister.Status == true)
-                {
-                    return RedirectToAction("Clients");
-                }
-                else
-                {
-                    TempData["Message"] = userRegister.StatusMsg;
-                    return RedirectToAction("AddUser");
-                }
-            }
-            TempData["Message"] = "Something went wrong";
-            return RedirectToAction("AddUser");
-        }
+       
 
         public ActionResult Products()
         {

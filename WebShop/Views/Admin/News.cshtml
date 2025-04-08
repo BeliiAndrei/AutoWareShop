@@ -1,0 +1,98 @@
+@{
+    ViewBag.Title = "Management News";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+}
+
+@model WebShop.Models.NewsViewModel
+
+<div class="container mt-4">
+    @if (TempData["Message"] != null)
+    {
+
+        <div class="alert alert-success" role="alert" style="color:red">
+            @TempData["Message"]
+        </div>
+    }
+    <div class="main-heading">
+        <div class="main-heading__text">Добавление новости</div>
+    </div>
+    <div class="formContainer">
+        @Html.ValidationSummary(true)
+        @using (Html.BeginForm("News", "Admin", FormMethod.Post, new { @id = "LoginForm", @class = "main-form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Author, "Автор", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Author, new
+                   {
+                       title = "Введите имя автора",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Title, "Заголовок", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Title, new
+                   {
+                       title = "Введите заголовок",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Content, "Контент", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Content, new
+                   {
+                       title = "Введите контент",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Category, "Категория", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Category, new
+                   {
+                       title = "Введите категорию",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Tags, "Тег", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Tags, new
+                   {
+                       title = "Введите тег",
+                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.Label("Images", "Фото", new { @class = "main-form__label" })
+                        <input type="file" name="Images" multiple class="main-form__input" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-form__field main-form__field--flex">
+                <input class="main-form__btn btn btn--main" type="submit" name="send-data" value="Добавить">
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,84 +1,100 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.News;
 using WebShop.BusinessLogic.Core;
 using System.Data.Entity.Migrations;
-
-
+using System;
+using WebShop.Domain.News.Image;
 
 namespace WebShop.BusinessLogic.BLogic
 {
-    internal class NewsBL: NewsApi, INews
+    internal class NewsBL : NewsApi, INews
     {
         public List<News> GetAllNews()
         {
-            var news = GetNewsList();
-            var newsList = new List<News>();
-            foreach (var u in news)
-            {
-                News m = new News();
-                m.Id = u.Id;
-                m.Title = u.Title;
-                m.Content = u.Content;
-                m.CreationDate = u.PublishedDate;
-                m.Author = u.Author;
-                m.Category = u.Category;
-                m.Tags = u.Tags;
-                m.Images = u.ImageString;
-                newsList.Add(m);
-            }
-            return newsList;
+            return GetNewsListAPI().Select(MapToNews).ToList();
         }
 
         public News GetNewsByIdAction(int id)
         {
-            var newsById = GetNewsById(id);
-            var news = new News();
-            news.Id = newsById.Id;
-            news.Title = newsById.Title;
-            news.Content = newsById.Content;
-            news.CreationDate = newsById.PublishedDate;
-            news.Author = newsById.Author;
-            news.Category = newsById.Category;
-            news.Tags = newsById.Tags;
-            news.Images = newsById.ImageString;
-            return news;
+            var newsById = GetNewsByIdAPI(id);
+            return newsById != null ? MapToNews(newsById) : null;
         }
 
         public bool UpdateNews(News updatedNews)
         {
-        
-            var DBNews = GetNewsById(updatedNews.Id);
-            if (DBNews == null)
+
+            var dbNews = GetNewsByIdAPI(updatedNews.Id);
+            if (dbNews == null)
                 return false;
-            DBNews.Title = updatedNews.Title;
-            DBNews.Content = updatedNews.Content;
-            DBNews.PublishedDate = updatedNews.CreationDate;
-            DBNews.Author = updatedNews.Author;
-            DBNews.Category = updatedNews.Category;
-            DBNews.Tags = updatedNews.Tags;
-            DBNews.ImageString = updatedNews.Images;
+
+            dbNews = MapToDB(updatedNews);
 
             using (var db = new NewsContext())
             {
-                db.News.AddOrUpdate(DBNews);
+                db.News.AddOrUpdate(dbNews);
                 db.SaveChanges();
-            }
 
+            }
+        
             return true;
         }
 
-        public NewsDBTable CreateNews(NewsDBTable newNews)
+        public bool CreateNews(News newNews)
         {
+            if (string.IsNullOrWhiteSpace(newNews.Title) ||
+                string.IsNullOrWhiteSpace(newNews.Author))
+            {
+                return false;
+            }
+            var dbNews = MapToDB(newNews);
             using (var context = new NewsContext())
             {
-                context.News.Add(newNews);
+                context.News.Add(dbNews);
                 context.SaveChanges();
+
             }
-            return newNews;
+        return true;
+        }
+
+        private NewsDBTable MapToDB(News news)
+        {
+            return new NewsDBTable
+            {
+                Id = news.Id,
+                Title = news.Title,
+                Content = news.Content,
+                Author = news.Author,
+                Category = news.Category,
+                Tags = news.Tags,
+                Images = news.Images?.Select(img => new NewsImage
+                {
+                    ContentType = img.ContentType,
+                    ImageData = Convert.FromBase64String(img.Base64Data) // преобразование из base64 в byte[]
+                }).ToList()
+            };
+        }
+
+        // Преобразование из NewsDBTable (Entity) в News (DTO)
+        private News MapToNews(NewsDBTable db)
+        {
+            return new News
+            {
+                Id = db.Id,
+                Title = db.Title,
+                Content = db.Content,
+                Author = db.Author,
+                Category = db.Category,
+                Tags = db.Tags,
+                Images = db.Images?.Select(img => new NewsImageDto
+                {
+                    Id = img.Id,
+                    ContentType = img.ContentType,
+                    Base64Data = Convert.ToBase64String(img.ImageData) // преобразование из byte[] в base64
+                }).ToList()
+            };
         }
     }
 }
