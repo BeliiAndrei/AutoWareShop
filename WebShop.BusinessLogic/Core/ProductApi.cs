@@ -58,7 +58,7 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
-        internal List<ProductDBTable> GetProductsByStatus(ProductStatus status)
+        internal List<ProductDBTable> GetProductsByStatusAction(ProductStatus status)
         {
             try
             {

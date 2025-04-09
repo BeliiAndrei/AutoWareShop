@@ -110,5 +110,19 @@ namespace WebShop.BusinessLogic.BLogic
             EditProduct(product);
             return GetProductById(product.Id);
         }
+
+        public List<ProductDTO> GetProductsByStatus(string statusString)
+        {
+            ProductStatus status;
+            try
+            {
+                status = (ProductStatus)Enum.Parse(typeof(ProductStatus), statusString);
+            }
+            catch
+            {
+                return null;
+            }
+            return FormList(GetProductsByStatusAction(status));
+        }
     }
 }

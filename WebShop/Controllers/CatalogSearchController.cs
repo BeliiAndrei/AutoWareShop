@@ -47,9 +47,10 @@ namespace WebShop.Controllers
         public ActionResult Search_result(string Path_Category, string Path_Subcategory, string Result_SearchString = "", int page = 1)
         {
             SearchModel viewModel;
+            List<ProductDTO> result;
             if (Path_Category != null || Path_Subcategory != null)
             {
-                var result = _product.GetProductsByCategory(Path_Subcategory);
+                result = _product.GetProductsByCategory(Path_Subcategory);
                 viewModel = FormViewModel(result, page, Result_SearchString);
                 viewModel.Path = new SearchPath
                 {
@@ -60,13 +61,12 @@ namespace WebShop.Controllers
             }
             if(Result_SearchString !="")
             {
-                var result = _product.GetProductsBySearchString(Result_SearchString);
+                if (Result_SearchString == "bonus")
+                    result = _product.GetProductsByStatus(Result_SearchString);
+                else
+                    result = _product.GetProductsBySearchString(Result_SearchString);
                 viewModel = FormViewModel(result, page, Result_SearchString);
                 return View(viewModel);
-            }
-            if(page != 1)
-            {
-                //return View(model);
             }
             return RedirectToAction("Error_500", "Error");
         }
@@ -110,30 +110,6 @@ namespace WebShop.Controllers
             PageInfo pageInfo = new PageInfo(count, page, pageSize);
             return pageInfo;
         }
-
-        //public ActionResult Search_result(SearchModel model, int page = 1)
-        //{
-        //    var viewModel = new SearchModel();
-        //    if(model.Path.Subcategory != null)
-        //    {
-        //        var result = _product.GetProductsByCategory(model.Path.Subcategory);
-        //        viewModel = FormViewModel(result, page, model.Result.SearchString);
-        //        viewModel.Path = new SearchPath
-        //        {
-        //            Category = model.Path.Category,
-        //            Subcategory = model.Path.Subcategory
-        //        };
-        //        return View(viewModel);
-        //    }
-
-        //    if(model.Result.SearchString != "")
-        //    {
-        //        var result = _product.GetProductsBySearchString(model.Result.SearchString);
-        //        viewModel = FormViewModel(result, page, model.Result.SearchString);
-        //        return View(viewModel);
-        //    }
-        //    return View("Error_500", "Error");
-        //}
         public ActionResult Select_car()
         {
             return View();

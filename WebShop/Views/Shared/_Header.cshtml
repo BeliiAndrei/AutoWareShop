@@ -51,7 +51,7 @@
                 </div>
                 <nav class="section-nav d-none d-md-block">
                     <ul class="section-nav__list">
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Search_result", "CatalogSearch")"><span class="section-nav__text">Акции</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Search_result", "CatalogSearch", new {Result_SearchString = "bonus"})"><span class="section-nav__text">Акции</span></a></li>
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Payment", "BasketPayment")"><span class="section-nav__text">Оплата </span></a></li>
                         @if (isAdmin)
                         {

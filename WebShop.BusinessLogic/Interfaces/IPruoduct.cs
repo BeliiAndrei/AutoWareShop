@@ -12,12 +12,12 @@ namespace WebShop.BusinessLogic.Interfaces
     {
         ProductActionResponse CreateNewProduct (ProductDTO data);
         ProductDTO ModifyProduct (ProductDTO data);
-
         List<ProductDTO> GetProductsList();
         ProductDTO GetProductById (int id);
         ProductDTO GetProductByArticle(string art);
         List<ProductDTO> GetProductsByCategory(string category);
         List<ProductDTO> GetProductsBySearchString(string search_string);
+        List<ProductDTO> GetProductsByStatus(string statusString);
 
     }
 }
