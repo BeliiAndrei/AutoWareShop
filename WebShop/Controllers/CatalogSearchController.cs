@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebShop.BusinessLogic;
+using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Product;
 using WebShop.Models;
@@ -70,7 +71,7 @@ namespace WebShop.Controllers
             return RedirectToAction("Error_500", "Error");
         }
 
-        SearchModel FormViewModel(List<ProductDTO> products, int page = 1, string Result_SearchString = "")
+        internal SearchModel FormViewModel(List<ProductDTO> products, int page = 1, string Result_SearchString = "")
         {
             var productsForView = new List<ProductCardViewModel>();
             foreach (ProductDTO p in products)
@@ -95,15 +96,44 @@ namespace WebShop.Controllers
                 SearchString = Result_SearchString,
                 TotalCount = products.Count()
             };
-            int pageSize = 1;   // количество элементов на странице
-            var count = searchResult.TotalCount;
-            var items = searchResult.Products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            searchResult.Products = items;
-            PageInfo pageInfo = new PageInfo(count, page, pageSize);
+            PageInfo pageInfo = FormPageInfo(searchResult, page);
             SearchModel viewModel = new SearchModel(searchResult, pageInfo);
             return viewModel;
         }
 
+        internal PageInfo FormPageInfo(SearchResult searchResult, int page = 1)
+        {
+            int pageSize = 1; // количество элементов на странице
+            var count = searchResult.TotalCount;
+            var items = searchResult.Products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            searchResult.Products = items;
+            PageInfo pageInfo = new PageInfo(count, page, pageSize);
+            return pageInfo;
+        }
+
+        //public ActionResult Search_result(SearchModel model, int page = 1)
+        //{
+        //    var viewModel = new SearchModel();
+        //    if(model.Path.Subcategory != null)
+        //    {
+        //        var result = _product.GetProductsByCategory(model.Path.Subcategory);
+        //        viewModel = FormViewModel(result, page, model.Result.SearchString);
+        //        viewModel.Path = new SearchPath
+        //        {
+        //            Category = model.Path.Category,
+        //            Subcategory = model.Path.Subcategory
+        //        };
+        //        return View(viewModel);
+        //    }
+
+        //    if(model.Result.SearchString != "")
+        //    {
+        //        var result = _product.GetProductsBySearchString(model.Result.SearchString);
+        //        viewModel = FormViewModel(result, page, model.Result.SearchString);
+        //        return View(viewModel);
+        //    }
+        //    return View("Error_500", "Error");
+        //}
         public ActionResult Select_car()
         {
             return View();

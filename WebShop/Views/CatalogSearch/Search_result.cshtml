@@ -282,7 +282,11 @@
                         <div class="pagination">
                             @if (page.HasPreviousPage)
                             {
-                                <a class="pagination__prev" href="@Url.Action("Search_result", new { page = page.PageNumber - 1 })">
+                                <a class="pagination__prev" href="@Url.Action("Search_result", new {
+                                                                                                    Path_Category = Model.Path?.Category,
+                                                                                                    Path_Subcategory = Model.Path?.Subcategory,
+                                                                                                    Result_SearchString = Model.Result.SearchString, 
+                                                                                                    page = page.PageNumber - 1 })">
                                     <svg class="icon icon-arrow-left pagination__icon">
                                         <use href="~/assets/images/svg/symbol/sprite.svg#arrow-left"></use>
                                     </svg>
@@ -309,7 +313,11 @@
                                     for (int i = start; i <= end; i++)
                                     {
                                         <li class="pagination__item">
-                                            <a class="pagination__link @(i == current ? "active" : "")" href="@Url.Action("Search_result", new { page = i })">@i</a>
+                                            <a class="pagination__link @(i == current ? "active" : "")" href="@Url.Action("Search_result", new {
+                                                                                                                Path_Category = Model.Path?.Category,
+                                                                                                                Path_Subcategory = Model.Path?.Subcategory,
+                                                                                                                Result_SearchString = Model.Result.SearchString, 
+                                                                                                                page = i })">@i</a>
                                         </li>
                                     }
 
@@ -326,7 +334,11 @@
 
                             @if (page.HasNextPage)
                             {
-                                <a class="pagination__next" href="@Url.Action("Search_result", new { page = page.PageNumber + 1 })">
+                                <a class="pagination__next" href="@Url.Action("Search_result", new {
+                                                                                                    Path_Category = Model.Path?.Category,
+                                                                                                    Path_Subcategory = Model.Path?.Subcategory,
+                                                                                                    Result_SearchString = Model.Result.SearchString, 
+                                                                                                    page = page.PageNumber+1 })">
                                     <svg class="icon icon-arrow-right pagination__icon">
                                         <use href="~/assets/images/svg/symbol/sprite.svg#arrow-right"></use>
                                     </svg>
