@@ -227,7 +227,7 @@ namespace WebShop.Controllers
             return View("ProductProfile", product);
         }
 
-        // ========== HELPERS ==========
+        // ========== HELPERS ===========
 
         private News ViewToNews(NewsViewModel model)
         {
