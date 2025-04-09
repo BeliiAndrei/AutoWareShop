@@ -18,7 +18,7 @@
     </div>
     <div class="formContainer">
         @Html.ValidationSummary(true)
-@using (Html.BeginForm("News", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "LoginForm", @class = "main-form" }))
+        @using (Html.BeginForm("News", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "LoginForm", @class = "main-form" }))
         {
             @Html.AntiForgeryToken()
             <div class="row">

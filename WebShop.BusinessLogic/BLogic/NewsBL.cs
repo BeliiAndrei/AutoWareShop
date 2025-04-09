@@ -96,6 +96,9 @@ namespace WebShop.BusinessLogic.BLogic
                 ImageData = db.ImageData,
                 ImageMimeType = db.ImageMimeType
             };
+
         }
+
+        
     }
 }

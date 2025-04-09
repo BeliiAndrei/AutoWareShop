@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
-using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.News;
 using WebShop.Domain.Product;
@@ -18,9 +14,9 @@ namespace WebShop.Controllers
 {
     public class AdminController : Controller
     {
-        IAdmin _admin;
-        IProduct _product;
-        INews _news;
+        private readonly IAdmin _admin;
+        private readonly IProduct _product;
+        private readonly INews _news;
 
         public AdminController()
         {
@@ -29,48 +25,55 @@ namespace WebShop.Controllers
             _product = bl.GetProductBl();
             _news = bl.GetNewsBl();
         }
-        ///////////////////////////////////////////////////////////////////////////////////////
+
+        // ========== NEWS ==========
+
         [HttpGet]
         public ActionResult News()
         {
-
-            var model = new NewsViewModel();
-            return View(model);
-
+            return View(new NewsViewModel());
         }
 
         [HttpPost]
-        public ActionResult News(News RegNews)
+        public ActionResult News(NewsViewModel model)
         {
+            var news = ViewToNews(model);
             var imageFile = Request.Files["ImageFile"];
 
             using (var binaryReader = new BinaryReader(imageFile.InputStream))
             {
-                RegNews.ImageData = binaryReader.ReadBytes(imageFile.ContentLength);
+                news.ImageData = binaryReader.ReadBytes(imageFile.ContentLength);
             }
-            RegNews.ImageMimeType = imageFile.ContentType;
+            news.ImageMimeType = imageFile.ContentType;
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                bool v = _news.CreateNews(RegNews);
-
-                TempData["Message"] = "Succes";
+                TempData["Message"] = "Something went wrong";
                 return RedirectToAction("News");
             }
-            TempData["Message"] = "Something went wrong";
+
+            _news.CreateNews(news);
+            TempData["Message"] = "Success";
             return RedirectToAction("News");
         }
+
         public ActionResult NewsEditor()
         {
-            var newsList = _news.GetAllNews();
-            return View(newsList);
-        }
-        [HttpPost]
-        public ActionResult NewsEditor(News RegNews)
-        {
-            return View();
+            try
+            {
+                var newsList = _news.GetAllNews()?.Select(NewsToView).ToList() ?? new List<NewsViewModel>();
+                return View(newsList);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка при загрузке новостей: {ex}");
+                TempData["Message"] = "Произошла ошибка при загрузке новостей";
+                TempData["AlertType"] = "danger";
+                return View(new List<NewsViewModel>());
+            }
         }
 
+ 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -78,75 +81,75 @@ namespace WebShop.Controllers
         {
             try
             {
-                bool isDeleted = _news.DeleteNews(id);
-                if (isDeleted)
-                {
-                    TempData["Message"] = "Новость успешно удалена";
-                    TempData["AlertType"] = "success";
-                }
-                else
-                {
-                    TempData["Message"] = "Новость не найдена";
-                    TempData["AlertType"] = "warning";
-                }
+                var isDeleted = _news.DeleteNews(id);
+
+                TempData["Message"] = isDeleted
+                    ? "Новость успешно удалена"
+                    : "Новость не найдена";
+
+                TempData["AlertType"] = isDeleted ? "success" : "warning";
             }
             catch (Exception ex)
             {
                 TempData["Message"] = $"Ошибка при удалении: {ex.Message}";
                 TempData["AlertType"] = "danger";
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                System.Diagnostics.Debug.WriteLine(ex);
             }
 
             return RedirectToAction("NewsEditor");
         }
-        /////////////////////////////////////////////////////////////////////////////////////////
 
+        public ActionResult ViewNews()
+        {
+           
+            
+                List<NewsViewModel> newsList = LNewsToLView(); // Преобразуем список News в NewsViewModel
+                return View(newsList); // Передаем правильный тип в представление
+            
+           
+        }
+
+
+        // ========== USERS ===============================================================
 
         [HttpPost]
         public ActionResult RegisterUser(UserRegistrationData registerData)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var userRegister = _admin.RegisterUser(registerData);
-                TempData["Message"] = userRegister.StatusMsg;
-                if (userRegister.Status == true)
-                {
-                    return RedirectToAction("Clients");
-                }
-                else
-                {
-                    TempData["Message"] = userRegister.StatusMsg;
-                    return RedirectToAction("AddUser");
-                }
+                TempData["Message"] = "Something went wrong";
+                return RedirectToAction("AddUser");
             }
-            TempData["Message"] = "Something went wrong";
-            return RedirectToAction("AddUser");
-        }
 
+            var result = _admin.RegisterUser(registerData);
+            TempData["Message"] = result.StatusMsg;
+
+            return result.Status
+                ? RedirectToAction("Clients")
+                : RedirectToAction("AddUser");
+        }
 
         [HttpGet]
         public ActionResult ClientProfile()
         {
             return RedirectToActionPermanent("Clients");
         }
+
         [HttpPost]
         public ActionResult ClientProfile(int userId)
         {
             var user = _admin.GetUserById(userId);
-            if (user == null)
-            {
-                return View("../Error/Error_500");
-            }
-            return View(user);
+            return user == null
+                ? View("../Error/Error_500")
+                : View(user);
         }
 
         [HttpPost]
         public ActionResult UserProfileEdit(UserInfo model)
         {
             if (!ModelState.IsValid)
-            {
                 return View("ClientProfile", model);
-            }
+
             var user = _admin.UpdateUser(model);
             TempData["SuccessMessage"] = "Изменения успешно сохранены.";
             return View("ClientProfile", user);
@@ -157,14 +160,14 @@ namespace WebShop.Controllers
             var users = _admin.GetUsersList();
             return View(users);
         }
+
         [HttpGet]
         public ActionResult AddUser()
         {
-            var model = new UserRegisterModel();
-            return View(model);
+            return View(new UserRegisterModel());
         }
 
-       
+        // ========== PRODUCTS ==========
 
         public ActionResult Products()
         {
@@ -182,21 +185,25 @@ namespace WebShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddProduct(ProductDTO model)
         {
+            // Проверка валидности модели
             if (!ModelState.IsValid)
             {
                 TempData["Message"] = "Введённые данные некорректны";
-                return View();
+                return View(model);
             }
+
+            // Попытка создать продукт
             var response = _product.CreateNewProduct(model);
-            if (response.Status == true)
+            TempData["Message"] = response.StatusMsg;
+
+            // В зависимости от результата, редиректим или возвращаем ту же вьюшку
+            if (response.Status)
             {
-                TempData["Message"] = response.StatusMsg;
                 return RedirectToAction("Products");
             }
             else
             {
-                TempData["Message"] = response.StatusMsg;
-                return View();
+                return View(model);
             }
         }
 
@@ -204,26 +211,74 @@ namespace WebShop.Controllers
         public ActionResult ProductProfile(int productId)
         {
             var product = _product.GetProductById(productId);
-            if (product == null)
-            {
-                return View("../Error/Error_500");
-            }
-            return View(product);
+            return product == null
+                ? View("../Error/Error_500")
+                : View(product);
         }
 
         [HttpPost]
         public ActionResult ProductProfileEdit(ProductDTO model)
         {
             if (!ModelState.IsValid)
-            {
                 return View("ProductProfile", model);
-            }
+
             var product = _product.ModifyProduct(model);
             TempData["Message"] = "Изменения успешно сохранены.";
             return View("ProductProfile", product);
         }
 
-        
+        // ========== HELPERS ==========
+
+        private News ViewToNews(NewsViewModel model)
+        {
+            return new News
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Content = model.Content,
+                Author = model.Author,
+                Category = model.Category,
+                Tags = model.Tags,
+                ImageData = model.ImageData,
+                ImageMimeType = model.ImageMimeType
+            };
+        }
+
+        private NewsViewModel NewsToView(News db)
+        {
+            return new NewsViewModel
+            {
+                Id = db.Id,
+                Title = db.Title,
+                Content = db.Content,
+                Author = db.Author,
+                Category = db.Category,
+                Tags = db.Tags,
+                ImageData = db.ImageData,
+                ImageMimeType = db.ImageMimeType
+            };
+        }
+
+
+        private List<NewsViewModel> LNewsToLView()
+        {
+            var newsList = _news.GetAllNews();
+
+            if (newsList == null)
+            {
+                return new List<NewsViewModel>(); 
+            }
+            var News2 = new List<NewsViewModel>();
+            foreach(var n in newsList)
+            {
+                var news = new NewsViewModel();
+                news = NewsToView(n);
+                News2.Add(news);
+            }
+            //var Ne = NewsToView()
+            //return newsList.Select(NewsToView).ToList();
+            return News2;
+        }
 
     }
 }

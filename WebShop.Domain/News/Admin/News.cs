@@ -17,8 +17,6 @@ namespace WebShop.Domain.News
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
 
-        //[NotMapped]
-        //public HttpPostedFileBase ImageFile { get; set; }
     }
 
 }
