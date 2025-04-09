@@ -328,6 +328,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\DeliveryViewModel.cs" />
     <Compile Include="Models\NewsViewModel.cs" />
     <Compile Include="Models\ProductCardViewModel.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
@@ -394,6 +395,7 @@
     <Content Include="Views\Auth\Delivery.cshtml" />
     <Content Include="Views\Informational\ViewNews.cshtml" />
     <Content Include="Views\Admin\NewsEditor.cshtml" />
+    <Content Include="Views\Admin\NewsUpdate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -31,7 +31,7 @@
                     <td>@news.Title</td>
                     <td>@news.Author</td>
                     <td>
-                        @Html.ActionLink("Редактировать", "EditNews", new { id = news.Id }, new { @class = "btn btn-sm btn-primary" })
+                        @Html.ActionLink("Редактировать", "NewsUpdate", new { id = news.Id }, new { @class = "btn btn-sm btn-primary" })
                         @using (Html.BeginForm("DeleteNews", "Admin", new { id = news.Id }, FormMethod.Post, new { @class = "d-inline" }))
                         {
                             @Html.AntiForgeryToken()

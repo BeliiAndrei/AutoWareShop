@@ -5,21 +5,25 @@ using WebShop.Domain.User.Auth;
 using WebShop.Models;
 using WebShop.Domain.User.Registration;
 using WebShop.Domain.User.Admin;
+using WebShop.Domain.Delivery.Admin;
+using WebShop.BusinessLogic;
+using WebShop.Domain.Delivery;
+
 namespace WebShop.Controllers
 {
     public class AuthController : Controller
     {
-        //System.Web.HttpContext.Current.Session["LoginStatus"] = "login";
 
-        //public System.Web.SessionState.HttpSessionState Session_user { get; }
         private readonly ISession _session;
+        private readonly IDelivery _delivery;
         public AuthController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _session = bl.GetSessionBL();
+            _delivery = bl.GetDeliveryBL();
         }
 
-        // GET: Auth
+
         public ActionResult Authorisation()
         {
             return View();
@@ -27,7 +31,6 @@ namespace WebShop.Controllers
         public void StoreUserInSession(UserInfo user)
         {
             Session["User"] = user;
-            //var test = Session["User"];
         }
 
         [HttpPost]
@@ -104,9 +107,74 @@ namespace WebShop.Controllers
             return RedirectToAction("MainPage", "Home");
         }
 
+
+        //==============================Delivery=========================================
         public ActionResult Delivery()
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delivery(DeliveryViewModel model)
+        {
+            try
+            {
+                if (model == null)
+                {
+                    TempData["ErrorMessage"] = "Неверные данные формы";
+                    return RedirectToAction("Delivery");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    // Возвращаем ту же модель с ошибками валидации
+                    return View(model);
+                }
+
+                // Конвертируем ViewModel в Domain Model
+                var deliveryLocation = ViewTODelivery(model);
+
+                // Сохраняем данные (предполагаем, что CreateDeliveryInfo возвращает bool)
+                bool isSuccess = _delivery.CreateDeliveryInfo(deliveryLocation);
+
+                if (isSuccess)
+                {
+                    TempData["SuccessMessage"] = "Адрес доставки успешно сохранён";
+                    return View(model);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Ошибка при сохранении адреса";
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Логирование ошибки
+                TempData["ErrorMessage"] = "Произошла ошибка: " + ex.Message;
+                return View(model);
+            }
+        }
+
+
+        public DeliveryLocation ViewTODelivery (DeliveryViewModel nam)
+        {
+            var del = new DeliveryLocation
+            {
+                City = nam.City,
+                Street = nam.Street,
+                House = nam.House,
+                Block = nam.Block,
+                Apartment = nam.Apartment,
+                PostalCode = nam.PostalCode,
+                Comment = nam.Comment
+
+
+            };
+            return del;
+        }
+
+        //==============================End_Delivery=====================================
     }
-    }
+}

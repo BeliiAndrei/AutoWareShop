@@ -109,6 +109,82 @@ namespace WebShop.Controllers
            
         }
 
+        [HttpGet]
+        public ActionResult NewsUpdate(int id)
+        {
+            try
+            {
+                var news = _news.GetNewsByIdAction(id);
+                if (news == null)
+                {
+                    TempData["Message"] = "Новость не найдена";
+                    TempData["AlertType"] = "warning";
+                    return RedirectToAction("NewsEditor");
+                }
+
+                return View(NewsToView(news));
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"Ошибка при загрузке новости: {ex.Message}";
+                TempData["AlertType"] = "danger";
+                return RedirectToAction("NewsEditor");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewsUpdate(NewsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = "Пожалуйста, заполните все обязательные поля";
+                TempData["AlertType"] = "warning";
+                return View(model);
+            }
+
+            try
+            {
+                var news = ViewToNews(model);
+                var imageFile = Request.Files["ImageFile"];
+
+                // Если загружено новое изображение
+                if (imageFile != null && imageFile.ContentLength > 0)
+                {
+                    using (var binaryReader = new BinaryReader(imageFile.InputStream))
+                    {
+                        news.ImageData = binaryReader.ReadBytes(imageFile.ContentLength);
+                    }
+                    news.ImageMimeType = imageFile.ContentType;
+                }
+                else
+                {
+                    // Сохраняем существующее изображение
+                    var existingNews = _news.GetNewsByIdAction(model.Id);
+                    if (existingNews != null)
+                    {
+                        news.ImageData = existingNews.ImageData;
+                        news.ImageMimeType = existingNews.ImageMimeType;
+                    }
+                }
+
+                var isUpdated = _news.UpdateNews(news);
+
+                TempData["Message"] = isUpdated
+                    ? "Новость успешно обновлена"
+                    : "Не удалось обновить новость";
+                TempData["AlertType"] = isUpdated ? "success" : "danger";
+
+                return RedirectToAction("NewsEditor");
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"Ошибка при обновлении новости: {ex.Message}";
+                TempData["AlertType"] = "danger";
+                return View(model);
+            }
+        }
+
 
         // ========== USERS ===============================================================
 
@@ -228,7 +304,15 @@ namespace WebShop.Controllers
         }
 
         // ========== HELPERS ===========
-
+        public ActionResult GetNewsImage(int id)
+        {
+            var news = _news.GetNewsByIdAction(id);
+            if (news?.ImageData != null && news.ImageMimeType != null)
+            {
+                return File(news.ImageData, news.ImageMimeType);
+            }
+            return null;
+        }
         private News ViewToNews(NewsViewModel model)
         {
             return new News

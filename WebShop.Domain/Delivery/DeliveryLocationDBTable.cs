@@ -15,23 +15,23 @@ namespace WebShop.Domain.Delivery
         public int Id { get; set; }
 
         [Required]
+        public string PostalCode { get; set; } 
+
+        [Required]
         [StringLength(100)]
         public string City { get; set; }
 
-        [Required]
         [StringLength(200)]
         public string Street { get; set; }
 
-        [Required]
-        public uint House { get; set; }
+        public string House { get; set; }
 
-        public uint? Block { get; set; } // Не всегда есть блок
+        public string Block { get; set; } // Не всегда есть блок
 
-        public uint? Apartment { get; set; } // Не всегда есть квартира
+        public string Apartment { get; set; } // Не всегда есть квартира
 
         [StringLength(500)]
 
         public string Comment { get; set; }
-        public bool IsSelfDelivery { get; set; }
     }
 }

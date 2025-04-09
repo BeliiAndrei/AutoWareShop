@@ -3,37 +3,92 @@
     ViewBag.Title = "Delivery";
 }
 
-<h2 class="text-center mb-53">Оформление доставки</h2>
+@model WebShop.Models.DeliveryViewModel
 
-<form asp-action="SubmitDelivery" method="post" class="p-4 shadow-lg rounded bg-light">
 
-    <div class="form-group mt-3">
-        <label asp-for="City">Город</label>
-        <input asp-for="City" class="form-control" placeholder="Введите ваш город" required />
+<div class="container-fluid">
+    <div class="main-content">
+        @if (TempData["Message"] != null)
+        {
+
+            <div class="alert alert-success" role="alert" style="color:red">
+                @TempData["Message"]
+            </div>
+        }
+        <div class="primary-layout">
+            <div class="product-main-section">
+                <div class="product-main">
+                    <div class="row">
+                        <div class="col-12">
+                            <header class="product-header">
+                                <h1>Редактировать продукт</h1>
+                            </header>
+
+                            @using (Html.BeginForm("Delivery", "Auth", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.City, "Название Города")
+                                            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.PostalCode, "Пост код почты")
+                                            @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Street, "Улица")
+                                            @Html.TextBoxFor(m => m.Street, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.House, "Дом")
+                                            @Html.TextBoxFor(m => m.House, new { @class = "form-control" })
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Block, "Блок")
+                                            @Html.TextBoxFor(m => m.Block, new { @class = "form-control", type = "number" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Apartment, "Квартира")
+                                            @Html.TextBoxFor(m => m.Apartment, new { @class = "form-control", type = "number" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Comment, "Заметка")
+                                    @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", rows = 4 })
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input type="submit" value="Сохранить изменения" class="btn--main btn" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group mt-3">
-        <label asp-for="Street">Улица</label>
-        <input asp-for="Street" class="form-control" placeholder="Введите улицу" required />
-    </div>
+</div>
 
-    <div class="form-group mt-3">
-        <label asp-for="Address">Дом / квартира</label>
-        <input asp-for="Address" class="form-control" placeholder="Введите номер дома и квартиры" required />
-    </div>
-
-    <div class="form-group mt-3">
-        <label asp-for="PaymentMethod">Способ оплаты</label>
-        <select asp-for="PaymentMethod" class="form-control">
-            <option value="cash">Наличными</option>
-            <option value="card">Картой</option>
-        </select>
-    </div>
-
-    <div class="form-group mt-3">
-        <label asp-for="Comment">Дополнительные пожелания</label>
-        <textarea asp-for="Comment" class="form-control" rows="3" placeholder="Оставьте комментарий (необязательно)"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">🚀 Подтвердить данные</button>
-</form>
- 

@@ -3,30 +3,15 @@ using System.Linq;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.Domain.Delivery;
 using WebShop.Domain.Delivery.Admin;
+using System;
 
 namespace WebShop.BusinessLogic.Core
 {
     public class DeliveryApi
     {
-        public DeliveryApi() { }
 
-        public List<DeliveryLocationDBTable> GetAllDeliveryLocations()
-        {
-            using (var db = new DeliveryContext())
-            {
-                return db.DeliveryLocations.ToList();  // ToList() работает с LINQ
-            }
-        }
 
-        public DeliveryLocationDBTable GetDeliveryLocationById(int id)
-        {
-            using (var db = new DeliveryContext())
-            {
-                return db.DeliveryLocations.Where(dl => dl.Id == id).FirstOrDefault();
-            }
-        }
-
-        internal bool AddDeliveryLocation(DeliveryLocationDBTable location)
+        public bool CreateDeliveryInfoAPI(DeliveryLocationDBTable location)
         {
             using (var db = new DeliveryContext())
             {
@@ -35,8 +20,7 @@ namespace WebShop.BusinessLogic.Core
                 return true;
             }
         }
-
-        internal bool EditDeliveryLocation(DeliveryLocationDBTable location)
+        public bool EditDeliveryInfoAPI(DeliveryLocationDBTable location)
         {
             using (var db = new DeliveryContext())
             {
@@ -50,8 +34,7 @@ namespace WebShop.BusinessLogic.Core
                 return true;
             }
         }
-
-        internal bool DeleteDeliveryLocation(int id)
+        public bool DeleteDeliveryLocationAPI(int id)
         {
             using (var db = new DeliveryContext())
             {
@@ -65,5 +48,18 @@ namespace WebShop.BusinessLogic.Core
                 return true;
             }
         }
+
+        public DeliveryLocationDBTable GetDeliveryLocationByIdActionAPI(int id)
+        {
+            using (var db = new DeliveryContext())
+            {
+                return db.DeliveryLocations.Where(dl => dl.Id == id).FirstOrDefault();
+            }
+        }
+
+       
+
+        
+        
     }
 }
