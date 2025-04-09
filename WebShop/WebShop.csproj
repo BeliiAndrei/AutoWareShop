@@ -392,6 +392,8 @@
     <Content Include="Views\Admin\ProductProfile.cshtml" />
     <Content Include="Views\Admin\News.cshtml" />
     <Content Include="Views\Auth\Delivery.cshtml" />
+    <Content Include="Views\Informational\ViewNews.cshtml" />
+    <Content Include="Views\Admin\NewsEditor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

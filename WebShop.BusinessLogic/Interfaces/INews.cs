@@ -11,5 +11,6 @@ namespace WebShop.BusinessLogic.Interfaces
         News GetNewsByIdAction(int id);
         bool UpdateNews(News updatedNews);
         bool CreateNews(News newNews);
+        bool DeleteNews(int id);
     }
 }

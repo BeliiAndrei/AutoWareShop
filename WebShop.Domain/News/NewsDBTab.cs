@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Web;
 
 namespace WebShop.Domain.News
 {
@@ -33,5 +34,6 @@ namespace WebShop.Domain.News
 
         [Display(Name = "Тип изображения")]
         public string ImageMimeType { get; set; }
+
     }
 }

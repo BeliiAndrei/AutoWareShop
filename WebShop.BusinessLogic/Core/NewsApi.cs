@@ -27,14 +27,22 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
-        public NewsDBTab UpdateNewsAPI(News updatedNews)
+        public NewsDBTab UpdateNewsAPI(NewsDBTab updatedNews)
         {
             using (var context = new NewsContext())
             {
-                var existingNews = context.News.Find(updatedNews.Id);
-                if (existingNews == null) return null;
+                var existingNews = context.News.FirstOrDefault(n => n.Id == updatedNews.Id);
+                if (existingNews == null)
+                    return null;
 
-                context.Entry(existingNews).CurrentValues.SetValues(updatedNews);
+                existingNews.Title = updatedNews.Title;
+                existingNews.Content = updatedNews.Content;
+                existingNews.Author = updatedNews.Author;
+                existingNews.Category = updatedNews.Category;
+                existingNews.Tags = updatedNews.Tags;
+                existingNews.ImageData = updatedNews.ImageData;
+                existingNews.ImageMimeType = updatedNews.ImageMimeType;
+
                 context.SaveChanges();
                 return existingNews;
             }
@@ -54,7 +62,7 @@ namespace WebShop.BusinessLogic.Core
             using (var context = new NewsContext())
             {
                 var news = context.News.Find(id);
-                if (news == null) return;
+                if (news == null) throw new ArgumentException("News not found");
 
                 context.News.Remove(news);
                 context.SaveChanges();

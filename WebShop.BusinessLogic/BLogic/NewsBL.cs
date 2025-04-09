@@ -29,15 +29,10 @@ namespace WebShop.BusinessLogic.BLogic
             if (dbNews == null)
                 return false;
 
-            dbNews = MapToDB(updatedNews);
+            var mappedNews = MapToDB(updatedNews);
 
-            using (var db = new NewsContext())
-            {
-                db.News.AddOrUpdate(dbNews);
-                db.SaveChanges();
+            var result = UpdateNewsAPI(mappedNews);
 
-            }
-        
             return true;
         }
 
@@ -48,15 +43,29 @@ namespace WebShop.BusinessLogic.BLogic
             {
                 return false;
             }
-            var dbNews = MapToDB(newNews);
-            using (var context = new NewsContext())
-            {
-                context.News.Add(dbNews);
-                context.SaveChanges();
 
-            }
-        return true;
+            var dbNews = MapToDB(newNews);
+
+            CreateNewsAPI(dbNews);
+
+            return true;
         }
+
+        public bool DeleteNews(int id)
+        {
+            if (id <= 0) return false;
+
+            try
+            {
+                DeleteNewsAPI(id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         private NewsDBTab MapToDB(News news)
         {

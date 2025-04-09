@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.News;
@@ -40,6 +42,14 @@ namespace WebShop.Controllers
         [HttpPost]
         public ActionResult News(News RegNews)
         {
+            var imageFile = Request.Files["ImageFile"];
+
+            using (var binaryReader = new BinaryReader(imageFile.InputStream))
+            {
+                RegNews.ImageData = binaryReader.ReadBytes(imageFile.ContentLength);
+            }
+            RegNews.ImageMimeType = imageFile.ContentType;
+
             if (ModelState.IsValid)
             {
                 bool v = _news.CreateNews(RegNews);
@@ -50,12 +60,45 @@ namespace WebShop.Controllers
             TempData["Message"] = "Something went wrong";
             return RedirectToAction("News");
         }
+        public ActionResult NewsEditor()
+        {
+            var newsList = _news.GetAllNews();
+            return View(newsList);
+        }
+        [HttpPost]
+        public ActionResult NewsEditor(News RegNews)
+        {
+            return View();
+        }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteNews(int id)
+        {
+            try
+            {
+                bool isDeleted = _news.DeleteNews(id);
+                if (isDeleted)
+                {
+                    TempData["Message"] = "Новость успешно удалена";
+                    TempData["AlertType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = "Новость не найдена";
+                    TempData["AlertType"] = "warning";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = $"Ошибка при удалении: {ex.Message}";
+                TempData["AlertType"] = "danger";
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+            }
 
-
-
-
+            return RedirectToAction("NewsEditor");
+        }
         /////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -179,6 +222,8 @@ namespace WebShop.Controllers
             TempData["Message"] = "Изменения успешно сохранены.";
             return View("ProductProfile", product);
         }
+
+        
 
     }
 }

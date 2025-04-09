@@ -18,7 +18,7 @@
     </div>
     <div class="formContainer">
         @Html.ValidationSummary(true)
-        @using (Html.BeginForm("News", "Admin", FormMethod.Post, new { @id = "LoginForm", @class = "main-form" }))
+@using (Html.BeginForm("News", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "LoginForm", @class = "main-form" }))
         {
             @Html.AntiForgeryToken()
             <div class="row">
@@ -81,16 +81,10 @@
                    })
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="main-form__field">
-                        @Html.LabelFor(m => m.ImageData, "Фото", new { @class = "main-form__label" })
-                        <input type="file"
-                               name="imageFile"
-                               title="Добавить фото"
-                               class="main-form__input"
-                               accept="image/*" />
-                        @Html.ValidationMessageFor(m => m.ImageData, "", new { @class = "text-danger" })
-                    </div>
+                <div class="form-group">
+                    <label>Изображение новости</label>
+                    <input type="file" name="ImageFile" class="form-control" />
+                    @Html.ValidationMessage("ImageFile")
                 </div>
             </div>
 

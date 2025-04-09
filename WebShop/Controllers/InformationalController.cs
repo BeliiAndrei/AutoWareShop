@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.News;
@@ -20,7 +17,7 @@ namespace WebShop.Controllers
         var bl = new BusinessLogic.BusinessLogic();
         _news = bl.GetNewsBl();
     }
-        // GET: Informational
+        
         public ActionResult About_1()
         {
             return View();
@@ -45,11 +42,11 @@ namespace WebShop.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult GetNewsList()
+
+        public ActionResult ViewNews()
         {
             var newsList = _news.GetAllNews(); 
-            return View("NewsList", newsList);  
+            return View(newsList);
         }
 
     }
