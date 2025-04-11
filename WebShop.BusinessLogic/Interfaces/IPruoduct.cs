@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebShop.Domain.Product;
 using WebShop.Domain.Product.Admin;
+using WebShop.Domain.Product.SearchResponses;
 
 namespace WebShop.BusinessLogic.Interfaces
 {
@@ -12,12 +13,12 @@ namespace WebShop.BusinessLogic.Interfaces
     {
         ProductActionResponse CreateNewProduct (ProductDTO data);
         ProductDTO ModifyProduct (ProductDTO data);
-        List<ProductDTO> GetProductsList();
+        ProductSearchResponseDTO GetProductsList(int page, int pageSize);
         ProductDTO GetProductById (int id);
         ProductDTO GetProductByArticle(string art);
-        List<ProductDTO> GetProductsByCategory(string category);
-        List<ProductDTO> GetProductsBySearchString(string search_string);
-        List<ProductDTO> GetProductsByStatus(string statusString);
+        ProductSearchResponseDTO GetProductsByCategory(string category, int page = 0, int pageSize = 100);
+        ProductSearchResponseDTO GetProductsBySearchString(string search_string, int page = 0, int pageSize = 100);
+        ProductSearchResponseDTO GetProductsByStatus(string statusString, int page = 0, int pageSize = 100);
 
     }
 }

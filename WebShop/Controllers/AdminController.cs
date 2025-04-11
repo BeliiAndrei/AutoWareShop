@@ -9,6 +9,7 @@ using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Registration;
 using WebShop.Models;
+using WebShop.Models.Search;
 
 namespace WebShop.Controllers
 {
@@ -83,10 +84,17 @@ namespace WebShop.Controllers
             return RedirectToAction("AddUser");
         }
 
-        public ActionResult Products()
+        public ActionResult Products(int page = 1)
         {
-            var products = _product.GetProductsList();
-            return View(products);
+            int pageSize = 10;
+            var response = _product.GetProductsList(page, pageSize);
+            var model = new AdminProductsModel
+            {
+                Page = new PageInfo(response.productsTotalCount, page, pageSize),
+                Products = response.products,
+                TotalCount = response.productsTotalCount
+            };
+            return View(model);
         }
 
         [HttpGet]

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using WebShop.BusinessLogic;
-using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Product;
+using WebShop.Domain.Product.SearchResponses;
 using WebShop.Models;
 using WebShop.Models.Search;
 
@@ -46,12 +43,13 @@ namespace WebShop.Controllers
 
         public ActionResult Search_result(string Path_Category, string Path_Subcategory, string Result_SearchString = "", int page = 1)
         {
+            var pageSize = 1;
             SearchModel viewModel;
-            List<ProductDTO> result;
+            ProductSearchResponseDTO result;
             if (Path_Category != null || Path_Subcategory != null)
             {
-                result = _product.GetProductsByCategory(Path_Subcategory);
-                viewModel = FormViewModel(result, page, Result_SearchString);
+                result = _product.GetProductsByCategory(Path_Subcategory, page, pageSize);
+                viewModel = FormViewModel(result, pageSize, page, Result_SearchString);
                 viewModel.Path = new SearchPath
                 {
                     Category = Path_Category,
@@ -62,19 +60,19 @@ namespace WebShop.Controllers
             if(Result_SearchString !="")
             {
                 if (Result_SearchString == "bonus")
-                    result = _product.GetProductsByStatus(Result_SearchString);
+                    result = _product.GetProductsByStatus(Result_SearchString, page, pageSize);
                 else
-                    result = _product.GetProductsBySearchString(Result_SearchString);
-                viewModel = FormViewModel(result, page, Result_SearchString);
+                    result = _product.GetProductsBySearchString(Result_SearchString, page, pageSize);
+                viewModel = FormViewModel(result, pageSize, page, Result_SearchString);
                 return View(viewModel);
             }
             return RedirectToAction("Error_500", "Error");
         }
 
-        internal SearchModel FormViewModel(List<ProductDTO> products, int page = 1, string Result_SearchString = "")
+        internal SearchModel FormViewModel(ProductSearchResponseDTO response, int pageSize, int page = 1, string Result_SearchString = "")
         {
             var productsForView = new List<ProductCardViewModel>();
-            foreach (ProductDTO p in products)
+            foreach (ProductDTO p in response.products)
             {
                 var product = new ProductCardViewModel
                 {
@@ -94,22 +92,13 @@ namespace WebShop.Controllers
             {
                 Products = productsForView,
                 SearchString = Result_SearchString,
-                TotalCount = products.Count()
+                TotalCount = response.productsTotalCount
             };
-            PageInfo pageInfo = FormPageInfo(searchResult, page);
+            PageInfo pageInfo = new PageInfo(searchResult.TotalCount, page, pageSize);
             SearchModel viewModel = new SearchModel(searchResult, pageInfo);
             return viewModel;
         }
 
-        internal PageInfo FormPageInfo(SearchResult searchResult, int page = 1)
-        {
-            int pageSize = 1; // количество элементов на странице
-            var count = searchResult.TotalCount;
-            var items = searchResult.Products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            searchResult.Products = items;
-            PageInfo pageInfo = new PageInfo(count, page, pageSize);
-            return pageInfo;
-        }
         public ActionResult Select_car()
         {
             return View();

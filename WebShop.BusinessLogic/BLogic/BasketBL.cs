@@ -27,7 +27,7 @@ namespace WebShop.BusinessLogic.BLogic
             return GetBasketSizeAction(userId);
         }
 
-        public void RemoveAll()
+        public BasketActionResponse RemoveAll(int userId)
         {
             throw new NotImplementedException();
         }

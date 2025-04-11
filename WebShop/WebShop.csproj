@@ -313,6 +313,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasketPaymentController.cs" />
     <Compile Include="Controllers\CatalogSearchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -328,6 +329,7 @@
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\DecimalModelBinder.cs" />
     <Compile Include="Models\ProductCardViewModel.cs" />
+    <Compile Include="Models\Search\AdminProductsModel.cs" />
     <Compile Include="Models\Search\PageInfo.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
     <Compile Include="Models\Search\SearchPath.cs" />

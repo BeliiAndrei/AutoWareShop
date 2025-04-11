@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebShop.BusinessLogic.Core;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Enumerables;
 using WebShop.Domain.Product;
 using WebShop.Domain.Product.Admin;
-using WebShop.Domain.User.Admin;
+using WebShop.Domain.Product.SearchResponses;
 
 namespace WebShop.BusinessLogic.BLogic
 {
@@ -55,15 +52,15 @@ namespace WebShop.BusinessLogic.BLogic
             return product;
         }
 
-        public List<ProductDTO> GetProductsByCategory(string category)
+        public ProductSearchResponseDTO GetProductsByCategory(string category, int page = 0, int pageSize = 100)
         {
-            var productsFromDB = GetProductsByCategoryAction(category);
+            var productsFromDB = GetProductsByCategoryAction(category, page, pageSize);
             return FormList(productsFromDB);
         }
-        public List<ProductDTO> FormList(List<ProductDBTable> productsFromDB)
+        internal ProductSearchResponseDTO FormList(ProductSearchResponseDB response)
         {
-            List<ProductDTO> products = new List<ProductDTO>();
-            foreach (var p in productsFromDB)
+            List<ProductDTO> productsL = new List<ProductDTO>();
+            foreach (var p in response.products)
             {
                 var product = new ProductDTO
                 {
@@ -78,19 +75,23 @@ namespace WebShop.BusinessLogic.BLogic
                     ImageNumber = p.ImageString,
                     Status = p.Status
                 };
-                products.Add(product);
+                productsL.Add(product);
             }
-            return products;
+            
+            return new ProductSearchResponseDTO 
+            { 
+                products = productsL, productsTotalCount = response.productsTotalCount
+            };
         }
-        public List<ProductDTO> GetProductsBySearchString(string search_string)
+        public ProductSearchResponseDTO GetProductsBySearchString(string search_string, int page = 0, int pageSize = 100)
         {
-            var productsFromDB = GetProductsBySearchStringAction(search_string);
+            var productsFromDB = GetProductsBySearchStringAction(search_string, page, pageSize);
             return FormList(productsFromDB);
         }
 
-        public List<ProductDTO> GetProductsList()
+        public ProductSearchResponseDTO GetProductsList(int page, int pageSize)
         {
-            return FormList(GetAllProducts());
+            return FormList(GetAllProducts(page,pageSize));
         }
 
         public ProductDTO ModifyProduct(ProductDTO oldProduct)
@@ -111,7 +112,7 @@ namespace WebShop.BusinessLogic.BLogic
             return GetProductById(product.Id);
         }
 
-        public List<ProductDTO> GetProductsByStatus(string statusString)
+        public ProductSearchResponseDTO GetProductsByStatus(string statusString, int page = 0, int pageSize = 100)
         {
             ProductStatus status;
             try
@@ -122,7 +123,7 @@ namespace WebShop.BusinessLogic.BLogic
             {
                 return null;
             }
-            return FormList(GetProductsByStatusAction(status));
+            return FormList(GetProductsByStatusAction(status, page, pageSize));
         }
     }
 }

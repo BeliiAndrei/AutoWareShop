@@ -6,6 +6,7 @@ using WebShop.BusinessLogic.DBModel.Seed;
 using WebShop.Domain.Enumerables;
 using WebShop.Domain.Product;
 using WebShop.Domain.Product.Admin;
+using WebShop.Domain.Product.SearchResponses;
 
 namespace WebShop.BusinessLogic.Core
 {
@@ -13,18 +14,29 @@ namespace WebShop.BusinessLogic.Core
     {
         public ProductApi() { }
 
-        internal List<ProductDBTable> GetAllProducts()
+        internal ProductSearchResponseDB GetAllProducts(int page, int pageSize)
         {
             try
             {
                 using (var db = new ProductContext())
                 {
-                    return db.Products.ToList();
+                    var pr = db.Products.OrderBy(p=>p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    var count = db.Products.Count();
+                    var response = new ProductSearchResponseDB
+                    {
+                        products = pr,
+                        productsTotalCount = count
+                    };
+                    return response;
                 }
             }
             catch (Exception)
             {
-                throw;  
+                return new ProductSearchResponseDB
+                {
+                    products = null,
+                    productsTotalCount = 0
+                };
             }
         }
 
@@ -58,53 +70,93 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
-        internal List<ProductDBTable> GetProductsByStatusAction(ProductStatus status)
+        internal ProductSearchResponseDB GetProductsByStatusAction(ProductStatus status, int page, int pageSize)
         {
             try
             {
                 using (var db = new ProductContext())
                 {
-                    return db.Products.Where(p => p.Status == status).ToList();
+                    var query = db.Products.Where(p => p.Status == status);
+                    var pr = query.OrderBy(p => p.Id)
+                        .Skip((page - 1) * pageSize).Take(pageSize)
+                        .ToList();
+                    var count = query.Count();
+                    var response = new ProductSearchResponseDB
+                    {
+                        products = pr,
+                        productsTotalCount = count
+                    };
+                    return response;
                 }
             }
             catch (Exception)
             {
-                throw;
+                return new ProductSearchResponseDB
+                {
+                    products = null,
+                    productsTotalCount = 0
+                };
             }
         }
 
-        internal List<ProductDBTable> GetProductsByCategoryAction(string category)
+        internal ProductSearchResponseDB GetProductsByCategoryAction(string category, int page, int pageSize)
         {
             try
             {
                 using (var db = new ProductContext())
                 {
-                    return db.Products
-                             .Where(p => p.Category == category && p.Status != ProductStatus.hidden)
+                    var query = db.Products
+                             .Where(p => p.Category == category && p.Status != ProductStatus.hidden);
+                    var pr =  query.OrderBy(p => p.Id)
+                             .Skip((page - 1) * pageSize).Take(pageSize)
                              .ToList();
+                    var count = query.Count();
+                    var response = new ProductSearchResponseDB
+                    {
+                        products = pr,
+                        productsTotalCount = count
+                    };
+                    return response;
                 }
             }
             catch (Exception)
             {
-                return new List<ProductDBTable>();
+                return new ProductSearchResponseDB
+                {
+                    products = null,
+                    productsTotalCount = 0
+                };
             }
         }
 
-        internal List<ProductDBTable> GetProductsBySearchStringAction(string searchString)
+        internal ProductSearchResponseDB GetProductsBySearchStringAction(string searchString, int page, int pageSize)
         {
             try
             {
                 using (var db = new ProductContext())
                 {
-                    return db.Products
+                    var query = db.Products
                              .Where(p => (p.Name.Contains(searchString) || p.Producer.Contains(searchString))
-                                         && p.Status != ProductStatus.hidden)
+                                         && p.Status != ProductStatus.hidden);
+                    var pr = query.OrderBy(p=>p.Id)
+                             .Skip((page - 1) * pageSize).Take(pageSize)
                              .ToList();
+                    var count = query.Count();
+                    var response = new ProductSearchResponseDB
+                    {
+                        products = pr,
+                        productsTotalCount = count
+                    };
+                    return response;
                 }
             }
             catch (Exception)
             {
-                return new List<ProductDBTable>();
+                return new ProductSearchResponseDB
+                {
+                    products = null,
+                    productsTotalCount = 0
+                };
             }
         }
         internal ProductActionResponse CreateNewProductAction(ProductDTO data)
