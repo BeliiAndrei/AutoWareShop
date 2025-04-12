@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebShop.Domain.User.Admin;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebShop.Domain.Delivery.Admin
+namespace WebShop.Domain.User.Delivery
 {
-    public class DeliveryLocation
+    public class DeliveryLoc
     {
-        public int Id { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string Street { get; set; }

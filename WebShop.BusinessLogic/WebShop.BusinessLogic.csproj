@@ -64,17 +64,14 @@
     <Compile Include="BLogic\UserBL.cs" />
     <Compile Include="BusinessLogic.cs" />
     <Compile Include="Core\AdminApi.cs" />
-    <Compile Include="Core\DeliveryApi.cs" />
     <Compile Include="Core\NewsApi.cs" />
     <Compile Include="Core\ProductApi.cs" />
     <Compile Include="Core\UserApi.cs" />
-    <Compile Include="DBModel\DeliveryContext.cs" />
     <Compile Include="DBModel\NewsContext.cs" />
     <Compile Include="DBModel\ProductContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
     <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\IBasket.cs" />
-    <Compile Include="Interfaces\IDelivery.cs" />
     <Compile Include="Interfaces\IOrder.cs" />
     <Compile Include="Interfaces\INews.cs" />
     <Compile Include="Interfaces\IPaymnet.cs" />

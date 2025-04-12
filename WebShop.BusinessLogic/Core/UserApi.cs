@@ -5,6 +5,7 @@ using WebShop.Domain.Enumerables;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
+using WebShop.Domain.User.Delivery;
 using WebShop.Domain.User.Modify;
 using WebShop.Domain.User.Registration;
 
@@ -14,6 +15,9 @@ namespace WebShop.BusinessLogic.Core
     {
 
         public UserApi() { }
+
+        
+
 
         internal UserLoginResponse UserLoginAction(UserLoginData data)
         {
@@ -51,7 +55,7 @@ namespace WebShop.BusinessLogic.Core
             };
 
         }
-
+        
         internal UserRegistrationResponse UserRegistrationAction(UserRegistrationData data)
         {
             using (var db = new UserContext())
@@ -149,10 +153,7 @@ namespace WebShop.BusinessLogic.Core
         internal UserInfo GetUserIdBySessionKeyAction(string sessionKey)
         {
 
-
-            //select from db 
-
-            return null;
+            return null; 
 
         }
 
@@ -171,5 +172,31 @@ namespace WebShop.BusinessLogic.Core
 
 
         //-----------------------------------------------------------------------
+
+        //=====================Delivery=========================
+
+
+
+
+        public bool AddDeliveryAddressApi(DeliveryLoc address)
+        {
+            using (var db = new UserContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id == data.Id); // или u.Email == model.Email
+                if (user == null)
+                {
+                    return false;
+                }
+
+
+                return true;
+            }
+        }
+
+
+
+
+
+        //======================================================
     }
 }

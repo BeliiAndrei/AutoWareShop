@@ -56,8 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basket\Basket.cs" />
-    <Compile Include="Delivery\Admin\DeliveryLocation.cs" />
-    <Compile Include="Delivery\DeliveryLocationDBTable.cs" />
     <Compile Include="Enumerables\ProductStatus.cs" />
     <Compile Include="Enumerables\UserRole.cs" />
     <Compile Include="News\Admin\News.cs" />
@@ -69,6 +67,7 @@
     <Compile Include="Product\ProductDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Admin\UserInfo.cs" />
+    <Compile Include="User\Delivery\DeliveryLoc.cs" />
     <Compile Include="User\Modify\ChangePasswordClass.cs" />
     <Compile Include="User\Registration\UserRegistrationResponse.cs" />
     <Compile Include="User\UserDBTable.cs" />
