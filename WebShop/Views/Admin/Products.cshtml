@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
 }
 
-@model List<WebShop.Domain.Product.ProductDTO>
+@model WebShop.Models.Search.AdminProductsModel
 
 <style>
     table {
@@ -68,6 +68,67 @@
     </div>
     <a href="@Url.Action("AddProduct", "Admin")"><input type="button" class="btn--main btn" value="Добавить товар" /></a>
     <h2>Список товаров</h2>
+    @{
+        var page = Model.Page;
+    }
+
+    @if (page?.TotalPages > 1)
+    {
+        <div class="pagination-wrap">
+            <div class="pagination">
+                @if (page.HasPreviousPage)
+                {
+                    <a class="pagination__prev" href="@Url.Action("Products", new {page = page.PageNumber - 1 })">
+                        <svg class="icon icon-arrow-left pagination__icon">
+                            <use href="~/assets/images/svg/symbol/sprite.svg#arrow-left"></use>
+                        </svg>
+                    </a>
+                }
+
+                <ul class="pagination__list">
+                    @{
+                        int current = page.PageNumber ?? 1;
+                        int total = page.TotalPages ?? 1;
+                        int start = Math.Max(1, current - 3);
+                        int end = Math.Min(total, current + 3);
+
+                        if (start > 1)
+                        {
+                            <li class="pagination__item"><a class="pagination__link" href="@Url.Action("Products", new { page = 1 })">1</a></li>
+                            if (start > 2)
+                            {
+                                <li class="pagination__item">&hellip;</li>
+                            }
+                        }
+
+                        for (int i = start; i <= end; i++)
+                        {
+                            <li class="pagination__item">
+                                <a class="pagination__link @(i == current ? "active" : "")" href="@Url.Action("Products", new {page = i })">@i</a>
+                            </li>
+                        }
+                        if (end < total)
+                        {
+                            if (end < total - 1)
+                            {
+                                <li class="pagination__item">&hellip;</li>
+                            }
+                            <li class="pagination__item"><a class="pagination__link" href="@Url.Action("Products", new { page = total })">@total</a></li>
+                        }
+                    }
+                </ul>
+
+                @if (page.HasNextPage)
+                {
+                    <a class="pagination__next" href="@Url.Action("Products", new {page = page.PageNumber+1 })">
+                        <svg class="icon icon-arrow-right pagination__icon">
+                            <use href="~/assets/images/svg/symbol/sprite.svg#arrow-right"></use>
+                        </svg>
+                    </a>
+                }
+            </div>
+        </div>
+    }
     <table>
         <thead>
             <tr>
@@ -82,7 +143,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in Model)
+            @foreach (var product in Model.Products)
             {
                 <tr>
                     <td>@product.Name</td>
@@ -90,7 +151,7 @@
                     <td>@product.Category</td>
                     <td>@product.Price.ToString("C")</td>
                     <td>
-                        @if (product.Status ==WebShop.Domain.Enumerables.ProductStatus.hidden)
+                        @if (product.Status == WebShop.Domain.Enumerables.ProductStatus.hidden)
                         {
                             <div>
                                 <span class="status-icon status-hidden"></span>Скрыт

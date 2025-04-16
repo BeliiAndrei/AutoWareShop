@@ -68,6 +68,7 @@
     <Compile Include="Core\NewsApi.cs" />
     <Compile Include="Core\ProductApi.cs" />
     <Compile Include="Core\UserApi.cs" />
+    <Compile Include="DBModel\CartContext.cs" />
     <Compile Include="DBModel\DeliveryContext.cs" />
     <Compile Include="DBModel\NewsContext.cs" />
     <Compile Include="DBModel\ProductContext.cs" />

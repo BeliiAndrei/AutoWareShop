@@ -22,7 +22,7 @@
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("AddUser", "Admin")">Регистрация пользователей</a></li>
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Products", "Admin")">Управление товарами</a></li>
                         }
-                        <li class="category-nav__item"><a class="category-nav__link @*important*@" href="@Url.Action("Search_result", "CatalogSearch")">Акции</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link @*important*@" href="@Url.Action("Search_result", "CatalogSearch", new {Result_SearchString = "bonus"})">Акции</a></li>
                         <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("About_2", "Informational")">О нас</a></li>
                         <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("About_1", "Informational")">Миссия и философия</a></li>
                         <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("News", "Informational")">Новости</a></li>

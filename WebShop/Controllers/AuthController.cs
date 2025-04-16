@@ -14,12 +14,13 @@ namespace WebShop.Controllers
     {
 
         private readonly ISession _session;
+        private readonly IBasket _basket;
         private readonly IDelivery _delivery;
-
         public AuthController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _session = bl.GetSessionBL();
+            _basket = bl.GetBasketBL();
             _delivery = bl.GetDeliveryBL();
         }
 
@@ -31,6 +32,7 @@ namespace WebShop.Controllers
         public void StoreUserInSession(UserInfo user)
         {
             Session["User"] = user;
+            Session["BasketCount"] = _basket.GetBasketSize(user.Id);
         }
 
         [HttpPost]
@@ -89,8 +91,21 @@ namespace WebShop.Controllers
                     RegisterTime = DateTime.Now,
                 };
                 var userRegister = _session.UserRegistration(data);
-                if (userRegister.Status == true)
+                if (userRegister.Status == true) { 
+                    var user = userRegister.User;
+                    var userForSession = new UserInfo
+                    {
+                        Id = user.Id,
+                        UserName = user.Username,
+                        UserLastName = user.Usersurname,
+                        Email = user.Email,
+                        Balance = 0,
+                        PhoneNumber = user.PhoneNumber,
+                        Role = user.Level.ToString()
+                    };
+                    Session["User"] = userForSession;
                     return View("../Home/MainPage");
+                }
                 else
                 {
                     TempData["Message"] = userRegister.StatusMsg;
@@ -104,6 +119,7 @@ namespace WebShop.Controllers
         public ActionResult LogOut()
         {
             Session["User"] = null;
+            Session["BasketCount"] = null;
             return RedirectToAction("MainPage", "Home");
         }
 

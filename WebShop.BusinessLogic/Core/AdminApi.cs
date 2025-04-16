@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using WebShop.BusinessLogic.DBModel;
-using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
 using WebShop.Domain.User.Registration;
 
@@ -85,23 +84,6 @@ namespace WebShop.BusinessLogic.Core
                 db.Users.AddOrUpdate(user);
                 db.SaveChanges();
             }
-        }
-
-        internal bool EditProduct()
-        {
-            return true;
-        }
-        internal bool DeleteUser()
-        {
-            return true;
-        }
-        internal bool DeleteProduct()
-        {
-            return true;
-        }
-        internal bool AddProduct()
-        {
-            return true;
         }
     }
 }
