@@ -1,4 +1,4 @@
-п»ї@{
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var role = HttpContext.Current.Session["User"] is WebShop.Domain.User.Admin.UserInfo user && user.Role != null
         ? user.Role
@@ -18,20 +18,20 @@
                     <ul class="category-nav__list">
                         @if (isAdmin)
                         {
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Clients", "Admin")">РЈРїСЂР°РІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё</a></li>
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("AddUser", "Admin")">Р РµРіРёСЃС‚СЂР°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№</a></li>
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Products", "Admin")">РЈРїСЂР°РІР»РµРЅРёРµ С‚РѕРІР°СЂР°РјРё</a></li>
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("NewsEditor", "Admin")">РЈРїСЂР°РІР»РµРЅРёРµ РЅРѕРІРѕСЃС‚СЏРјРё</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Clients", "Admin")">Управление пользователями</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("AddUser", "Admin")">Регистрация пользователей</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Products", "Admin")">Управление товарами</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("NewsEditor", "Admin")">Управление новостями</a></li>
 
 
                         }
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Basket_step_1", "BasketPayment")">РљРѕСЂР·РёРЅР°</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Profile")">Р—Р°РєР°Р·С‹</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Payment", "BasketPayment")">РћРїР»Р°С‚Р°</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("ProfileUser", "Profile")">РџСЂРѕС„РёР»СЊ</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "CatalogSearch", new {Result_SearchString = "bonus"})">РђРєС†РёРё</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "CatalogSearch")">РђРєС†РёРё</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Delivery", "Auth")">РђРґСЂРµСЃ РґРѕСЃС‚Р°РІРєРё</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Basket_step_1", "BasketPayment")">Корзина</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Profile")">Заказы</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Payment", "BasketPayment")">Оплата</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("ProfileUser", "Profile")">Профиль</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "CatalogSearch", new {Result_SearchString = "bonus"})">Акции</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "CatalogSearch")">Акции</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("DeliveryList", "Auth")">Адрес доставки</a></li>
 
                     </ul>
                 </div>
