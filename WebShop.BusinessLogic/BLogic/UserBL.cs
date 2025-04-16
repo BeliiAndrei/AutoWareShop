@@ -43,11 +43,6 @@ namespace WebShop.BusinessLogic.BLogic
             throw new NotImplementedException();
         }
 
-        public bool IsSessionValid(string key)
-        {
-            return IsSessionValidAction(key);
-        }
-
         public UserRegistrationResponse UserRegistrationAction(UserLoginData data)
         {
             throw new NotImplementedException();

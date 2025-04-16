@@ -4,8 +4,9 @@
     ViewBag.Title = "Basket_step_2";
 }
 
+@*@{var total = sessionStorage.getItem("totalOrderPrice"); }*@
+
 <main class="main-content">
-    <h1 class="main-title">Заказ<span>№ 00000154705@19</span></h1>
     <div class="order-steps-wrap text-center">
         <ul class="order-steps">
             <li class="order-steps__item">
@@ -37,6 +38,12 @@
                 <div class="col-sm-6">
                     <div class="radio-opt active">
                         <div class="radio-opt__title">Оплата онлайн</div>
+                        <figure class="radio-opt__figure">
+                            <svg class="icon radio-opt__icon" viewbox="0 0 512 512">
+                                <use href="~/assets/images/svg/symbol/sprite.svg#money"></use>
+                            </svg>
+                            <figcaption class="radio-opt__figcaption"><strong>Оплата заказа<br /> <a href="@Url.Action("Payment", "BasketPayment")">банковской картой</a></strong></figcaption>
+                        </figure>
                         <div class="radio-opt__user-data">
                             <div class="row">
                                 <div class="col-lg-8">

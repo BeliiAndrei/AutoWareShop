@@ -5,40 +5,49 @@ using System.Text;
 using System.Threading.Tasks;
 using WebShop.BusinessLogic.Core;
 using WebShop.BusinessLogic.Interfaces;
+using WebShop.Domain.Basket;
 using WebShop.Domain.Product;
 
 namespace WebShop.BusinessLogic.BLogic
 {
     public class BasketBL : UserApi, IBasket
     {
-        public void AddToBasket(ProductDTO product)
+        public BasketActionResponse AddToBasket(int userId, int productId, int quantity)
+        {
+            return AddToBasketAction(userId, productId, quantity);
+        }
+
+        public List<BasketDTO> GetAllProductsInCart(int userId)
+        {
+            return GetAllProductsInBasketAction(userId);
+        }
+
+        public int GetBasketSize(int userId)
+        {
+            return GetBasketSizeAction(userId);
+        }
+
+        //public decimal GetOrderPrice(List<string> selectedProductsIds, int userId)
+        //{
+        //    return GetOrderPriceAction(selectedProductsIds, userId);
+        //}
+
+        public BasketActionResponse RemoveAll(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public void DecrementProductCount(int productId, uint currentCount)
+        public BasketActionResponse RemoveFromBasket(List<string> productIdsAsString, int userId)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<ProductDTO> GetAllProductsInCart(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void IncrementProductCount(int productId, uint currentCount)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveFromBasket(int productId, uint count)
-        {
-            throw new NotImplementedException();
+            List<int> productIds = new List<int>();
+            foreach (string productId in productIdsAsString)
+            {
+                if (int.TryParse(productId, out int id))
+                {
+                    productIds.Add(id);
+                }
+            }
+            return RemoveFromBasketAction(productIds, userId);
         }
     }
 }

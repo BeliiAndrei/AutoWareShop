@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebShop.BusinessLogic.Core;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Enumerables;
 using WebShop.Domain.Product;
 using WebShop.Domain.Product.Admin;
-using WebShop.Domain.User.Admin;
+using WebShop.Domain.Product.SearchResponses;
 
 namespace WebShop.BusinessLogic.BLogic
 {
@@ -23,6 +20,8 @@ namespace WebShop.BusinessLogic.BLogic
         {
             var p = GetProductByArticleAction(art);
             ProductDTO m = new ProductDTO();
+            if (p == null)
+                return null;
             m.Id = p.Id;
             m.Name = p.Name;
             m.Producer = p.Producer;
@@ -48,29 +47,51 @@ namespace WebShop.BusinessLogic.BLogic
             product.Price = productFromDB.Price;
             product.Quantity = productFromDB.Quantity;
             product.Article = productFromDB.Article;
+            product.ImageNumber = productFromDB.ImageString;
+            product.Status = productFromDB.Status;
             return product;
         }
 
-        public List<ProductDTO> GetProductsList()
+        public ProductSearchResponseDTO GetProductsByCategory(string category, int page = 0, int pageSize = 100)
         {
-            var productsFromDB = GetAllProducts();
-            var productsList = new List<ProductDTO>();
-            foreach (var p in productsFromDB)
+            var productsFromDB = GetProductsByCategoryAction(category, page, pageSize);
+            return FormList(productsFromDB);
+        }
+        internal ProductSearchResponseDTO FormList(ProductSearchResponseDB response)
+        {
+            List<ProductDTO> productsL = new List<ProductDTO>();
+            foreach (var p in response.products)
             {
-                ProductDTO m = new ProductDTO();
-                m.Id = p.Id;
-                m.Name = p.Name;
-                m.Producer = p.Producer;
-                m.Article = p.Article;
-                m.Price = p.Price;
-                m.Category = p.Category;
-                m.Status = p.Status;
-                m.Quantity = p.Quantity;
-                m.ImageNumber = p.ImageString;
-                m.Description = p.Description;
-                productsList.Add(m);
+                var product = new ProductDTO
+                {
+                    Name = p.Name,
+                    Producer = p.Producer,
+                    Description = p.Description,
+                    Category = p.Category,
+                    Price = p.Price,
+                    Quantity = p.Quantity,
+                    Article = p.Article,
+                    Id = p.Id,
+                    ImageNumber = p.ImageString,
+                    Status = p.Status
+                };
+                productsL.Add(product);
             }
-            return productsList;
+            
+            return new ProductSearchResponseDTO 
+            { 
+                products = productsL, productsTotalCount = response.productsTotalCount
+            };
+        }
+        public ProductSearchResponseDTO GetProductsBySearchString(string search_string, int page = 0, int pageSize = 100)
+        {
+            var productsFromDB = GetProductsBySearchStringAction(search_string, page, pageSize);
+            return FormList(productsFromDB);
+        }
+
+        public ProductSearchResponseDTO GetProductsList(int page, int pageSize)
+        {
+            return FormList(GetAllProducts(page,pageSize));
         }
 
         public ProductDTO ModifyProduct(ProductDTO oldProduct)
@@ -85,8 +106,24 @@ namespace WebShop.BusinessLogic.BLogic
             product.Price = oldProduct.Price;
             product.Quantity = oldProduct.Quantity;
             product.Article = oldProduct.Article;
+            product.ImageString = oldProduct.ImageNumber;
+            product.Status = oldProduct.Status;
             EditProduct(product);
             return GetProductById(product.Id);
+        }
+
+        public ProductSearchResponseDTO GetProductsByStatus(string statusString, int page = 0, int pageSize = 100)
+        {
+            ProductStatus status;
+            try
+            {
+                status = (ProductStatus)Enum.Parse(typeof(ProductStatus), statusString);
+            }
+            catch
+            {
+                return null;
+            }
+            return FormList(GetProductsByStatusAction(status, page, pageSize));
         }
     }
 }

@@ -15,7 +15,7 @@
                     <div class="product-main-promo__main">
                         <div class="js-promo-main swiper-container">
                             <div class="swiper-wrapper">
-                                    <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-1.jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-" + Model.Image + ".jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-" + Model.Image + ".jpg")"></a></div>
+                                <div class="swiper-slide"><a class="product-main-promo__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-" + Model.Image + ".jpg")"><img class="product-main-promo__img img-responsive" src="@Url.Content("~/assets/images/content/product-main-promo-slider-" + Model.Image + ".jpg")" alt="Product" data-zoom="@Url.Content("~/assets/images/content/product-main-promo-zoom-" + Model.Image + ".jpg")"></a></div>
                             </div>
                         </div>
                         <div class="product-main-promo__pagination"></div>
@@ -42,9 +42,9 @@
                             <header class="product-header d-none d-md-block">
                                 <div class="product-header__heading">@Model.ProductName</div><span class="product-header__type">@Model.BrandName</span>
                             </header>
-                            <div class="product-main__subhelpers">
+                            @*<div class="product-main__subhelpers">
                                 <div class="product-header__brand"><a class="product-header__brand-link" href="@Model.BrandImage"><img class="product-header__brand-img" src="@Url.Content("~/assets/images/content/filtron.png")" alt="Brand"></a></div>
-                            </div>
+                            </div>*@
                             <div class="product-main__details">
                                 <div class="product-main__params-wrap">
                                     <dl class="product-main__params">
@@ -72,7 +72,6 @@
                                         <div class="counter">
                                             <button class="counter__btn counter--remove">-</button>
                                             <input class="counter__field" type="tel" name="quantity" readonly value="1">
-                                            @*@if(Model.Quantity > )*@
                                             <button class="counter__btn counter--add">+</button>
                                         </div>
                                     </div>
@@ -87,7 +86,11 @@
                                 </div>
                                 @if (Model.Quantity > 0)
                                 {
-                                    <a class="product-main__buy btn btn--main" href="#" data-modal-win-trigger="add" onclick="alert('Товар добавлен в корзину')">В корзину</a>
+                                    <a class="product-main__buy btn btn--main"
+                                       href="javascript:void(0);"
+                                       onclick="addToBasketAjax(@Model.Code)">
+                                        В корзину
+                                    </a>
                                 }
                             </div>
                         </div>
@@ -169,5 +172,21 @@
                         el.value = @Model.Quantity;
                 });
         });
+        function addToBasketAjax(productId) {
+            const quantity = document.querySelector('.counter__field').value;
+
+            $.ajax({
+                url: '/BasketPayment/AddToBasket',
+                method: 'POST',
+                data: { productId: productId, quantity: quantity },
+                success: function (response) {
+                    alert('Товар добавлен в корзину');
+                    // можно обновить корзину или показать всплывающее окно если потом будет время добавить
+                },
+                error: function () {
+                    alert('Произошла ошибка при добавлении в корзину');
+                }
+            });
+        }
     </script>
 }
