@@ -10,6 +10,7 @@ using WebShop.Domain.Enumerables;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
+using WebShop.Domain.User.Delivery;
 using WebShop.Domain.User.Modify;
 using WebShop.Domain.User.Registration;
 
@@ -19,6 +20,9 @@ namespace WebShop.BusinessLogic.Core
     {
 
         public UserApi() { }
+
+        
+
 
         internal UserLoginResponse UserLoginAction(UserLoginData data)
         {
@@ -56,7 +60,7 @@ namespace WebShop.BusinessLogic.Core
             };
 
         }
-
+        
         internal UserRegistrationResponse UserRegistrationAction(UserRegistrationData data)
         {
             using (var db = new UserContext())
@@ -266,10 +270,7 @@ namespace WebShop.BusinessLogic.Core
         internal UserInfo GetUserIdBySessionKeyAction(string sessionKey)
         {
 
-
-            //select from db 
-
-            return null;
+            return null; 
 
         }
 
@@ -288,5 +289,7 @@ namespace WebShop.BusinessLogic.Core
 
 
         //-----------------------------------------------------------------------
+
+       
     }
 }

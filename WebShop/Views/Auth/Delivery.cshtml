@@ -1,0 +1,124 @@
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewBag.Title = "Доставка";
+
+    // Получаем данные пользователя из сессии
+    var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
+    var userId = user?.Id ?? 0;
+}
+
+@model WebShop.Models.DeliveryViewModel
+
+<div class="container-fluid">
+    <div class="main-content">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert @(TempData["AlertType"]?.ToString() == "danger" ? "alert-danger" : "alert-success")" role="alert">
+                @TempData["Message"]
+            </div>
+        }
+
+        @if (userId == 0)
+        {
+            <div class="alert alert-warning">
+                Для оформления доставки необходимо авторизоваться
+            </div>
+        }
+        else
+        {
+            <div class="primary-layout">
+                <div class="product-main-section">
+                    <div class="product-main">
+                        <div class="row">
+                            <div class="col-12">
+                                <header class="product-header">
+                                    <h1>Данные доставки</h1>
+                                </header>
+
+                                @using (Html.BeginForm("Delivery", "Auth", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("UserId", userId) 
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.City, "Город")
+                                                @Html.TextBoxFor(m => m.City, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(m => m.City)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.PostalCode, "Почтовый индекс")
+                                                @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(m => m.PostalCode)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Street, "Улица")
+                                                @Html.TextBoxFor(m => m.Street, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(m => m.Street)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.House, "Дом")
+                                                @Html.TextBoxFor(m => m.House, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(m => m.House)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Block, "Корпус")
+                                                @Html.TextBoxFor(m => m.Block, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Apartment, "Квартира")
+                                                @Html.TextBoxFor(m => m.Apartment, new { @class = "form-control", type = "number", min = "1" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Comment, "Комментарий к доставке")
+                                        @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", rows = 3 })
+                                    </div>
+
+                                    <div class="form-group mt-4">
+                                        <button type="submit" class="btn btn-primary">Сохранить данные доставки</button>
+                                        <a href="@Url.Action("ProfileUser", "Profile")" class="btn btn-secondary ml-2">Отмена</a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Валидация почтового индекса
+            $('form').submit(function(e) {
+                const postalCode = $('#PostalCode').val();
+                if (postalCode && !/^\d{6}$/.test(postalCode)) {
+                    alert('Почтовый индекс должен содержать 6 цифр');
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,36 @@
+@*@model List<WebShop.Domain.News.News>*@
+@model List<WebShop.Models.NewsViewModel>
+
+@{
+    ViewBag.Title = "Все новости";
+}
+
+<h2>Все новости</h2>
+
+@if (!Model.Any())
+{
+    <p>Новостей пока нет.</p>
+}
+else
+{
+    <div class="news-list">
+        @foreach (var news in Model)
+        {
+            <div class="news-item" style="border:1px solid #ccc; padding:15px; margin-bottom:15px;">
+                <h3>@news.Title</h3>
+                <p><strong>Автор:</strong> @news.Author</p>
+                <p><strong>Категория:</strong> @news.Category</p>
+                <p><strong>Теги:</strong> @news.Tags</p>
+                <div>
+                        @if (news.ImageData != null && news.ImageMimeType != null)
+                        {
+                            var base64 = Convert.ToBase64String(news.ImageData);
+                            var imgSrc = String.Format("data:{0};base64,{1}", news.ImageMimeType, base64);
+                            <img src="@imgSrc" alt="News Image" style="max-width: 300px;" />
+                        }
+                    </div>
+                <p>@news.Content</p>
+            </div>
+        }
+    </div>
+}

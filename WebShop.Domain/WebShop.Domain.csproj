@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -43,6 +46,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,9 +59,11 @@
     <Compile Include="Basket\BasketBDTables.cs" />
     <Compile Include="Basket\BasketDTO.cs" />
     <Compile Include="Delivery\DeliveryLocation.cs" />
+    <Compile Include="Basket\Basket.cs" />
     <Compile Include="Enumerables\ProductStatus.cs" />
     <Compile Include="Enumerables\UserRole.cs" />
-    <Compile Include="News\News.cs" />
+    <Compile Include="News\Admin\News.cs" />
+    <Compile Include="News\NewsDBTab.cs" />
     <Compile Include="Order\Order.cs" />
     <Compile Include="Payment\ReceiptToPay.cs" />
     <Compile Include="Product\Admin\ProductActionResponse.cs" />
@@ -67,6 +73,8 @@
     <Compile Include="Product\SearchResponses\ProductSearchResponseDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Admin\UserInfo.cs" />
+    <Compile Include="Delivery\DeliveryLocDBTable.cs" />
+    <Compile Include="Delivery\Admin\DeliveryL.cs" />
     <Compile Include="User\Modify\ChangePasswordClass.cs" />
     <Compile Include="User\Registration\UserRegistrationResponse.cs" />
     <Compile Include="User\UserDBTable.cs" />
@@ -84,7 +92,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="User\Delivery\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

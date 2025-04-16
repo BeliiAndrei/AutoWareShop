@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebShop.BusinessLogic.Core;
+﻿using System.Collections.Generic;
+using WebShop.Domain.News;
+
 
 namespace WebShop.BusinessLogic.Interfaces
 {
+
     public interface INews
     {
-        void CreateNews(News news);
-        void UpdateNews(News news);
-        void DeleteNews(int newsId);
+        List<News> GetAllNews();
+        News GetNewsByIdAction(int id);
+        bool UpdateNews(News updatedNews);
+        bool CreateNews(News newNews);
+        bool DeleteNews(int id);
     }
 }

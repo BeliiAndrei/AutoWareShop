@@ -3,6 +3,7 @@ using WebShop.BusinessLogic.Core;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
+using WebShop.Domain.User.Delivery;
 using WebShop.Domain.User.Modify;
 using WebShop.Domain.User.Registration;
 
@@ -60,6 +61,30 @@ namespace WebShop.BusinessLogic.BLogic
         UserRegistrationResponse IUser.UserRegistrationAction(UserRegistrationData data)
         {
             return UserRegistrationAction(data);
+        }
+        public bool IsProductValid(int id)
+        {
+            return IsProductValidAction(id);
+        }
+
+        public bool AddDeliveryAddress(DeliveryL address, int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DeliveryL GetDeliveryAddressById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EditDeliveryAddress(DeliveryL address)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteDeliveryAddress(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

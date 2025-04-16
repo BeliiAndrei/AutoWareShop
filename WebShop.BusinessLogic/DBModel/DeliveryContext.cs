@@ -4,20 +4,19 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebShop.Domain.User.Auth;
+using WebShop.Domain.News;
 using WebShop.Domain.User.Delivery;
 
 namespace WebShop.BusinessLogic.DBModel
 {
-    public class UserContext : DbContext
+     public class DeliveryContext : DbContext
     {
-        public UserContext() :
-            base("name=WebShop")
-        {
 
+        public DeliveryContext() : base("name=WebShop")
+        {
         }
 
-        public virtual DbSet<UserDBTable> Users { get; set; }
+        public virtual DbSet<DeliveryLocDBTable> Delivery { get; set; }
 
     }
 }
