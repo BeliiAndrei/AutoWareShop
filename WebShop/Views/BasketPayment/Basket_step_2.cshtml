@@ -2,9 +2,9 @@
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Basket_step_2";
+    decimal orderPrice = (HttpContext.Current.Session["OrderPrice"] as decimal?) ?? 0m;
 }
 
-@*@{var total = sessionStorage.getItem("totalOrderPrice"); }*@
 
 <main class="main-content">
     <div class="order-steps-wrap text-center">
@@ -85,13 +85,13 @@
         <textarea class="order-footer__message" placeholder="Комментарий к заказу" rows="1" name="order-message"></textarea>
         <div class="footer-summary-price">
             <div class="footer-summary-price__title">Сумма к оплате</div>
-            <div class="footer-summary-price__value">2 297 <span>Лей</span></div>
+            <div class="footer-summary-price__value">@orderPrice <span>Лей</span></div>
         </div><a class="btn btn--main" href="@Url.Action("Basket_step_3", "BasketPayment")">Далее<i class="fas fa-chevron-circle-right"></i></a>
     </div>
     <div class="order-mob-footer d-md-none">
         <footer class="order-mob-footer__main">
             <p class="order-mob-footer__payment">Сумма к оплате</p>
-            <div class="order-mob-footer__total-price"><span class="order-mob-footer__total-price-value">2 297</span> Лей</div>
+            <div class="order-mob-footer__total-price"><span class="order-mob-footer__total-price-value">@orderPrice</span> Лей</div>
             <textarea class="order-mob-footer__message" placeholder="Комментарий к заказу" rows="2" name="order-message"></textarea>
         </footer>
         <div class="order-mob-footer__controls">

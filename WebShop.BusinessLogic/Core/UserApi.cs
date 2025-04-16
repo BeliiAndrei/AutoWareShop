@@ -233,16 +233,6 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
-        //internal decimal GetOrderPriceAction(List<string> productIds, int userId)
-        //{
-        //    using (var db = new CartContext())
-        //    {
-        //        return db.Carts
-        //                 .Where(c => c.UserId == userId .Contains(p.Id) && p.UserId == userId)
-        //                 .Sum(p => (decimal?)p.Price) ?? 0m;
-        //    }
-        //}
-
         internal BasketActionResponse RemoveFromBasketAction(List<int> productIds, int userId)
         {
             using (var db = new CartContext())

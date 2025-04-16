@@ -21,9 +21,10 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult BasketFormHandler(string actionType, List<string> selectedProductIds)
+        public ActionResult BasketFormHandler(string actionType, List<string> selectedProductIds, decimal orderPrice)
         {
             TempData["SelectedProductIds"] = selectedProductIds;
+            TempData["OrderPrice"] = orderPrice;
             if (actionType == "remove")
             {
                 // Удалить выбранные
@@ -103,9 +104,10 @@ namespace WebShop.Controllers
         }
         public ActionResult Basket_step_2()
         {
+            decimal orderPrice = (decimal)TempData["OrderPrice"];
             var selectedProductIds = TempData["SelectedProductIds"] as List<string>;
             Session["preOreder"] = selectedProductIds;
-            //var price = 
+            Session["OrderPrice"] = orderPrice;
             return View();
         }
         public ActionResult Basket_step_3()
