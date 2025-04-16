@@ -16,16 +16,5 @@ namespace WebShop.BusinessLogic.Interfaces
         bool IsSessionValid(string key);
         UserInfo GetUserInfoById(int id);
 
-
-
-        //====================Delivery=========================
-
-
-        bool AddDeliveryAddress(DeliveryLoc address);
-        bool EditDeliveryAddress(DeliveryLoc address);
-        bool DeleteDeliveryAddress(int id);
-        DeliveryLoc GetDeliveryAddressById(int id);
-
-        //=============================================
     }
 }

@@ -173,30 +173,6 @@ namespace WebShop.BusinessLogic.Core
 
         //-----------------------------------------------------------------------
 
-        //=====================Delivery=========================
-
-
-
-
-        public bool AddDeliveryAddressApi(DeliveryLoc address)
-        {
-            using (var db = new UserContext())
-            {
-                var user = db.Users.SingleOrDefault(u => u.Id == data.Id); // или u.Email == model.Email
-                if (user == null)
-                {
-                    return false;
-                }
-
-
-                return true;
-            }
-        }
-
-
-
-
-
-        //======================================================
+       
     }
 }

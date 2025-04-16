@@ -4,100 +4,88 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.BusinessLogic.Core;
-using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.Interfaces;
-using WebShop.Domain;
-using WebShop.Domain.Delivery;
-using WebShop.Domain.Delivery.Admin;
-using WebShop.Domain.News;
-using WebShop.Domain.User;
-
+using WebShop.Domain.User.Delivery;
 
 namespace WebShop.BusinessLogic.BLogic
 {
-    public class DeliveryBL : DeliveryApi, IDelivery
+    internal class DeliveryBL:DeliveryApi, IDelivery
     {
-        public bool CreateDeliveryInfo(DeliveryLocation newDelivery)
+        public bool AddDeliveryAddress(DeliveryL address)
         {
-            if (string.IsNullOrWhiteSpace(newDelivery.PostalCode) ||
-               string.IsNullOrWhiteSpace(newDelivery.City))
+            if (string.IsNullOrWhiteSpace(address.PostalCode) ||
+           string.IsNullOrWhiteSpace(address.City))
             {
                 return false;
             }
-
-            var dbDeliv = MapToDlDB(newDelivery);
-
-            CreateDeliveryInfoAPI(dbDeliv);
-
+            var db = MapToDB(address);
+            AddDeliveryAddressApi(db);
             return true;
         }
-        public bool EditDeliveryInfo(DeliveryLocation newDelivery)
+        public DeliveryL GetDeliveryAddressByUserId(int Uid)
         {
-            var dbDeliv = GetDeliveryLocationByIdActionAPI(newDelivery.Id);
-            if (dbDeliv == null)
+            var db = GetDeliveryAddressByUserIdApi(Uid);
+            if (db == null)
+            {
+                return null;
+            }
+            var address = MapToL(db);
+            return address;
+        }
+        public bool EditDeliveryAddress(DeliveryL address, int Uid)
+        {
+
+            if (string.IsNullOrWhiteSpace(address.PostalCode) ||
+               string.IsNullOrWhiteSpace(address.City))
+            {
                 return false;
-
-            var mappedNews = MapToDlDB(newDelivery);
-
-            var result = EditDeliveryInfoAPI(mappedNews);
-
+            }
+            address.UserId = Uid;
+            var db = MapToDB(address);
+            EditDeliveryAddressApi(db);
             return true;
-
         }
-        public bool DeleteDeliveryInfo(int id)
+        public bool DeleteDeliveryAddress(int id)
         {
-
-            if (id <= 0) return false;
-
-            try
-            {
-                DeleteDeliveryLocationAPI(id);
-                return true;
-            }
-            catch
+            if (id <= 0)
             {
                 return false;
             }
-
+            DeleteDeliveryAddressApi(id);
+            return true;
         }
-        public DeliveryLocation GetDeliveryLocationByIdAction(int id)
+        public DeliveryLocDBTable MapToDB(DeliveryL adress)
         {
-            using (var db = new DeliveryContext())
-            {
-                var dbLocation = db.DeliveryLocations.FirstOrDefault(dl => dl.Id == id);
-                return dbLocation == null ? null : MapToDl(dbLocation);
-            }
-        }
 
-        public DeliveryLocation MapToDl(DeliveryLocationDBTable db)
-        {
-            return new DeliveryLocation
+            return new DeliveryLocDBTable
             {
-                Id = db.Id,
-                PostalCode = db.PostalCode,
-                City = db.City,
-                Street = db.Street,
-                House = db.House,
-                Block = db.Block,
-                Apartment = db.Apartment,
-                Comment = db.Comment
+                Id = adress.Id,
+                UserId = adress.UserId,
+                PostalCode = adress.PostalCode,
+                City = adress.City,
+                Street = adress.Street,
+                House = adress.House,
+                Block = adress.Block,
+                Apartment = adress.Apartment,
+                Comment = adress.Comment
             };
 
         }
-        public DeliveryLocationDBTable MapToDlDB(DeliveryLocation db)
+        public DeliveryL MapToL(DeliveryLocDBTable address)
         {
-            return new DeliveryLocationDBTable
+            return new DeliveryL
             {
-                Id = db.Id,
-                PostalCode = db.PostalCode,
-                City = db.City,
-                Street = db.Street,
-                House = db.House,
-                Block = db.Block,
-                Apartment = db.Apartment,
-                Comment = db.Comment
+                Id = address.Id,
+                UserId = address.UserId,
+                PostalCode = address.PostalCode,
+                City = address.City,
+                Street = address.Street,
+                House = address.House,
+                Block = address.Block,
+                Apartment = address.Apartment,
+                Comment = address.Comment
             };
-
         }
     }
+    
 }

@@ -46,28 +46,6 @@ namespace WebShop.Domain.User.Auth
 
 
         //====================DeliveryLocation=========================
-        public class DeliveryLocation
-        {
-
-            [Required]
-            public string PostalCode { get; set; }
-            [Required]
-            [StringLength(100)]
-            public string City { get; set; }
-
-            [StringLength(200)]
-            public string Street { get; set; }
-
-            public string House { get; set; }
-
-            public string Block { get; set; }
-
-            public string Apartment { get; set; }
-
-            [StringLength(500)]
-
-            public string Comment { get; set; }
-        }
        
 
         //============================================================
