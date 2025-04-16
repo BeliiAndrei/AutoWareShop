@@ -63,6 +63,7 @@
                                                type="checkbox"
                                                name="selectedProductIds"
                                                value="@product.Code"
+                                               data-price="@(product.Price * product.Quantity)"
                                                id="prod-@product.Article"
                                                checked />
                                         <label class="checkbox-label__main" for="prod-@product.Article"></label>
@@ -96,7 +97,7 @@
             </div>
         </div>
         <input type="hidden" name="actionType" id="actionType" />
-
+        <input type="hidden" name="orderPrice" id="price" value="@Model.TotalPrice"/>
         <div class="orders-list__mob-controls">
             <div class="row">
                 <div class="col-4">
@@ -141,5 +142,27 @@
         document.getElementById("next").addEventListener("click", function () {
             document.getElementById("actionType").value = "next";
         });
+
+        function updateTotalPrice() {
+            let total = 0;
+            document.querySelectorAll("input[name='selectedProductIds']:checked").forEach(cb => {
+                total += parseFloat(cb.dataset.price || 0);
+            });
+
+            // Обновляем hidden input
+            document.getElementById("price").value = total.toFixed(2);
+
+            // Обновляем отображение суммы
+            const priceTextElement = document.querySelector(".orders-list__mob-total");
+            if (priceTextElement) {
+                priceTextElement.textContent = total.toFixed(2);
+            }
+        }
+
+        // Назначаем обработчик на чекбоксы
+        document.querySelectorAll("input[name='selectedProductIds']").forEach(cb => {
+            cb.addEventListener("change", updateTotalPrice);
+        });
+
     </script>
 }

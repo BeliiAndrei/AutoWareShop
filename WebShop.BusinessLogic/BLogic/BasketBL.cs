@@ -27,10 +27,6 @@ namespace WebShop.BusinessLogic.BLogic
             return GetBasketSizeAction(userId);
         }
 
-        //public decimal GetOrderPrice(List<string> selectedProductsIds, int userId)
-        //{
-        //    return GetOrderPriceAction(selectedProductsIds, userId);
-        //}
 
         public BasketActionResponse RemoveAll(int userId)
         {
