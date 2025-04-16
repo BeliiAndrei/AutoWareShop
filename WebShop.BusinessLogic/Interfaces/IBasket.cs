@@ -11,7 +11,5 @@ namespace WebShop.BusinessLogic.Interfaces
         BasketActionResponse RemoveFromBasket(List <string> productIds, int userId);
         BasketActionResponse AddToBasket(int userId, int productId, int quantity);
         BasketActionResponse RemoveAll(int userId);
-
-        //decimal GetOrderPrice(List<string> selectedProductsIds, int userId);
     }
 }

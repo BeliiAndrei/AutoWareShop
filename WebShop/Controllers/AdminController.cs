@@ -8,11 +8,13 @@ using WebShop.Domain.News;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Registration;
+using WebShop.Filters;
 using WebShop.Models;
 using WebShop.Models.Search;
 
 namespace WebShop.Controllers
 {
+    [AdminOnly]
     public class AdminController : Controller
     {
         private readonly IAdmin _admin;
