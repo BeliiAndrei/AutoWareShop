@@ -14,7 +14,10 @@ namespace WebShop.BusinessLogic
         {
             return new SessionBL();
         }
-
+        public IDelivery GetDeliveryBL()
+        {
+            return new DeliveryBL();
+        }
         public IUser GetUserBl()
         {
             return new UserBL();
@@ -37,11 +40,6 @@ namespace WebShop.BusinessLogic
         public IBasket GetBasketBL()
         {
             return new BasketBL();
-        }
-
-        public IDelivery GetDeliveryBL()
-        {
-            return new DeliveryBL();
         }
 
         public IOrder GetOrderBL()

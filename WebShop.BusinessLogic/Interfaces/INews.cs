@@ -7,9 +7,10 @@ namespace WebShop.BusinessLogic.Interfaces
 
     public interface INews
     {
-        List<NewsDBTable> GetNewsList();
-        NewsDBTable GetNewsByIdAction(int id);
-        NewsDBTable UpdateNews(NewsDBTable updatedNews);
-        void CreateNews(NewsDBTable newNews);
+        List<News> GetAllNews();
+        News GetNewsByIdAction(int id);
+        bool UpdateNews(News updatedNews);
+        bool CreateNews(News newNews);
+        bool DeleteNews(int id);
     }
 }

@@ -1,38 +1,124 @@
-п»ї@{
+@{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
-    ViewBag.Title = "Delivery";
+    ViewBag.Title = "Доставка";
+
+    // Получаем данные пользователя из сессии
+    var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
+    var userId = user?.Id ?? 0;
 }
 
-<h2 class="text-center mb-53">РћС„РѕСЂРјР»РµРЅРёРµ РґРѕСЃС‚Р°РІРєРё</h2>
+@model WebShop.Models.DeliveryViewModel
 
-<form asp-action="SubmitDelivery" method="post" class="p-4 shadow-lg rounded bg-light">
+<div class="container-fluid">
+    <div class="main-content">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert @(TempData["AlertType"]?.ToString() == "danger" ? "alert-danger" : "alert-success")" role="alert">
+                @TempData["Message"]
+            </div>
+        }
 
-    <div class="form-group mt-3">
-        <label asp-for="City">Р“РѕСЂРѕРґ</label>
-        <input asp-for="City" class="form-control" placeholder="Р’РІРµРґРёС‚Рµ РІР°С€ РіРѕСЂРѕРґ" required />
+        @if (userId == 0)
+        {
+            <div class="alert alert-warning">
+                Для оформления доставки необходимо авторизоваться
+            </div>
+        }
+        else
+        {
+            <div class="primary-layout">
+                <div class="product-main-section">
+                    <div class="product-main">
+                        <div class="row">
+                            <div class="col-12">
+                                <header class="product-header">
+                                    <h1>Данные доставки</h1>
+                                </header>
+
+                                @using (Html.BeginForm("Delivery", "Auth", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("UserId", userId) 
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.City, "Город")
+                                                @Html.TextBoxFor(m => m.City, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(m => m.City)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.PostalCode, "Почтовый индекс")
+                                                @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(m => m.PostalCode)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Street, "Улица")
+                                                @Html.TextBoxFor(m => m.Street, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(m => m.Street)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.House, "Дом")
+                                                @Html.TextBoxFor(m => m.House, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(m => m.House)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Block, "Корпус")
+                                                @Html.TextBoxFor(m => m.Block, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Apartment, "Квартира")
+                                                @Html.TextBoxFor(m => m.Apartment, new { @class = "form-control", type = "number", min = "1" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Comment, "Комментарий к доставке")
+                                        @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", rows = 3 })
+                                    </div>
+
+                                    <div class="form-group mt-4">
+                                        <button type="submit" class="btn btn-primary">Сохранить данные доставки</button>
+                                        <a href="@Url.Action("ProfileUser", "Profile")" class="btn btn-secondary ml-2">Отмена</a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-    <div class="form-group mt-3">
-        <label asp-for="Street">РЈР»РёС†Р°</label>
-        <input asp-for="Street" class="form-control" placeholder="Р’РІРµРґРёС‚Рµ СѓР»РёС†Сѓ" required />
-    </div>
+</div>
 
-    <div class="form-group mt-3">
-        <label asp-for="Address">Р”РѕРј / РєРІР°СЂС‚РёСЂР°</label>
-        <input asp-for="Address" class="form-control" placeholder="Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РґРѕРјР° Рё РєРІР°СЂС‚РёСЂС‹" required />
-    </div>
-
-    <div class="form-group mt-3">
-        <label asp-for="PaymentMethod">РЎРїРѕСЃРѕР± РѕРїР»Р°С‚С‹</label>
-        <select asp-for="PaymentMethod" class="form-control">
-            <option value="cash">РќР°Р»РёС‡РЅС‹РјРё</option>
-            <option value="card">РљР°СЂС‚РѕР№</option>
-        </select>
-    </div>
-
-    <div class="form-group mt-3">
-        <label asp-for="Comment">Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїРѕР¶РµР»Р°РЅРёСЏ</label>
-        <textarea asp-for="Comment" class="form-control" rows="3" placeholder="РћСЃС‚Р°РІСЊС‚Рµ РєРѕРјРјРµРЅС‚Р°СЂРёР№ (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">рџљЂ РџРѕРґС‚РІРµСЂРґРёС‚СЊ РґР°РЅРЅС‹Рµ</button>
-</form>
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Валидация почтового индекса
+            $('form').submit(function(e) {
+                const postalCode = $('#PostalCode').val();
+                if (postalCode && !/^\d{6}$/.test(postalCode)) {
+                    alert('Почтовый индекс должен содержать 6 цифр');
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

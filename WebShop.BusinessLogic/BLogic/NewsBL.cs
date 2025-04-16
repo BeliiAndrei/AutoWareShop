@@ -1,52 +1,104 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.News;
 using WebShop.BusinessLogic.Core;
-
-
+using System.Data.Entity.Migrations;
+using System;
+using WebShop.Domain.User.Auth;
 namespace WebShop.BusinessLogic.BLogic
 {
-    internal class NewsBL: NewsApi, INews
+    internal class NewsBL : NewsApi, INews
     {
-        public List<NewsDBTable> GetNewsList()
+        public List<News> GetAllNews()
         {
-            using (var context = new NewsContext())
+            return GetNewsListAPI().Select(MapToNews).ToList();
+        }
+
+        public News GetNewsByIdAction(int id)
+        {
+            var newsById = GetNewsByIdAPI(id);
+            return newsById != null ? MapToNews(newsById) : null;
+        }
+
+        public bool UpdateNews(News updatedNews)
+        {
+
+            var dbNews = GetNewsByIdAPI(updatedNews.Id);
+            if (dbNews == null)
+                return false;
+
+            var mappedNews = MapToDB(updatedNews);
+
+            var result = UpdateNewsAPI(mappedNews);
+
+            return true;
+        }
+
+        public bool CreateNews(News newNews)
+        {
+            if (string.IsNullOrWhiteSpace(newNews.Title) ||
+                string.IsNullOrWhiteSpace(newNews.Author))
             {
-                return context.News.ToList();
+                return false;
+            }
+
+            var dbNews = MapToDB(newNews);
+
+            CreateNewsAPI(dbNews);
+
+            return true;
+        }
+
+        public bool DeleteNews(int id)
+        {
+            if (id <= 0) return false;
+
+            try
+            {
+                DeleteNewsAPI(id);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
-        public NewsDBTable GetNewsByIdAction(int id)
+
+        private NewsDBTab MapToDB(News news)
         {
-            using (var context = new NewsContext())
+            return new NewsDBTab
             {
-                return context.News.FirstOrDefault(news => news.Id == id);
-            }
+                Id = news.Id,
+                Title = news.Title,
+                Content = news.Content,
+                Author = news.Author,
+                Category = news.Category,
+                Tags = news.Tags,
+                ImageData = news.ImageData,
+                ImageMimeType = news.ImageMimeType
+
+            };
         }
 
-        public NewsDBTable UpdateNews(NewsDBTable updatedNews)
+        private News MapToNews(NewsDBTab db)
         {
-            using (var context = new NewsContext())
+            return new News
             {
-                var existingNews = context.News.Find(updatedNews.Id);
-                if (existingNews == null) return null;
+                Id = db.Id,
+                Title = db.Title,
+                Content = db.Content,
+                Author = db.Author,
+                Category = db.Category,
+                Tags = db.Tags,
+                ImageData = db.ImageData,
+                ImageMimeType = db.ImageMimeType
+            };
 
-                context.Entry(existingNews).CurrentValues.SetValues(updatedNews);
-                context.SaveChanges();
-                return existingNews;
-            }
         }
 
-        public void CreateNews(NewsDBTable newNews)
-        {
-            using (var context = new NewsContext())
-            {
-                context.News.Add(newNews);
-                context.SaveChanges();
-            }
-        }
+        
     }
 }

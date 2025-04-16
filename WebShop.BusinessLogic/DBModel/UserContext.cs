@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.Domain.User.Auth;
+using WebShop.Domain.User.Delivery;
 
 namespace WebShop.BusinessLogic.DBModel
 {
@@ -17,6 +18,6 @@ namespace WebShop.BusinessLogic.DBModel
         }
 
         public virtual DbSet<UserDBTable> Users { get; set; }
-       
+
     }
 }

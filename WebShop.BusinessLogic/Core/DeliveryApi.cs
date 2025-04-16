@@ -1,69 +1,71 @@
-﻿using System.Collections.Generic;
-using System.Linq; 
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using WebShop.BusinessLogic.DBModel;
-using WebShop.Domain.Delivery;
-using WebShop.Domain.Delivery.Admin;
+using WebShop.Domain.User.Delivery;
 
 namespace WebShop.BusinessLogic.Core
 {
     public class DeliveryApi
     {
-        public DeliveryApi() { }
-
-        public List<DeliveryLocationDBTable> GetAllDeliveryLocations()
+        public void AddDeliveryAddressApi(DeliveryLocDBTable address)
         {
+
             using (var db = new DeliveryContext())
             {
-                return db.DeliveryLocations.ToList();  // ToList() работает с LINQ
+               db.Delivery.Add(address);    
+               db.SaveChanges();
             }
         }
-
-        public DeliveryLocationDBTable GetDeliveryLocationById(int id)
+        public DeliveryLocDBTable GetDeliveryAddressByUserIdApi(int id)
         {
             using (var db = new DeliveryContext())
             {
-                return db.DeliveryLocations.Where(dl => dl.Id == id).FirstOrDefault();
+                var address = db.Delivery.FirstOrDefault(x => x.UserId == id);
+                return address;
             }
         }
-
-        internal bool AddDeliveryLocation(DeliveryLocationDBTable location)
+        public void EditDeliveryAddressApi(DeliveryLocDBTable address)
         {
             using (var db = new DeliveryContext())
             {
-                db.DeliveryLocations.Add(location);
-                db.SaveChanges();
-                return true;
-            }
-        }
-
-        internal bool EditDeliveryLocation(DeliveryLocationDBTable location)
-        {
-            using (var db = new DeliveryContext())
-            {
-                var existingLocation = db.DeliveryLocations.Where(dl => dl.Id == location.Id).FirstOrDefault();
-                if (existingLocation == null)
+                var existingAddress = db.Delivery.FirstOrDefault(x => x.Id == address.Id);
+                if (existingAddress != null)
                 {
-                    return false;
+                    existingAddress.PostalCode = address.PostalCode;
+                    existingAddress.City = address.City;
+                    existingAddress.Street = address.Street;
+                    existingAddress.House = address.House;
+                    existingAddress.Block = address.Block;
+                    existingAddress.Apartment = address.Apartment;
+                    existingAddress.Comment = address.Comment;
+                    db.SaveChanges();
                 }
-                db.Entry(existingLocation).CurrentValues.SetValues(location);
-                db.SaveChanges();
-                return true;
             }
         }
-
-        internal bool DeleteDeliveryLocation(int id)
+        public void DeleteDeliveryAddressApi(int id)
         {
             using (var db = new DeliveryContext())
             {
-                var location = db.DeliveryLocations.Where(dl => dl.Id == id).FirstOrDefault();
-                if (location == null)
+                var address = db.Delivery.FirstOrDefault(x => x.Id == id);
+                if (address != null)
                 {
-                    return false;
+                    db.Delivery.Remove(address);
+                    db.SaveChanges();
                 }
-                db.DeliveryLocations.Remove(location);
-                db.SaveChanges();
-                return true;
             }
         }
+        public List<DeliveryLocDBTable> GetAllDeliveryAddressesApi()
+        {
+            using (var db = new DeliveryContext())
+            {
+                return db.Delivery.ToList();
+            }
+        }
+
+
+
     }
 }

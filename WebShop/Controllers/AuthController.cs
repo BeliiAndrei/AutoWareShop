@@ -5,21 +5,25 @@ using WebShop.Domain.User.Auth;
 using WebShop.Models;
 using WebShop.Domain.User.Registration;
 using WebShop.Domain.User.Admin;
+using WebShop.Domain.User.Delivery;
+
+
 namespace WebShop.Controllers
 {
     public class AuthController : Controller
     {
-        //System.Web.HttpContext.Current.Session["LoginStatus"] = "login";
 
-        //public System.Web.SessionState.HttpSessionState Session_user { get; }
         private readonly ISession _session;
+        private readonly IDelivery _delivery;
+
         public AuthController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _session = bl.GetSessionBL();
+            _delivery = bl.GetDeliveryBL();
         }
 
-        // GET: Auth
+
         public ActionResult Authorisation()
         {
             return View();
@@ -27,7 +31,6 @@ namespace WebShop.Controllers
         public void StoreUserInSession(UserInfo user)
         {
             Session["User"] = user;
-            //var test = Session["User"];
         }
 
         [HttpPost]
@@ -104,9 +107,53 @@ namespace WebShop.Controllers
             return RedirectToAction("MainPage", "Home");
         }
 
+
+        //==============================Delivery=========================================
+
+
         public ActionResult Delivery()
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delivery(DeliveryViewModel deliveryData)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                var user = (UserInfo)Session["User"];
+                if (user != null)
+                {
+                    deliveryData.UserId = user.Id;
+                    DeliveryL delivery = ViewToL(deliveryData);
+
+                    var deliveryResponse = _delivery.AddDeliveryAddress(delivery);
+                }
+                TempData["Message"] = "Succes";
+                return RedirectToAction("ProfileUser", "Profile");
+
+            }
+            TempData["Message"] = "Something went wrerong";
+            return View("Delivery");
+        }
+
+        public DeliveryL ViewToL(DeliveryViewModel view)
+        {
+            return new DeliveryL
+            {
+                UserId = view.UserId,
+                PostalCode = view.PostalCode,
+                City = view.City,
+                Street = view.Street,
+                House = view.House,
+                Block = view.Block,
+                Apartment = view.Apartment,
+                Comment = view.Comment
+            };
+        }
+
+
+        //==============================End_Delivery=====================================
     }
-    }
+}

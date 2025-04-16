@@ -1,12 +1,14 @@
 ﻿using System.Data.Entity;
 using WebShop.Domain.News;
 
-internal class NewsContext : DbContext
+namespace WebShop.BusinessLogic.DBModel
 {
-    public NewsContext() :
-        base("name=WebShop")
+    public class NewsContext : DbContext
     {
-    }
+        public NewsContext() : base("name=WebShop")
+        {
+        }
 
-    public virtual DbSet<NewsDBTable> News { get; set; }
+        public virtual DbSet<NewsDBTab> News { get; set; }
+    }
 }

@@ -41,5 +41,15 @@ namespace WebShop.Domain.User.Auth
 
         [Display(Name = "Role")]
         public Enumerables.UserRole Level { get; set; }
+
+      
+
+
+        //====================DeliveryLocation=========================
+       
+
+        //============================================================
+
+
     }
 }
