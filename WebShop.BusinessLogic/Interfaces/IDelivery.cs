@@ -13,5 +13,6 @@ namespace WebShop.BusinessLogic.Interfaces
         DeliveryL GetDeliveryAddressByUserId(int id);
         bool EditDeliveryAddress(DeliveryL address, int userId);
         bool DeleteDeliveryAddress(int id);
+        List<DeliveryL> GetDeliveryAddressesByUserId(int userId);
     }
 }

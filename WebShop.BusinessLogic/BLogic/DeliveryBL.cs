@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.BusinessLogic.Core;
+using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.User.Delivery;
 
@@ -53,6 +54,19 @@ namespace WebShop.BusinessLogic.BLogic
             }
             DeleteDeliveryAddressApi(id);
             return true;
+        }
+
+
+        public List<DeliveryL> GetDeliveryAddressesByUserId(int uid)
+        {
+            using (var db = new DeliveryContext())
+            {
+                var dbAddresses = db.Delivery
+                                  .Where(x => x.UserId == uid)
+                                  .ToList();
+
+                return dbAddresses.Select(MapToL).ToList();
+            }
         }
         public DeliveryLocDBTable MapToDB(DeliveryL adress)
         {

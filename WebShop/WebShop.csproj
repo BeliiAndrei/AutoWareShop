@@ -325,7 +325,10 @@
     <Compile Include="Controllers\OtherServicesController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+
+    <Compile Include="Filters\UserOnlyAttribute.cs" />
     <Compile Include="Filters\AdminOnlyAttribute.cs" />
+
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -393,7 +396,6 @@
     <Content Include="Views\Admin\ClientProfile.cshtml" />
     <Content Include="Views\CatalogSearch\Catalog.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\_PersonalLayout.cshtml" />
     <Content Include="Views\BasketPayment\Basket_step_1.cshtml" />
     <Content Include="Views\Shared\_InfoLayout.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
@@ -405,7 +407,13 @@
     <Content Include="Views\Admin\NewsEditor.cshtml" />
     <Content Include="Views\Admin\NewsUpdate.cshtml" />
     <Content Include="Views\Auth\Delivery.cshtml" />
+
+    <Content Include="Views\Auth\DeliveryManager.cshtml" />
+    <Content Include="Views\Shared\_PersonalLayout.cshtml" />
+    <Content Include="Views\Auth\DeliveryList.cshtml" />
+
     <Content Include="Views\Error\AccessDenied.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -113,11 +113,7 @@
         $(document).ready(function() {
             // Валидация почтового индекса
             $('form').submit(function(e) {
-                const postalCode = $('#PostalCode').val();
-                if (postalCode && !/^\d{6}$/.test(postalCode)) {
-                    alert('Почтовый индекс должен содержать 6 цифр');
-                    e.preventDefault();
-                }
+                
             });
         });
     </script>
