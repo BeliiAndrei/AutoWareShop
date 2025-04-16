@@ -6,10 +6,14 @@ using WebShop.Models;
 using WebShop.Domain.User.Registration;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Delivery;
+using System.Linq;
+using System.Collections.Generic;
+using WebShop.Filter;
 
 
 namespace WebShop.Controllers
 {
+    [UserOnly]
     public class AuthController : Controller
     {
 
@@ -24,10 +28,12 @@ namespace WebShop.Controllers
             _delivery = bl.GetDeliveryBL();
         }
 
+       
 
         public ActionResult Authorisation()
         {
-            return View();
+        
+                return View();
         }
         public void StoreUserInSession(UserInfo user)
         {
@@ -127,9 +133,13 @@ namespace WebShop.Controllers
         //==============================Delivery=========================================
 
 
+
         public ActionResult Delivery()
         {
-            return View();
+            
+                return View();
+
+           
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -137,7 +147,7 @@ namespace WebShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 var user = (UserInfo)Session["User"];
                 if (user != null)
                 {
@@ -151,9 +161,39 @@ namespace WebShop.Controllers
 
             }
             TempData["Message"] = "Something went wrerong";
-            return View("Delivery");
+            return View("DeliveryCreate");
         }
 
+       
+        public ActionResult DeliveryList()
+        {
+          
+                var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
+                if (user == null)
+                {
+                    TempData["Message"] = "Для просмотра адресов доставки необходимо авторизоваться";
+                    TempData["AlertType"] = "danger";
+                    return RedirectToAction("Athorisation", "Auth");
+                }
+
+                try
+                {
+                    var deliveryAddresses = _delivery.GetDeliveryAddressesByUserId(user.Id);
+                    var viewModels = deliveryAddresses.Select(LToView).ToList();
+
+                    return View(viewModels);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Trace.TraceError(ex.Message);
+                    TempData["Message"] = "Произошла ошибка при загрузке адресов доставки";
+                    TempData["AlertType"] = "danger";
+                    return View(new List<DeliveryViewModel>());
+                }
+
+            
+            
+        }
         public DeliveryL ViewToL(DeliveryViewModel view)
         {
             return new DeliveryL
@@ -168,6 +208,24 @@ namespace WebShop.Controllers
                 Comment = view.Comment
             };
         }
+
+
+        public DeliveryViewModel LToView(DeliveryL delivery)
+        {
+            return new DeliveryViewModel
+            {
+                UserId = delivery.UserId,
+                PostalCode = delivery.PostalCode,
+                City = delivery.City,
+                Street = delivery.Street,
+                House = delivery.House,
+                Block = delivery.Block,
+                Apartment = delivery.Apartment,
+                Comment = delivery.Comment
+            };
+        }
+
+
 
 
         //==============================End_Delivery=====================================

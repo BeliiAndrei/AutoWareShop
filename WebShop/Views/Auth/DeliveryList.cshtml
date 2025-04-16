@@ -1,0 +1,136 @@
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewBag.Title = "Мои адреса доставки";
+
+    var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
+    var userId = user?.Id ?? 0;
+}
+
+@model List<WebShop.Models.DeliveryViewModel>
+
+<div class="container-fluid">
+    <div class="main-content">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert @(TempData["AlertType"]?.ToString() == "danger" ? "alert-danger" : "alert-success")" role="alert">
+                @TempData["Message"]
+            </div>
+        }
+
+        @if (userId == 0)
+        {
+            <div class="alert alert-warning">
+                Необходимо авторизоваться
+            </div>
+        }
+        else
+        {
+            <div class="delivery-addresses-container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Мои адреса доставки</h2>
+                    <a href="@Url.Action("Delivery", "Auth")" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Добавить новый адрес
+                    </a>
+                </div>
+
+                @if (Model == null || !Model.Any())
+                {
+                    <div class="alert alert-info">
+                        У вас пока нет сохраненных адресов доставки
+                    </div>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var address in Model)
+                        {
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="address-info">
+                                        <h5>Адрес #@(Model.IndexOf(address) + 1)</h5>
+                                        <div class="address-details">
+                                            <p>
+                                                <strong>Индекс:</strong> @address.PostalCode<br>
+                                                <strong>Город:</strong> @address.City<br>
+                                                <strong>Улица:</strong> @address.Street<br>
+                                                <strong>Дом:</strong> @address.House
+                                                @if (!string.IsNullOrEmpty(address.Block))
+                                                {
+                                                    <span>, корп. @address.Block</span>
+                                                }
+                                                @if (!string.IsNullOrEmpty(address.Apartment))
+                                                {
+                                                    <span>, кв. @address.Apartment</span>
+                                                }
+                                            </p>
+                                            @if (!string.IsNullOrEmpty(address.Comment))
+                                            {
+                                                <p class="text-muted"><small>Комментарий: @address.Comment</small></p>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="address-actions">
+                                        <a href="@Url.Action("EditDelivery", "Auth", new { id = address.UserId })"
+                                           class="btn btn-outline-primary">
+                                            <i class="fas fa-edit"></i> Редактировать
+                                        </a>
+                                        <button class="btn btn-outline-danger delete-address"
+                                                data-id="@address.UserId">
+                                            <i class="fas fa-trash"></i> Удалить
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .delivery-addresses-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .address-info {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .address-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .list-group-item {
+            margin-bottom: 15px;
+            border-radius: 5px;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+
+        .address-details {
+            margin-top: 10px;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Подтверждение удаления адреса
+            $('.delete-address').click(function(e) {
+                e.preventDefault();
+                const addressId = $(this).data('id');
+
+                if (confirm('Вы уверены, что хотите удалить этот адрес?')) {
+                    // Здесь будет AJAX-запрос для 
+                }
+            });
+        });
+    </script>
+}

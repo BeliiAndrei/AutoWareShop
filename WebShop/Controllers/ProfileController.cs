@@ -2,10 +2,13 @@
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Modify;
+using WebShop.Filter;
 using WebShop.Models;
 
 namespace WebShop.Controllers
 {
+
+    [UserOnly]
     public class ProfileController : Controller
     {
         IUser _user;
@@ -16,34 +19,36 @@ namespace WebShop.Controllers
             _user = bl.GetUserBl();
         }
         public ActionResult Orders()
-        {
-            return View();
+        { 
+                return View();
+
         }
 
         public ActionResult ProfileUser()
         {
-            if (Session["User"] != null)
-                return RedirectToAction("ProfileUserIsAuthorised");
-            return RedirectToAction("Authorisation", "Auth");
+            
+                
+                return View();
+           
         }
 
-        public ActionResult ProfileUserIsAuthorised()
-        {
-            var model = Session["User"];
-            return View("ProfileUser", model);
-        }
-
+      
         public ActionResult SaveProfile(UserInfo edited)
         {
-            if (!ModelState.IsValid)
-            {
-                TempData["Message"] = "Введённые данные некорректны";
-                return View("ClientProfile", edited);
-            }
-            var user = _user.EditUserProfile(edited);
-            TempData["Message"] = "Изменения успешно сохранены.";
-            Session["User"] = user;
-            return View("ProfileUser", user);
+           
+                if (!ModelState.IsValid)
+                {
+                    TempData["Message"] = "Введённые данные некорректны";
+                    return View("ClientProfile", edited);
+                }
+                var user = _user.EditUserProfile(edited);
+                TempData["Message"] = "Изменения успешно сохранены.";
+                Session["User"] = user;
+                return View("ProfileUser", user);
+
+            
+           
+            
         }
 
         [HttpPost]
