@@ -5,8 +5,6 @@
 @model WebShop.Models.BasketViewModel
 
 <main class="main-content">
-    <h1 class="main-title">Заказ<span>№ 00000154705@19</span></h1>
-
     <div class="order-steps-wrap text-center">
         <ul class="order-steps">
             <li class="order-steps__item is-current">
@@ -32,7 +30,7 @@
         </ul>
     </div>
 
-    <form id="basket-form" method="post" action="@Url.Action("RemoveSelected", "BasketPayment")">
+    <form id="basket-form" method="post" action="@Url.Action("BasketFormHandler", "BasketPayment")">
         <div class="orders-list">
             <header class="orders-list__header">
                 <div class="orders-list__heading">Детали заказа</div>
@@ -97,14 +95,15 @@
                 </footer>
             </div>
         </div>
+        <input type="hidden" name="actionType" id="actionType" />
 
         <div class="orders-list__mob-controls">
             <div class="row">
                 <div class="col-4">
-                    <button type="submit" class="btn btn--reverse">Удалить</button>
+                    <button type="submit" class="btn btn--reverse" id="remove">Удалить</button>
                 </div>
                 <div class="col-8">
-                    <a class="btn btn--main" href="@Url.Action("Basket_step_2", "BasketPayment")">Далее<i class="fas fa-chevron-circle-right"></i></a>
+                    <button type="submit" class="btn btn--main" id="next">Далее<i class="fas fa-chevron-circle-right"></i></button>
                 </div>
             </div>
         </div>
@@ -131,6 +130,16 @@
         document.getElementById("opt-1").addEventListener("change", function () {
             const allChecked = this.checked;
             document.querySelectorAll("input[name='selectedProductIds']").forEach(cb => cb.checked = allChecked);
+        });
+
+        // Отправка по кнопке "Удалить"
+        document.getElementById("remove").addEventListener("click", function () {
+            document.getElementById("actionType").value = "remove";
+        });
+
+        // Отправка по кнопке "Далее"
+        document.getElementById("next").addEventListener("click", function () {
+            document.getElementById("actionType").value = "next";
         });
     </script>
 }

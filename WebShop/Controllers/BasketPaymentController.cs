@@ -21,6 +21,24 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
+        public ActionResult BasketFormHandler(string actionType, List<string> selectedProductIds)
+        {
+            TempData["SelectedProductIds"] = selectedProductIds;
+            if (actionType == "remove")
+            {
+                // Удалить выбранные
+                return RedirectToAction("RemoveSelected", "BasketPayment");
+            }
+            else if (actionType == "next")
+            {
+                // Перейти к оплате
+                return RedirectToAction("Basket_step_2", "BasketPayment");
+            }
+
+            return RedirectToAction("Basket_step_1");
+        }
+
+        [HttpPost]
         public ActionResult AddToBasket(int productId, int quantity)
         {
             var user = Session["User"] as UserInfo;
@@ -36,8 +54,9 @@ namespace WebShop.Controllers
         }
 
         
-        public ActionResult RemoveSelected(List<string> selectedProductIds)
+        public ActionResult RemoveSelected()
         {
+            var selectedProductIds = TempData["SelectedProductIds"] as List<string>;
             if (selectedProductIds != null)
             {
                 var user = Session["User"] as UserInfo;
@@ -84,6 +103,9 @@ namespace WebShop.Controllers
         }
         public ActionResult Basket_step_2()
         {
+            var selectedProductIds = TempData["SelectedProductIds"] as List<string>;
+            Session["preOreder"] = selectedProductIds;
+            //var price = 
             return View();
         }
         public ActionResult Basket_step_3()

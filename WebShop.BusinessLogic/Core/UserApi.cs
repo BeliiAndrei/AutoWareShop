@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.DBModel.Seed;
 using WebShop.Domain.Basket;
@@ -58,51 +59,6 @@ namespace WebShop.BusinessLogic.Core
 
         internal UserRegistrationResponse UserRegistrationAction(UserRegistrationData data)
         {
-            //UserDBTable user;
-            //try
-            //{
-            //    using (var db = new UserContext())
-            //    {
-            //        //check if user exist in db
-
-            //        user = db.Users.FirstOrDefault(u
-            //            => u.Email == data.Email);
-
-
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    return new UserRegistrationResponse() {Status = false, StatusMsg = ex.Message  };
-            //}
-
-
-
-            //try
-            //{
-            //    user.Username = "uuuuuuu";
-
-            //    using (var db = new UserContext())
-            //    {
-            //        //db.Users.AddOrUpdate(user);
-            //        //db.SaveChanges();
-
-            //        db.Users.Add(user);
-            //        db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            //        db.SaveChanges();
-
-
-            //        // write data to db
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    return new UserRegistrationResponse() { Status = false, StatusMsg = ex.Message };
-
-            //}
-
             using (var db = new UserContext())
             {
                 var isSuchEmail = db.Users.FirstOrDefault(u => u.Email == data.Email);
@@ -164,7 +120,6 @@ namespace WebShop.BusinessLogic.Core
                 user.PhoneNumber = data.PhoneNumber;
                 user.Email = data.Email;
 
-                // Сохраняем изменения в базе данных
                 db.SaveChanges();
 
                 return user;
@@ -229,50 +184,6 @@ namespace WebShop.BusinessLogic.Core
                     return result;
                 }
             }
-
-            //List<int> productsIds = new List<int>();
-            //using (var db = new CartContext())
-            //{
-            //    var cartsInDB = db.Carts.Where(c => c.UserId == userId).ToList();
-            //    foreach (var cart in cartsInDB)
-            //    {
-            //        productsIds.Add(cart.ProductInBasketId);
-            //    }
-            //}
-            //using (var db = new ProductContext())
-            //{
-            //    var products = db.Products
-            //                        .Where(p => productsIds.Contains(p.Id))
-            //                        .ToList();
-            //    return products;
-            //}
-            //using (var cartDb = new CartContext())
-            //{
-            //    using (var productDb = new ProductContext())
-            //    {
-            //        var productsInCart = (from cart in cartDb.Carts
-            //                              join product in productDb.Products on cart.ProductInBasketId equals product.Id
-            //                              where cart.UserId == userId
-            //                              select new BasketDTO
-            //                              {
-            //                                  Product = new ProductDTO
-            //                                  {
-            //                                      Id = product.Id,
-            //                                      Name = product.Name,
-            //                                      Price = product.Price,
-            //                                      Producer = product.Producer,
-            //                                      Article = product.Article,
-            //                                      Category = product.Category,
-            //                                      Description = product.Description,
-            //                                      Status = product.Status,
-            //                                      ImageNumber = product.ImageString,
-            //                                      Quantity = product.Quantity
-            //                                  },
-            //                                  Quantity = cart.Quantity
-            //                              }).ToList();
-            //        return productsInCart;
-            //    }
-            //}
         }
 
         internal BasketActionResponse AddToBasketAction(int userId, int productId, int quantity)
@@ -317,6 +228,16 @@ namespace WebShop.BusinessLogic.Core
                 return totalQuantity;
             }
         }
+
+        //internal decimal GetOrderPriceAction(List<string> productIds, int userId)
+        //{
+        //    using (var db = new CartContext())
+        //    {
+        //        return db.Carts
+        //                 .Where(c => c.UserId == userId .Contains(p.Id) && p.UserId == userId)
+        //                 .Sum(p => (decimal?)p.Price) ?? 0m;
+        //    }
+        //}
 
         internal BasketActionResponse RemoveFromBasketAction(List<int> productIds, int userId)
         {
