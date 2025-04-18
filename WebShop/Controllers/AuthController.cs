@@ -120,8 +120,7 @@ namespace WebShop.Controllers
 
         public ActionResult LogOut()
         {
-            Session["User"] = null;
-            Session["BasketCount"] = null;
+            Session.Clear();
             return RedirectToAction("MainPage", "Home");
         }
 

@@ -1,9 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Modify;
 using WebShop.Filter;
 using WebShop.Models;
+using WebShop.Models.Order;
 
 namespace WebShop.Controllers
 {
@@ -12,16 +14,42 @@ namespace WebShop.Controllers
     public class ProfileController : Controller
     {
         IUser _user;
+        IOrder _order;
 
         public ProfileController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _user = bl.GetUserBl();
+            _order = bl.GetOrderBL();
         }
         public ActionResult Orders()
-        { 
-                return View();
-
+        {
+            var user = Session["User"] as UserInfo;
+            var userOrders = _order.GetUserOrders(user.Id);
+            var model = new List<OrderModel>();
+            foreach (var order in userOrders)
+            {
+                var o = new OrderModel()
+                {
+                    Comment = order.Comment,
+                    Created = order.CreationDate,
+                    OrderId = order.Id,
+                    EstimatedDeliveryDate = order.EstimatedDeliveryDate,
+                    isPaid = order.IsPayed,
+                    Price = order.Price,
+                    OrderStatus = order.Status
+                };
+                if (order.IsPickup)
+                    o.DeliveryType = "Самовывоз";
+                if (!order.IsPickup)
+                    o.DeliveryType = "Доставка";
+                if(order.Status == Domain.Enumerables.OrderStatus.Received)
+                    o.isReceived = true;
+                else o.isReceived = false;
+                o.DeliveryCity = (Session["Delivery"] as DeliveryViewModel)?.City ?? "Chisinau";
+                model.Add(o);
+            }
+            return View(model);
         }
 
         public ActionResult ProfileUser()

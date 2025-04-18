@@ -10,7 +10,7 @@ namespace WebShop.Models.Order
     {
         public int OrderId { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        //public DateTime Created { get; set; }
+        public DateTime Created { get; set; }
         public DateTime EstimatedDeliveryDate { get; set; }
         public string Comment { get; set; }
         public decimal Price { get; set; }

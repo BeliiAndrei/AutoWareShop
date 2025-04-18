@@ -71,8 +71,8 @@
                                     <a class="orders-list__order-number" href="@Url.Action("Card", "Product", new {article = @product.Article})">@product.Article</a>
                                 </td>
                                 <td class="orders-list__td">
-                                    <div class="orders-list__product-brand">Бренд: <a href="#">@product.BrandName</a></div>
-                                    <div class="orders-list__product-heading"><a href="#">@product.ProductName</a></div>
+                                    <div class="orders-list__product-brand">Бренд: <a href="@Url.Action("SearchMethod", "CatalogSearch", new {searchType = "name", value = @product.BrandName})">@product.BrandName</a></div>
+                                    <div class="orders-list__product-heading"><a href="@Url.Action("SearchMethod", "CatalogSearch", new {searchType = "article", value = product.Article})">@product.ProductName</a></div>
                                 </td>
                                 <td class="orders-list__td">
                                     <span class="orders-list__price">@product.Price.ToString("N2")</span>

@@ -34,7 +34,29 @@ namespace WebShop.BusinessLogic.BLogic
             throw new NotImplementedException();
         }
 
-        public List<OrderDTO> GetAllOrders(int userId)
+        public List<OrderDTO> GetUserOrders(int userId)
+        {
+            var ordersDB = GetUserOrdersAction(userId);
+            var orders = new List<OrderDTO>();
+            foreach (var o in ordersDB)
+            {
+                var order = new OrderDTO
+                {
+                    Id = o.Id,
+                    Comment = o.Comment,
+                    CreationDate = o.CreationDate,
+                    EstimatedDeliveryDate = o.EstimatedDeliveryDate,
+                    IsPayed = o.IsPayed,
+                    IsPickup = o.IsPickup,
+                    PaymentMethod = o.PaymentMethod,
+                    Price = o.Price,
+                    Status = o.Status
+                };
+                orders.Add(order);
+            }
+            return orders;
+        }
+        public List<OrderDTO> GetAllOrders()
         {
             throw new NotImplementedException();
         }

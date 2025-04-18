@@ -140,7 +140,7 @@ namespace WebShop.Controllers
                 };
                 return View(deliveryInfo);
             }
-            return View();
+            return View(new DeliveryViewModel());
         }
 
         [UserOnly]

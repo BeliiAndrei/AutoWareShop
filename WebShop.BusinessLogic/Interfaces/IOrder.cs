@@ -12,7 +12,8 @@ namespace WebShop.BusinessLogic.Interfaces
     {
         OrderActionResponse CreateNewOrder(OrderDTO order, int userId, List<int> products);
 
-        List<OrderDTO> GetAllOrders(int userId);
+        List<OrderDTO> GetUserOrders(int userId);
+        List<OrderDTO> GetAllOrders();
 
         OrderDTO GetOrderById(int id);
 

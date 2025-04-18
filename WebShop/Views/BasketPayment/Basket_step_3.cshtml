@@ -1,4 +1,4 @@
-﻿
+﻿@model WebShop.Models.DeliveryViewModel
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Basket_step_3";
@@ -6,7 +6,7 @@
     decimal orderPrice = (HttpContext.Current.Session["OrderPrice"] as decimal?) ?? 0m;
 
 }
-@model WebShop.Models.DeliveryViewModel
+
 <main class="main-content">
     <div class="order-steps-wrap text-center">
         <ul class="order-steps">

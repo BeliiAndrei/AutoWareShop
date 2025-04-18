@@ -31,13 +31,15 @@ namespace WebShop.BusinessLogic.Core
                 user = db.Users.FirstOrDefault(u => u.Email == data.Email);
 
             }
-            var encPassword = LoginRegisterHelper.HashGen(data.Password);
-            if (user.Password != encPassword)
-                return new UserLoginResponse
-                {
-                    Status = false,
-                    StatusMsg = "Wrong Password"
-                };
+
+            // !!! Отключена проверка пароля, вернуть потом обратно !!!
+            //var encPassword = LoginRegisterHelper.HashGen(data.Password);
+            //if (user.Password != encPassword)
+            //    return new UserLoginResponse
+            //    {
+            //        Status = false,
+            //        StatusMsg = "Wrong Password"
+            //    };
             if (user != null)
                 return new UserLoginResponse
                 {
@@ -139,8 +141,10 @@ namespace WebShop.BusinessLogic.Core
                 var user = db.Users.FirstOrDefault(u => u.Id == pass.Id);
                 if (user == null)
                     return false;
-                if (user.Password != pass.OldPassword)
+                var encPasswordOld = LoginRegisterHelper.HashGen(pass.OldPassword);
+                if (user.Password != encPasswordOld)
                     return false;
+                var encPasswordNew = LoginRegisterHelper.HashGen(pass.NewPassword);
                 user.Password = pass.NewPassword;
                 db.SaveChanges();
                 return true;
@@ -337,6 +341,15 @@ namespace WebShop.BusinessLogic.Core
                     return null;
                 }
                 return order;
+            }
+        }
+
+        internal List<OrderDBTable> GetUserOrdersAction(int userId)
+        {
+            using (var db = new OrderContext())
+            {
+                var orders = db.Orders.Where(o => o.UserId == userId).ToList();
+                return orders;
             }
         }
 
