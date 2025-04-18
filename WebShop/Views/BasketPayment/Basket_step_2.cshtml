@@ -31,63 +31,65 @@
             </li>
         </ul>
     </div>
-    <div class="payment-section">
-        <div class="payment-section__heading">Форма оплаты</div>
-        <div class="radio-option">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="radio-opt active">
-                        <div class="radio-opt__title">Оплата онлайн</div>
-                        <figure class="radio-opt__figure">
-                            <svg class="icon radio-opt__icon" viewbox="0 0 512 512">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#money"></use>
-                            </svg>
-                            <figcaption class="radio-opt__figcaption"><strong>Оплата заказа<br /> <a href="@Url.Action("Payment", "BasketPayment")">банковской картой</a></strong></figcaption>
-                        </figure>
-                        <div class="radio-opt__user-data">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                </div>
-                                <div class="col-lg-4">
+    <form id="payment-method-form" method="post" action="@Url.Action("Basket_step_3", "BasketPayment")">
+        <div class="payment-section">
+            <div class="payment-section__heading">Форма оплаты</div>
+            <div class="radio-option">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="radio-opt active">
+                            <div class="radio-opt__title">Оплата онлайн</div>
+                            <figure class="radio-opt__figure">
+                                <svg class="icon radio-opt__icon" viewbox="0 0 512 512">
+                                    <use href="~/assets/images/svg/symbol/sprite.svg#money"></use>
+                                </svg>
+                                <figcaption class="radio-opt__figcaption"><strong>Оплата заказа<br /> <a href="@Url.Action("Payment", "BasketPayment")">банковской картой</a></strong></figcaption>
+                            </figure>
+                            <div class="radio-opt__user-data">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                    </div>
+                                    <div class="col-lg-4">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="radio-opt__footer">
-                            <div class="radio-label">
-                                <input class="radio-label__input" type="radio" name="payment" value="payment-online" checked id="opt-1">
-                                <label class="radio-label__main" for="opt-1">Выбрать этот способ оплаты</label>
+                            <div class="radio-opt__footer">
+                                <div class="radio-label">
+                                    <input class="radio-label__input" type="radio" name="payment" value="payment-online" checked id="opt-1">
+                                    <label class="radio-label__main" for="opt-1">Выбрать этот способ оплаты</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="radio-opt">
-                        <div class="radio-opt__title">Оплата наличными</div>
-                        <figure class="radio-opt__figure">
-                            <svg class="icon radio-opt__icon" viewbox="0 0 512 512">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#money"></use>
-                            </svg>
-                            <figcaption class="radio-opt__figcaption"><strong>Оплата заказа наличными курьеру либо в кассу</strong></figcaption>
-                        </figure>
-                        <div class="radio-opt__footer">
-                            <div class="radio-label">
-                                <input class="radio-label__input" type="radio" name="payment" value="payment-cash" id="opt-2">
-                                <label class="radio-label__main" for="opt-2">Выбрать этот способ оплаты</label>
+                    <div class="col-sm-6">
+                        <div class="radio-opt">
+                            <div class="radio-opt__title">Оплата наличными</div>
+                            <figure class="radio-opt__figure">
+                                <svg class="icon radio-opt__icon" viewbox="0 0 512 512">
+                                    <use href="~/assets/images/svg/symbol/sprite.svg#money"></use>
+                                </svg>
+                                <figcaption class="radio-opt__figcaption"><strong>Оплата заказа наличными курьеру либо в кассу</strong></figcaption>
+                            </figure>
+                            <div class="radio-opt__footer">
+                                <div class="radio-label">
+                                    <input class="radio-label__input" type="radio" name="payment" value="payment-cash" id="opt-2">
+                                    <label class="radio-label__main" for="opt-2">Выбрать этот способ оплаты</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="order-footer d-none d-md-flex">
-        <a class="btn btn--reverse" href="@Url.Action("Basket_step_1", "BasketPayment")">Назад</a>
-        <textarea class="order-footer__message" placeholder="Комментарий к заказу" rows="1" name="order-message"></textarea>
-        <div class="footer-summary-price">
-            <div class="footer-summary-price__title">Сумма к оплате</div>
-            <div class="footer-summary-price__value">@orderPrice <span>Лей</span></div>
-        </div><a class="btn btn--main" href="@Url.Action("Basket_step_3", "BasketPayment")">Далее<i class="fas fa-chevron-circle-right"></i></a>
-    </div>
+        <div class="order-footer d-none d-md-flex">
+            <a class="btn btn--reverse" href="@Url.Action("Basket_step_1", "BasketPayment")">Назад</a>
+            <input type="text" class="order-footer__message" name="orderMessage">
+            <div class="footer-summary-price">
+                <div class="footer-summary-price__title">Сумма к оплате</div>
+                <div class="footer-summary-price__value">@orderPrice <span>Лей</span></div>
+            </div><input class="btn btn--main" type="submit" value="Далее"/>
+        </div>
+    </form>
     <div class="order-mob-footer d-md-none">
         <footer class="order-mob-footer__main">
             <p class="order-mob-footer__payment">Сумма к оплате</p>

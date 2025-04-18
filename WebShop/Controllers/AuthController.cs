@@ -10,10 +10,8 @@ using System.Linq;
 using System.Collections.Generic;
 using WebShop.Filter;
 
-
 namespace WebShop.Controllers
 {
-    [UserOnly]
     public class AuthController : Controller
     {
 
@@ -28,12 +26,10 @@ namespace WebShop.Controllers
             _delivery = bl.GetDeliveryBL();
         }
 
-       
-
         public ActionResult Authorisation()
         {
         
-                return View();
+            return View();
         }
         public void StoreUserInSession(UserInfo user)
         {
@@ -147,7 +143,6 @@ namespace WebShop.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var user = (UserInfo)Session["User"];
                 if (user != null)
                 {
@@ -160,14 +155,13 @@ namespace WebShop.Controllers
                 return RedirectToAction("ProfileUser", "Profile");
 
             }
-            TempData["Message"] = "Something went wrerong";
+            TempData["Message"] = "Something went wrong";
             return View("DeliveryCreate");
         }
 
        
         public ActionResult DeliveryList()
         {
-          
                 var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
                 if (user == null)
                 {

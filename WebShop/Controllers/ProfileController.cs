@@ -26,10 +26,8 @@ namespace WebShop.Controllers
 
         public ActionResult ProfileUser()
         {
-            
-                
-                return View();
-           
+            var user = Session["User"];
+            return View(user);
         }
 
       
@@ -44,11 +42,7 @@ namespace WebShop.Controllers
                 var user = _user.EditUserProfile(edited);
                 TempData["Message"] = "Изменения успешно сохранены.";
                 Session["User"] = user;
-                return View("ProfileUser", user);
-
-            
-           
-            
+                return View("ProfileUser", user); 
         }
 
         [HttpPost]

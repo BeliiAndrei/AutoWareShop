@@ -10,11 +10,11 @@ namespace WebShop.BusinessLogic.Interfaces
 {
     public interface IOrder
     {
-        Order CreateNewOrder(List <ProductDTO> selectedProducts);
+        OrderActionResponse CreateNewOrder(OrderDTO order, int userId, List<int> products);
 
-        List<Order> GetAllOrders(int userId);
+        List<OrderDTO> GetAllOrders(int userId);
 
-        Order GetOrderById(int id);
+        OrderDTO GetOrderById(int id);
 
         void DeleteOrder(int id);
 
@@ -22,7 +22,7 @@ namespace WebShop.BusinessLogic.Interfaces
 
         decimal GetOrderPrice(int id);
 
-        void SortOrdersByDate(List<Order> orders);
+        void SortOrdersByDate(List<OrderDTO> orders);
 
 
     }

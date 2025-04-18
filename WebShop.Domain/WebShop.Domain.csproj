@@ -58,11 +58,16 @@
     <Compile Include="Basket\BasketActionResponse.cs" />
     <Compile Include="Basket\BasketBDTables.cs" />
     <Compile Include="Basket\BasketDTO.cs" />
+    <Compile Include="Enumerables\OrderStatus.cs" />
+    <Compile Include="Enumerables\PaymentType.cs" />
     <Compile Include="Enumerables\ProductStatus.cs" />
     <Compile Include="Enumerables\UserRole.cs" />
     <Compile Include="News\Admin\News.cs" />
     <Compile Include="News\NewsDBTab.cs" />
-    <Compile Include="Order\Order.cs" />
+    <Compile Include="Order\OrderActionResponse.cs" />
+    <Compile Include="Order\OrderDBTable.cs" />
+    <Compile Include="Order\OrderDTO.cs" />
+    <Compile Include="Order\ProductsInOrderDBTable.cs" />
     <Compile Include="Payment\ReceiptToPay.cs" />
     <Compile Include="Product\Admin\ProductActionResponse.cs" />
     <Compile Include="Product\ProductDBTable.cs" />

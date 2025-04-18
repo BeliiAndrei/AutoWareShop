@@ -3,21 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using WebShop.BusinessLogic;
+using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
+using WebShop.Domain.Order;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
+using WebShop.Filter;
 using WebShop.Models;
+using WebShop.Models.Order;
 
 namespace WebShop.Controllers
 {
     public class BasketPaymentController : Controller
     {
         IBasket _basket;
+        IDelivery _delivery;
+        IOrder _order;
         public BasketPaymentController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _basket = bl.GetBasketBL();
+            _delivery = bl.GetDeliveryBL();
+            _order = bl.GetOrderBL();
         }
 
         [HttpPost]
@@ -54,7 +63,7 @@ namespace WebShop.Controllers
 
         }
 
-        
+        [UserOnly]
         public ActionResult RemoveSelected()
         {
             var selectedProductIds = TempData["SelectedProductIds"] as List<string>;
@@ -67,11 +76,10 @@ namespace WebShop.Controllers
             }
             return RedirectToAction("Basket_step_1");
         }
+        [UserOnly]
         public ActionResult Basket_step_1()
         {
             var user = Session["User"] as UserInfo;
-            if (user == null)
-                return RedirectToAction("Authorisation", "Auth");
             var products = _basket.GetAllProductsInCart(user.Id);
             int productCount = 0;
             foreach (var product in products)
@@ -102,24 +110,99 @@ namespace WebShop.Controllers
 
             return View(basket);
         }
+        [UserOnly]
         public ActionResult Basket_step_2()
         {
-            decimal orderPrice = (decimal)TempData["OrderPrice"];
+            decimal orderPrice = TempData["OrderPrice"] != null ? (decimal)TempData["OrderPrice"] : 0;
             var selectedProductIds = TempData["SelectedProductIds"] as List<string>;
-            Session["preOreder"] = selectedProductIds;
+            Session["PreOreder"] = selectedProductIds;
             Session["OrderPrice"] = orderPrice;
             return View();
         }
-        public ActionResult Basket_step_3()
+        [HttpPost]
+        [UserOnly]
+        public ActionResult Basket_step_3(string payment, string orderMessage = "")
         {
+            Session["OrderPaymentType"] = payment;
+            Session["OrderMessage"] = orderMessage;
+            var userId = (Session["User"] as UserInfo).Id;
+            var deliveryInfoDB = _delivery.GetDeliveryAddressByUserId(userId) ?? null;
+            if (deliveryInfoDB != null)
+            {
+                var deliveryInfo = new DeliveryViewModel
+                {
+                    Apartment = deliveryInfoDB.Apartment,
+                    Block = deliveryInfoDB.Block,
+                    City = deliveryInfoDB.City,
+                    House = deliveryInfoDB.House,
+                    PostalCode = deliveryInfoDB.PostalCode,
+                    Street = deliveryInfoDB.Street
+                };
+                return View(deliveryInfo);
+            }
             return View();
         }
 
-        public ActionResult Basket_step_4()
+        [UserOnly]
+        [HttpPost]
+        public ActionResult Basket_step_4(string deliveryType, string orderMessage, string userCity,
+                                          string userStreet, string userHouse, string userBlock, string userAppartment)
         {
-            return View();
-        }
+            var paymentType = (string) Session["OrderPaymentType"];
+            var userId = ((UserInfo)Session["User"]).Id;
 
+            var orderInfo = new OrderDTO();
+
+            orderInfo.CreationDate = DateTime.Now.Date;
+            orderInfo.EstimatedDeliveryDate = DateTime.Now.AddDays(7).Date;
+            orderInfo.OrderedProducts = new List<ProductsInOrderDBTable>();
+
+            if (paymentType == "payment-online")
+                orderInfo.IsPayed = true;
+            if (paymentType == "payment-cash")
+                orderInfo.IsPayed = false;
+
+            var stringList = Session["PreOreder"] as List<string>;
+            var productsIdList = stringList != null
+                ? stringList.Where(s => int.TryParse(s, out _)).Select(s => int.Parse(s)).ToList()
+                : new List<int>();
+
+            DeliveryViewModel deliveryLocation = new DeliveryViewModel();
+            if(deliveryType == "delivery")
+            {
+                deliveryLocation = new DeliveryViewModel
+                {
+                    Apartment = userAppartment,
+                    Block = userBlock,
+                    City = userCity,
+                    Street = userStreet,
+                    House = userHouse
+                };
+                orderInfo.IsPickup = false;
+                Session["Delivery"] = deliveryLocation;
+            }
+            if(deliveryType == "pickup")
+            {
+                orderInfo.IsPickup = true;
+            }
+            orderInfo.Price = (decimal)Session["OrderPrice"];
+            orderInfo.Status = Domain.Enumerables.OrderStatus.Pending;
+            orderInfo.Comment = orderMessage;
+            var response = _order.CreateNewOrder(orderInfo, userId, productsIdList);
+            var order = _order.GetOrderById(response.OrderId);
+            var model = new OrderModel
+            {
+                Comment = order.Comment,
+                OrderId = order.Id,
+                DeliveryCity = deliveryLocation.City,
+                EstimatedDeliveryDate = order.EstimatedDeliveryDate,
+                isPaid = order.IsPayed,
+                Price = order.Price,
+                DeliveryType = deliveryType,
+            };
+            return View(model);
+        }
+        [UserOnly]
         public ActionResult Empty_basket()
         {
             return View();

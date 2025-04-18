@@ -13,11 +13,9 @@ namespace WebShop.Filters
             {
                 userRole = userInfo.Role;
             }
-            //var userRole = (session["User"] as UserInfo).Role ;
 
             if (userRole != "Admin")
             {
-                // редирект на страницу ошибки или отказа
                 filterContext.Result = new RedirectResult("~/Error/AccessDenied");
             }
 

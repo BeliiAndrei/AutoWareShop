@@ -2,10 +2,11 @@
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Basket_step_4";
+    var delivery = Session["Delivery"] as WebShop.Models.DeliveryViewModel ?? null;
 }
-
+@model WebShop.Models.Order.OrderModel
 <main class="main-content">
-    <h1 class="main-title">Заказ<span>№ 00000154705@19</span></h1>
+    <h1 class="main-title">Заказ<span>№@Model.OrderId</span></h1>
     <div class="order-steps-wrap text-center">
         <ul class="order-steps">
             <li class="order-steps__item">
@@ -34,7 +35,7 @@
         <img class="order-success__img img-responsive" src="~/assets/images/general/order-success.svg" alt="Order Success" width="90" height="90">
         <figcaption class="order-success__figcaption">
             <div class="order-success__heading">Благодарим за покупку</div>
-            <p class="order-success__desc">Ваш заказ <a href="#">№00000154705@19</a> был принят нами, и в ближайшее время Вы его получите.</p>
+            <p class="order-success__desc">Ваш заказ <a href="@Url.Action("Ordrs", "Profile")">№@Model.OrderId</a> был принят нами, и в ближайшее время Вы его получите.</p>
             <p class="order-success__desc">Если у Вас возникли вопросы по заказу, обратитесь в отдел продаж:</p><a class="tiny-contacts__wrap" href="tel:7333">
                 <svg class="icon icon-phone-call tiny-contacts__icon">
                     <use href="~/assets/images/svg/symbol/sprite.svg#phone-call"></use>
@@ -44,28 +45,38 @@
     </figure>
     <div class="manual-params manual-params--bigger">
         <dl class="manual-params__param">
-            <dt class="manual-params__value">Склад отгрузки</dt>
-            <dd class="manual-params__property">Кишинев, Studenților 9/9</dd>
+            <dt class="manual-params__value">Заказ будет доставлен в город </dt>
+            <dd class="manual-params__property">@Model.DeliveryCity</dd>
         </dl>
         <dl class="manual-params__param">
             <dt class="manual-params__value">Заказ доступен с</dt>
-            <dd class="manual-params__property">06 Ноября 2025 / 14:00</dd>
+            <dd class="manual-params__property">@Model.EstimatedDeliveryDate </dd>
         </dl>
         <dl class="manual-params__param">
             <dt class="manual-params__value">Форма оплаты</dt>
-            <dd class="manual-params__property">Безналичный</dd>
+            @if (Model.isPaid == true)
+            {
+                <dd class="manual-params__property">Оплачено картой</dd>
+            }
+            @if (Model.isPaid == false)
+            {
+                <dd class="manual-params__property">Оплата наличными при получении заказа</dd>
+            }
         </dl>
         <dl class="manual-params__param">
             <dt class="manual-params__value">Тип доставки</dt>
-            <dd class="manual-params__property">Доставка автотранспортом</dd>
+            <dd class="manual-params__property">@Model.DeliveryType</dd>
         </dl>
-        <dl class="manual-params__param">
-            <dt class="manual-params__value">Адрес доставки</dt>
-            <dd class="manual-params__property">Republica Moldova, or.Codru, mun.Chișinău, ул.Qwerty, дом № 94/10</dd>
-        </dl>
+        @if (delivery != null)
+        {
+            <dl class="manual-params__param">
+                <dt class="manual-params__value">Адрес доставки</dt>
+                <dd class="manual-params__property">@delivery.City, улица @delivery.Street @delivery.House/@delivery.Block, квартира @delivery.Apartment</dd>
+            </dl>
+        }
         <dl class="manual-params__param">
             <dt class="manual-params__value">Комментарий</dt>
-            <dd class="manual-params__property">Привезите пж в офис</dd>
+            <dd class="manual-params__property">@Model.Comment</dd>
         </dl>
     </div>
     <div class="basket-success-summary"><a class="btn btn--main" href="@Url.Action("MainPage", "Home")">Вернуться на главную</a></div>
