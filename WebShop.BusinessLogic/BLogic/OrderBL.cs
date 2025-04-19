@@ -76,6 +76,7 @@ namespace WebShop.BusinessLogic.BLogic
                 Price = orderBL.Price,
                 Status = orderBL.Status
             };
+            order.OrderedProducts = GetOrderProductsByIdAction(id);
             return order;
         }
 

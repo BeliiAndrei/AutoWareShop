@@ -1,0 +1,71 @@
+﻿@model WebShop.Models.Order.OrderModel
+@{
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+    ViewBag.Title = "Информация о заказе";
+}
+
+<main class="main-content">
+    <h2 class="text-center">Информация о заказе №@Model.OrderId</h2>
+
+    <div class="order-details-block" style="margin-bottom: 30px; padding: 15px; border: 1px solid #ccc; border-radius: 10px;">
+        <h4>Общие данные</h4>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr><td><strong>Статус:</strong></td><td>@Model.OrderStatus</td></tr>
+            <tr><td><strong>Дата оформления:</strong></td><td>@Model.Created.ToString("dd.MM.yyyy")</td></tr>
+            <tr><td><strong>Ожидаемая доставка:</strong></td><td>@Model.EstimatedDeliveryDate.ToString("dd.MM.yyyy")</td></tr>
+            <tr><td><strong>Доставка / Самовывоз:</strong></td><td>@Model.DeliveryType</td></tr>
+            @*<tr><td><strong>Город доставки:</strong></td><td>@Model.DeliveryCity</td></tr>*@
+            <tr><td><strong>Оплачен:</strong></td><td>@(Model.isPaid ? "Да" : "Нет")</td></tr>
+            <tr><td><strong>Получен:</strong></td><td>@(Model.isReceived ? "Да" : "Нет")</td></tr>
+            @if (!string.IsNullOrEmpty(Model.Comment))
+            {
+                <tr><td><strong>Комментарий:</strong></td><td>@Model.Comment</td></tr>
+            }
+        </table>
+    </div>
+
+    <div class="product-list-block" style="margin-bottom: 30px; padding: 15px; border: 1px solid #ccc; border-radius: 10px;">
+        <h4>Список товаров</h4>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
+            <thead style="background-color: #f5f5f5;">
+                <tr>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Артикул</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Название</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Бренд</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Цена за ед.</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Количество</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td style="border: 1px solid #ccc; padding: 8px;">
+                            <a href="@Url.Action("Card", "Product", new { article = product.Article })">@product.Article</a>
+                        </td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">@product.ProductName</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">
+                            <a href="@Url.Action("SearchMethod", "CatalogSearch", new { searchType = "name", value = product.BrandName })">@product.BrandName</a>
+                        </td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">@product.Price</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">@product.Quantity</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">@(product.Price * product.Quantity)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div style="text-align: right; margin-top: 15px;">
+            <strong>Итоговая сумма: @Model.Price лей</strong>
+        </div>
+    </div>
+
+    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; background-color: #f8f9fa;">
+        <strong>Важно:</strong>
+        <p style="margin-top: 10px;">Пожалуйста, проверьте внешний вид товара в течение 3 дней после получения. Возврат возможен в течение 14 рабочих дней при сохранении товарного вида. Технические неисправности оформляются через Акт Рекламации.</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a class="btn btn--main" href="@Url.Action("Orders", "Profile")" class="btn btn-primary">Назад к заказам</a>
+    </div>
+</main>

@@ -410,6 +410,7 @@
     <Content Include="Views\Shared\_PersonalLayout.cshtml" />
     <Content Include="Views\Auth\DeliveryList.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Profile\OrderInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

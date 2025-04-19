@@ -353,6 +353,15 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
+        internal List<ProductsInOrderDBTable> GetOrderProductsByIdAction(int id)
+        {
+            using (var db = new ProductsInOrderContext())
+            {
+                var products = db.ProductsInOrder.Where(p => p.OrderId == id).ToList();
+                return products;
+            }
+        }
+
         internal bool IsProductValidAction(int id)
         {
             return true;

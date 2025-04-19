@@ -15,12 +15,14 @@ namespace WebShop.Controllers
     {
         IUser _user;
         IOrder _order;
+        IProduct _product;
 
         public ProfileController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _user = bl.GetUserBl();
             _order = bl.GetOrderBL();
+            _product = bl.GetProductBl();
         }
         public ActionResult Orders()
         {
@@ -50,6 +52,45 @@ namespace WebShop.Controllers
                 model.Add(o);
             }
             return View(model);
+        }
+
+        public ActionResult OrderInfo(int orderId)
+        {
+            var order = _order.GetOrderById(orderId);
+            var orderModel = new OrderModel
+            {
+                OrderId = orderId,
+                Comment = order.Comment,
+                Created = order.CreationDate,
+                EstimatedDeliveryDate = order.EstimatedDeliveryDate,
+                isPaid = order.IsPayed,
+                Price = order.Price,
+                OrderStatus = order.Status,
+            };
+            if(order.Status == Domain.Enumerables.OrderStatus.Received)
+                orderModel.isReceived = true;
+            else orderModel.isReceived = false;
+            if (order.IsPickup)
+                orderModel.DeliveryType = "Самовывоз";
+            else orderModel.DeliveryType = "Доставка";
+            var products = new List<ProductCardViewModel>();
+            foreach(var p in order.OrderedProducts)
+            {
+                var productFromDB = _product.GetProductById(p.ProductId);
+                var productModel = new ProductCardViewModel
+                {
+                    Article = productFromDB.Article,
+                    BrandName = productFromDB.Producer,
+                    Code = productFromDB.Id,
+                    Description = productFromDB.Description,
+                    Price = productFromDB.Price,
+                    ProductName = productFromDB.Name,
+                    Quantity = p.Quantity
+                };
+                products.Add(productModel);
+            }
+            orderModel.Products = products;
+            return View(orderModel);
         }
 
         public ActionResult ProfileUser()

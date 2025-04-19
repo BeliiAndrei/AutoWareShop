@@ -22,7 +22,7 @@
                 {
                     <tr class="orders-table__tr">
                         <td class="orders-table__td">
-                            <a class="orders-table__order-id" href="#">@order.OrderId</a>
+                            <a class="orders-table__order-id" href="@Url.Action("OrderInfo", "Profile", new {orderId = order.OrderId})">@order.OrderId</a>
                             <span class="orders-table__order-date">@order.Created.ToString("dd MMMM yyyy")</span>
                         </td>
                         <td class="orders-table__td">
@@ -47,7 +47,7 @@
                         </td>
                         <td class="orders-table__td">
                             <div class="orders-table__delivery-location">в @order.DeliveryCity</div>
-                            <a class="orders-table__delivery-more" href="#">Инфо</a>
+                            <a class="orders-table__delivery-more" href="@Url.Action("OrderInfo", "Profile", new {orderId = order.OrderId})">Инфо</a>
                         </td>
                     </tr>
                 }
