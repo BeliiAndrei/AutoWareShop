@@ -4,7 +4,43 @@
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Orders";
 }
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+    .orders-table__delivery-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
 
+    .orders-table__delivery--delivered {
+        color: #155724;
+        background-color: #d4edda;
+    }
+
+    .orders-table__delivery--pending {
+        color: #856404;
+        background-color: #fff3cd;
+    }
+
+    .orders-table__delivery--cancelled {
+        color: #721c24;
+        background-color: #f8d7da;
+    }
+
+    .orders-table__delivery--received {
+        color: #004085;
+        background-color: #cce5ff;
+    }
+
+    .orders-table__delivery-status i {
+        font-size: 14px;
+    }
+    </style>
+}
 <main class="main-content">
     <div class="table-responsive">
         <table class="orders-table">

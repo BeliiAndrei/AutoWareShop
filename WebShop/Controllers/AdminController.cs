@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI;
 using WebShop.BusinessLogic.Interfaces;
+using WebShop.Domain.Enumerables;
 using WebShop.Domain.News;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
@@ -11,6 +13,7 @@ using WebShop.Domain.User.Registration;
 
 using WebShop.Filters;
 using WebShop.Models;
+using WebShop.Models.Order;
 using WebShop.Models.Search;
 
 namespace WebShop.Controllers
@@ -21,13 +24,14 @@ namespace WebShop.Controllers
         private readonly IAdmin _admin;
         private readonly IProduct _product;
         private readonly INews _news;
-
+        private readonly IOrder _order;
         public AdminController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _admin = bl.GetAdminBl();
             _product = bl.GetProductBl();
             _news = bl.GetNewsBl();
+            _order = bl.GetOrderBL();
         }
 
         // ========== NEWS ==========
@@ -77,8 +81,6 @@ namespace WebShop.Controllers
             }
         }
 
- 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteNews(int id)
@@ -105,12 +107,8 @@ namespace WebShop.Controllers
 
         public ActionResult ViewNews()
         {
-           
-            
-                List<NewsViewModel> newsList = LNewsToLView(); // Преобразуем список News в NewsViewModel
-                return View(newsList); // Передаем правильный тип в представление
-            
-           
+            List<NewsViewModel> newsList = LNewsToLView(); // Преобразуем список News в NewsViewModel
+            return View(newsList); // Передаем правильный тип в представление
         }
 
         [HttpGet]
@@ -319,6 +317,86 @@ namespace WebShop.Controllers
             return View("ProductProfile", product);
         }
 
+        // ========== Orders ============
+
+        public ActionResult Orders(int page = 1)
+        {
+            int pageSize = 10;
+            var response = _order.GetAllOrders(page, pageSize);
+            var model = new AdminOrdersModel
+            {
+                Page = new PageInfo(response.ordersTotalCount, page, pageSize),
+                TotalCount = response.ordersTotalCount
+            };
+            model.Orders = new List<OrderModel>();
+            foreach (var order in response.orders)
+            {
+                var o = new OrderModel
+                {
+                    Comment = order.Comment,
+                    Created = order.CreationDate,
+                    EstimatedDeliveryDate = order.EstimatedDeliveryDate,
+                    isPaid = order.IsPayed,
+                    OrderStatus = order.Status,
+                    OrderId = order.Id,
+                    Price = order.Price,
+                    UserId = order.UserId
+                };
+                model.Orders.Add(o);
+            };
+            return View(model);
+        }
+
+        public ActionResult OrderDetails(int orderId)
+        {
+            var order = _order.GetOrderById(orderId);
+            var orderModel = new OrderModel
+            {
+                OrderId = orderId,
+                UserId = order.UserId,
+                Comment = order.Comment,
+                Created = order.CreationDate,
+                EstimatedDeliveryDate = order.EstimatedDeliveryDate,
+                isPaid = order.IsPayed,
+                OrderStatus = order.Status,
+                Price = order.Price
+            };
+            if (order.Status == Domain.Enumerables.OrderStatus.Received)
+                orderModel.isReceived = true;
+            else orderModel.isReceived = false;
+            if (order.IsPickup)
+                orderModel.DeliveryType = "Самовывоз";
+            else orderModel.DeliveryType = "Доставка";
+            var products = new List<ProductCardViewModel>();
+            foreach (var p in order.OrderedProducts)
+            {
+                var productFromDB = _product.GetProductById(p.ProductId);
+                var productModel = new ProductCardViewModel
+                {
+                    Article = productFromDB.Article,
+                    BrandName = productFromDB.Producer,
+                    Code = productFromDB.Id,
+                    Description = productFromDB.Description,
+                    Price = productFromDB.Price,
+                    ProductName = productFromDB.Name,
+                    Quantity = p.Quantity,
+                };
+                products.Add(productModel);
+            }
+            orderModel.Products = products;
+            var user = _admin.GetUserById(orderModel.UserId);
+            Session["OrderUserInfo"] = user;
+            return View(orderModel);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateOrderStatus(int orderId, OrderStatus newStatus)
+        {
+            _order.UpdateOrder(orderId, newStatus);
+            return RedirectToAction("OrderDetails", new { orderId });
+        }
+
+
         // ========== HELPERS ===========
         public ActionResult GetNewsImage(int id)
         {
@@ -366,10 +444,10 @@ namespace WebShop.Controllers
 
             if (newsList == null)
             {
-                return new List<NewsViewModel>(); 
+                return new List<NewsViewModel>();
             }
             var News2 = new List<NewsViewModel>();
-            foreach(var n in newsList)
+            foreach (var n in newsList)
             {
                 var news = new NewsViewModel();
                 news = NewsToView(n);

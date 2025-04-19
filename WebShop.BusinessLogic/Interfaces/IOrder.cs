@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebShop.Domain.Enumerables;
 using WebShop.Domain.Order;
 using WebShop.Domain.Product;
 
@@ -13,17 +14,19 @@ namespace WebShop.BusinessLogic.Interfaces
         OrderActionResponse CreateNewOrder(OrderDTO order, int userId, List<int> products);
 
         List<OrderDTO> GetUserOrders(int userId);
-        List<OrderDTO> GetAllOrders();
+        OrderGetAllResponse GetAllOrders(int page, int pageSize);
 
         OrderDTO GetOrderById(int id);
 
+        OrderDTO UpdateOrder(int orderId, OrderStatus status);
+
         void DeleteOrder(int id);
 
-        void ModifyOrderStatus(int id);
+        OrderActionResponse ModifyOrderStatus(int id, OrderStatus newStatus);
 
         decimal GetOrderPrice(int id);
 
-        void SortOrdersByDate(List<OrderDTO> orders);
+        List<OrderDTO> SortOrdersByDate(List<OrderDTO> orders);
 
 
     }

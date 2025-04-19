@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.BusinessLogic.Core;
+using WebShop.BusinessLogic.DBModel;
+using WebShop.BusinessLogic.DBModel.Seed;
 using WebShop.BusinessLogic.Interfaces;
+using WebShop.Domain.Enumerables;
 using WebShop.Domain.Order;
 using WebShop.Domain.Product;
+using WebShop.Domain.Product.SearchResponses;
 
 namespace WebShop.BusinessLogic.BLogic
 {
@@ -56,9 +60,50 @@ namespace WebShop.BusinessLogic.BLogic
             }
             return orders;
         }
-        public List<OrderDTO> GetAllOrders()
+        public OrderGetAllResponse GetAllOrders(int page, int pageSize)
         {
-            throw new NotImplementedException();
+            //Работа с базой прямо тут, так как эта опция администратора и не имеет отношения к UserApi
+            //наверное, следует вынести все действия с Orders в отдельный OrderApi ~~
+            try
+            {
+                using (var db = new OrderContext())
+                {
+                    var ordersDB = db.Orders.OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    var count = db.Orders.Count();
+                    var ordersDTO = new List<OrderDTO>();
+                    foreach (var o in ordersDB)
+                    {
+                        var el = new OrderDTO
+                        {
+                            Comment = o.Comment,
+                            CreationDate = o.CreationDate,
+                            EstimatedDeliveryDate = o.EstimatedDeliveryDate,
+                            Id = o.Id,
+                            IsPayed = o.IsPayed,
+                            IsPickup = o.IsPickup,
+                            PaymentMethod = o.PaymentMethod,
+                            Price = o.Price,
+                            Status = o.Status,
+                            UserId = o.UserId
+                        };
+                        ordersDTO.Add(el);
+                    }
+                    var response = new OrderGetAllResponse
+                    {
+                        orders = ordersDTO,
+                        ordersTotalCount = count
+                    };
+                    return response;
+                }
+            }
+            catch (Exception)
+            {
+                return new OrderGetAllResponse
+                {
+                    orders = null,
+                    ordersTotalCount = 0
+                };
+            }
         }
 
         public OrderDTO GetOrderById(int id)
@@ -74,7 +119,8 @@ namespace WebShop.BusinessLogic.BLogic
                 IsPickup = orderBL.IsPickup,
                 PaymentMethod = orderBL.PaymentMethod,
                 Price = orderBL.Price,
-                Status = orderBL.Status
+                Status = orderBL.Status,
+                UserId = orderBL.UserId
             };
             order.OrderedProducts = GetOrderProductsByIdAction(id);
             return order;
@@ -85,14 +131,62 @@ namespace WebShop.BusinessLogic.BLogic
             throw new NotImplementedException();
         }
 
-        public void ModifyOrderStatus(int id)
+        public OrderActionResponse ModifyOrderStatus(int id, OrderStatus newStatus)
+        {
+            //Работа с базой прямо тут, так как статус может изменять только администратор и он не имеет отношения к UserApi
+            using (var db = new OrderContext())
+            {
+                var order = db.Orders.FirstOrDefault(o => o.Id == id);
+                if (order != null)
+                {
+                    order.Status = newStatus;
+                    db.SaveChanges();
+                    return new OrderActionResponse
+                    {
+                        OrderId = id,
+                        Status = true,
+                        StatusMsg = "Status modified successfully"
+                    };
+                }
+                return new OrderActionResponse
+                {
+                    OrderId = id,
+                    Status = false,
+                    StatusMsg = "Order was not found"
+                };
+            }
+        }
+
+        public List<OrderDTO> SortOrdersByDate(List<OrderDTO> orders)
         {
             throw new NotImplementedException();
         }
 
-        public void SortOrdersByDate(List<OrderDTO> orders)
+        public OrderDTO UpdateOrder(int orderId, OrderStatus status)
         {
-            throw new NotImplementedException();
+            using (var db = new OrderContext())
+            {
+                var order = db.Orders.FirstOrDefault(o => o.Id == orderId);
+                if (order != null)
+                {
+                    order.Status = status;
+                    db.SaveChanges();
+                }
+                var orderDTO = new OrderDTO
+                {
+                    Status = status,
+                    Id = orderId,
+                    Comment = order.Comment,
+                    CreationDate = order.CreationDate,
+                    EstimatedDeliveryDate = order.EstimatedDeliveryDate,
+                    IsPayed = order.IsPayed,
+                    IsPickup = order.IsPickup,
+                    PaymentMethod = order.PaymentMethod,
+                    Price = order.Price,
+                    UserId = order.UserId
+                };
+                return orderDTO;
+            }
         }
     }
 }

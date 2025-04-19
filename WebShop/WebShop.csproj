@@ -337,6 +337,7 @@
     <Compile Include="Models\NewsViewModel.cs" />
     <Compile Include="Models\Order\OrderModel.cs" />
     <Compile Include="Models\ProductCardViewModel.cs" />
+    <Compile Include="Models\Order\AdminOrdersModel.cs" />
     <Compile Include="Models\Search\AdminProductsModel.cs" />
     <Compile Include="Models\Search\PageInfo.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
@@ -411,6 +412,8 @@
     <Content Include="Views\Auth\DeliveryList.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Profile\OrderInfo.cshtml" />
+    <Content Include="Views\Admin\Orders.cshtml" />
+    <Content Include="Views\Admin\OrderDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -11,6 +11,7 @@ namespace WebShop.Domain.Order
     public class OrderDTO
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime EstimatedDeliveryDate { get; set; }
         public decimal Price { get; set; }

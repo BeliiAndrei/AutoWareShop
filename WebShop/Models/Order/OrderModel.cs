@@ -9,6 +9,7 @@ namespace WebShop.Models.Order
     public class OrderModel
     {
         public int OrderId { get; set; }
+        public int UserId { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public DateTime Created { get; set; }
         public DateTime EstimatedDeliveryDate { get; set; }
