@@ -20,7 +20,7 @@ namespace WebShop.BusinessLogic.Core
             {
                 using (var db = new ProductContext())
                 {
-                    var pr = db.Products.OrderBy(p=>p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    var pr = db.Products.OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
                     var count = db.Products.Count();
                     var response = new ProductSearchResponseDB
                     {
@@ -107,7 +107,7 @@ namespace WebShop.BusinessLogic.Core
                 {
                     var query = db.Products
                              .Where(p => p.Category == category && p.Status != ProductStatus.hidden);
-                    var pr =  query.OrderBy(p => p.Id)
+                    var pr = query.OrderBy(p => p.Id)
                              .Skip((page - 1) * pageSize).Take(pageSize)
                              .ToList();
                     var count = query.Count();
@@ -138,7 +138,7 @@ namespace WebShop.BusinessLogic.Core
                     var query = db.Products
                              .Where(p => (p.Name.Contains(searchString) || p.Producer.Contains(searchString))
                                          && p.Status != ProductStatus.hidden);
-                    var pr = query.OrderBy(p=>p.Id)
+                    var pr = query.OrderBy(p => p.Id)
                              .Skip((page - 1) * pageSize).Take(pageSize)
                              .ToList();
                     var count = query.Count();

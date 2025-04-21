@@ -25,6 +25,7 @@ namespace WebShop.Controllers
         private readonly IProduct _product;
         private readonly INews _news;
         private readonly IOrder _order;
+        private readonly IDelivery _delivery;
         public AdminController()
         {
             var bl = new BusinessLogic.BusinessLogic();
@@ -32,6 +33,7 @@ namespace WebShop.Controllers
             _product = bl.GetProductBl();
             _news = bl.GetNewsBl();
             _order = bl.GetOrderBL();
+            _delivery = bl.GetDeliveryBL();
         }
 
         // ========== NEWS ==========
@@ -385,8 +387,27 @@ namespace WebShop.Controllers
             }
             orderModel.Products = products;
             var user = _admin.GetUserById(orderModel.UserId);
-            Session["OrderUserInfo"] = user;
-            return View(orderModel);
+            DeliveryViewModel delivery = null;
+            if(order.IsPickup == false)
+            {
+                var response = _delivery.GetDeliveryAddressByUserId(user.Id);
+                delivery = new DeliveryViewModel {
+                    City = response.City,
+                    Street = response.Street,
+                    House = response.House,
+                    Block = response.Block,
+                    Apartment = response.Apartment,
+                    Comment = response.Comment,
+                    PostalCode = response.PostalCode
+                };
+            }
+            var orderDetailsOrder = new OrderDetailsModel
+            {
+                userInfo = user,
+                orderModel = orderModel,
+                deliveryInfo = delivery
+            };
+            return View(orderDetailsOrder);
         }
 
         [HttpPost]

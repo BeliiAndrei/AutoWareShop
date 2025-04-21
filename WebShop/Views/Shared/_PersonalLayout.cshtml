@@ -19,11 +19,9 @@
                         @if (isAdmin)
                         {
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Clients", "Admin")">Управление пользователями</a></li>
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("AddUser", "Admin")">Регистрация пользователей</a></li>
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Products", "Admin")">Управление товарами</a></li>
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("NewsEditor", "Admin")">Управление новостями</a></li>
-
-
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Admin")">Управление заказами</a></li>
                         }
                         <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Basket_step_1", "BasketPayment")">Корзина</a></li>
                         <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Profile")">Заказы</a></li>

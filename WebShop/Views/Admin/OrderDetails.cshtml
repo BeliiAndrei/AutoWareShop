@@ -1,10 +1,8 @@
-﻿@model WebShop.Models.Order.OrderModel
+﻿@model WebShop.Models.Order.OrderDetailsModel
 
 @{
     ViewBag.Title = "Детали заказа";
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
-
-    var userInfo = Session["OrderUserInfo"] as WebShop.Domain.User.Admin.UserInfo;
 }
 
 <style>
@@ -98,32 +96,46 @@
 </style>
 
 <div class="order-details">
-    <h2>Заказ #@Model.OrderId</h2>
+    <h2>Заказ #@Model.orderModel.OrderId</h2>
 
     <div class="card">
         <h3>Информация о заказе</h3>
         <div class="info-grid">
-            <div><strong>Дата создания:</strong> @Model.Created.ToString("dd MMMM yyyy")</div>
-            <div><strong>Ожидаемая доставка:</strong> @Model.EstimatedDeliveryDate.Date.ToString("dd MMMM yyyy")</div>
-            <div><strong>Город доставки:</strong> @Model.DeliveryCity</div>
-            <div><strong>Тип доставки:</strong> @Model.DeliveryType</div>
-            <div><strong>Комментарий:</strong> @(string.IsNullOrWhiteSpace(Model.Comment) ? "-" : Model.Comment)</div>
-            <div><strong>Статус:</strong> @Model.OrderStatus</div>
-            <div><strong>Оплачен:</strong> @(Model.isPaid ? "Да" : "Нет")</div>
-            <div><strong>Получен:</strong> @(Model.isReceived ? "Да" : "Нет")</div>
-            <div><strong>Сумма:</strong> @Model.Price.ToString("C")</div>
+            <div><strong>Дата создания:</strong> @Model.orderModel.Created.ToString("dd MMMM yyyy")</div>
+            <div><strong>Ожидаемая доставка:</strong> @Model.orderModel.EstimatedDeliveryDate.Date.ToString("dd MMMM yyyy")</div>
+            <div><strong>Тип доставки:</strong> @Model.orderModel.DeliveryType</div>
+            <div><strong>Комментарий:</strong> @(string.IsNullOrWhiteSpace(Model.orderModel.Comment) ? "-" : Model.orderModel.Comment)</div>
+            <div><strong>Статус:</strong> @Model.orderModel.OrderStatus</div>
+            <div><strong>Оплачен:</strong> @(Model.orderModel.isPaid ? "Да" : "Нет")</div>
+            <div><strong>Получен:</strong> @(Model.orderModel.isReceived ? "Да" : "Нет")</div>
+            <div><strong>Сумма:</strong> @Model.orderModel.Price.ToString("C")</div>
         </div>
     </div>
 
-    @if (userInfo != null)
+    @if (Model.orderModel == null)
+    {
+        <div class="card">
+            <h3>Информация о доставке</h3>
+            <div class="info-grid">
+                <div><strong>Город:</strong> @Model.deliveryInfo.City</div>
+                <div><strong>Улица:</strong> @Model.deliveryInfo.Street</div>
+                <div><strong>Дом:</strong> @Model.deliveryInfo.House / @Model.deliveryInfo.Block</div>
+                <div><strong>Квартира:</strong> @Model.deliveryInfo.Apartment</div>
+                <div><strong>Комментарий:</strong> @Model.deliveryInfo.Comment</div>
+            </div>
+        </div>
+    }
+
+
+    @if (Model.userInfo != null)
     {
         <div class="card">
             <h3>Информация о покупателе</h3>
             <div class="info-grid">
-                <div><strong>Имя:</strong> @userInfo.UserName</div>
-                <div><strong>Фамилия:</strong> @userInfo.UserLastName</div>
-                <div><strong>Email:</strong> @userInfo.Email</div>
-                <div><strong>Телефон:</strong> @userInfo.PhoneNumber</div>
+                <div><strong>Имя:</strong> @Model.userInfo.UserName</div>
+                <div><strong>Фамилия:</strong> @Model.userInfo.UserLastName</div>
+                <div><strong>Email:</strong> @Model.userInfo.Email</div>
+                <div><strong>Телефон:</strong> @Model.userInfo.PhoneNumber</div>
             </div>
         </div>
     }
@@ -143,7 +155,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var product in Model.Products)
+                @foreach (var product in Model.orderModel.Products)
                 {
                     <tr>
                         <td><a href="@Url.Action("Card", "Product", new {value = @product.Article})"> @product.Code</a></td>
@@ -155,28 +167,28 @@
                         <td>@(product.Price * product.Quantity)</td>
                     </tr>
                 }
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td colspan="2">Стоимость заказа : @Model.Price</td>
-            </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2">Стоимость заказа : @Model.orderModel.Price</td>
+                </tr>
             </tbody>
-            
+
         </table>
     </div>
 
     <div class="card">
         <h3>Изменить статус заказа</h3>
         <form method="post" action="@Url.Action("UpdateOrderStatus", "Admin")">
-            <input type="hidden" name="orderId" value="@Model.OrderId" />
+            <input type="hidden" name="orderId" value="@Model.orderModel.OrderId" />
             <select name="newStatus" class="form-control">
                 @foreach (WebShop.Domain.Enumerables.OrderStatus status in Enum.GetValues(typeof(WebShop.Domain.Enumerables.OrderStatus)))
                 {
                     var intValue = (int)status;
-                    <option value="@intValue" @(Model.OrderStatus == status ? "selected" : "")>@status</option>
+                    <option value="@intValue" @(Model.orderModel.OrderStatus == status ? "selected" : "")>@status</option>
                 }
             </select>
             <br />
