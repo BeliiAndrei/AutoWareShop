@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WebShop.BusinessLogic.Interfaces;
@@ -41,14 +42,14 @@ namespace WebShop.Controllers
             return RedirectToAction("Error_500", "Error");
         }
 
-        public ActionResult Search_result(string Path_Category, string Path_Subcategory, string Result_SearchString = "", int page = 1)
+        public ActionResult Search_result(string Path_Category, string Path_Subcategory, string Result_SearchString = "", int page = 1, decimal minPrice = 0, decimal maxPrice = 10000, bool onlyAvailable = false, List<string> brands = null)
         {
-            var pageSize = 1;
+            var pageSize = 8;   // РАЗМЕР СТРАНИЦЫ ТУТ
             SearchModel viewModel;
             ProductSearchResponseDTO result;
-            if (Path_Category != null || Path_Subcategory != null)
+            if (!string.IsNullOrEmpty(Path_Category) || !string.IsNullOrEmpty(Path_Subcategory))
             {
-                result = _product.GetProductsByCategory(Path_Subcategory, page, pageSize);
+                result = _product.GetProductsByCategory(Path_Subcategory, page, pageSize, minPrice, maxPrice, onlyAvailable, brands);
                 viewModel = FormViewModel(result, pageSize, page, Result_SearchString);
                 viewModel.Path = new SearchPath
                 {
@@ -60,9 +61,9 @@ namespace WebShop.Controllers
             if(Result_SearchString !="")
             {
                 if (Result_SearchString == "bonus")
-                    result = _product.GetProductsByStatus(Result_SearchString, page, pageSize);
+                    result = _product.GetProductsByStatus(Result_SearchString, page, pageSize, minPrice, maxPrice, onlyAvailable, brands);
                 else
-                    result = _product.GetProductsBySearchString(Result_SearchString, page, pageSize);
+                    result = _product.GetProductsBySearchString(Result_SearchString, page, pageSize, minPrice, maxPrice, onlyAvailable, brands);
                 viewModel = FormViewModel(result, pageSize, page, Result_SearchString);
                 return View(viewModel);
             }
@@ -92,10 +93,12 @@ namespace WebShop.Controllers
             {
                 Products = productsForView,
                 SearchString = Result_SearchString,
-                TotalCount = response.productsTotalCount
+                TotalCount = response.productsTotalCount,
+                AvailableBrands = response.brands
             };
             PageInfo pageInfo = new PageInfo(searchResult.TotalCount, page, pageSize);
             SearchModel viewModel = new SearchModel(searchResult, pageInfo);
+            //viewModel.Result.AvailableBrands = new List<string> { "Filtron", "Bosh" };  // Тест!!!!
             return viewModel;
         }
 

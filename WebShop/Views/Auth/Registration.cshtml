@@ -74,7 +74,6 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="main-form__field">
-                                @*error  добавить в имя класса при ошибке чтобы подстветить красным поле*@
                                 @Html.LabelFor(m => m.RePassword, "Пароль ещё раз", new { @class = "main-form__label" })
                                 @Html.TextBoxFor(m => m.RePassword, new
                            {
@@ -84,7 +83,6 @@
                                value = "",
                                @class = "main-form__input"
                            })
-                                <small class="error__desc">Пароли не совпадают</small>
                             </div>
                         </div>
                     </div>

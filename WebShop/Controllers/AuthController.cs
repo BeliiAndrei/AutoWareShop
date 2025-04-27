@@ -166,7 +166,7 @@ namespace WebShop.Controllers
                 {
                     TempData["Message"] = "Для просмотра адресов доставки необходимо авторизоваться";
                     TempData["AlertType"] = "danger";
-                    return RedirectToAction("Athorisation", "Auth");
+                    return RedirectToAction("Authorisation", "Auth");
                 }
 
                 try

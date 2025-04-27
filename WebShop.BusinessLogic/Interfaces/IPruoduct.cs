@@ -16,9 +16,12 @@ namespace WebShop.BusinessLogic.Interfaces
         ProductSearchResponseDTO GetProductsList(int page, int pageSize);
         ProductDTO GetProductById (int id);
         ProductDTO GetProductByArticle(string art);
-        ProductSearchResponseDTO GetProductsByCategory(string category, int page = 0, int pageSize = 100);
-        ProductSearchResponseDTO GetProductsBySearchString(string search_string, int page = 0, int pageSize = 100);
-        ProductSearchResponseDTO GetProductsByStatus(string statusString, int page = 0, int pageSize = 100);
+        ProductSearchResponseDTO GetProductsByCategory(string category, int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands);
+        ProductSearchResponseDTO GetProductsBySearchString(string searchString, int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands);
+        ProductSearchResponseDTO GetProductsByStatus(string statusString, int page, int pageSize, 
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands);
 
     }
 }
