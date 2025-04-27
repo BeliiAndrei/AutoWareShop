@@ -1,8 +1,6 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var role = HttpContext.Current.Session["User"] is WebShop.Domain.User.Admin.UserInfo user && user.Role != null
-        ? user.Role
-        : string.Empty;
+    var role = SessionHelper.User?.Role ?? string.Empty;
     var isAdmin = role == "Admin" ? true : false;
 }
 

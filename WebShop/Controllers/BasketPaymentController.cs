@@ -52,12 +52,12 @@ namespace WebShop.Controllers
         [HttpPost]
         public ActionResult AddToBasket(int productId, int quantity)
         {
-            var user = Session["User"] as UserInfo;
+            var user = SessionHelper.User;
             if (user == null)
                 return RedirectToAction("Authorisation", "Auth");
 
             var response = _basket.AddToBasket(user.Id, productId, quantity);
-            Session["BasketCount"] = _basket.GetBasketSize(user.Id);
+            SessionHelper.ProductsInCartCount = _basket.GetBasketSize(user.Id);
             if(response.Status == true)
                 return Json(new { success = true });
             else return Json(new { success = false });
@@ -70,17 +70,17 @@ namespace WebShop.Controllers
             var selectedProductIds = TempData["SelectedProductIds"] as List<string>;
             if (selectedProductIds != null)
             {
-                var user = Session["User"] as UserInfo;
+                var user = SessionHelper.User;
                 var response = _basket.RemoveFromBasket(selectedProductIds, user.Id);
                 if (response.Status == true)
-                    Session["BasketCount"] = _basket.GetBasketSize(user.Id);
+                    SessionHelper.ProductsInCartCount = _basket.GetBasketSize(user.Id);
             }
             return RedirectToAction("Basket_step_1");
         }
         [UserOnly]
         public ActionResult Basket_step_1()
         {
-            var user = Session["User"] as UserInfo;
+            var user = SessionHelper.User;
             var products = _basket.GetAllProductsInCart(user.Id);
             int productCount = 0;
             foreach (var product in products)
@@ -116,17 +116,17 @@ namespace WebShop.Controllers
         {
             decimal orderPrice = TempData["OrderPrice"] != null ? (decimal)TempData["OrderPrice"] : 0;
             var selectedProductIds = TempData["SelectedProductIds"] as List<string>;
-            Session["PreOreder"] = selectedProductIds;
-            Session["OrderPrice"] = orderPrice;
+            SessionHelper.ProductsSelectedForOrder = selectedProductIds;
+            SessionHelper.OrderPrice = orderPrice;
             return View();
         }
         [HttpPost]
         [UserOnly]
         public ActionResult Basket_step_3(string payment, string orderMessage = "")
         {
-            Session["OrderPaymentType"] = payment;
-            Session["OrderMessage"] = orderMessage;
-            var userId = (Session["User"] as UserInfo).Id;
+            SessionHelper.OrderPaymentType = payment;
+            SessionHelper.OrderMessage = orderMessage;
+            var userId = SessionHelper.User.Id;
             var deliveryInfoDB = _delivery.GetDeliveryAddressByUserId(userId) ?? null;
             if (deliveryInfoDB != null)
             {
@@ -149,8 +149,8 @@ namespace WebShop.Controllers
         public ActionResult Basket_step_4(string deliveryType, string orderMessage, string userCity,
                                           string userStreet, string userHouse, string userBlock, string userAppartment)
         {
-            var paymentType = (string) Session["OrderPaymentType"];
-            var userId = ((UserInfo)Session["User"]).Id;
+            var paymentType = SessionHelper.OrderPaymentType;
+            var userId = SessionHelper.User.Id;
 
             var orderInfo = new OrderDTO();
 
@@ -163,7 +163,7 @@ namespace WebShop.Controllers
             if (paymentType == "payment-cash")
                 orderInfo.IsPayed = false;
 
-            var stringList = Session["PreOreder"] as List<string>;
+            var stringList = SessionHelper.ProductsSelectedForOrder;
             var productsIdList = stringList != null
                 ? stringList.Where(s => int.TryParse(s, out _)).Select(s => int.Parse(s)).ToList()
                 : new List<int>();
@@ -180,13 +180,13 @@ namespace WebShop.Controllers
                     House = userHouse
                 };
                 orderInfo.IsPickup = false;
-                Session["Delivery"] = deliveryLocation;
+                SessionHelper.Delivery = deliveryLocation;
             }
             if(deliveryType == "pickup")
             {
                 orderInfo.IsPickup = true;
             }
-            orderInfo.Price = (decimal)Session["OrderPrice"];
+            orderInfo.Price = SessionHelper.OrderPrice;
             orderInfo.Status = Domain.Enumerables.OrderStatus.Pending;
             orderInfo.Comment = orderMessage;
             var response = _order.CreateNewOrder(orderInfo, userId, productsIdList);
@@ -201,7 +201,7 @@ namespace WebShop.Controllers
                 Price = order.Price,
                 DeliveryType = deliveryType,
             };
-            Session["BasketCount"] = _basket.GetBasketSize(userId);
+            SessionHelper.ProductsInCartCount = _basket.GetBasketSize(userId);
             return View(model);
         }
         [UserOnly]

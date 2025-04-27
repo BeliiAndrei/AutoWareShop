@@ -26,7 +26,7 @@ namespace WebShop.Controllers
         }
         public ActionResult Orders()
         {
-            var user = Session["User"] as UserInfo;
+            var user = SessionHelper.User;
             var userOrders = _order.GetUserOrders(user.Id);
             var model = new List<OrderModel>();
             foreach (var order in userOrders)
@@ -48,7 +48,7 @@ namespace WebShop.Controllers
                 if(order.Status == Domain.Enumerables.OrderStatus.Received)
                     o.isReceived = true;
                 else o.isReceived = false;
-                o.DeliveryCity = (Session["Delivery"] as DeliveryViewModel)?.City ?? "Chisinau";
+                o.DeliveryCity = SessionHelper.Delivery?.City ?? "Chisinau";
                 model.Add(o);
             }
             return View(model);
@@ -95,7 +95,7 @@ namespace WebShop.Controllers
 
         public ActionResult ProfileUser()
         {
-            var user = Session["User"];
+            var user = SessionHelper.User;
             return View(user);
         }
 
@@ -110,14 +110,14 @@ namespace WebShop.Controllers
                 }
                 var user = _user.EditUserProfile(edited);
                 TempData["Message"] = "Изменения успешно сохранены.";
-                Session["User"] = user;
+                SessionHelper.User = user;
                 return View("ProfileUser", user); 
         }
 
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel passwordModel)
         {
-            UserInfo user = (UserInfo)Session["User"];
+            UserInfo user = SessionHelper.User;
             passwordModel.Id = user.Id;
             if (!ModelState.IsValid)
             {

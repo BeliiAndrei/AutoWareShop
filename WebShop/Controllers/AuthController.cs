@@ -33,8 +33,8 @@ namespace WebShop.Controllers
         }
         public void StoreUserInSession(UserInfo user)
         {
-            Session["User"] = user;
-            Session["BasketCount"] = _basket.GetBasketSize(user.Id);
+            SessionHelper.User = user;
+            SessionHelper.ProductsInCartCount = _basket.GetBasketSize(user.Id);
         }
 
         [HttpPost]
@@ -105,7 +105,7 @@ namespace WebShop.Controllers
                         PhoneNumber = user.PhoneNumber,
                         Role = user.Level.ToString()
                     };
-                    Session["User"] = userForSession;
+                    SessionHelper.User = userForSession;
                     return View("../Home/MainPage");
                 }
                 else
@@ -142,7 +142,7 @@ namespace WebShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = (UserInfo)Session["User"];
+                var user = SessionHelper.User;
                 if (user != null)
                 {
                     deliveryData.UserId = user.Id;
@@ -161,7 +161,7 @@ namespace WebShop.Controllers
        
         public ActionResult DeliveryList()
         {
-                var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
+            var user = SessionHelper.User;
                 if (user == null)
                 {
                     TempData["Message"] = "Для просмотра адресов доставки необходимо авторизоваться";

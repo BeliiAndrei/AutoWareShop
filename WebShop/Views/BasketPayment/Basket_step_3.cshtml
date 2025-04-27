@@ -2,8 +2,8 @@
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Basket_step_3";
-    var comment = Session["OrderMessage"];
-    decimal orderPrice = (HttpContext.Current.Session["OrderPrice"] as decimal?) ?? 0m;
+    var comment = SessionHelper.OrderMessage;
+    decimal orderPrice = SessionHelper.OrderPrice /*?? 0m*/;
 
 }
 

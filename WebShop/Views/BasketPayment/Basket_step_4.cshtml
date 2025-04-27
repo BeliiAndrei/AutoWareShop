@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Basket_step_4";
-    var delivery = Session["Delivery"] as WebShop.Models.DeliveryViewModel ?? null;
+    var delivery = SessionHelper.Delivery ?? null;
 }
 @model WebShop.Models.Order.OrderModel
 <main class="main-content">
