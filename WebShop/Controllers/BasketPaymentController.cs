@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Antlr.Runtime.Misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -200,6 +201,7 @@ namespace WebShop.Controllers
                 Price = order.Price,
                 DeliveryType = deliveryType,
             };
+            Session["BasketCount"] = _basket.GetBasketSize(userId);
             return View(model);
         }
         [UserOnly]
@@ -207,8 +209,31 @@ namespace WebShop.Controllers
         {
             return View();
         }
+        [HttpGet]
         public ActionResult Payment()
         {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Payment(string userEmail, decimal userPrice = 0)
+        {
+            bool paymentSuccess = true;
+            if (string.IsNullOrEmpty(userEmail) || userPrice <= 0)
+            {
+                ViewBag.PaymentError = "Неверные данные для оплаты.";
+                paymentSuccess = false;
+                return View();
+            }
+
+            if (paymentSuccess)
+            {
+                ViewBag.PaymentSuccess = true;
+            }
+            else
+            {
+                ViewBag.PaymentError = "Не удалось обработать платёж. Попробуйте ещё раз.";
+            }
+
             return View();
         }
     }

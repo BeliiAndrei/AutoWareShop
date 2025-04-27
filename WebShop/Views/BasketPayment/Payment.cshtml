@@ -1,28 +1,77 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
-    ViewBag.Title = "Payment";
+    ViewBag.Title = "Оплата";
 }
 
 <main class="main-content">
     <div class="main-heading">
         <h1 class="main-heading__text">Оплата</h1>
-        <div class="main-heading__link-wrap"> <strong>текущая задолженность<span>0 Лей</span></strong></div>
+        <div class="main-heading__link-wrap">
+            <strong>Текущая задолженность<span>0 Лей</span></strong>
+        </div>
     </div>
-    <form class="payment-form" action="/" method="POST" name="payment-form">
+
+    @* Сообщения об успехе или ошибке оплаты *@
+    @if (ViewBag.PaymentSuccess != null && (bool)ViewBag.PaymentSuccess)
+    {
+        <div class="payment-success">
+            <p>Оплата прошла успешно! Спасибо за ваш платеж.</p>
+        </div>
+    }
+    else if (ViewBag.PaymentError != null)
+    {
+        <div class="payment-error">
+            <p>Ошибка оплаты: @ViewBag.PaymentError</p>
+        </div>
+    }
+
+    <form class="payment-form" action="@Url.Action("Payment", "BasketPayment")" method="POST" name="payment-form">
         <div class="payment-form__fields">
             <div class="payment-form__field">
                 <div class="payment-form__helper">Введите данные для оплаты</div>
             </div>
             <div class="payment-form__field">
-                <input class="payment-form__input" type="email" name="user-email" placeholder="Email плательщика">
+                <input class="payment-form__input" type="email" name="userEmail" placeholder="Email плательщика" required>
             </div>
             <div class="payment-form__field payment-form__field--currency">
-                <input class="payment-form__input" type="text" name="user-price" placeholder="Сумма к оплате"><span class="payment-form__currency">Лей</span>
+                <input class="payment-form__input" type="number" name="userPrice" placeholder="Сумма к оплате" min="1" step="0.01" required>
+                <span class="payment-form__currency">Лей</span>
             </div>
             <div class="payment-form__field">
                 <input class="payment-form__btn btn btn--main" type="submit" name="send-data" value="Оплатить">
             </div>
         </div>
     </form>
+
+    <section class="payment-info">
+        <h2 class="payment-info__title">Способы оплаты</h2>
+        <ul class="payment-info__list">
+            <li>Банковские карты Visa, MasterCard</li>
+            <li>Интернет-банкинг</li>
+            <li>Мобильные платежи (PayPal, Apple Pay, Google Pay)</li>
+        </ul>
+    </section>
+
+    <section class="payment-security">
+        <h2 class="payment-info__title">Безопасность платежей</h2>
+        <p class="payment-info__text">Ваши платежные данные передаются по защищённому SSL-соединению и не сохраняются на нашем сервере.</p>
+    </section>
+
+    <section class="payment-instructions">
+        <h2 class="payment-info__title">Как оплатить</h2>
+        <ol class="payment-info__list">
+            <li>Введите ваш Email и сумму платежа.</li>
+            <li>Нажмите кнопку «Оплатить».</li>
+            <li>Следуйте инструкциям платёжной системы для завершения оплаты.</li>
+        </ol>
+    </section>
+
+    <section class="payment-support">
+        <h2 class="payment-info__title">Нужна помощь?</h2>
+        <p class="payment-info__text">
+            Свяжитесь с нашей поддержкой:
+            <a href="mailto:autowares@help.com">autowares@help.com</a>
+            или по телефону +373 (79) 637-411.
+        </p>
+    </section>
 </main>
