@@ -3,46 +3,39 @@
     ViewBag.Title = "MainPage";
 }
 <div class="main-carousel">
-    <div class="swiper-container main-carousel__container js-main-carousel">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <figure class="main-carousel__slide" style="background-image: url('/assets/images/content/slide-3.jpg')">
-                    <figcaption class="main-carousel__desc">
-                        <div class="main-carousel__title">Текст предложения <span class="main-carousel__title-emphasis">или акции</span></div>
-                        <p class="main-carousel__desc-small">пояснения по тексту предложения или акции</p><a class="main-carousel__btn btn btn--main" href="#">Заказать</a>
-                    </figcaption>
-                </figure>
+        <div class="swiper-container main-carousel__container js-main-carousel">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <figure class="main-carousel__slide" style="background-image: url('/assets/images/content/slide-3.jpg')">
+                        <figcaption class="main-carousel__desc">
+                            <div class="main-carousel__title">Лучший аккуммулятор <span class="main-carousel__title-emphasis">для зимнего времени года</span></div>
+                            <p class="main-carousel__desc-small">Не подведёт вас на морозе</p><a class="main-carousel__btn btn btn--main" href="@Url.Action("Card", "Product", new { value = "AKK2"})">Заказать</a>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="main-carousel__slide is-white" style="background-image: url('/assets/images/content/slide-1.jpg')">
+                        <figcaption class="main-carousel__desc">
+                            <div class="main-carousel__logo-wrap"><img class="main-carousel__logo img-responsive" src="~/assets/images/content/apollo-tyres-logo.svg" alt="Apollo" width="140" height="50"></div>
+                            <div class="main-carousel__title">Шины для <strong class="main-carousel__title-emphasis">победителей</strong></div>
+                            <p class="main-carousel__desc-small">Доступные цены</p><a class="main-carousel__btn btn btn--main" href="@Url.Action("Card", "Product", new { value = "APP001"})">Заказать</a>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="swiper-slide">
+                    <figure class="main-carousel__slide is-white" style="background-image: url('/assets/images/content/slide-2.jpg')">
+                        <figcaption class="main-carousel__desc">
+                            <div class="main-carousel__logo-wrap"><img class="main-carousel__logo img-responsive" src="~/assets/images/content/apollo-tyres-logo.svg" alt="Apollo" width="140" height="50"></div>
+                            <div class="main-carousel__title">Тормози всегда <strong class="main-carousel__title-emphasis">вовремя</strong></div>
+                            <p class="main-carousel__desc-small">Лучший выбор тормозных колодок</p><a class="main-carousel__btn btn btn--main" href="@Url.Action("SearchMethod", "CatalogSearch", new { searchType = "name", value = "колодки"})">Просмотреть</a>
+                        </figcaption>
+                    </figure>
+                </div>
             </div>
-            <div class="swiper-slide">
-                <figure class="main-carousel__slide is-white" style="background-image: url('/assets/images/content/slide-2.jpg')">
-                    <figcaption class="main-carousel__desc">
-                        <div class="main-carousel__title">Ключ к <strong class="main-carousel__title-emphasis">самому лучшему!</strong></div>
-                        <p class="main-carousel__desc-small">Только оригинальные запчасти!</p><a class="main-carousel__btn btn btn--main" href="#">Заказать</a>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure class="main-carousel__slide is-white" style="background-image: url('/assets/images/content/slide-1.jpg')">
-                    <figcaption class="main-carousel__desc">
-                        <div class="main-carousel__logo-wrap"><img class="main-carousel__logo img-responsive" src="~/assets/images/content/apollo-tyres-logo.svg" alt="Apollo" width="140" height="50"></div>
-                        <div class="main-carousel__title">Шины для <strong class="main-carousel__title-emphasis">победителей</strong></div>
-                        <p class="main-carousel__desc-small">Доступные цены</p><a class="main-carousel__btn btn btn--main" href="#">Заказать</a>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure class="main-carousel__slide is-white" style="background-image: url('/assets/images/content/slide-2.jpg')">
-                    <figcaption class="main-carousel__desc">
-                        <div class="main-carousel__logo-wrap"><img class="main-carousel__logo img-responsive" src="~/assets/images/content/apollo-tyres-logo.svg" alt="Apollo" width="140" height="50"></div>
-                        <div class="main-carousel__title">Шины для <strong class="main-carousel__title-emphasis">победителей</strong></div>
-                        <p class="main-carousel__desc-small">Широкий ассортимент. Доступные цены</p><a class="main-carousel__btn btn btn--main" href="#">Заказать</a>
-                    </figcaption>
-                </figure>
-            </div>
+            <div class="main-carousel__pagination"></div>
         </div>
-        <div class="main-carousel__pagination"></div>
     </div>
-</div>
+
 <main class="main">
     <section class="news-section news-section--column section">
         <div class="container-fluid">
@@ -132,11 +125,11 @@
     </section>
     <section class="section section--gray categories">
         <div class="container-fluid">
-            <div class="categories__heading section__heading"><a href="#">Популярные категории</a></div>
+            <div class="categories__heading section__heading">Популярные категории</div>
             <div class="categories__division-section">
                 <div class="row">
                     <div class="col-6 col-md-3">
-                        <a class="category-division" href="#">
+                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Колёса", Path_Subcategory = "Шины"})">
                             <figure class="category-division__main">
                                 <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-1.jpg" alt="Шины"></div>
                                 <figcaption class="category-division__caption">Шины</figcaption>
@@ -144,7 +137,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a class="category-division" href="#">
+                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Колёса", Path_Subcategory = "Диски"})">
                             <figure class="category-division__main">
                                 <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-2.jpg" alt="Диски"></div>
                                 <figcaption class="category-division__caption">Диски</figcaption>
@@ -152,7 +145,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a class="category-division" href="#">
+                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Автохимия", Path_Subcategory = "Очистители инжектора"})">
                             <figure class="category-division__main">
                                 <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-3.jpg" alt="Автохимия"></div>
                                 <figcaption class="category-division__caption">Автохимия</figcaption>
@@ -160,10 +153,10 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a class="category-division" href="#">
+                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Тормозная система", Path_Subcategory = "Колодки"})">
                             <figure class="category-division__main">
                                 <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-2.jpg" alt="Диски"></div>
-                                <figcaption class="category-division__caption">Диски</figcaption>
+                                <figcaption class="category-division__caption">Колодки</figcaption>
                             </figure>
                         </a>
                     </div>

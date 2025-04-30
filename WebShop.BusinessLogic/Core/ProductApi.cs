@@ -40,6 +40,62 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
+        internal ProductSearchResponseDB GetAllProducts(int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
+        {
+            try
+            {
+                using (var db = new ProductContext())
+                {
+                    var query = db.Products.AsQueryable();
+
+                    // Фильтрация по цене
+                    query = query.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+
+                    // Фильтрация по наличию
+                    if (onlyAvailable)
+                    {
+                        query = query.Where(p => p.Quantity > 0);
+                    }
+
+                    // Фильтрация по брендам
+                    if (brands != null && brands.Any())
+                    {
+                        query = query.Where(p => brands.Contains(p.Producer));
+                    }
+
+                    var count = query.Count();
+
+                    var products = query.OrderBy(p => p.Id)
+                                        .Skip((page - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .ToList();
+
+                    // Список брендов для отображения в фильтре
+                    var allBrands = query.Select(p => p.Producer)
+                                         .Distinct()
+                                         .OrderBy(name => name)
+                                         .ToList();
+
+                    return new ProductSearchResponseDB
+                    {
+                        products = products,
+                        productsTotalCount = count,
+                        availableBrands = allBrands
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                return new ProductSearchResponseDB
+                {
+                    products = null,
+                    productsTotalCount = 0,
+                    availableBrands = new List<string>()
+                };
+            }
+        }
+
         internal ProductDBTable GetProductByArticleAction(string article)
         {
             try
@@ -71,7 +127,7 @@ namespace WebShop.BusinessLogic.Core
         }
 
         internal ProductSearchResponseDB GetProductsByStatusAction(ProductStatus status, int page, int pageSize,
-    decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
         {
             try
             {

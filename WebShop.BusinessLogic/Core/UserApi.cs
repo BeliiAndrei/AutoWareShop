@@ -88,7 +88,7 @@ namespace WebShop.BusinessLogic.Core
                 };
 
                 db.Users.Add(user);
-                db.SaveChanges(); // Сохранение изменений в БД
+                db.SaveChanges(); 
 
                 // Проверка: Поиск пользователя в БД
                 var savedUser = db.Users.FirstOrDefault(u => u.Id == user.Id);

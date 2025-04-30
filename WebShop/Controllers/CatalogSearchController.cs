@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Product;
 using WebShop.Domain.Product.SearchResponses;
@@ -18,9 +19,13 @@ namespace WebShop.Controllers
             var bl = new BusinessLogic.BusinessLogic();
             _product = bl.GetProductBl();
         }
-        public ActionResult Catalog()
+        public ActionResult Catalog(int page = 1, decimal minPrice = 0, decimal maxPrice = 10000, bool onlyAvailable = false, List<string> brands = null)
         {
-            return View();
+            var pageSize = 8;   // РАЗМЕР СТРАНИЦЫ ТУТ
+            SearchModel viewModel;
+            ProductSearchResponseDTO result = _product.GetProductsList(page, pageSize, minPrice, maxPrice, onlyAvailable, brands);
+            viewModel = FormViewModel(result, pageSize, page, "");
+            return View(viewModel);
         }
 
         public ActionResult Catalog_brands()
