@@ -77,7 +77,7 @@ namespace WebShop.Controllers
         {
             if (registerData.Password != registerData.RePassword)
             {
-                TempData["Message"] = "Пароли не совпаают";
+                TempData["Message"] = "Пароли не совпадают";
                 return View("Registration");
             }
             if (ModelState.IsValid)
