@@ -319,6 +319,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasketPaymentController.cs" />
     <Compile Include="Controllers\CatalogSearchController.cs" />
+    <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationalController.cs" />
@@ -408,10 +409,10 @@
     <Content Include="Views\Informational\ViewNews.cshtml" />
     <Content Include="Views\Admin\NewsEditor.cshtml" />
     <Content Include="Views\Admin\NewsUpdate.cshtml" />
-    <Content Include="Views\Auth\Delivery.cshtml" />
-    <Content Include="Views\Auth\DeliveryManager.cshtml" />
+    <Content Include="Views\Delivery\Delivery.cshtml" />
+    <Content Include="Views\Delivery\DeliveryManager.cshtml" />
     <Content Include="Views\Shared\_PersonalLayout.cshtml" />
-    <Content Include="Views\Auth\DeliveryList.cshtml" />
+    <Content Include="Views\Delivery\DeliveryList.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Profile\OrderInfo.cshtml" />
     <Content Include="Views\Admin\Orders.cshtml" />
