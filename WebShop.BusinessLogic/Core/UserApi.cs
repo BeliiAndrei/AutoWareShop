@@ -32,14 +32,15 @@ namespace WebShop.BusinessLogic.Core
 
             }
 
-            // !!! Отключена проверка пароля, вернуть потом обратно !!!
-            //var encPassword = LoginRegisterHelper.HashGen(data.Password);
-            //if (user.Password != encPassword)
-            //    return new UserLoginResponse
-            //    {
-            //        Status = false,
-            //        StatusMsg = "Wrong Password"
-            //    };
+            // !!! Отключена проверка пароля, вернуть потом обратно !!!  \\
+            // +++ Уже вернул обратно. Но если снова надо будет отключить, то закомментить следубщие 7 строк. +++  \\
+            var encPassword = LoginRegisterHelper.HashGen(data.Password);
+            if (user.Password != encPassword)
+                return new UserLoginResponse
+                {
+                    Status = false,
+                    StatusMsg = "Wrong Password"
+                };
             if (user != null)
                 return new UserLoginResponse
                 {
