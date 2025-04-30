@@ -14,6 +14,8 @@ namespace WebShop.BusinessLogic.Interfaces
         ProductActionResponse CreateNewProduct (ProductDTO data);
         ProductDTO ModifyProduct (ProductDTO data);
         ProductSearchResponseDTO GetProductsList(int page, int pageSize);
+        ProductSearchResponseDTO GetProductsList(int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands);
         ProductDTO GetProductById (int id);
         ProductDTO GetProductByArticle(string art);
         ProductSearchResponseDTO GetProductsByCategory(string category, int page, int pageSize,

@@ -96,6 +96,13 @@ namespace WebShop.BusinessLogic.BLogic
             return FormList(GetAllProducts(page,pageSize));
         }
 
+        public ProductSearchResponseDTO GetProductsList(int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
+        {
+            var productsFromDB = GetAllProducts(page, pageSize, minPrice, maxPrice, onlyAvailable, brands);
+            return FormList(productsFromDB);
+        }
+
         public ProductDTO ModifyProduct(ProductDTO oldProduct)
         {
             var product = GetProductByArticleAction(oldProduct.Article);
