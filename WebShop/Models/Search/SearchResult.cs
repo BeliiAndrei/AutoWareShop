@@ -10,5 +10,7 @@ namespace WebShop.Models.Search
         public int TotalCount { get; set; }
         public string SearchString { get; set; }
         public List<ProductCardViewModel> Products { get; set; }
+        public List<string> AvailableBrands { get; set; }
+
     }
 }

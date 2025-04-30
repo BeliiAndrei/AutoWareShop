@@ -1,466 +1,93 @@
-﻿
+﻿@model List<WebShop.Models.Order.OrderModel>
+
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Orders";
 }
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+    .orders-table__delivery-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
 
+    .orders-table__delivery--delivered {
+        color: #155724;
+        background-color: #d4edda;
+    }
+
+    .orders-table__delivery--pending {
+        color: #856404;
+        background-color: #fff3cd;
+    }
+
+    .orders-table__delivery--cancelled {
+        color: #721c24;
+        background-color: #f8d7da;
+    }
+
+    .orders-table__delivery--received {
+        color: #004085;
+        background-color: #cce5ff;
+    }
+
+    .orders-table__delivery-status i {
+        font-size: 14px;
+    }
+    </style>
+}
 <main class="main-content">
-    <!-- orders-filter-->
-    <div class="orders-filter">
-        <div class="orders-filter__heading d-md-none">
-            Фильтр заказов
-            <button class="orders-filter__close d-md-none">
-                <svg class="icon icon-close orders-filter__close-icon">
-                    <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                </svg>
-            </button>
-        </div>
-        <form class="orders-filter__main" action="/" method="POST" name="orders-filter">
-            <div class="row">
-                <div class="col-md-4">
-                    <input class="orders-filter__control" type="text" placeholder="Номер заказа" name="order-number">
-                </div>
-                <div class="col-md-4">
-                    <div class="orders-filter__status">
-                        <select class="js-select-statuses">
-                            <option placeholder>Статус заказа</option>
-                            <option value="process">Обрабатывается</option>
-                            <option value="delivery">Отправлен</option>
-                            <option value="success">Получен</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="orders-filter__date-pickers">
-                        <div class="orders-filter__date-picker">
-                            <input class="orders-filter__date-from" id="date-from" type="text" name="order-from" placeholder="Период с">
-                            <svg class="icon icon-calendar-alt orders-filter__date-picker-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#calendar-alt"></use>
-                            </svg>
-                        </div>
-                        <div class="orders-filter__date-picker">
-                            <input class="orders-filter__date-to" id="date-to" type="text" name="order-from" placeholder="по">
-                            <svg class="icon icon-calendar-alt orders-filter__date-picker-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#calendar-alt"></use>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <input class="orders-filter__control" type="text" name="product-heading" placeholder="Наименование товаа в заказе">
-                </div>
-                <div class="col-md-4">
-                    <input class="orders-filter__btn btn btn--main" type="submit" name="send-data" value="Применить фильтр">
-                </div>
-            </div>
-        </form>
-    </div>
-    <!-- /orders-filter-->
-    <div class="table-responsive d-none d-md-block">
+    <div class="table-responsive">
         <table class="orders-table">
             <thead class="orders-table__thead">
                 <tr class="orders-table__tr">
                     <th class="orders-table__th">Номер / Дата</th>
-                    <th class="orders-table__th">Склад отгрузки</th>
+                    <th class="orders-table__th">Получение</th>
                     <th class="orders-table__th">Сумма Леев</th>
-                    <th class="orders-table__th" colspan="4">Статусы / Доставка</th>
+                    <th class="orders-table__th">Дата доставки</th>
+                    <th class="orders-table__th" colspan="3">Статус</th>
                 </tr>
             </thead>
             <tbody class="orders-table__tbody">
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">24 октября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Склад Уценненого товар</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">1 278,48</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--send">Отправлен</span></td>
-                    <td class="orders-table__td"><span class="orders-table__payment-status orders-table__payment-status--success">Оплачен</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Алматы</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">01 ноября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Группа Алматы</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">2 297,00</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--instock">На складе</span></td>
-                    <td class="orders-table__td"><span class="orders-table__payment-status orders-table__payment-status--warning">Нет оплаты</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Нур-Султан</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">24 октября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Склад Уценненого товар</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">1 278,48</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--draft">Черновик</span></td>
-                    <td class="orders-table__td"></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Алматы</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">01 ноября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Группа Алматы</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">2 297,00</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--delivered">Получен</span></td>
-                    <td class="orders-table__td"><span class="orders-table__payment-status orders-table__payment-status--warning">Нет оплаты</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Нур-Султан</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">24 октября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Склад Уценненого товар</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">1 278,48</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--process">В работе</span></td>
-                    <td class="orders-table__td"><span class="orders-table__payment-status orders-table__payment-status--success">Оплачен</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Алматы</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">01 ноября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Группа Алматы</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">2 297,00</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--unload">На отгрузке</span></td>
-                    <td class="orders-table__td"><span class="orders-table__payment-status orders-table__payment-status--success">Оплачен</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Нур-Султан</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">24 октября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Склад Уценненого товар</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">1 278,48</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--abandon">Отменен</span></td>
-                    <td class="orders-table__td"></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Алматы</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">01 ноября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Группа Алматы</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">2 297,00</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--delivered">Получен</span></td>
-                    <td class="orders-table__td"><span class="orders-table__payment-status orders-table__payment-status--warning">Нет оплаты</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Нур-Султан</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">01 ноября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Группа Алматы</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">2 297,00</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--delivered">Получен</span></td>
-                    <td class="orders-table__td"><span class="orders-table__payment-status orders-table__payment-status--success">Оплачен</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Нур-Султан</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="orders-table__tr">
-                    <td class="orders-table__td"><a class="orders-table__order-id" href="#">00000157556@19</a><span class="orders-table__order-date">01 ноября 2019</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__stock-heading">Группа Алматы</div>
-                        <div class="orders-table__stock-location">г.Алматы</div>
-                    </td>
-                    <td class="orders-table__td"><strong class="orders-table__order-price">2 297,00</strong></td>
-                    <td class="orders-table__td"><span class="orders-table__delivery-status orders-table__delivery-status--delivered">Получен</span></td>
-                    <td class="orders-table__td"><span class="orders-table__payment-status orders-table__payment-status--success">Оплачен</span></td>
-                    <td class="orders-table__td">
-                        <div class="orders-table__delivery-location">в Нур-Султан</div><a class="orders-table__delivery-more" href="#">Инфо</a>
-                    </td>
-                    <td class="orders-table__td">
-                        <a class="orders-table__basket" href="#">
-                            <svg class="icon icon-dolly orders-table__basket-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                            </svg>
-                        </a><a class="orders-table__remove" href="#">
-                            <svg class="icon icon-close orders-table__remove-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
+                @foreach (var order in Model)
+                {
+                    <tr class="orders-table__tr">
+                        <td class="orders-table__td">
+                            <a class="orders-table__order-id" href="@Url.Action("OrderInfo", "Profile", new {orderId = order.OrderId})">@order.OrderId</a>
+                            <span class="orders-table__order-date">@order.Created.ToString("dd MMMM yyyy")</span>
+                        </td>
+                        <td class="orders-table__td">
+                            <div class="orders-table__stock-heading">@order.DeliveryType</div>
+                            <div class="orders-table__stock-location">@order.DeliveryCity</div>
+                        </td>
+                        <td class="orders-table__td">
+                            <strong class="orders-table__order-price">@order.Price.ToString("N2")</strong>
+                        </td>
+                        <td class="orders-table__td">
+                            @order.EstimatedDeliveryDate.ToString("dd MMMM yyyy")
+                        </td>
+                        <td class="orders-table__td">
+                            <span class="orders-table__delivery-status @(order.OrderStatus == WebShop.Domain.Enumerables.OrderStatus.Delivered ? "orders-table__delivery-status--delivered" : "orders-table__delivery-status--process")">
+                                @order.OrderStatus.ToString()
+                            </span>
+                        </td>
+                        <td class="orders-table__td">
+                            <span class="orders-table__payment-status @(order.isPaid ? "orders-table__payment-status--success" : "orders-table__payment-status--warning")">
+                                @(order.isPaid ? "Оплачен" : "Нет оплаты")
+                            </span>
+                        </td>
+                        <td class="orders-table__td">
+                            <div class="orders-table__delivery-location">в @order.DeliveryCity</div>
+                            <a class="orders-table__delivery-more" href="@Url.Action("OrderInfo", "Profile", new {orderId = order.OrderId})">Инфо</a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
-    </div>
-    <div class="orders-mob d-md-none">
-        <div class="orders-mob__heading">Номер / Дата</div>
-        <div class="orders-mob__order is-opened">
-            <div class="orders-mob__order-header">
-                <button class="orders-mob__order-body-toggle"></button>
-                <div class="orders-mob__order-detail">
-                    <a class="orders-mob__order-id" href="#">00000157556@19</a>
-                    <time class="orders-mob__order-date" datetime="20019-10-24">24 октября 2019</time>
-                </div>
-                <div class="orders-mob__order-controls">
-                    <a class="orders-table__basket" href="#">
-                        <svg class="icon icon-dolly orders-table__basket-icon">
-                            <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                        </svg>
-                    </a><a class="orders-table__remove" href="#">
-                        <svg class="icon icon-close orders-table__remove-icon">
-                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            <div class="orders-mob__order-body">
-                <dl class="orders-mob__params">
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Склад отгрузки</dt>
-                        <dd class="orders-mob__param-definition">Склад Уценненого товар г.Алматы</dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Сумма Руб</dt>
-                        <dd class="orders-mob__param-definition">1 278,48</dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Статусы</dt>
-                        <dd class="orders-mob__param-definition">
-                            <div class="orders-mob__statuses"><span class="orders-table__delivery-status orders-table__delivery-status--send">Отправлен</span><span class="orders-table__payment-status orders-table__payment-status--success">Оплачен</span></div>
-                        </dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Доставка</dt>
-                        <dd class="orders-mob__param-definition">Республика Казахстан, Алматы, ул.Толеби, дом № 94/10</dd>
-                    </div>
-                </dl>
-            </div>
-        </div>
-        <div class="orders-mob__order">
-            <div class="orders-mob__order-header">
-                <button class="orders-mob__order-body-toggle"></button>
-                <div class="orders-mob__order-detail">
-                    <a class="orders-mob__order-id" href="#">00000157556@19</a>
-                    <time class="orders-mob__order-date" datetime="20019-10-24">24 октября 2019</time>
-                </div>
-                <div class="orders-mob__order-controls">
-                    <a class="orders-table__basket" href="#">
-                        <svg class="icon icon-dolly orders-table__basket-icon">
-                            <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                        </svg>
-                    </a><a class="orders-table__remove" href="#">
-                        <svg class="icon icon-close orders-table__remove-icon">
-                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            <div class="orders-mob__order-body">
-                <dl class="orders-mob__params">
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Склад отгрузки</dt>
-                        <dd class="orders-mob__param-definition">Склад Уценненого товар г.Алматы</dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Сумма Руб</dt>
-                        <dd class="orders-mob__param-definition">1 278,48</dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Статусы</dt>
-                        <dd class="orders-mob__param-definition">
-                            <div class="orders-mob__statuses"><span class="orders-table__delivery-status orders-table__delivery-status--unload">Отправлен</span><span class="orders-table__payment-status orders-table__payment-status--warning">Не оплачен</span></div>
-                        </dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Доставка</dt>
-                        <dd class="orders-mob__param-definition">Республика Казахстан, Алматы, ул.Толеби, дом № 94/10</dd>
-                    </div>
-                </dl>
-            </div>
-        </div>
-        <div class="orders-mob__order">
-            <div class="orders-mob__order-header">
-                <button class="orders-mob__order-body-toggle"></button>
-                <div class="orders-mob__order-detail">
-                    <a class="orders-mob__order-id" href="#">00000157556@19</a>
-                    <time class="orders-mob__order-date" datetime="20019-10-24">24 октября 2019</time>
-                </div>
-                <div class="orders-mob__order-controls">
-                    <a class="orders-table__basket" href="#">
-                        <svg class="icon icon-dolly orders-table__basket-icon">
-                            <use href="~/assets/images/svg/symbol/sprite.svg#dolly"></use>
-                        </svg>
-                    </a><a class="orders-table__remove" href="#">
-                        <svg class="icon icon-close orders-table__remove-icon">
-                            <use href="~/assets/images/svg/symbol/sprite.svg#close"></use>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            <div class="orders-mob__order-body">
-                <dl class="orders-mob__params">
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Склад отгрузки</dt>
-                        <dd class="orders-mob__param-definition">Склад Уценненого товар г.Алматы</dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Сумма Руб</dt>
-                        <dd class="orders-mob__param-definition">1 278,48</dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Статусы</dt>
-                        <dd class="orders-mob__param-definition">
-                            <div class="orders-mob__statuses"><span class="orders-table__delivery-status orders-table__delivery-status--abandon">Отправлен</span><span class="orders-table__payment-status orders-table__payment-status--success">Оплачен</span></div>
-                        </dd>
-                    </div>
-                    <div class="orders-mob__param">
-                        <dt class="orders-mob__param-term">Доставка</dt>
-                        <dd class="orders-mob__param-definition">Республика Казахстан, Алматы, ул.Толеби, дом № 94/10</dd>
-                    </div>
-                </dl>
-            </div>
-        </div>
-    </div>
-    <div class="pagination-wrap">
-        <div class="pagination">
-            <a class="pagination__prev" href="#">
-                <svg class="icon icon-arrow-left pagination__icon">
-                    <use href="~/assets/images/svg/symbol/sprite.svg#arrow-left"></use>
-                </svg>
-            </a>
-            <ul class="pagination__list">
-                <li class="pagination__item"><a class="pagination__link" href="#">1</a></li>
-                <li class="pagination__item"><a class="pagination__link" href="#">2</a></li>
-                <li class="pagination__item"><a class="pagination__link" href="#">3</a></li>
-                <li class="pagination__item"><a class="pagination__link active" href="#">4</a></li>
-                <li class="pagination__item">&hellip;</li>
-                <li class="pagination__item"><a class="pagination__link" href="#">12</a></li>
-                <li class="pagination__item"><a class="pagination__link" href="#">13</a></li>
-                <li class="pagination__item"><a class="pagination__link" href="#">14</a></li>
-                <li class="pagination__item"><a class="pagination__link" href="#">15</a></li>
-            </ul><a class="pagination__next" href="#">
-                <svg class="icon icon-arrow-right pagination__icon">
-                    <use href="~/assets/images/svg/symbol/sprite.svg#arrow-right"></use>
-                </svg>
-            </a>
-        </div>
     </div>
 </main>

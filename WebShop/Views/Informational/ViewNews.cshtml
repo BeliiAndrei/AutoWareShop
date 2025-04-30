@@ -1,11 +1,12 @@
-@*@model List<WebShop.Domain.News.News>*@
 @model List<WebShop.Models.NewsViewModel>
 
 @{
+    Layout = "~/Views/Shared/_InfoLayout.cshtml";
     ViewBag.Title = "Все новости";
 }
 
 <h2>Все новости</h2>
+<br />
 
 @if (!Model.Any())
 {

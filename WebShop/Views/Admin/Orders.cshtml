@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+}
+
+@model WebShop.Models.Order.AdminOrdersModel
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .details-button {
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .details-button:hover {
+            background-color: #45a049;
+        }
+
+    .orders-table__td {
+        text-align: center;
+        width: 120px; /* Фикс ширины, чтобы статус не "распирал" колонку */
+    }
+
+    .orders-table__delivery-status {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: white;
+        background-color: orange;
+        min-width: 80px;
+        text-align: center;
+    }
+
+    .orders-table__delivery-status--delivered {
+        background-color: green;
+    }
+
+    .orders-table__delivery-status--process {
+        background-color: orange;
+    }
+</style>
+
+<main class="main-content">
+    <div class="main-heading">
+        <div class="main-heading__text">Управление заказами</div>
+    </div>
+    <h2>Список заказов</h2>
+
+    @{
+        var page = Model.Page;
+    }
+
+    @if (page?.TotalPages > 1)
+    {
+        <div class="pagination-wrap">
+            <div class="pagination">
+                @if (page.HasPreviousPage)
+                {
+                    <a class="pagination__prev" href="@Url.Action("Orders", new { page = page.PageNumber - 1 })">
+                        <svg class="icon icon-arrow-left pagination__icon">
+                            <use href="~/assets/images/svg/symbol/sprite.svg#arrow-left"></use>
+                        </svg>
+                    </a>
+                }
+
+                <ul class="pagination__list">
+                    @{
+                        int current = page.PageNumber ?? 1;
+                        int total = page.TotalPages ?? 1;
+                        int start = Math.Max(1, current - 3);
+                        int end = Math.Min(total, current + 3);
+
+                        if (start > 1)
+                        {
+                            <li class="pagination__item"><a class="pagination__link" href="@Url.Action("Orders", new { page = 1 })">1</a></li>
+                            if (start > 2)
+                            {
+                                <li class="pagination__item">&hellip;</li>
+                            }
+                        }
+
+                        for (int i = start; i <= end; i++)
+                        {
+                            <li class="pagination__item">
+                                <a class="pagination__link @(i == current ? "active" : "")" href="@Url.Action("Orders", new { page = i })">@i</a>
+                            </li>
+                        }
+                        if (end < total)
+                        {
+                            if (end < total - 1)
+                            {
+                                <li class="pagination__item">&hellip;</li>
+                            }
+                            <li class="pagination__item"><a class="pagination__link" href="@Url.Action("Orders", new { page = total })">@total</a></li>
+                        }
+                    }
+                </ul>
+
+                @if (page.HasNextPage)
+                {
+                    <a class="pagination__next" href="@Url.Action("Orders", new { page = page.PageNumber + 1 })">
+                        <svg class="icon icon-arrow-right pagination__icon">
+                            <use href="~/assets/images/svg/symbol/sprite.svg#arrow-right"></use>
+                        </svg>
+                    </a>
+                }
+            </div>
+        </div>
+    }
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID Заказа</th>
+                <th>ID Покупателя</th>
+                <th>Дата</th>
+                <th>Сумма</th>
+                <th>Комментарий</th>
+                <th>Статус</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.UserId</td>
+                    <td>@order.Created.ToString("dd.MM.yyyy")</td>
+                    <td>@order.Price.ToString("C")</td>
+                    <td>@order.Comment</td>
+                    <td class="orders-table__td">
+                        <span class="orders-table__delivery-status @(order.OrderStatus == WebShop.Domain.Enumerables.OrderStatus.Delivered ? "orders-table__delivery-status--delivered" : "orders-table__delivery-status--process")">
+                            @order.OrderStatus.ToString()
+                        </span>
+                    </td>                    <td>
+                        <form action="@Url.Action("OrderDetails", "Admin", new { orderId = order.OrderId })" method="post">
+                            <button type="submit" class="details-button">Подробнее</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

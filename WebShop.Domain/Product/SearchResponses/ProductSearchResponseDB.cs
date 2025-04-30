@@ -10,5 +10,6 @@ namespace WebShop.Domain.Product.SearchResponses
     {
         public List<ProductDBTable> products { get; set; }
         public int productsTotalCount { get; set; }
+        public List<string> availableBrands {  get; set; }
     }
 }

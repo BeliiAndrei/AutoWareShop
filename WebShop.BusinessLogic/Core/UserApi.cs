@@ -7,23 +7,22 @@ using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.DBModel.Seed;
 using WebShop.Domain.Basket;
 using WebShop.Domain.Enumerables;
+using WebShop.Domain.Order;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
 using WebShop.Domain.User.Delivery;
 using WebShop.Domain.User.Modify;
 using WebShop.Domain.User.Registration;
+using WebShop.Helpers.LoginRegisterHelper;
 
 namespace WebShop.BusinessLogic.Core
 {
     public class UserApi
     {
-
         public UserApi() { }
 
-        
-
-
+        //===================== Login - Register - Edit Profile =======================
         internal UserLoginResponse UserLoginAction(UserLoginData data)
         {
             UserDBTable user;
@@ -32,7 +31,11 @@ namespace WebShop.BusinessLogic.Core
                 user = db.Users.FirstOrDefault(u => u.Email == data.Email);
 
             }
-            if (user.Password != data.Password)
+
+            // !!! Отключена проверка пароля, вернуть потом обратно !!!  \\
+            // +++ Уже вернул обратно. Но если снова надо будет отключить, то закомментить следубщие 7 строк. +++  \\
+            var encPassword = LoginRegisterHelper.HashGen(data.Password);
+            if (user.Password != encPassword)
                 return new UserLoginResponse
                 {
                     Status = false,
@@ -72,11 +75,12 @@ namespace WebShop.BusinessLogic.Core
                         Status = false,
                         StatusMsg = "Such Email already exists"
                     };
+                var encPassword = LoginRegisterHelper.HashGen(data.Password);
                 var user = new UserDBTable()
                 {
                     Username = data.UserName,
                     Usersurname = data.UserLastName,
-                    Password = data.Password,
+                    Password = encPassword,
                     Email = data.Email,
                     PhoneNumber = data.PhoneNumber,
                     LoginTime = DateTime.Now,
@@ -138,15 +142,17 @@ namespace WebShop.BusinessLogic.Core
                 var user = db.Users.FirstOrDefault(u => u.Id == pass.Id);
                 if (user == null)
                     return false;
-                if (user.Password != pass.OldPassword)
+                var encPasswordOld = LoginRegisterHelper.HashGen(pass.OldPassword);
+                if (user.Password != encPasswordOld)
                     return false;
+                var encPasswordNew = LoginRegisterHelper.HashGen(pass.NewPassword);
                 user.Password = pass.NewPassword;
                 db.SaveChanges();
                 return true;
             }
         }
 
-
+        //=========================== Basket ===========================
         internal List<BasketDTO> GetAllProductsInBasketAction(int userId)
         {
             using (var cartDb = new CartContext())
@@ -250,6 +256,111 @@ namespace WebShop.BusinessLogic.Core
                 Status = true,
                 StatusMsg = "Deleted successfully"
             };
+        }
+
+        //================================= Order ================================
+
+        internal OrderActionResponse CreateNewOrderAction(OrderDBTable order, int userId, List<int> productIds)
+        {
+            using (var orderContext = new OrderContext())
+            using (var productsInOrderContext = new ProductsInOrderContext())
+            using (var basketContext = new CartContext())
+            {
+                // 1. Сохраняем заказ
+                order.UserId = userId;
+                order.CreationDate = DateTime.Now.Date;
+                order.EstimatedDeliveryDate = DateTime.Now.AddDays(7).Date;
+
+                orderContext.Orders.Add(order);
+                orderContext.SaveChanges();
+
+                var newOrderId = order.Id;
+
+                // 2. Получаем данные из корзины
+                var cartItems = basketContext.Carts
+                    .Where(c => c.UserId == userId && productIds.Contains(c.ProductInBasketId))
+                    .ToList();
+
+                // 3. Создаём записи для таблицы ProductsInOrderDBTable
+                using (var productContext = new ProductContext())
+                {
+                    foreach (var cartItem in cartItems)
+                    {
+                        // Получаем товар из базы по его ID
+                        var productFromDb = productContext.Products.FirstOrDefault(p => p.Id == cartItem.ProductInBasketId);
+
+                        if (productFromDb != null && productFromDb.Status != ProductStatus.hidden && productFromDb.Quantity > 0)
+                        {
+                            var productInOrder = new ProductsInOrderDBTable
+                            {
+                                ProductId = cartItem.ProductInBasketId,
+                                UserId = userId,
+                                OrderId = newOrderId,
+                                Quantity = cartItem.Quantity,
+                                PositionPrice = cartItem.Quantity * productFromDb.Price
+                            };
+
+                            productsInOrderContext.ProductsInOrder.Add(productInOrder);
+                        }
+                        else {
+                            return new OrderActionResponse
+                            {
+                                OrderId = newOrderId,
+                                Status = false,
+                                StatusMsg = "Товар с id = " + cartItem.Id + "не доступен"
+                            };
+                        }
+                    }
+                }
+
+                productsInOrderContext.SaveChanges();
+
+                var response = RemoveFromBasketAction(productIds, userId);
+                if(response.Status == true)
+                    return new OrderActionResponse
+                    {
+                        Status = true,
+                        StatusMsg = "Заказ успешно создан",
+                        OrderId = newOrderId
+                    };
+                return new OrderActionResponse
+                {
+                    Status = false,
+                    StatusMsg = "Где-то произошла ошибка",
+                    OrderId = newOrderId
+                };
+            }
+        }
+
+        internal OrderDBTable GetOrderByIdAction(int id)
+        {
+            using (var db = new OrderContext())
+            {
+                var order = db.Orders.Find(id);
+                if (order == null)
+                {
+                    return null;
+                }
+                return order;
+            }
+        }
+
+        internal List<OrderDBTable> GetUserOrdersAction(int userId)
+        {
+            using (var db = new OrderContext())
+            {
+                var orders = db.Orders.Where(o => o.UserId == userId).ToList();
+                return orders;
+            }
+        }
+
+        internal List<ProductsInOrderDBTable> GetOrderProductsByIdAction(int id)
+        {
+            using (var db = new ProductsInOrderContext())
+            {
+                var products = db.ProductsInOrder.Where(p => p.OrderId == id).ToList();
+                return products;
+            }
         }
 
         internal bool IsProductValidAction(int id)

@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Мои адреса доставки";
 
-    var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
+    var user = SessionHelper.User;
     var userId = user?.Id ?? 0;
 }
 

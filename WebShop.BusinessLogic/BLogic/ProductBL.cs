@@ -52,9 +52,10 @@ namespace WebShop.BusinessLogic.BLogic
             return product;
         }
 
-        public ProductSearchResponseDTO GetProductsByCategory(string category, int page = 0, int pageSize = 100)
+        public ProductSearchResponseDTO GetProductsByCategory(string category, int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
         {
-            var productsFromDB = GetProductsByCategoryAction(category, page, pageSize);
+            var productsFromDB = GetProductsByCategoryAction(category, page, pageSize, minPrice, maxPrice, onlyAvailable, brands);
             return FormList(productsFromDB);
         }
         internal ProductSearchResponseDTO FormList(ProductSearchResponseDB response)
@@ -80,12 +81,13 @@ namespace WebShop.BusinessLogic.BLogic
             
             return new ProductSearchResponseDTO 
             { 
-                products = productsL, productsTotalCount = response.productsTotalCount
+                products = productsL, productsTotalCount = response.productsTotalCount, brands = response.availableBrands
             };
         }
-        public ProductSearchResponseDTO GetProductsBySearchString(string search_string, int page = 0, int pageSize = 100)
+        public ProductSearchResponseDTO GetProductsBySearchString(string searchString, int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
         {
-            var productsFromDB = GetProductsBySearchStringAction(search_string, page, pageSize);
+            var productsFromDB = GetProductsBySearchStringAction(searchString, page, pageSize, minPrice, maxPrice, onlyAvailable, brands);
             return FormList(productsFromDB);
         }
 
@@ -112,7 +114,8 @@ namespace WebShop.BusinessLogic.BLogic
             return GetProductById(product.Id);
         }
 
-        public ProductSearchResponseDTO GetProductsByStatus(string statusString, int page = 0, int pageSize = 100)
+        public ProductSearchResponseDTO GetProductsByStatus(string statusString, int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
         {
             ProductStatus status;
             try
@@ -123,7 +126,7 @@ namespace WebShop.BusinessLogic.BLogic
             {
                 return null;
             }
-            return FormList(GetProductsByStatusAction(status, page, pageSize));
+            return FormList(GetProductsByStatusAction(status, page, pageSize, minPrice, maxPrice, onlyAvailable, brands));
         }
     }
 }

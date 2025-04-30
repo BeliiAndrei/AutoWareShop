@@ -1,14 +1,9 @@
 ﻿@{
-    var role = HttpContext.Current.Session["User"] is WebShop.Domain.User.Admin.UserInfo user && user.Role != null
-    ? user.Role
-    : string.Empty;
+    var role = SessionHelper.User?.Role ?? string.Empty;
     var isAdmin = role == "Admin" ? true : false;
     var isBanned = role == "Banned" ? true : false;
-    var name = HttpContext.Current.Session["User"] is WebShop.Domain.User.Admin.UserInfo u && u.UserName != null
-    ? u.UserName : string.Empty;
-    object value = HttpContext.Current.Session["BasketCount"];
-    int basketCount = value != null ? Convert.ToInt32(value) : 0;
-
+    var name = SessionHelper.User?.UserName ?? string.Empty;
+    int basketCount = SessionHelper.ProductsInCartCount;
 }
 
 <header class="header">
@@ -28,7 +23,7 @@
                 @if (isBanned)
                 {
                     <div class="alert alert-danger" role="alert" style="color:red">
-                        Ваш аккаунт заблокирован! Обратитесь к администратору для разблокировки, иначе вы не сможете полноценно пользоватьсяс нашими услугами.
+                        Ваш аккаунт заблокирован! Обратитесь к администратору для разблокировки, иначе вы не сможете полноценно пользоваться нашими услугами.
                     </div>
                 }
                 <div class="tiny-contacts">
@@ -62,7 +57,7 @@
                         <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("ProfileUser", "Profile")"><span class="section-nav__text">Профиль</span></a></li>
                     </ul>
                 </nav>
-                @if (HttpContext.Current.Session["User"] == null)
+                @if (SessionHelper.User == null)
                 {
                     <div class="authorize">
                         <ul class="authorize__list">
@@ -79,7 +74,7 @@
 
                         <div class="authorize__dropdown">
                             <div class="authorize__dropdown-body">
-                                @if (HttpContext.Current.Session["User"] == null)
+                                @if (SessionHelper.User == null)
                                 {
                                     @Html.ValidationSummary(true)
                                     using (Html.BeginForm("TryToLogIn", "Auth", FormMethod.Post, new { @id = "LoginForm", @class = "auth-form" }))
@@ -92,10 +87,10 @@
                                             <input class="auth-form__input" type="password" name="Password" placeholder="Пароль">
                                         </div>
                                         <div class="auth-form__field">
-                                            <div class="auth-form__checkbox checkbox-label">
+                                            @*<div class="auth-form__checkbox checkbox-label">
                                                 <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
                                                 <label class="checkbox-label__main" for="remember">Запомнить</label>
-                                            </div>
+                                            </div>*@
                                             <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти">
                                         </div>
                                     }
