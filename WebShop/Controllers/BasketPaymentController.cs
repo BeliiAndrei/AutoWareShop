@@ -205,6 +205,7 @@ namespace WebShop.Controllers
             return View();
         }
         [HttpGet]
+        [UserOnly]
         public ActionResult Payment()
         {
             return View();

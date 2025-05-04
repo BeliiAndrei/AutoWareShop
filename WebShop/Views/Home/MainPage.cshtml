@@ -129,7 +129,7 @@
             <div class="categories__division-section">
                 <div class="row">
                     <div class="col-6 col-md-3">
-                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Колёса", Path_Subcategory = "Шины"})">
+                        <a class="category-division" href="@Url.Action("SearchMethod", "CatalogSearch", new { searchType = "name", value = "Шины"})">
                             <figure class="category-division__main">
                                 <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-1.jpg" alt="Шины"></div>
                                 <figcaption class="category-division__caption">Шины</figcaption>
@@ -153,7 +153,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Тормозная система", Path_Subcategory = "Колодки"})">
+                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Автозапчасти", Path_Subcategory = "Колодки"})">
                             <figure class="category-division__main">
                                 <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-2.jpg" alt="Диски"></div>
                                 <figcaption class="category-division__caption">Колодки</figcaption>

@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Оплата";
-    var balance = SessionHelper.User.Balance;
+    decimal ?balance = SessionHelper.User.Balance;
 }
 <main class="main-content">
     <div class="main-heading">
@@ -31,7 +31,7 @@
                 <div class="payment-form__helper">Введите данные для оплаты</div>
             </div>
             <div class="payment-form__field">
-                <input class="payment-form__input" type="email" name="userEmail" placeholder="Email плательщика" required>
+                <input class="payment-form__input" type="email" name="userEmail" value="@SessionHelper.User.Email" required>
             </div>
             <div class="payment-form__field payment-form__field--currency">
                 <input class="payment-form__input" type="number" name="userPrice" placeholder="Сумма к оплате" min="1" step="0.01" required>
@@ -44,7 +44,7 @@
     </form>
     <br />
     <p class="text-center">Пополнить счёт</p>
-    <p class="text-center">У вас на счету @balance леев</p>
+    <p class="text-center">У вас на счету @(balance?.ToString("F2") ?? "0.00") леев</p>
     <form class="payment-form" action="@Url.Action("SupplyBalance", "BasketPayment")" method="POST" name="payment-form">
         <div class="payment-form__fields">
             <div class="payment-form__field">
