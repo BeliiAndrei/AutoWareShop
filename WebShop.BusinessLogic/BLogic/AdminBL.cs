@@ -22,7 +22,7 @@ namespace WebShop.BusinessLogic.BLogic
             user.UserLastName = userFromDB.Usersurname;
             user.Email = userFromDB.Email;
             user.PhoneNumber = userFromDB.PhoneNumber;
-            user.Balance = 0;
+            user.Balance = userFromDB.Balance;
             user.Role = userFromDB.Level.ToString();
             return user;
         }
@@ -39,7 +39,7 @@ namespace WebShop.BusinessLogic.BLogic
                 m.UserLastName = u.Usersurname;
                 m.Email = u.Email;
                 m.PhoneNumber = u.PhoneNumber;
-                m.Balance = 0;
+                m.Balance = u.Balance;
                 m.Role = u.Level.ToString();
                 usersList.Add(m);
             }
@@ -57,6 +57,7 @@ namespace WebShop.BusinessLogic.BLogic
             user.Email = oldUser.Email;
             user.PhoneNumber = oldUser.PhoneNumber;
             user.Level = (UserRole)Enum.Parse(typeof(UserRole), oldUser.Role);
+            user.Balance = oldUser.Balance;
             EditUser(user);
             return GetUserById(oldUser.Id);
         }

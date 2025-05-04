@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
 
 }
-@model WebShop.Models.UserRegisterModel
+@model WebShop.Models.User.UserRegisterModel
 
 <div class="inner-section__body inner-section__body--no-gutters">
     @if (TempData["Message"] != null)
@@ -28,7 +28,6 @@
                         @Html.TextBoxFor(m => m.UserName, new
                    {
                        title = "Введите ваше имя",
-                       value = "",
                        @class = "main-form__input"
                    })
                     </div>
@@ -39,7 +38,6 @@
                         @Html.TextBoxFor(m => m.UserLastName, new
                    {
                        title = "Введите ваше имя",
-                       value = "",
                        @class = "main-form__input"
                    })
                     </div>
@@ -54,26 +52,10 @@
                        type = "email",
                        placeholder = "example@gmail.com",
                        title = "Email (используется как логин)",
-                       value = "",
                        @class = "main-form__input"
                    })
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="main-form__field">
-                        @Html.LabelFor(m => m.Password, "Пароль", new { @class = "main-form__label" })
-                        @Html.TextBoxFor(m => m.Password, new
-                   {
-                       type = "password",
-                       placeholder = "****",
-                       title = "Введите пароль",
-                       value = "",
-                       @class = "main-form__input"
-                   })
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="main-form__field">
                         @Html.LabelFor(m => m.PhoneNumber, "Телефон мобильный", new { @class = "main-form__label" })
@@ -82,7 +64,45 @@
                        type = "tel",
                        placeholder = "+373",
                        title = "Телефон мобильный",
-                       value = "",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Password, "Пароль", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Password, new
+                   {
+                       type = "password",
+                       placeholder = "****",
+                       title = "Введите пароль",
+                       @class = "main-form__input"
+                   })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.RePassword, "Повторите пароль", new { @class = "main-form__label" })
+                        @Html.PasswordFor(m => m.RePassword, new
+                        {
+                            placeholder = "****",
+                            title = "Повторите пароль",
+                            @class = "main-form__input"
+                        })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="main-form__field">
+                        @Html.LabelFor(m => m.Balance, "Средства на счету", new { @class = "main-form__label" })
+                        @Html.TextBoxFor(m => m.Balance, new
+                   {
+                       type = "number",
+                       placeholder = "0",
+                       title = "Средства на счету",
                        @class = "main-form__input"
                    })
                     </div>
@@ -100,10 +120,8 @@
                             new { @class = "main-form__input" }
                         )
                     </div>
-
                 </div>
             </div>
-
             <div class="main-form__field main-form__field--flex">
                 <input class="main-form__btn btn btn--main" type="submit" name="send-data" value="Зарегистрировать">
             </div>

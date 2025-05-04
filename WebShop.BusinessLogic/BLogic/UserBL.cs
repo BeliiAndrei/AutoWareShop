@@ -40,7 +40,16 @@ namespace WebShop.BusinessLogic.BLogic
 
         public UserInfo GetUserInfoById(int id)
         {
-            throw new NotImplementedException();
+            var userFromDB = GetUserByIdAction(id);
+            var user = new UserInfo();
+            user.Id = userFromDB.Id;
+            user.UserName = userFromDB.Username;
+            user.UserLastName = userFromDB.Usersurname;
+            user.Email = userFromDB.Email;
+            user.PhoneNumber = userFromDB.PhoneNumber;
+            user.Balance = userFromDB.Balance;
+            user.Role = userFromDB.Level.ToString();
+            return user;
         }
 
         public UserRegistrationResponse UserRegistrationAction(UserLoginData data)
@@ -53,38 +62,23 @@ namespace WebShop.BusinessLogic.BLogic
             throw new NotImplementedException();
         }
 
-        UserLoginResponse IUser.UserLoginAction(UserLoginData auth)
-        {
-            return UserLoginAction(auth);
-        }
+        //UserLoginResponse IUser.UserLoginAction(UserLoginData auth)
+        //{
+        //    return UserLoginAction(auth);
+        //}
 
-        UserRegistrationResponse IUser.UserRegistrationAction(UserRegistrationData data)
-        {
-            return UserRegistrationAction(data);
-        }
+        //UserRegistrationResponse IUser.UserRegistrationAction(UserRegistrationData data)
+        //{
+        //    return UserRegistrationAction(data);
+        //}
         public bool IsProductValid(int id)
         {
             return IsProductValidAction(id);
         }
 
-        public bool AddDeliveryAddress(DeliveryL address, int userId)
+        public bool SupplyBalance(int userId, decimal moneyToAdd)
         {
-            throw new NotImplementedException();
-        }
-
-        public DeliveryL GetDeliveryAddressById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool EditDeliveryAddress(DeliveryL address)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteDeliveryAddress(int id)
-        {
-            throw new NotImplementedException();
+            return SupplyBalanceAction(userId, moneyToAdd);
         }
     }
 }

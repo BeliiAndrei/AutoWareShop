@@ -15,6 +15,7 @@ using WebShop.Filters;
 using WebShop.Models;
 using WebShop.Models.Order;
 using WebShop.Models.Search;
+using WebShop.Models.User;
 
 namespace WebShop.Controllers
 {
@@ -193,14 +194,28 @@ namespace WebShop.Controllers
         // ========== USERS ===============================================================
 
         [HttpPost]
-        public ActionResult RegisterUser(UserRegistrationData registerData)
+        public ActionResult RegisterUser(UserRegisterModel model)
         {
             if (!ModelState.IsValid)
             {
-                TempData["Message"] = "Something went wrong";
+                TempData["Message"] = "Something went wrong (Model is not valid). Убедитесь, что данные удовлетворяют требованиям";
                 return RedirectToAction("AddUser");
             }
-
+            if(model.Password != model.RePassword)
+            {
+                TempData["Message"] = "Повторный пароль введён неправильно";
+                return RedirectToAction("AddUser");
+            }
+            var registerData = new UserRegistrationData
+            {
+                Balance = model.Balance,
+                Email = model.Email,
+                Password = model.Password,
+                PhoneNumber = model.PhoneNumber,
+                Role = (UserRole)Enum.Parse(typeof(UserRole), model.Role),
+                UserName = model.UserName,
+                UserLastName = model.UserLastName
+            };
             var result = _admin.RegisterUser(registerData);
             TempData["Message"] = result.StatusMsg;
 
@@ -219,26 +234,72 @@ namespace WebShop.Controllers
         public ActionResult ClientProfile(int userId)
         {
             var user = _admin.GetUserById(userId);
+            var model = new UserInfoModel
+            {
+                UserName = user.UserName,
+                UserLastName = user.UserLastName,
+                PhoneNumber = user.PhoneNumber,
+                Id = user.Id,
+                Email = user.Email,
+                Balance = user.Balance,
+                Role = user.Role
+            };
             return user == null
-                ? View("../Error/Error_500")
-                : View(user);
+                ? View("../Error/Error_404")
+                : View(model);
         }
 
         [HttpPost]
-        public ActionResult UserProfileEdit(UserInfo model)
+        public ActionResult UserProfileEdit(UserInfoModel model)
         {
             if (!ModelState.IsValid)
                 return View("ClientProfile", model);
 
-            var user = _admin.UpdateUser(model);
+            var userInfo = new UserInfo
+            {
+                UserName = model.UserName,
+                Email = model.Email,
+                Balance = model.Balance,
+                Id = model.Id,
+                PhoneNumber = model.PhoneNumber,
+                Role = model.Role,
+                UserLastName = model.UserLastName
+            };
+            var user = _admin.UpdateUser(userInfo);
+            var editedModel = new UserInfoModel
+            {
+                UserLastName = user.UserLastName,
+                Role = user.Role,
+                PhoneNumber = user.PhoneNumber,
+                Id = user.Id,
+                Balance = user.Balance,
+                Email = user.Email,
+                UserName = user.UserName
+            };
+            SessionHelper.User = user;
             TempData["SuccessMessage"] = "Изменения успешно сохранены.";
-            return View("ClientProfile", user);
+            return View("ClientProfile", editedModel);
         }
 
         public ActionResult Clients()
         {
             var users = _admin.GetUsersList();
-            return View(users);
+            var model = new List<UserInfoModel>();
+            foreach (var u in users)
+            {
+                var m = new UserInfoModel
+                {
+                    Balance = u.Balance,
+                    Email = u.Email,
+                    Id = u.Id,
+                    PhoneNumber = u.PhoneNumber,
+                    Role = u.Role,
+                    UserLastName = u.UserLastName,
+                    UserName = u.UserName
+                };
+                model.Add(m);
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -272,18 +333,15 @@ namespace WebShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddProduct(ProductDTO model)
         {
-            // Проверка валидности модели
             if (!ModelState.IsValid)
             {
                 TempData["Message"] = "Введённые данные некорректны";
                 return View(model);
             }
 
-            // Попытка создать продукт
             var response = _product.CreateNewProduct(model);
             TempData["Message"] = response.StatusMsg;
 
-            // В зависимости от результата, редиректим или возвращаем ту же вьюшку
             if (response.Status)
             {
                 return RedirectToAction("Products");
@@ -401,9 +459,19 @@ namespace WebShop.Controllers
                     PostalCode = response.PostalCode
                 };
             }
+            var userInfo = new UserInfoModel
+            {
+                UserName = user.UserName,
+                Balance = user.Balance,
+                Email = user.Email,
+                Id = user.Id,
+                PhoneNumber = user.PhoneNumber,
+                Role = user.Role,
+                UserLastName = user.UserLastName
+            };
             var orderDetailsOrder = new OrderDetailsModel
             {
-                userInfo = user,
+                userInfo = userInfo,
                 orderModel = orderModel,
                 deliveryInfo = delivery
             };
@@ -413,7 +481,7 @@ namespace WebShop.Controllers
         [HttpPost]
         public ActionResult UpdateOrderStatus(int orderId, OrderStatus newStatus)
         {
-            _order.UpdateOrder(orderId, newStatus);
+            _ = _order.UpdateOrder(orderId, newStatus);
             return RedirectToAction("OrderDetails", new { orderId });
         }
 

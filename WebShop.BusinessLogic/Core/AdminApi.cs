@@ -51,7 +51,8 @@ namespace WebShop.BusinessLogic.Core
                     Email = data.Email,
                     PhoneNumber = data.PhoneNumber,
                     LoginTime = DateTime.Now,
-                    Level = data.Role
+                    Level = data.Role,
+                    Balance = data.Balance
                 };
 
                 db.Users.Add(user);

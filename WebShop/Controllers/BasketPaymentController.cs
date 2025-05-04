@@ -1,16 +1,9 @@
-﻿using Antlr.Runtime.Misc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.WebPages;
-using WebShop.BusinessLogic;
-using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Order;
-using WebShop.Domain.Product;
-using WebShop.Domain.User.Admin;
 using WebShop.Filter;
 using WebShop.Models;
 using WebShop.Models.Order;
@@ -22,12 +15,14 @@ namespace WebShop.Controllers
         IBasket _basket;
         IDelivery _delivery;
         IOrder _order;
+        IUser _user;
         public BasketPaymentController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _basket = bl.GetBasketBL();
             _delivery = bl.GetDeliveryBL();
             _order = bl.GetOrderBL();
+            _user = bl.GetUserBl();
         }
 
         [HttpPost]
@@ -235,6 +230,14 @@ namespace WebShop.Controllers
             }
 
             return View();
+        }
+        [HttpPost]
+        [UserOnly]
+        public ActionResult SupplyBalance (decimal moneyToAdd)
+        {
+           var response  = _user.SupplyBalance(SessionHelper.User.Id, moneyToAdd);
+           SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
+           return RedirectToAction("Payment"); 
         }
     }
 }

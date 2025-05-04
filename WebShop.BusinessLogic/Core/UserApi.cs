@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.DBModel.Seed;
 using WebShop.Domain.Basket;
@@ -11,7 +10,6 @@ using WebShop.Domain.Order;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
-using WebShop.Domain.User.Delivery;
 using WebShop.Domain.User.Modify;
 using WebShop.Domain.User.Registration;
 using WebShop.Helpers.LoginRegisterHelper;
@@ -53,7 +51,8 @@ namespace WebShop.BusinessLogic.Core
                         UserLastName = user.Usersurname,
                         Email = user.Email,
                         PhoneNumber = user.PhoneNumber,
-                        Role = user.Level.ToString()
+                        Role = user.Level.ToString(),
+                        Balance = user.Balance
                     }
                 };
             return new UserLoginResponse
@@ -84,7 +83,8 @@ namespace WebShop.BusinessLogic.Core
                     Email = data.Email,
                     PhoneNumber = data.PhoneNumber,
                     LoginTime = DateTime.Now,
-                    Level = Domain.Enumerables.UserRole.User
+                    Level = Domain.Enumerables.UserRole.User,
+                    Balance = 0m,
                 };
 
                 db.Users.Add(user);
@@ -111,6 +111,18 @@ namespace WebShop.BusinessLogic.Core
                 }
             }
         }
+        public UserDBTable GetUserByIdAction(int id)
+        {
+            using (var db = new UserContext())
+            {
+                var user = db.Users.Find(id);
+                if (user == null)
+                {
+                    return null;
+                }
+                return user;
+            }
+        }
 
         internal UserDBTable EditUserProfileAction(UserInfo data)
         {
@@ -127,12 +139,12 @@ namespace WebShop.BusinessLogic.Core
                 user.Usersurname = data.UserLastName;
                 user.PhoneNumber = data.PhoneNumber;
                 user.Email = data.Email;
+                user.Balance = data.Balance;
 
                 db.SaveChanges();
 
                 return user;
             }
-            ;
         }
 
         internal bool ChangePasswordInDBAction(ChangePasswordClass pass)
@@ -256,6 +268,22 @@ namespace WebShop.BusinessLogic.Core
                 Status = true,
                 StatusMsg = "Deleted successfully"
             };
+        }
+
+
+        //================================= Balance ==============================
+
+        internal bool SupplyBalanceAction(int userId, decimal moneyToAdd)
+        {
+            using(var db = new UserContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == userId);
+                if (user == null)
+                    return false;
+                user.Balance += moneyToAdd;
+                db.SaveChanges();
+                return true;
+            }
         }
 
         //================================= Order ================================
