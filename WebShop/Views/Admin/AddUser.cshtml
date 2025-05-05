@@ -6,7 +6,8 @@
 @model WebShop.Models.User.UserRegisterModel
 
 <div class="inner-section__body inner-section__body--no-gutters">
-    @if (TempData["Message"] != null)
+    @if (
+    TempData["Message"] != null)
     {
 
         <div class="alert alert-success" role="alert" style="color:red">

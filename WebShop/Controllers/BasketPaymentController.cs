@@ -27,7 +27,7 @@ namespace WebShop.Controllers
 
         [HttpPost]
         public ActionResult BasketFormHandler(string actionType, List<string> selectedProductIds, decimal orderPrice)
-        {
+        {   
             TempData["SelectedProductIds"] = selectedProductIds;
             TempData["OrderPrice"] = orderPrice;
             if (actionType == "remove")
@@ -120,6 +120,20 @@ namespace WebShop.Controllers
         public ActionResult Basket_step_3(string payment, string orderMessage = "")
         {
             SessionHelper.OrderPaymentType = payment;
+            if(payment == "payment-online" && SessionHelper.User.Balance >= SessionHelper.OrderPrice)
+            {
+                //Тут списание со счёта, если на нём достаточно средств
+                _user.SupplyBalance(SessionHelper.User.Id, -(SessionHelper.OrderPrice));
+                SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
+            }
+            else
+            {
+                if(payment == "payment-online" && SessionHelper.User.Balance < SessionHelper.OrderPrice)
+                {
+                    TempData["NotEnoughMoney"] = $"У вас недостаточно средств на счету. У вас на счету {SessionHelper.User.Balance.ToString("F2") ?? "0.00"}, а стоимость заказа {SessionHelper.OrderPrice}.";
+                    return RedirectToAction("Payment");
+                }
+            }
             SessionHelper.OrderMessage = orderMessage;
             var userId = SessionHelper.User.Id;
             var deliveryInfoDB = _delivery.GetDeliveryAddressByUserId(userId) ?? null;

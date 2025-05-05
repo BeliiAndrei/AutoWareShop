@@ -335,7 +335,8 @@ namespace WebShop.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["Message"] = "Введённые данные некорректны";
+                
+            TempData["Message"] = "Введённые данные некорректны";
                 return View(model);
             }
 

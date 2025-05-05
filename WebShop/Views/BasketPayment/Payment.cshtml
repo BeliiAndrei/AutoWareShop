@@ -24,6 +24,13 @@
             <p>Ошибка оплаты: @ViewBag.PaymentError</p>
         </div>
     }
+    @* Если попадаем сюда со после basket_step_2*@
+    @if (TempData["NotEnoughMoney"] != null)
+    {
+        <div class="alert alert-notification" role="alert" style="color:black">
+            @TempData["NotEnoughMoney"]
+        </div>
+    }
 
     <form class="payment-form" action="@Url.Action("Payment", "BasketPayment")" method="POST" name="payment-form">
         <div class="payment-form__fields">
