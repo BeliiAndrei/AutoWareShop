@@ -7,12 +7,12 @@ namespace WebShop.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var session = filterContext.HttpContext.Session;
-            var userRole = "guest";
-            if (session["User"] is UserInfo userInfo && userInfo.Role != null)
+            var userRole = "Guest";
+            if (SessionHelper.User is UserInfo userInfo && userInfo.Role != null)
             {
                 userRole = userInfo.Role;
             }
+            else filterContext.Result = new RedirectResult("~/Error/AccessDenied");
 
             if (userRole != "Admin")
             {
