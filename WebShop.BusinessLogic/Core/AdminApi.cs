@@ -5,6 +5,7 @@ using System.Linq;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.Domain.User.Auth;
 using WebShop.Domain.User.Registration;
+using WebShop.Helpers.LoginRegisterHelper;
 
 namespace WebShop.BusinessLogic.Core
 {
@@ -43,11 +44,12 @@ namespace WebShop.BusinessLogic.Core
                         StatusMsg = "Such Email already exists"
                     };
                 }
+                var encPassword = LoginRegisterHelper.HashGen(data.Password);
                 var user = new UserDBTable
                 {
                     Username = data.UserName,
                     Usersurname = data.UserLastName,
-                    Password = data.Password,
+                    Password = encPassword,
                     Email = data.Email,
                     PhoneNumber = data.PhoneNumber,
                     LoginTime = DateTime.Now,

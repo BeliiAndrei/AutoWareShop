@@ -158,7 +158,7 @@ namespace WebShop.BusinessLogic.Core
                 if (user.Password != encPasswordOld)
                     return false;
                 var encPasswordNew = LoginRegisterHelper.HashGen(pass.NewPassword);
-                user.Password = pass.NewPassword;
+                user.Password = encPasswordNew;
                 db.SaveChanges();
                 return true;
             }
@@ -314,10 +314,9 @@ namespace WebShop.BusinessLogic.Core
                 {
                     foreach (var cartItem in cartItems)
                     {
-                        // Получаем товар из базы по его ID
                         var productFromDb = productContext.Products.FirstOrDefault(p => p.Id == cartItem.ProductInBasketId);
 
-                        if (productFromDb != null && productFromDb.Status != ProductStatus.hidden && productFromDb.Quantity > 0)
+                        if (productFromDb != null && productFromDb.Status != ProductStatus.hidden && productFromDb.Quantity >= cartItem.Quantity)
                         {
                             var productInOrder = new ProductsInOrderDBTable
                             {
@@ -329,16 +328,21 @@ namespace WebShop.BusinessLogic.Core
                             };
 
                             productsInOrderContext.ProductsInOrder.Add(productInOrder);
+
+                            // Уменьшить количество доступных товаров
+                            productFromDb.Quantity -= cartItem.Quantity;
                         }
-                        else {
+                        else
+                        {
                             return new OrderActionResponse
                             {
                                 OrderId = newOrderId,
                                 Status = false,
-                                StatusMsg = "Товар с id = " + cartItem.Id + "не доступен"
+                                StatusMsg = "Товар с id = " + cartItem.Id + " не доступен или недостаточное количество"
                             };
                         }
                     }
+                    productContext.SaveChanges(); 
                 }
 
                 productsInOrderContext.SaveChanges();
