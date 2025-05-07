@@ -1,10 +1,13 @@
-﻿
+﻿@model WebShop.Models.DeliveryViewModel
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Basket_step_3";
+    var comment = SessionHelper.OrderMessage;
+    decimal orderPrice = SessionHelper.OrderPrice /*?? 0m*/;
+
 }
+
 <main class="main-content">
-    <h1 class="main-title">Заказ<span>№ 00000154705@19</span></h1>
     <div class="order-steps-wrap text-center">
         <ul class="order-steps">
             <li class="order-steps__item">
@@ -29,110 +32,99 @@
             </li>
         </ul>
     </div>
-    <div class="tabs-section">
-        <div class="tabs tabs--secondary">
-            <div class="tabs__header">
-                <ul class="tabs__list">
-                    <li class="tabs__item"><a class="tabs__link is-active" href="#section-1">Доставка на адрес</a></li>
-                    <li class="tabs__item"><a class="tabs__link" href="#section-2">Самовывоз</a></li>
-                </ul>
-                <div class="tabs__panes">
-                    <div class="tabs__tab-pane is-active">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="delivery-opt__field">
-                                    <label class="delivery-opt__label" for="delivery-type">Тип доставки</label>
-                                    <ul>
-                                        <li> Доставка автотранспортом</li>
-                                    </ul>
+    <form class="add-address" method="POST" action=@Url.Action("Basket_step_4", "BasketPayment") name="add-address">
+        <input type="hidden" name="deliveryType" id="deliveryType" value="delivery" />
+        <div class="tabs-section">
+            <div class="tabs tabs--secondary">
+                <div class="tabs__header">
+                    <ul class="tabs__list">
+                        <li class="tabs__item"><a class="tabs__link is-active" href="#section-1" name="deliveryType">Доставка на адрес</a></li>
+                        <li class="tabs__item"><a class="tabs__link" href="#section-2" name="deliveryType">Самовывоз</a></li>
+                    </ul>
+                    <div class="tabs__panes">
+                        <div class="tabs__tab-pane is-active">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="delivery-opt__field">
+                                        <label class="delivery-opt__label" for="delivery-type">Тип доставки</label>
+                                        <ul>
+                                            <li> Доставка автотранспортом</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <form class="add-address" method="POST" action="/" name="add-address">
                                 <div class="row">
                                     <div class="col-24 col-md-8">
                                         <div class="add-address__field">
                                             <label class="add-address__label" for="user-city-location">Город <span>*</span></label>
-                                            <select class="js-select-default" id="user-city-location" name="user-city-location">
-                                                <option value="user-city-loc-1">г. Кишинёв</option>
-                                                <option value="user-city-loc-2">г. Ставчены</option>
-                                                <option value="user-city-loc-3">г. Хынчешты</option>
-                                                <option value="user-city-loc-4">г. Оргеев</option>
-                                            </select>
+                                            <input type="text" class="add-address__input" name="userCity" id="user-city-location" value="@Model.City" />
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="add-address__field">
                                             <label class="add-address__label" for="user-street">Улица <span>*</span></label>
-                                            <input class="add-address__input" type="text" name="user-street" id="user-street">
+                                            <input class="add-address__input" type="text" name="userStreet" id="user-street" value="@Model.Street">
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-2">
                                         <div class="add-address__field">
                                             <label class="add-address__label" for="user-house"><br />Дом <span>*</span></label>
-                                            <input class="add-address__input" type="text" name="user-house" id="user-house">
+                                            <input class="add-address__input" type="text" name="userHouse" id="user-house" value="@Model.House">
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-2">
                                         <div class="add-address__field">
                                             <label class="add-address__label" for="user-box">Блок</label>
-                                            <input class="add-address__input" type="text" name="user-box" id="user-box">
+                                            <input class="add-address__input" type="text" name="userBlock" id="user-box" value="@Model.Block">
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-2">
                                         <div class="add-address__field">
                                             <label class="add-address__label" for="user-flat">Квартира</label>
-                                            <input class="add-address__input" type="text" name="user-flat" id="user-flat">
+                                            <input class="add-address__input" type="text" name="userAppartment" id="user-flat" value="@Model.Apartment">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-8">
-                                        <div class="add-address__field">
-                                            <textarea class="add-address__msg" row="1" name="user-message" placeholder="Комментарий"></textarea>
-                                        </div>
-                                    </div>
-
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tabs__tab-pane">
-                        <div class="location-desc">
-                            <p>Для того, чтобы забрать свой заказ, Вам нужно явиться в наше представительство по адресу, указанному ниже.</p>
-                            <p>Просим обратить внимание на время, с которого будет доступен заказ.</p><strong>Ближайшие рабочие дни</strong>
-                            <p>07 Июня / 08 Июня / 09 Июня</p>
-                        </div>
-                        <div class="location">
-                            <div class="location__places">
-                                <div class="location__place"><img class="location__place-img" src="~/assets/images/general/garage-location-1.jpg" alt="location"></div>
-                                <div class="location__place"><img class="location__place-img" src="~/assets/images/general/garage-location-map.jpg" alt="location"></div>
                             </div>
-                            <div class="location__details">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="location__detail">
-                                            <div class="location__detail-heading">Адрес</div>
-                                            <div class="location__detail-desc">MD-2011, Молдова, г. Кишинев, ул. Студенцилор, 9/9</div>
+                        </div>
+                        <div class="tabs__tab-pane">
+                            <div class="location-desc">
+                                <p>Для того, чтобы забрать свой заказ, Вам нужно явиться в наше представительство по адресу, указанному ниже.</p>
+                                <p>Просим обратить внимание на время, с которого будет доступен заказ.</p>
+                            </div>
+                            <div class="location">
+                                <div class="location__places">
+                                    <div class="location__place"><img class="location__place-img" src="~/assets/images/general/garage-location-1.jpg" alt="location"></div>
+                                    <div class="location__place"><img class="location__place-img" src="~/assets/images/general/garage-location-map.jpg" alt="location"></div>
+                                </div>
+                                <div class="location__details">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="location__detail">
+                                                <div class="location__detail-heading">Адрес</div>
+                                                <div class="location__detail-desc">MD-2011, Молдова, г. Кишинев, ул. Студенцилор, 9/9</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="location__detail">
-                                            <div class="location__detail-heading">Телефоны</div>
-                                            <dl>
-                                                <dt>Администрация</dt>
-                                                <dd><a href="tel:+37322815400">+373 79-637-411</a></dd>
-                                            </dl>
+                                        <div class="col-md-4">
+                                            <div class="location__detail">
+                                                <div class="location__detail-heading">Телефоны</div>
+                                                <dl>
+                                                    <dt>Администрация</dt>
+                                                    <dd><a href="tel:+37322815400">+373 79-637-411</a></dd>
+                                                </dl>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="location__detail">
-                                            <div class="location__detail-heading">График работы</div>
-                                            <dl>
-                                                <dt>Пн-Пт</dt>
-                                                <dd>с 8:00 до 18:00</dd>
-                                                <dt>Суббота</dt>
-                                                <dd>с 8:00 до 15:00</dd>
-                                                <dt>Воскресенье</dt>
-                                                <dd>выходной</dd>
-                                            </dl>
+                                        <div class="col-md-4">
+                                            <div class="location__detail">
+                                                <div class="location__detail-heading">График работы</div>
+                                                <dl>
+                                                    <dt>Пн-Пт</dt>
+                                                    <dd>с 8:00 до 18:00</dd>
+                                                    <dt>Суббота</dt>
+                                                    <dd>с 8:00 до 15:00</dd>
+                                                    <dt>Воскресенье</dt>
+                                                    <dd>выходной</dd>
+                                                </dl>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -142,27 +134,60 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="order-footer d-none d-md-flex">
-        <a class="btn btn--reverse" href="@Url.Action("Basket_step_2", "BasketPayment")">Назад</a>
-        <textarea class="order-footer__message" placeholder="Комментарий к заказу" rows="1" name="order-message"></textarea>
-        <div class="footer-summary-price">
-            <div class="footer-summary-price__title">Сумма к оплате</div>
-            <div class="footer-summary-price__value">2 297 <span>Лей</span></div>
-        </div><a class="btn btn--main" href="@Url.Action("Basket_step_4", "BasketPayment")">Далее<i class="fas fa-chevron-circle-right"></i></a>
-    </div>
-    <div class="order-mob-footer d-md-none">
-        <footer class="order-mob-footer__main">
-            <p class="order-mob-footer__payment">Сумма к оплате</p>
-            <div class="order-mob-footer__total-price"><span class="order-mob-footer__total-price-value">2 297</span> Лей</div>
-            <textarea class="order-mob-footer__message" placeholder="Комментарий к заказу" rows="2" name="order-message"></textarea>
-        </footer>
-        <div class="order-mob-footer__controls">
-            <div class="row">
-                <div class="col-4"><a class="btn btn--reverse" href="@Url.Action("Basket_step_2", "BasketPayment")">Назад</a></div>
-                <div class="col-8"><a class="btn btn--main" href="@Url.Action("Basket_step_4", "BasketPayment")">Далее<i class="fas fa-chevron-circle-right"></i></a></div>
-            </div>
+        <div class="order-footer d-none d-md-flex">
+            <a class="btn btn--reverse" href="@Url.Action("Basket_step_2", "BasketPayment")">Назад</a>
+            <input type="text" class="order-footer__message" value="@comment" name="orderMessage" />
+            <div class="footer-summary-price">
+                <div class="footer-summary-price__title">Сумма к оплате</div>
+                <div class="footer-summary-price__value">@orderPrice <span>Лей</span></div>
+            </div><input type="submit" class="btn btn--main" value="Далее">
         </div>
-    </div>
-
+    </form>
 </main>
+
+@section Scripts
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tabs = document.querySelectorAll(".tabs__link");
+            const deliveryTypeInput = document.getElementById("deliveryType");
+
+            tabs.forEach((tab, index) => {
+                tab.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    // Активировать нужную вкладку
+                    tabs.forEach(t => t.classList.remove("is-active"));
+                    tab.classList.add("is-active");
+
+                    const panes = document.querySelectorAll(".tabs__tab-pane");
+                    panes.forEach(p => p.classList.remove("is-active"));
+                    panes[index].classList.add("is-active");
+
+                    if (index === 0) {
+                        deliveryTypeInput.value = "delivery";
+
+                        // Включаем поля адреса
+                        enableAddressFields(true);
+                    } else {
+                        deliveryTypeInput.value = "pickup";
+
+                        // Отключаем поля адреса
+                        enableAddressFields(false);
+                    }
+                });
+            });
+
+            function enableAddressFields(enable) {
+                const fields = document.querySelectorAll("#user-city-location, #user-street, #user-house, #user-box, #user-flat");
+                fields.forEach(f => {
+                    if (enable) {
+                        f.removeAttribute("disabled");
+                    } else {
+                        f.setAttribute("disabled", "disabled");
+                    }
+                });
+            }
+        });
+    </script>
+}

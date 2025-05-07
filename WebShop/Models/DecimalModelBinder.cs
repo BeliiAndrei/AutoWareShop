@@ -12,7 +12,7 @@ namespace WebShop.Models
             if (valueProviderResult == null || string.IsNullOrEmpty(valueProviderResult.AttemptedValue))
                 return base.BindModel(controllerContext, bindingContext);
 
-            return decimal.TryParse(valueProviderResult.AttemptedValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var result)
+            return decimal.TryParse(valueProviderResult.AttemptedValue.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)
                 ? (decimal?)result 
                 : base.BindModel(controllerContext, bindingContext);
         }

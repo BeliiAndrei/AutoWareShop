@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Мои адреса доставки";
 
-    var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
+    var user = SessionHelper.User;
     var userId = user?.Id ?? 0;
 }
 
@@ -28,7 +28,7 @@
             <div class="delivery-addresses-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Мои адреса доставки</h2>
-                    <a href="@Url.Action("Delivery", "Auth")" class="btn btn-primary">
+                    <a href="@Url.Action("Delivery", "Delivery")" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Добавить новый адрес
                     </a>
                 </div>
@@ -70,7 +70,7 @@
                                         </div>
                                     </div>
                                     <div class="address-actions">
-                                        <a href="@Url.Action("EditDelivery", "Auth", new { id = address.UserId })"
+                                        <a href="@Url.Action("EditDelivery", "Delivery", new { id = address.UserId })"
                                            class="btn btn-outline-primary">
                                             <i class="fas fa-edit"></i> Редактировать
                                         </a>

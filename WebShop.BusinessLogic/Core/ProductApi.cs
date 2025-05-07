@@ -20,7 +20,7 @@ namespace WebShop.BusinessLogic.Core
             {
                 using (var db = new ProductContext())
                 {
-                    var pr = db.Products.OrderBy(p=>p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    var pr = db.Products.OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
                     var count = db.Products.Count();
                     var response = new ProductSearchResponseDB
                     {
@@ -36,6 +36,62 @@ namespace WebShop.BusinessLogic.Core
                 {
                     products = null,
                     productsTotalCount = 0
+                };
+            }
+        }
+
+        internal ProductSearchResponseDB GetAllProducts(int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
+        {
+            try
+            {
+                using (var db = new ProductContext())
+                {
+                    var query = db.Products.AsQueryable();
+
+                    // Фильтрация по цене
+                    query = query.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+
+                    // Фильтрация по наличию
+                    if (onlyAvailable)
+                    {
+                        query = query.Where(p => p.Quantity > 0);
+                    }
+
+                    // Фильтрация по брендам
+                    if (brands != null && brands.Any())
+                    {
+                        query = query.Where(p => brands.Contains(p.Producer));
+                    }
+
+                    var count = query.Count();
+
+                    var products = query.OrderBy(p => p.Id)
+                                        .Skip((page - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .ToList();
+
+                    // Список брендов для отображения в фильтре
+                    var allBrands = query.Select(p => p.Producer)
+                                         .Distinct()
+                                         .OrderBy(name => name)
+                                         .ToList();
+
+                    return new ProductSearchResponseDB
+                    {
+                        products = products,
+                        productsTotalCount = count,
+                        availableBrands = allBrands
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                return new ProductSearchResponseDB
+                {
+                    products = null,
+                    productsTotalCount = 0,
+                    availableBrands = new List<string>()
                 };
             }
         }
@@ -70,23 +126,52 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
-        internal ProductSearchResponseDB GetProductsByStatusAction(ProductStatus status, int page, int pageSize)
+        internal ProductSearchResponseDB GetProductsByStatusAction(ProductStatus status, int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
         {
             try
             {
                 using (var db = new ProductContext())
                 {
-                    var query = db.Products.Where(p => p.Status == status);
-                    var pr = query.OrderBy(p => p.Id)
-                        .Skip((page - 1) * pageSize).Take(pageSize)
-                        .ToList();
-                    var count = query.Count();
-                    var response = new ProductSearchResponseDB
+                    var query = db.Products.AsQueryable();
+
+                    // Фильтрация по статусу
+                    query = query.Where(p => p.Status == status);
+
+                    // Фильтрация по цене
+                    query = query.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+
+                    // Фильтрация по наличию
+                    if (onlyAvailable)
                     {
-                        products = pr,
-                        productsTotalCount = count
+                        query = query.Where(p => p.Quantity > 0);
+                    }
+
+                    // Фильтрация по брендам
+                    if (brands != null && brands.Any())
+                    {
+                        query = query.Where(p => brands.Contains(p.Producer));
+                    }
+
+                    var count = query.Count();
+
+                    var products = query.OrderBy(p => p.Id)
+                                        .Skip((page - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .ToList();
+
+                    // Список брендов для отображения в фильтре
+                    var allBrands = query.Select(p => p.Producer)
+                                         .Distinct()
+                                         .OrderBy(name => name)
+                                         .ToList();
+
+                    return new ProductSearchResponseDB
+                    {
+                        products = products,
+                        productsTotalCount = count,
+                        availableBrands = allBrands
                     };
-                    return response;
                 }
             }
             catch (Exception)
@@ -94,29 +179,61 @@ namespace WebShop.BusinessLogic.Core
                 return new ProductSearchResponseDB
                 {
                     products = null,
-                    productsTotalCount = 0
+                    productsTotalCount = 0,
+                    availableBrands = new List<string>()
                 };
             }
         }
 
-        internal ProductSearchResponseDB GetProductsByCategoryAction(string category, int page, int pageSize)
+
+        internal ProductSearchResponseDB GetProductsByCategoryAction(string category, int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
         {
             try
             {
                 using (var db = new ProductContext())
                 {
-                    var query = db.Products
-                             .Where(p => p.Category == category && p.Status != ProductStatus.hidden);
-                    var pr =  query.OrderBy(p => p.Id)
-                             .Skip((page - 1) * pageSize).Take(pageSize)
-                             .ToList();
+                    var query = db.Products.AsQueryable();
+
+                    // Фильтрация по категории
+                    if (!string.IsNullOrEmpty(category))
+                        query = query.Where(p => p.Category == category);
+
+                    // Фильтрация: только видимые товары
+                    query = query.Where(p => p.Status != ProductStatus.hidden);
+
+                    // Фильтрация по цене
+                    query = query.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+
+                    // Фильтрация по наличию
+                    if (onlyAvailable)
+                        query = query.Where(p => p.Quantity > 0);
+
+                    // Фильтрация по брендам
+                    if (brands != null && brands.Any())
+                        query = query.Where(p => brands.Contains(p.Producer));
+
                     var count = query.Count();
-                    var response = new ProductSearchResponseDB
+
+                    var products = query.OrderBy(p => p.Id)
+                                        .Skip((page - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .ToList();
+
+                    // Список всех брендов для фильтра
+                    var allBrands = db.Products
+                                      .Where(p => p.Category == category && p.Status != ProductStatus.hidden)
+                                      .Select(p => p.Producer)
+                                      .Distinct()
+                                      .OrderBy(name => name)
+                                      .ToList();
+
+                    return new ProductSearchResponseDB
                     {
-                        products = pr,
-                        productsTotalCount = count
+                        products = products,
+                        productsTotalCount = count,
+                        availableBrands = allBrands 
                     };
-                    return response;
                 }
             }
             catch (Exception)
@@ -124,30 +241,64 @@ namespace WebShop.BusinessLogic.Core
                 return new ProductSearchResponseDB
                 {
                     products = null,
-                    productsTotalCount = 0
+                    productsTotalCount = 0,
+                    availableBrands = new List<string>()
                 };
             }
         }
 
-        internal ProductSearchResponseDB GetProductsBySearchStringAction(string searchString, int page, int pageSize)
+        internal ProductSearchResponseDB GetProductsBySearchStringAction(string searchString, int page, int pageSize,
+            decimal minPrice, decimal maxPrice, bool onlyAvailable, List<string> brands)
         {
             try
             {
                 using (var db = new ProductContext())
                 {
-                    var query = db.Products
-                             .Where(p => (p.Name.Contains(searchString) || p.Producer.Contains(searchString))
-                                         && p.Status != ProductStatus.hidden);
-                    var pr = query.OrderBy(p=>p.Id)
-                             .Skip((page - 1) * pageSize).Take(pageSize)
-                             .ToList();
-                    var count = query.Count();
-                    var response = new ProductSearchResponseDB
+                    var query = db.Products.AsQueryable();
+
+                    // Поиск по названию или производителю
+                    if (!string.IsNullOrEmpty(searchString))
                     {
-                        products = pr,
-                        productsTotalCount = count
+                        query = query.Where(p => (p.Name.Contains(searchString) || p.Producer.Contains(searchString)));
+                    }
+
+                    // Только видимые товары
+                    query = query.Where(p => p.Status != ProductStatus.hidden);
+
+                    // Фильтрация по цене
+                    query = query.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+
+                    // Фильтрация по наличию
+                    if (onlyAvailable)
+                    {
+                        query = query.Where(p => p.Quantity > 0);
+                    }
+
+                    // Фильтрация по брендам
+                    if (brands != null && brands.Any())
+                    {
+                        query = query.Where(p => brands.Contains(p.Producer));
+                    }
+
+                    var count = query.Count();
+
+                    var products = query.OrderBy(p => p.Id)
+                                        .Skip((page - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .ToList();
+
+                    // Список всех брендов для отображения в фильтрах
+                    var allBrands = query.Select(p => p.Producer)
+                                         .Distinct()
+                                         .OrderBy(name => name)
+                                         .ToList();
+
+                    return new ProductSearchResponseDB
+                    {
+                        products = products,
+                        productsTotalCount = count,
+                        availableBrands = allBrands // новое свойство!
                     };
-                    return response;
                 }
             }
             catch (Exception)
@@ -155,7 +306,8 @@ namespace WebShop.BusinessLogic.Core
                 return new ProductSearchResponseDB
                 {
                     products = null,
-                    productsTotalCount = 0
+                    productsTotalCount = 0,
+                    availableBrands = new List<string>()
                 };
             }
         }

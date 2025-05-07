@@ -71,7 +71,9 @@
     <Compile Include="DBModel\CartContext.cs" />
     <Compile Include="DBModel\DeliveryContext.cs" />
     <Compile Include="DBModel\NewsContext.cs" />
+    <Compile Include="DBModel\OrderContext.cs" />
     <Compile Include="DBModel\ProductContext.cs" />
+    <Compile Include="DBModel\ProductsInOrderContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
     <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\IBasket.cs" />

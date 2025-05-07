@@ -1,983 +1,231 @@
 ﻿@{
-    ViewBag.Title = "Catalog";
+    ViewBag.Title = "Catalogt";
 }
+@model WebShop.Models.Search.SearchModel
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.css" />
+}
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js"></script>
+    <script>
+        const priceSlider = document.getElementById("price-slider");
+        const minOutput = document.getElementById("price-min");
+        const maxOutput = document.getElementById("price-max");
 
+        noUiSlider.create(priceSlider, {
+            start: [0, 10000],
+            connect: true,
+            step: 10,
+            range: {
+                min: 0,
+                max: 10000
+            }
+        });
+
+        priceSlider.noUiSlider.on("update", (values) => {
+            minOutput.textContent = Math.round(values[0]);
+            maxOutput.textContent = Math.round(values[1]);
+        });
+
+        document.getElementById("apply-filters").addEventListener("click", function (e) {
+            const [minPrice, maxPrice] = priceSlider.noUiSlider.get();
+            const onlyAvailable = document.getElementById("only-available").checked;
+            const form = document.getElementById("filters-form");
+
+            // Установка значения hidden input'ов
+            document.getElementById("minPriceInput").value = Math.round(minPrice);
+            document.getElementById("maxPriceInput").value = Math.round(maxPrice);
+            document.getElementById("onlyAvailableInput").value = onlyAvailable;
+
+            // Удаление старых скрытых бренды
+            form.querySelectorAll("input[name='brands[]']").forEach(el => el.remove());
+
+            // Добавление новых брендов
+            Array.from(document.querySelectorAll('input[name="brands"]:checked')).forEach(cb => {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "brands[]";
+                input.value = cb.value;
+                form.appendChild(input);
+            });
+
+        });
+    </script>
+}
 <div class="container-fluid">
-    <ul class="breadcrumbs">
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Главная</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Автохимия</a></li>
-        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Система топливная</a></li>
-        <li class="breadcrumbs__item">Присадки к бензину</li>
-    </ul>
+    
     <div class="primary-layout">
+        <h1 class="main-title">
+            <small>Найдено @Model.Result.TotalCount товар(ов)</small>
+        </h1>
         <div class="primary-content">
             <div class="sidebar">
-                <!-- filter-->
                 <div class="filter">
-                    <div class="filter__heading h3 d-md-none">
-                        Фильтры
-                        <button class="filter__close">
-                            <svg class="icon icon-close filter__close-icon">
-                                <use href="assets/images/svg/symbol/sprite.svg#close"></use>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="filter__main">
-                        <div class="filter__section is-opened">
-                            <div class="filter__title">Цена</div>
-                            <div class="filter__body">
-                                <div class="price-range">
-                                    <div class="price-range__values">
-                                        <div class="price-range__field">
-                                            <input class="price-range__input" id="input-number-a" type="text" name="a">
-                                        </div>
-                                        <div class="price-range__field">
-                                            <input class="price-range__input" id="input-number-b" type="text" name="b">
+                    <form id="filters-form" method="get" action="@Url.Action("Catalog")">
+
+                        <input type="hidden" name="minPrice" id="minPriceInput" />
+                        <input type="hidden" name="maxPrice" id="maxPriceInput" />
+                        <input type="hidden" name="onlyAvailable" id="onlyAvailableInput" />
+
+                        <div class="filter__main">
+                            <!-- Цена -->
+                            <div class="filter__section">
+                                <div class="filter__title">Цена</div>
+                                <div class="filter__body">
+                                    <div class="price-range">
+                                        <div id="price-slider"></div>
+                                        <div class="slider-values">
+                                            <span id="price-min">0</span> — <span id="price-max">10000</span> Лей.
                                         </div>
                                     </div>
-                                    <div class="price-range__slider" id="price-range"></div>
                                 </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="is-available" id="opt-avail">
-                                    <label class="checkbox-label__main" for="opt-avail">Только то, что в наличии</label>
+                            </div>
+
+                            <!-- Наличие -->
+                            <div class="filter__section">
+                                <div class="filter__title">Наличие</div>
+                                <div class="filter__body">
+                                    <div class="filter__option checkbox-label">
+                                        <input class="checkbox-label__input" type="checkbox" id="only-available" name="available">
+                                        <label class="checkbox-label__main" for="only-available">Только в наличии</label>
+                                    </div>
                                 </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="is-discount" id="opt-discount">
-                                    <label class="checkbox-label__main" for="opt-discount">Распродажа</label>
+                            </div>
+
+                            <!-- Бренд -->
+                            <div class="filter__section">
+                                <div class="filter__title">Бренд</div>
+                                <div class="filter__body" id="brands-container">
+                                    @foreach (var brand in Model.Result.AvailableBrands)
+                                    {
+                                        var safeId = "brand-" + brand.Replace(" ", "-").ToLower();
+                                        <div class="filter__option checkbox-label">
+                                            <input class="checkbox-label__input" type="checkbox" name="brands" value="@brand" id="@safeId">
+                                            <label class="checkbox-label__main" for="@safeId">@brand</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Кнопки -->
+                            <div class="filter__footer">
+                                <div class="filter__btns">
+                                    <button type="submit" class="filter__btn-accept btn btn--main" id="apply-filters">Применить</button>
+                                    <a class="filter__btn-reset btn btn--ghost" id="reset-filters" type="button" href="@Url.Action("Catalog")">
+                                        Сбросить
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="filter__section is-opened">
-                            <div class="filter__title">Бренд</div>
-                            <div class="filter__body filter__body--free-space">
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="Ok" id="opt-ok">
-                                    <label class="checkbox-label__main" for="opt-ok">Ok</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="Aftermarket" id="opt-aftermarket">
-                                    <label class="checkbox-label__main" for="opt-aftermarket">Aftermarket</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="ABRO" id="opt-abro">
-                                    <label class="checkbox-label__main" for="opt-abro">ABRO</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="Accessory" id="opt-accessory">
-                                    <label class="checkbox-label__main" for="opt-accessory">Accessory</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="AGA" id="opt-aga">
-                                    <label class="checkbox-label__main" for="opt-aga">AGA (Hi-Gear)</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="BLUECHEM" id="opt-bluechem">
-                                    <label class="checkbox-label__main" for="opt-bluechem">BLUECHEM</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="MOTUL" id="opt-motul">
-                                    <label class="checkbox-label__main" for="opt-motul">MOTUL</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="WYNN" id="opt-wynn">
-                                    <label class="checkbox-label__main" for="opt-wynn">WYNN'S</label>
-                                </div>
-                            </div><a class="filter__more-options" href="#">Показать все</a>
-                        </div>
-                        <div class="filter__section is-hidden">
-                            <div class="filter__title">Размеры</div>
-                            <div class="filter__body">
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="sm" id="opt-sm">
-                                    <label class="checkbox-label__main" for="opt-sm">sm</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="xxl" id="opt-xl">
-                                    <label class="checkbox-label__main" for="opt-xl">xl</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="xxl" id="opt-xxl">
-                                    <label class="checkbox-label__main" for="opt-xxl">xxl</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="xxxl" id="opt-xxxl">
-                                    <label class="checkbox-label__main" for="opt-xxxl">xxxl</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter__section is-hidden">
-                            <div class="filter__title">Цвета</div>
-                            <div class="filter__body">
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="red" id="opt-red">
-                                    <label class="checkbox-label__main" for="opt-red">Красный</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="orange" id="opt-orange">
-                                    <label class="checkbox-label__main" for="opt-orange">Оранжевый</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="brown" id="opt-brown">
-                                    <label class="checkbox-label__main" for="opt-brown">Коричневый</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="yellow" id="opt-yellow">
-                                    <label class="checkbox-label__main" for="opt-yellow">Желтый</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="purple" id="opt-purple">
-                                    <label class="checkbox-label__main" for="opt-purple">Фиолетовый</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter__section is-hidden">
-                            <div class="filter__title">Характеристики</div>
-                            <div class="filter__body">
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="char-1" id="opt-char-1">
-                                    <label class="checkbox-label__main" for="opt-char-1">Характеристика-1</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="char-2" id="opt-char-2">
-                                    <label class="checkbox-label__main" for="opt-char-2">Характеристика-2</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="char-3" id="opt-char-3">
-                                    <label class="checkbox-label__main" for="opt-char-3">Характеристика-3</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="char-4" id="opt-char-4">
-                                    <label class="checkbox-label__main" for="opt-char-4">Характеристика-4</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="char-5" id="opt-char-5">
-                                    <label class="checkbox-label__main" for="opt-char-5">Характеристика-5</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="char-6" id="opt-char-6">
-                                    <label class="checkbox-label__main" for="opt-char-6">Характеристика-6</label>
-                                </div>
-                                <div class="filter__option checkbox-label">
-                                    <input class="checkbox-label__input" type="checkbox" name="char-7" id="opt-char-7">
-                                    <label class="checkbox-label__main" for="opt-char-7">Характеристика-7</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter__footer">
-                            <div class="filter__btns">
-                                <a class="filter__btn-accept btn btn--main" href="#">Применить</a><a class="filter__btn-reset btn btn--ghost" href="#">
-                                    <svg class="icon icon-close filter__btn-icon">
-                                        <use href="assets/images/svg/symbol/sprite.svg#close"></use>
-                                    </svg>Сбросить
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-                <!-- /filter-->
             </div>
             <main class="main-content">
-                <h1 class="main-title">Присадки к бензину</h1>
-                <div class="header-controls d-none d-md-flex">
-                    <div class="header-control">
-                        <div class="header-control__main">
-                            <div class="header-control__caption">Сортировать по:</div>
-                            <ul class="header-control__list">
-                                <li class="header-control__item"><a class="header-control__current link--high" href="#">Наличие</a></li>
-                                <li class="header-control__item"><a class="header-control__current" href="#">Наименование</a></li>
-                                <li class="header-control__item"><a class="header-control__current link--low" href="#">Цена</a></li>
-                                <li class="header-control__item"><a class="header-control__current" href="#">Бренд</a></li>
-                                <li class="header-control__item"><a class="header-control__current" href="#">Срок доставки</a></li>
+                @{
+                    var page = Model.Page;
+                }
+                @if (page?.TotalPages > 1)
+                {
+                    <div class="pagination-wrap">
+                        <div class="pagination">
+                            @if (page.HasPreviousPage)
+                            {
+                                <a class="pagination__prev" href="@Url.Action("Catalog", new {page = page.PageNumber - 1 })">
+                                    <svg class="icon icon-arrow-left pagination__icon">
+                                        <use href="~/assets/images/svg/symbol/sprite.svg#arrow-left"></use>
+                                    </svg>
+                                </a>
+                            }
+                            <ul class="pagination__list">
+                                @{
+                                    int current = page.PageNumber ?? 1;
+                                    int total = page.TotalPages ?? 1;
+                                    int start = Math.Max(1, current - 3);
+                                    int end = Math.Min(total, current + 3);
+
+                                    if (start > 1)
+                                    {
+                                        <li class="pagination__item"><a class="pagination__link" href="@Url.Action("Catalog", new { page = 1 })">1</a></li>
+                                        if (start > 2)
+                                        {
+                                            <li class="pagination__item">&hellip;</li>
+                                        }
+                                    }
+
+                                    for (int i = start; i <= end; i++)
+                                    {
+                                        <li class="pagination__item">
+                                            <a class="pagination__link @(i == current ? "active" : "")" href="@Url.Action("Catalog", new {page = i })">@i</a>
+                                        </li>
+                                        }
+
+                                        if (end < total)
+                                        {
+                                            if (end < total - 1)
+                                            {
+                                                <li class="pagination__item">&hellip;</li>
+                                            }
+                                            <li class="pagination__item"><a class="pagination__link" href="@Url.Action("Catalog", new { page = total })">@total</a></li>
+                                        }
+                                }
                             </ul>
-                        </div>
-                    </div>
-                    <div class="header-control">
-                        <ul class="view-mode d-none d-md-block">
-                            <li class="view-mode__item active">
-                                <a class="view-mode__link" href="#">
-                                    <svg class="icon icon-th view-mode__icon">
-                                        <use href="assets/images/svg/symbol/sprite.svg#th"></use>
+                            @if (page.HasNextPage)
+                            {
+                                <a class="pagination__next" href="@Url.Action("Catalog", new { page = page.PageNumber+1 })">
+                                    <svg class="icon icon-arrow-right pagination__icon">
+                                        <use href="~/assets/images/svg/symbol/sprite.svg#arrow-right"></use>
                                     </svg>
                                 </a>
-                            </li>
-                            <li class="view-mode__item">
-                                <a class="view-mode__link" href="#">
-                                    <svg class="icon icon-th-list view-mode__icon">
-                                        <use href="assets/images/svg/symbol/sprite.svg#th-list"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="header-controls d-md-none">
-                    <div class="header-control">
-                        <a class="filter-toggle" href="#">
-                            <svg class="icon icon-sliders-h filter-toggle__icon">
-                                <use href="assets/images/svg/symbol/sprite.svg#sliders-h"></use>
-                            </svg>Фильтры
-                        </a>
-                    </div>
-                    <div class="header-control">
-                        <a class="sort-by js-sort-by-toggle" href="#">
-                            <svg class="icon icon-sort sort-by__icon">
-                                <use href="assets/images/svg/symbol/sprite.svg#sort"></use>
-                            </svg>Сортировка
-                        </a>
-                        <div class="sort-by-window d-md-none">
-                            <div class="sort-by-window__header">
-                                <svg class="icon icon-sort sort-by-window__icon">
-                                    <use href="assets/images/svg/symbol/sprite.svg#sort"></use>
-                                </svg><span class="sort-by-window__text">Сортировка</span>
-                                <div class="sort-by-window__close">
-                                    <svg class="icon icon-close sort-by-window__close-icon">
-                                        <use href="assets/images/svg/symbol/sprite.svg#close"></use>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="sort-by-window__body">
-                                <div class="sort-by-window__header-control header-control">
-                                    <label class="header-control__title" for="show-by-select-drop">Показывать</label>
-                                    <select class="js-select-default" id="show-by-select-drop">
-                                        <option value="12">12</option>
-                                        <option value="24">24</option>
-                                        <option value="36">36</option>
-                                    </select>
-                                </div>
-                                <div class="sort-by-window__option radio-label">
-                                    <input class="radio-label__input" type="radio" value="sort-type-1" name="sort-type" id="sort-type-1">
-                                    <label class="radio-label__main" for="sort-type-1">По алфавиту</label>
-                                </div>
-                                <div class="sort-by-window__option radio-label">
-                                    <input class="radio-label__input" type="radio" value="sort-type-2" name="sort-type" id="sort-type-2">
-                                    <label class="radio-label__main" for="sort-type-2">Подороже</label>
-                                </div>
-                                <div class="sort-by-window__option radio-label">
-                                    <input class="radio-label__input" type="radio" value="sort-type-3" name="sort-type" id="sort-type-3">
-                                    <label class="radio-label__main" for="sort-type-3">Подешевле</label>
-                                </div>
-                                <div class="sort-by-window__option radio-label">
-                                    <input class="radio-label__input" type="radio" value="sort-type-4" name="sort-type" id="sort-type-4">
-                                    <label class="radio-label__main" for="sort-type-4">Новинки</label>
-                                </div>
-                                <div class="sort-by-window__option radio-label">
-                                    <input class="radio-label__input" type="radio" value="sort-type-5" name="sort-type" id="sort-type-5">
-                                    <label class="radio-label__main" for="sort-type-5">По рейтингу</label>
-                                </div>
-                            </div>
+                            }
                         </div>
                     </div>
-                </div>
+                }
                 <div class="catalog-main">
                     <div class="row">
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a><img class="product__logo" src="~assets/images/content/product-logo-1.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--discount">Распродажа</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--new">Новинка</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очистители топливной системы</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-check success"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 54231</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 80%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
+                        @foreach (var product in Model.Result.Products)
+                        {
+                            <div class="col-6 col-sm-4 col-lg-3">
+                                <article class="product">
+                                    <div class="product__wrapper">
+                                        <header class="product__header">
+                                            <a class="product__img-wrap" href="@Url.Content("~/assets/images/content/product-main-promo-zoom-" + product.Image + ".jpg")">
+                                                <img class="product__img" src="@Url.Content("~/assets/images/content/product-img-"+ @product.Image + ".jpg")" alt="Product">
+                                            </a>
+                                            @if (product.Status == "bonus")
+                                            {
+                                                <div class="product__stickers">
+                                                    <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
                                                 </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
+                                            }
+                                        </header>
+                                        <div class="product__body">
+                                            <div class="product__title">
+                                                <a class="product__title-link" href="@Url.Action("Card", "Product", new { value = product.Article })">@product.ProductName</a>
+                                                <a class="spec-table-list__brand-link" href="@Url.Action("Card", "Product", new { value = product.Article })">@product.BrandName</a>
+                                            </div>
+                                            <div class="product__info">
+                                                <div class="product__instock">
+                                                    @if (product.Quantity > 0)
+                                                    {
+                                                        <i class="fas fa-check success">В наличии</i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-times fail">Нет в наличии</i>
+                                                    }
                                                 </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
+                                                <div class="product__articul">Артикул @product.Article</div>
+                                            </div>
+                                            <a class="product__add btn btn--main" href="@Url.Action("Card", "Product", new { value = product.Article })">Цена <span>@product.Price</span> лей</a>
+                                            <div class="product__footer">
+                                                <ul class="rate product__rate">
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/content/product-img-1.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-2.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очиститель топливной системы 325ML Очиститель топливной системы 325ML</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-times fail"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 62345</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 20%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-1.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--discount">Распродажа</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--new">Новинка</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очистители топливной системы</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-check success"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 54231</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 80%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/content/product-img-1.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-2.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очиститель топливной системы 325ML Очиститель топливной системы 325ML</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-times fail"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 62345</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 20%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-1.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--discount">Распродажа</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--new">Новинка</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очистители топливной системы</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-check success"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 54231</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 80%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/content/product-img-1.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-2.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очиститель топливной системы 325ML Очиститель топливной системы 325ML</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-times fail"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 62345</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 20%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-1.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--discount">Распродажа</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--new">Новинка</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очистители топливной системы</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-check success"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 54231</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 80%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/content/product-img-1.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-2.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очиститель топливной системы 325ML Очиститель топливной системы 325ML</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-times fail"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 62345</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 20%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-1.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--discount">Распродажа</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--new">Новинка</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очистители топливной системы</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-check success"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 54231</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 80%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/content/product-img-1.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-2.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очиститель топливной системы 325ML Очиститель топливной системы 325ML</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-times fail"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 62345</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 20%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/general/product-default.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-1.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--discount">Распродажа</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                            <div class="product__stickers-sticker product__stickers-sticker--new">Новинка</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очистители топливной системы</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-check success"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 54231</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 80%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-6 col-sm-4 col-lg-3">
-                            <article class="product">
-                                <div class="product__wrapper">
-                                    <header class="product__header">
-                                        <a class="product__img-wrap" href="#"><img class="product__img" src="~/assets/images/content/product-img-1.jpg" alt="Product"></a><img class="product__logo" src="~/assets/images/content/product-logo-2.png" alt="Product Logo">
-                                        <div class="product__stickers">
-                                            <div class="product__stickers-sticker product__stickers-sticker--action">Акция</div>
-                                        </div>
-                                    </header>
-                                    <div class="product__body">
-                                        <div class="product__title"><a class="product__title-link" href="#">Очиститель топливной системы 325ML Очиститель топливной системы 325ML</a></div>
-                                        <div class="product__info">
-                                            <div class="product__instock"><i class="fas fa-times fail"></i> В наличии</div>
-                                            <div class="product__articul">Артикул 62345</div>
-                                        </div><a class="product__add btn btn--main" href="#">Цена от <span>23000</span> руб</a>
-                                        <div class="product__footer">
-                                            <ul class="rate product__rate">
-                                                <div class="rate__wrap">
-                                                    <div class="span rate__stars-active" style="width: 20%"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                    <div class="span rate__stars-inactive"><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i><i class="rate__icon fas fa-star"></i></div>
-                                                </div>
-                                            </ul>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Доставка:</dt>
-                                                    <dd class="product__value">Сегодня, после 18.30</dd>
-                                                </div>
-                                            </dl>
-                                            <dl class="product__params">
-                                                <div class="product__param">
-                                                    <dt class="product__property">Вязкость SAE:</dt>
-                                                    <dd class="product__value">15W-40</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">API: CF, SL</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Классификация:</dt>
-                                                    <dd class="product__value">ACEA: A3, B3</dd>
-                                                </div>
-                                                <div class="product__param">
-                                                    <dt class="product__property">Объем:</dt>
-                                                    <dd class="product__value">1.000</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-                <div class="pagination-wrap">
-                    <div class="pagination">
-                        <a class="pagination__prev" href="#">
-                            <svg class="icon icon-arrow-left pagination__icon">
-                                <use href="assets/images/svg/symbol/sprite.svg#arrow-left"></use>
-                            </svg>
-                        </a>
-                        <ul class="pagination__list">
-                            <li class="pagination__item"><a class="pagination__link" href="#">1</a></li>
-                            <li class="pagination__item"><a class="pagination__link" href="#">2</a></li>
-                            <li class="pagination__item"><a class="pagination__link" href="#">3</a></li>
-                            <li class="pagination__item"><a class="pagination__link active" href="#">4</a></li>
-                            <li class="pagination__item">&hellip;</li>
-                            <li class="pagination__item"><a class="pagination__link" href="#">12</a></li>
-                            <li class="pagination__item"><a class="pagination__link" href="#">13</a></li>
-                            <li class="pagination__item"><a class="pagination__link" href="#">14</a></li>
-                            <li class="pagination__item"><a class="pagination__link" href="#">15</a></li>
-                        </ul><a class="pagination__next" href="#">
-                            <svg class="icon icon-arrow-right pagination__icon">
-                                <use href="assets/images/svg/symbol/sprite.svg#arrow-right"></use>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="compare-success">
-                    <div class="compare-success__heading main-heading">Добавлен к сравнению</div>
-                    <div class="compare-success__item">
-                        <div class="compare-success__preview">
-                            <div class="compare-success__img-wrap"><img class="compare-success__img img-responsive" src="~/assets/images/content/product-img-1.jpg" alt=""></div>
-                        </div>
-                        <div class="compare-success__desc">
-                            <div class="compare-success__item-header">Фильтр осушителя пневмосистемы Mercedes DAF TRUCKS, MAN TRUCK, RENAULT TRUCKS, Volvo</div>
-                            <div class="compare-success__item-price">45 300 <span>Руб</span></div>
-                        </div>
+                                </article>
+                            </div>
+                        }
                     </div>
                 </div>
             </main>

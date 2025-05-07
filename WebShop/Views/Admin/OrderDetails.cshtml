@@ -1,0 +1,200 @@
+﻿@model WebShop.Models.Order.OrderDetailsModel
+
+@{
+    ViewBag.Title = "Детали заказа";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+}
+
+<style>
+    .order-details {
+        max-width: 1000px;
+        margin: 0 auto;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+    }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            color: #333;
+        }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .info-row strong {
+        display: inline-block;
+        min-width: 160px;
+        color: #666;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        background-color: #fafafa;
+        text-align: left;
+    }
+
+    .form-control {
+        padding: 8px;
+        width: 300px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+    }
+
+    .button-save {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .button-save:hover {
+            background-color: #218838;
+        }
+
+    .button-back {
+        background-color: #6c757d;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .button-back:hover {
+            background-color: #5a6268;
+        }
+</style>
+
+<div class="order-details">
+    <h2>Заказ #@Model.orderModel.OrderId</h2>
+
+    <div class="card">
+        <h3>Информация о заказе</h3>
+        <div class="info-grid">
+            <div><strong>Дата создания:</strong> @Model.orderModel.Created.ToString("dd MMMM yyyy")</div>
+            <div><strong>Ожидаемая доставка:</strong> @Model.orderModel.EstimatedDeliveryDate.Date.ToString("dd MMMM yyyy")</div>
+            <div><strong>Тип доставки:</strong> @Model.orderModel.DeliveryType</div>
+            <div><strong>Комментарий:</strong> @(string.IsNullOrWhiteSpace(Model.orderModel.Comment) ? "-" : Model.orderModel.Comment)</div>
+            <div><strong>Статус:</strong> @Model.orderModel.OrderStatus</div>
+            <div><strong>Оплачен:</strong> @(Model.orderModel.isPaid ? "Да" : "Нет")</div>
+            <div><strong>Получен:</strong> @(Model.orderModel.isReceived ? "Да" : "Нет")</div>
+            <div><strong>Сумма:</strong> @Model.orderModel.Price.ToString("C")</div>
+        </div>
+    </div>
+
+    @if (Model.orderModel == null)
+    {
+        <div class="card">
+            <h3>Информация о доставке</h3>
+            <div class="info-grid">
+                <div><strong>Город:</strong> @Model.deliveryInfo.City</div>
+                <div><strong>Улица:</strong> @Model.deliveryInfo.Street</div>
+                <div><strong>Дом:</strong> @Model.deliveryInfo.House / @Model.deliveryInfo.Block</div>
+                <div><strong>Квартира:</strong> @Model.deliveryInfo.Apartment</div>
+                <div><strong>Комментарий:</strong> @Model.deliveryInfo.Comment</div>
+            </div>
+        </div>
+    }
+
+
+    @if (Model.userInfo != null)
+    {
+        <div class="card">
+            <h3>Информация о покупателе</h3>
+            <div class="info-grid">
+                <div><strong>Имя:</strong> @Model.userInfo.UserName</div>
+                <div><strong>Фамилия:</strong> @Model.userInfo.UserLastName</div>
+                <div><strong>Email:</strong> @Model.userInfo.Email</div>
+                <div><strong>Телефон:</strong> @Model.userInfo.PhoneNumber</div>
+            </div>
+        </div>
+    }
+
+    <div class="card">
+        <h3>Товары</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Производитель</th>
+                    <th>Артикул</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.orderModel.Products)
+                {
+                    <tr>
+                        <td><a href="@Url.Action("Card", "Product", new {value = @product.Article})"> @product.Code</a></td>
+                        <td>@product.ProductName</td>
+                        <td>@product.BrandName</td>
+                        <td><a href="@Url.Action("Card", "Product", new {value = @product.Article})"> @product.Article</a></td>
+                        <td>@product.Quantity</td>
+                        <td>@product.Price.ToString("C")</td>
+                        <td>@(product.Price * product.Quantity)</td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2">Стоимость заказа : @Model.orderModel.Price</td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Изменить статус заказа</h3>
+        <form method="post" action="@Url.Action("UpdateOrderStatus", "Admin")">
+            <input type="hidden" name="orderId" value="@Model.orderModel.OrderId" />
+            <select name="newStatus" class="form-control">
+                @foreach (WebShop.Domain.Enumerables.OrderStatus status in Enum.GetValues(typeof(WebShop.Domain.Enumerables.OrderStatus)))
+                {
+                    var intValue = (int)status;
+                    <option value="@intValue" @(Model.orderModel.OrderStatus == status ? "selected" : "")>@status</option>
+                }
+            </select>
+            <br />
+            <button type="submit" class="button button-save">Сохранить</button>
+        </form>
+    </div>
+
+    <a href="@Url.Action("Orders", "Admin")" class="button button-back">← Назад к списку заказов</a>
+</div>

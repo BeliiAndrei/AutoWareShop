@@ -3,7 +3,7 @@
     ViewBag.Title = "Доставка";
 
     // Получаем данные пользователя из сессии
-    var user = Session["User"] as WebShop.Domain.User.Admin.UserInfo;
+    var user = SessionHelper.User;
     var userId = user?.Id ?? 0;
 }
 
