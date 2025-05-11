@@ -162,19 +162,20 @@ namespace WebShop.BusinessLogic.BLogic
             throw new NotImplementedException();
         }
 
-        public OrderDTO UpdateOrder(int orderId, OrderStatus status)
-        {
+        public OrderDTO UpdateOrderPrice(int orderId, decimal newPrice)
+        { 
+            //Этот метод на данный используется в случае, если оформление заказа неудачное и нужно пометить новый заказ как отменённый и приравнять цену нулю.
             using (var db = new OrderContext())
             {
                 var order = db.Orders.FirstOrDefault(o => o.Id == orderId);
                 if (order != null)
                 {
-                    order.Status = status;
+                    order.Price = newPrice;
                     db.SaveChanges();
                 }
                 var orderDTO = new OrderDTO
                 {
-                    Status = status,
+                    Status = order.Status,
                     Id = orderId,
                     Comment = order.Comment,
                     CreationDate = order.CreationDate,

@@ -200,6 +200,24 @@ namespace WebShop.Controllers
             orderInfo.Comment = orderMessage;
             var response = _order.CreateNewOrder(orderInfo, userId, productsIdList);
             var order = _order.GetOrderById(response.OrderId);
+
+            if(response.Status == false)
+            {
+                var errorResponse = _order.ModifyOrderStatus(order.Id, Domain.Enumerables.OrderStatus.Cancelled);
+                if(errorResponse.Status == false)
+                {
+                    return RedirectToAction("OrderError", "Error", new { message = errorResponse.StatusMsg + "Обязательно свяжитесь с нами, если произошла ошибка, приведшая к потере средств."});
+                }
+                if (order.IsPayed)
+                {
+                    _user.SupplyBalance(userId, order.Price);
+                    SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
+                    response.StatusMsg += " Средства были возвращены на ваш счёт. В случае обнаружения ошибок, пожалуйста, свяжитесь с нами.";
+                }
+                order =_order.UpdateOrderPrice(order.Id, 0m);
+                SessionHelper.ProductsInCartCount = _basket.GetBasketSize(userId);
+                return RedirectToAction("OrderError", "Order", new { message = response.StatusMsg });
+            }
             var model = new OrderModel
             {
                 Comment = order.Comment,

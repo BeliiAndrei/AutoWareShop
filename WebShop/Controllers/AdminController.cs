@@ -482,7 +482,7 @@ namespace WebShop.Controllers
         [HttpPost]
         public ActionResult UpdateOrderStatus(int orderId, OrderStatus newStatus)
         {
-            _ = _order.UpdateOrder(orderId, newStatus);
+            _ = _order.ModifyOrderStatus(orderId, newStatus);
             return RedirectToAction("OrderDetails", new { orderId });
         }
 

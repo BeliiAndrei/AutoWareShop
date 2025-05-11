@@ -1,0 +1,18 @@
+﻿@model string
+@{
+    ViewBag.Title = "Ошибка оформления заказа";
+}
+
+<div class="order-error-container" style="padding: 2rem; max-width: 600px; margin: auto;">
+    <h2 style="color: darkred;">Ошибка оформления заказа</h2>
+    <p>К сожалению, не удалось оформить заказ.</p>
+
+    <div style="margin-top: 1rem; padding: 1rem; background-color: #ffe6e6; border-left: 5px solid red;">
+        <strong>Причина:</strong>
+        <div>@Model</div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Вернуться на главную</a>
+    </div>
+</div>

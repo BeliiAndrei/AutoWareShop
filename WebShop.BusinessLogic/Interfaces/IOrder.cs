@@ -18,7 +18,7 @@ namespace WebShop.BusinessLogic.Interfaces
 
         OrderDTO GetOrderById(int id);
 
-        OrderDTO UpdateOrder(int orderId, OrderStatus status);
+        OrderDTO UpdateOrderPrice(int orderId, decimal newPrice);
 
         void DeleteOrder(int id);
 

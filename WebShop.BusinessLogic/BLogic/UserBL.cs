@@ -33,11 +33,6 @@ namespace WebShop.BusinessLogic.BLogic
             return model;
         }
 
-        public UserInfo GetUserIdBySessionKey(string sessionKey)
-        {
-            return GetUserIdBySessionKeyAction(sessionKey);
-        }
-
         public UserInfo GetUserInfoById(int id)
         {
             var userFromDB = GetUserByIdAction(id);
@@ -50,30 +45,6 @@ namespace WebShop.BusinessLogic.BLogic
             user.Balance = userFromDB.Balance;
             user.Role = userFromDB.Level.ToString();
             return user;
-        }
-
-        public UserRegistrationResponse UserRegistrationAction(UserLoginData data)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IUser.GetUserIdBySessionKey(string sessionKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        //UserLoginResponse IUser.UserLoginAction(UserLoginData auth)
-        //{
-        //    return UserLoginAction(auth);
-        //}
-
-        //UserRegistrationResponse IUser.UserRegistrationAction(UserRegistrationData data)
-        //{
-        //    return UserRegistrationAction(data);
-        //}
-        public bool IsProductValid(int id)
-        {
-            return IsProductValidAction(id);
         }
 
         public bool SupplyBalance(int userId, decimal moneyToAdd)
