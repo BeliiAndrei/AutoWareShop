@@ -376,7 +376,7 @@ namespace WebShop.BusinessLogic.Core
 
         internal OrderActionResponse CreateNewOrderAction(OrderDBTable order, int userId, List<int> productIds)
         {
-            int newOrderId = -1;
+            int newOrderId;
 
             try
             {

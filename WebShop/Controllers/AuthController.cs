@@ -48,7 +48,7 @@ namespace WebShop.Controllers
                 if (userLoginResponse.Status == true)
                 {
                     StoreUserInSession(userLoginResponse.UserInfo);
-                    return View("../Home/MainPage");
+                    return RedirectToAction("MainPage", "Home");
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace WebShop.Controllers
                         Role = user.Level.ToString()
                     };
                     SessionHelper.User = userForSession;
-                    return View("../Home/MainPage");
+                    return RedirectToAction("MainPage", "Home");
                 }
                 else
                 {

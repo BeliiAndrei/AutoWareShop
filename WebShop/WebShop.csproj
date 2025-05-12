@@ -335,6 +335,7 @@
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\DecimalModelBinder.cs" />
     <Compile Include="Models\DeliveryViewModel.cs" />
+    <Compile Include="Models\MainPageModels\MainPageModel.cs" />
     <Compile Include="Models\NewsViewModel.cs" />
     <Compile Include="Models\Order\OrderDetailsModel.cs" />
     <Compile Include="Models\Order\OrderModel.cs" />
