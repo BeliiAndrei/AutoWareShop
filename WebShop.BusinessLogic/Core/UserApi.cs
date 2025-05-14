@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using AutoMapper;
+using System.Web;
 using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.DBModel.Seed;
@@ -14,6 +18,8 @@ using WebShop.Domain.User.Auth;
 using WebShop.Domain.User.Delivery;
 using WebShop.Domain.User.Modify;
 using WebShop.Domain.User.Registration;
+using WebShop.Domain.User.Session;
+using WebShop.Helpers;
 using WebShop.Helpers.LoginRegisterHelper;
 
 namespace WebShop.BusinessLogic.Core
@@ -391,6 +397,81 @@ namespace WebShop.BusinessLogic.Core
 
         //-----------------------------------------------------------------------
 
-       
+        internal HttpCookie Cookie(string loginCredential)
+        {
+            var apiCookie = new HttpCookie("X-KEY")
+            {
+                Value = CookieGenerator.Create(loginCredential)
+            };
+
+            using (var db = new SessionContext())
+            {
+                Session curent;
+                var validate = new EmailAddressAttribute();
+                if (validate.IsValid(loginCredential))
+                {
+                    curent = (from e in db.Sessions where e.Username == loginCredential select e).FirstOrDefault();
+                }
+                else
+                {
+                    curent = (from e in db.Sessions where e.Username == loginCredential select e).FirstOrDefault();
+                }
+
+                if (curent != null)
+                {
+                    curent.CookieString = apiCookie.Value;
+                    curent.ExpireTime = DateTime.Now.AddMinutes(60);
+                    using (var todo = new SessionContext())
+                    {
+                        todo.Entry(curent).State = EntityState.Modified;
+                        todo.SaveChanges();
+                    }
+                }
+                else
+                {
+                    db.Sessions.Add(new Session
+                    {
+                        Username = loginCredential,
+                        CookieString = apiCookie.Value,
+                        ExpireTime = DateTime.Now.AddMinutes(60)
+                    });
+                    db.SaveChanges();
+                }
+            }
+
+            return apiCookie;
+        }
+
+        internal UserInfo UserCookie(string cookie)
+        {
+            Session session;
+            UserDBTable curentUser;
+
+            using (var db = new SessionContext())
+            {
+                session = db.Sessions.FirstOrDefault(s => s.CookieString == cookie && s.ExpireTime > DateTime.Now);
+            }
+
+            if (session == null) return null;
+            using (var db = new UserContext())
+            {
+                var validate = new EmailAddressAttribute();
+                if (validate.IsValid(session.Username))
+                {
+                    curentUser = db.Users.FirstOrDefault(u => u.Email == session.Username);
+                }
+                else
+                {
+                    curentUser = db.Users.FirstOrDefault(u => u.Username == session.Username);
+                }
+            }
+
+            if (curentUser == null) return null;
+            Mapper.Initialize(cfg => cfg.CreateMap<UserDBTable, UserInfo>());
+            var userminimal = Mapper.Map<UserInfo>(curentUser);
+
+            return userminimal;
+        }
     }
 }
+
