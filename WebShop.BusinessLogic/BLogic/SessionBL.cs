@@ -16,12 +16,12 @@ namespace WebShop.BusinessLogic
     {
         public HttpCookie GenCookie(string loginCredential)
         {
-            throw new NotImplementedException();
+            return Cookie(loginCredential);
         }
 
         public UserInfo GetUserByCookie(string apiCookieValue)
         {
-            throw new NotImplementedException();
+            return UserCookie(apiCookieValue);
         }
 
         public UserLoginResponse UserLogin(UserLoginData data)
