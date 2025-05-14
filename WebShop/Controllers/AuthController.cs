@@ -5,6 +5,8 @@ using WebShop.Domain.User.Auth;
 using WebShop.Domain.User.Registration;
 using WebShop.Domain.User.Admin;
 using WebShop.Models.User;
+using System.Web.UI.WebControls;
+using System.Web;
 
 namespace WebShop.Controllers
 {
@@ -33,7 +35,7 @@ namespace WebShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TryToLogIn(UserLoginModel loginData)
+        public ActionResult TryToLogIn(UserLoginModel loginData)// метод авторизации 
         {
             if (ModelState.IsValid)
             {
@@ -47,6 +49,10 @@ namespace WebShop.Controllers
                 var userLoginResponse = _session.UserLogin(data);
                 if (userLoginResponse.Status == true)
                 {
+                    HttpCookie cookie = _session.GenCookie(loginData.Email);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+
+         
                     StoreUserInSession(userLoginResponse.UserInfo);
                     return RedirectToAction("MainPage", "Home");
                 }
@@ -67,7 +73,7 @@ namespace WebShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RegisterNewUser(UserRegisterModel registerData)
+        public ActionResult RegisterNewUser(UserRegisterModel registerData)// регистрация  
         {
             if (registerData.Password != registerData.RePassword)
             {

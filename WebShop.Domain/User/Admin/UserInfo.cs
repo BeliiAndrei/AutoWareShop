@@ -11,6 +11,9 @@ namespace WebShop.Domain.User.Admin
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
         public decimal Balance { get; set; }
+        public string LasIp { get; set; }
+        public DateTime LastLogin { get; set; }
+
 
     }
 }
