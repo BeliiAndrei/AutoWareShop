@@ -52,6 +52,7 @@ namespace WebShop.Controllers
                 };
                 productsForView.Add(product);
             }
+            
             model.SearchResults = productsForView;
             return View(model);
         }
