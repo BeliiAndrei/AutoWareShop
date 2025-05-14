@@ -4,7 +4,7 @@
     ViewBag.Title = "All users";
 }
 
-@model List<WebShop.Domain.User.Admin.UserInfo>
+@model List<WebShop.Models.User.UserInfoModel>
 <style>
     table {
         width: 100%;
@@ -20,6 +20,7 @@
     th {
         background-color: #f2f2f2;
     }
+
     .details-button {
         padding: 5px 10px;
         background-color: #4CAF50;
@@ -28,9 +29,10 @@
         border-radius: 4px;
         cursor: pointer;
     }
-    .details-button:hover {
-        background-color: #45a049;
-    }
+
+        .details-button:hover {
+            background-color: #45a049;
+        }
 </style>
 <main class="main-content">
     @if (TempData["Message"] != null)

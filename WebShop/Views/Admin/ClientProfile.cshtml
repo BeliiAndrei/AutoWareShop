@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
 }
 
-@model WebShop.Domain.User.Admin.UserInfo
+@model WebShop.Models.User.UserInfoModel
 
 <main class="main-content">
     @if (TempData["SuccessMessage"] != null)
@@ -91,7 +91,7 @@
             </div>
         </div>
     </form>
-    <div class="section-area__heading">Заказы</div>
+    <div class="section-area__heading">Заказы этого пользователя можно найти в таблице заказов с ID пользователя равным "@Model.Id".
     <div class="table-responsive">
         <table></table>
     </div>

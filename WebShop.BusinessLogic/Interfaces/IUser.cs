@@ -8,13 +8,12 @@ namespace WebShop.BusinessLogic.Interfaces
 {
     public interface IUser
     {
-        UserLoginResponse UserLoginAction(UserLoginData data);
-        UserRegistrationResponse UserRegistrationAction(UserRegistrationData data);
         UserInfo EditUserProfile(UserInfo data);
         bool ChangePasswordInDB(ChangePasswordClass pass);
-        int GetUserIdBySessionKey(string sessionKey);
-        //bool IsSessionValid(string key);
+
         UserInfo GetUserInfoById(int id);
+
+        bool SupplyBalance(int userId, decimal moneyToAdd);
 
     }
 }

@@ -335,6 +335,7 @@
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\DecimalModelBinder.cs" />
     <Compile Include="Models\DeliveryViewModel.cs" />
+    <Compile Include="Models\MainPageModels\MainPageModel.cs" />
     <Compile Include="Models\NewsViewModel.cs" />
     <Compile Include="Models\Order\OrderDetailsModel.cs" />
     <Compile Include="Models\Order\OrderModel.cs" />
@@ -345,8 +346,9 @@
     <Compile Include="Models\Search\SearchModel.cs" />
     <Compile Include="Models\Search\SearchPath.cs" />
     <Compile Include="Models\Search\SearchResult.cs" />
-    <Compile Include="Models\UserLoginModel.cs" />
-    <Compile Include="Models\UserRegisterModel.cs" />
+    <Compile Include="Models\User\UserLoginModel.cs" />
+    <Compile Include="Models\User\UserRegisterModel.cs" />
+    <Compile Include="Models\User\UserInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionHelper.cs" />
   </ItemGroup>
@@ -417,6 +419,7 @@
     <Content Include="Views\Profile\OrderInfo.cshtml" />
     <Content Include="Views\Admin\Orders.cshtml" />
     <Content Include="Views\Admin\OrderDetails.cshtml" />
+    <Content Include="Views\Error\OrderError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

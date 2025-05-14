@@ -88,9 +88,9 @@
                                         </div>
                                         <div class="auth-form__field">
                                             @*<div class="auth-form__checkbox checkbox-label">
-                                                <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
-                                                <label class="checkbox-label__main" for="remember">Запомнить</label>
-                                            </div>*@
+                                                    <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
+                                                    <label class="checkbox-label__main" for="remember">Запомнить</label>
+                                                </div>*@
                                             <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти">
                                         </div>
                                     }
@@ -140,9 +140,9 @@
                                         <li class="main-nav__sub-item">
                                             <a class="main-nav__sub-link"
                                                href="@Url.Action("Search_result", "CatalogSearch", new {
-                                   Path_Category = "Масла и смазки",
-                                   Path_Subcategory = "Моторное масло",
-                                   Result_SearchString = ""
+                                                    Path_Category = "Масла и смазки",
+                                                    Path_Subcategory = "Моторное масло",
+                                                    Result_SearchString = ""
                                })">
                                                 Моторное масло
                                             </a>
@@ -150,9 +150,9 @@
                                         <li class="main-nav__sub-item">
                                             <a class="main-nav__sub-link"
                                                href="@Url.Action("Search_result", "CatalogSearch", new {
-                                   Path_Category = "Масла и смазки",
-                                   Path_Subcategory = "Трансмиссионная жидкость",
-                                   Result_SearchString = ""
+                                                    Path_Category = "Масла и смазки",
+                                                    Path_Subcategory = "Трансмиссионная жидкость",
+                                                    Result_SearchString = ""
                                })">
                                                 Трансмиссионная жидкость
                                             </a>
@@ -166,9 +166,9 @@
                                         <li class="main-nav__sub-item">
                                             <a class="main-nav__sub-link"
                                                href="@Url.Action("Search_result", "CatalogSearch", new {
-                                   Path_Category = "Автохимия",
-                                   Path_Subcategory = "Очистители инжектора",
-                                   Result_SearchString = ""
+                                                    Path_Category = "Автохимия",
+                                                    Path_Subcategory = "Очистители инжектора",
+                                                    Result_SearchString = ""
                                })">
                                                 Очистители инжектора
                                             </a>
@@ -176,12 +176,179 @@
                                         <li class="main-nav__sub-item">
                                             <a class="main-nav__sub-link"
                                                href="@Url.Action("Search_result", "CatalogSearch", new {
-                                   Path_Category = "Автохимия",
-                                   Path_Subcategory = "Присадки к дизтопливу",
-                                   Result_SearchString = ""
+                                                    Path_Category = "Автохимия",
+                                                    Path_Subcategory = "Присадки к дизтопливу",
+                                                    Result_SearchString = ""
                                })">
                                                 Присадки к дизтопливу
                                             </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="main-nav__item">
+                                    <span class="main-nav__link">Автозапчасти</span>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Автозапчасти",
+                Path_Subcategory = "Фильтры",
+                Result_SearchString = ""
+            })">Фильтры</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Автозапчасти",
+                Path_Subcategory = "Тормозные колодки",
+                Result_SearchString = ""
+            })">Тормозные колодки</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Автозапчасти",
+                Path_Subcategory = "Амортизаторы",
+                Result_SearchString = ""
+            })">Амортизаторы</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="main-nav__item">
+                                    <span class="main-nav__link">Аксессуары</span>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Аксессуары",
+                Path_Subcategory = "Коврики",
+                Result_SearchString = ""
+            })">Коврики</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Аксессуары",
+                Path_Subcategory = "Автодержатели",
+                Result_SearchString = ""
+            })">Автодержатели</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+    Path_Category = "Аксессуары",
+    Path_Subcategory = "Аптечки",
+    Result_SearchString = ""
+})">Аптечки</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="main-nav__item">
+                                    <span class="main-nav__link">Инструменты</span>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Инструменты",
+                Path_Subcategory = "Домкраты",
+                Result_SearchString = ""
+            })">Домкраты</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Инструменты",
+                Path_Subcategory = "Наборы ключей",
+                Result_SearchString = ""
+            })">Наборы ключей</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Инструменты",
+                Path_Subcategory = "Компрессоры",
+                Result_SearchString = ""
+            })">Компрессоры</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="main-nav__item">
+                                    <span class="main-nav__link">Шины и диски</span>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Шины и диски",
+                Path_Subcategory = "Зимние шины",
+                Result_SearchString = ""
+            })">Зимние шины</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Шины и диски",
+                Path_Subcategory = "Летние шины",
+                Result_SearchString = ""
+            })">Летние шины</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Шины и диски",
+                Path_Subcategory = "Литые диски",
+                Result_SearchString = ""
+            })">Литые диски</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="main-nav__item">
+                                    <span class="main-nav__link">Электроника</span>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Электроника",
+                Path_Subcategory = "Видеорегистраторы",
+                Result_SearchString = ""
+            })">Видеорегистраторы</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Электроника",
+                Path_Subcategory = "GPS-навигаторы",
+                Result_SearchString = ""
+            })">GPS-навигаторы</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Электроника",
+                Path_Subcategory = "Автоакустика",
+                Result_SearchString = ""
+            })">Автоакустика</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="main-nav__item">
+                                    <span class="main-nav__link">Освещение</span>
+                                    <ul class="main-nav__sub-container">
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Освещение",
+                Path_Subcategory = "Лампы головного света",
+                Result_SearchString = ""
+            })">Лампы головного света</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Освещение",
+                Path_Subcategory = "Светодиодные лампы",
+                Result_SearchString = ""
+            })">Светодиодные лампы</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Освещение",
+                Path_Subcategory = "Противотуманные фары",
+                Result_SearchString = ""
+            })">Противотуманные фары</a>
+                                        </li>
+                                        <li class="main-nav__sub-item">
+                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
+                Path_Category = "Освещение",
+                Path_Subcategory = "Габаритные огни",
+                Result_SearchString = ""
+            })">Габаритные огни</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -203,7 +370,7 @@
                         </select>
                     </div>
                     <div class="search-form__field search-form__field--input">
-                        <input class="search-form__input"  type="search" name="value" placeholder="Артикул детали. Например “gbl199”">
+                        <input class="search-form__input" type="search" name="value" placeholder="Артикул детали. Например “gbl199”">
                         <button class="search-form__submit" type="submit" @*name="send-data"*@>
                             <svg class="icon icon-magnifying-zoom-glass search-form__submit-icon">
                                 <use href="~/assets/images/svg/symbol/sprite.svg#magnifying-zoom-glass"></use>

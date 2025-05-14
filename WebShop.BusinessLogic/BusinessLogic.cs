@@ -32,11 +32,6 @@ namespace WebShop.BusinessLogic
             return new ProductBL();
         }
 
-        public IPaymnet GetPaymnetBl()
-        {
-            return new PaymentBL();
-        }
-
         public IBasket GetBasketBL()
         {
             return new BasketBL();

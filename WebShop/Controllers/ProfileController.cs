@@ -6,6 +6,7 @@ using WebShop.Domain.User.Modify;
 using WebShop.Filter;
 using WebShop.Models;
 using WebShop.Models.Order;
+using WebShop.Models.User;
 
 namespace WebShop.Controllers
 {
@@ -45,7 +46,7 @@ namespace WebShop.Controllers
                     o.DeliveryType = "Самовывоз";
                 if (!order.IsPickup)
                     o.DeliveryType = "Доставка";
-                if(order.Status == Domain.Enumerables.OrderStatus.Received)
+                if (order.Status == Domain.Enumerables.OrderStatus.Received)
                     o.isReceived = true;
                 else o.isReceived = false;
                 o.DeliveryCity = SessionHelper.Delivery?.City ?? "Chisinau";
@@ -67,14 +68,14 @@ namespace WebShop.Controllers
                 Price = order.Price,
                 OrderStatus = order.Status,
             };
-            if(order.Status == Domain.Enumerables.OrderStatus.Received)
+            if (order.Status == Domain.Enumerables.OrderStatus.Received)
                 orderModel.isReceived = true;
             else orderModel.isReceived = false;
             if (order.IsPickup)
                 orderModel.DeliveryType = "Самовывоз";
             else orderModel.DeliveryType = "Доставка";
             var products = new List<ProductCardViewModel>();
-            foreach(var p in order.OrderedProducts)
+            foreach (var p in order.OrderedProducts)
             {
                 var productFromDB = _product.GetProductById(p.ProductId);
                 var productModel = new ProductCardViewModel
@@ -96,22 +97,52 @@ namespace WebShop.Controllers
         public ActionResult ProfileUser()
         {
             var user = SessionHelper.User;
-            return View(user);
+            var model = new UserInfoModel
+            {
+                UserName = user.UserName,
+                UserLastName = user.UserLastName,
+                Role = user.Role,
+                Balance = user.Balance,
+                Email = user.Email,
+                Id = user.Id,
+                PhoneNumber = user.PhoneNumber
+            };
+            return View(model);
         }
 
-      
-        public ActionResult SaveProfile(UserInfo edited)
+
+        public ActionResult SaveProfile(UserInfoModel model)
         {
-           
-                if (!ModelState.IsValid)
-                {
-                    TempData["Message"] = "Введённые данные некорректны";
-                    return View("ClientProfile", edited);
-                }
-                var user = _user.EditUserProfile(edited);
-                TempData["Message"] = "Изменения успешно сохранены.";
-                SessionHelper.User = user;
-                return View("ProfileUser", user); 
+
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = "Введённые данные некорректны";
+                return View("ClientProfile", model);
+            }
+            var data = new UserInfo
+            {
+                UserName = model.UserName,
+                Balance = model.Balance,
+                Email = model.Email,
+                Id = model.Id,
+                PhoneNumber = model.PhoneNumber,
+                Role = model.Role,
+                UserLastName = model.UserLastName
+            };
+            var user = _user.EditUserProfile(data);
+            TempData["Message"] = "Изменения успешно сохранены.";
+            SessionHelper.User = user;
+            var editedModel = new UserInfoModel
+            {
+                UserLastName = user.UserLastName,
+                Role = user.Role,
+                PhoneNumber = user.PhoneNumber,
+                Id = user.Id,
+                Email = user.Email,
+                Balance = user.Balance,
+                UserName = user.UserName
+            };
+            return View("ProfileUser", editedModel);
         }
 
         [HttpPost]
@@ -131,10 +162,11 @@ namespace WebShop.Controllers
             }
 
             var success = _user.ChangePasswordInDB(new ChangePasswordClass
-                {Id = passwordModel.Id, 
-                 OldPassword = passwordModel.OldPassword, 
-                 NewPassword = passwordModel.NewPassword
-                }
+            {
+                Id = passwordModel.Id,
+                OldPassword = passwordModel.OldPassword,
+                NewPassword = passwordModel.NewPassword
+            }
             );
             if (!success)
             {

@@ -13,6 +13,7 @@ namespace WebShop.Domain.User.Registration
         public string PhoneNumber { get; set; }
         public DateTime RegisterTime { get; set; }
         public UserRole Role { get; set; }
+        public decimal Balance { get; set; }
 
     }
 }

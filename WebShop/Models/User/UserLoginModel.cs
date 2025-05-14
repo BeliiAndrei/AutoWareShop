@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebShop.Models
+namespace WebShop.Models.User
 {
     public class UserLoginModel
     {
@@ -12,7 +8,6 @@ namespace WebShop.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Введите пароль")]
-        //[Range(0, 100, ErrorMessage = "Минимум 4 символа в пароле")]
         [MinLength(4, ErrorMessage = "Минимум 4 символа в пароле")]
         public string Password { get; set; }
     }

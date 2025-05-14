@@ -1,8 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Оплата";
+    decimal ?balance = SessionHelper.User.Balance;
 }
-
 <main class="main-content">
     <div class="main-heading">
         <h1 class="main-heading__text">Оплата</h1>
@@ -24,6 +24,13 @@
             <p>Ошибка оплаты: @ViewBag.PaymentError</p>
         </div>
     }
+    @* Если попадаем сюда со после basket_step_2*@
+    @if (TempData["NotEnoughMoney"] != null)
+    {
+        <div class="alert alert-notification" role="alert" style="color:black">
+            @TempData["NotEnoughMoney"]
+        </div>
+    }
 
     <form class="payment-form" action="@Url.Action("Payment", "BasketPayment")" method="POST" name="payment-form">
         <div class="payment-form__fields">
@@ -31,7 +38,7 @@
                 <div class="payment-form__helper">Введите данные для оплаты</div>
             </div>
             <div class="payment-form__field">
-                <input class="payment-form__input" type="email" name="userEmail" placeholder="Email плательщика" required>
+                <input class="payment-form__input" type="email" name="userEmail" value="@SessionHelper.User.Email" required>
             </div>
             <div class="payment-form__field payment-form__field--currency">
                 <input class="payment-form__input" type="number" name="userPrice" placeholder="Сумма к оплате" min="1" step="0.01" required>
@@ -42,7 +49,24 @@
             </div>
         </div>
     </form>
-
+    <br />
+    <p class="text-center">Пополнить счёт</p>
+    <p class="text-center">У вас на счету @(balance?.ToString("F2") ?? "0.00") леев</p>
+    <form class="payment-form" action="@Url.Action("SupplyBalance", "BasketPayment")" method="POST" name="payment-form">
+        <div class="payment-form__fields">
+            <div class="payment-form__field">
+                <div class="payment-form__helper">Пополнить счёт</div>
+            </div>
+            <div class="payment-form__field payment-form__field--currency">
+                <input class="payment-form__input" type="number" name="moneyToAdd" placeholder="Сумма к пополнению" min="1" step="0.01" required>
+                <span class="payment-form__currency">Лей</span>
+            </div>
+            <div class="payment-form__field">
+                <input class="payment-form__btn btn btn--main" type="submit" name="send-data" value="Пополнить">
+            </div>
+        </div>
+    </form>
+    <br />
     <section class="payment-info">
         <h2 class="payment-info__title">Способы оплаты</h2>
         <ul class="payment-info__list">

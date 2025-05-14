@@ -59,7 +59,6 @@
     <Compile Include="BLogic\DeliveryBL.cs" />
     <Compile Include="BLogic\OrderBL.cs" />
     <Compile Include="BLogic\NewsBL.cs" />
-    <Compile Include="BLogic\PaymentBL.cs" />
     <Compile Include="BLogic\ProductBL.cs" />
     <Compile Include="BLogic\UserBL.cs" />
     <Compile Include="BusinessLogic.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="Interfaces\IDelivery.cs" />
     <Compile Include="Interfaces\IOrder.cs" />
     <Compile Include="Interfaces\INews.cs" />
-    <Compile Include="Interfaces\IPaymnet.cs" />
     <Compile Include="Interfaces\IPruoduct.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="Interfaces\IUser.cs" />
