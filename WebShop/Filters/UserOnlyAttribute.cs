@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using WebShop.Domain.User.Admin;
 
 namespace WebShop.Filter
 {
+    //This filter is used to give access only to authorised and not banned users of WebShop application.
     public class UserOnlyAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var session = filterContext.HttpContext.Session;
-            var userRole = "guest";
+            var userRole = "Guest";
             if (session["User"] is UserInfo userInfo && userInfo.Role != null && userInfo.Role != "Banned")
             {
                 userRole = userInfo.Role;
             }
-            //var userRole = (session["User"] as UserInfo).Role ;
 
             if (userRole != "User" && userRole != "Admin")
             {
-                // редирект на страницу ошибки или отказа
                 filterContext.Result = new RedirectResult("~/Auth/Authorisation");
             }
             

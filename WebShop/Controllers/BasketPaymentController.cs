@@ -1,16 +1,9 @@
-﻿using Antlr.Runtime.Misc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.WebPages;
-using WebShop.BusinessLogic;
-using WebShop.BusinessLogic.BLogic;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Order;
-using WebShop.Domain.Product;
-using WebShop.Domain.User.Admin;
 using WebShop.Filter;
 using WebShop.Models;
 using WebShop.Models.Order;
@@ -22,17 +15,19 @@ namespace WebShop.Controllers
         IBasket _basket;
         IDelivery _delivery;
         IOrder _order;
+        IUser _user;
         public BasketPaymentController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _basket = bl.GetBasketBL();
             _delivery = bl.GetDeliveryBL();
             _order = bl.GetOrderBL();
+            _user = bl.GetUserBl();
         }
 
         [HttpPost]
         public ActionResult BasketFormHandler(string actionType, List<string> selectedProductIds, decimal orderPrice)
-        {
+        {   
             TempData["SelectedProductIds"] = selectedProductIds;
             TempData["OrderPrice"] = orderPrice;
             if (actionType == "remove")
@@ -125,6 +120,20 @@ namespace WebShop.Controllers
         public ActionResult Basket_step_3(string payment, string orderMessage = "")
         {
             SessionHelper.OrderPaymentType = payment;
+            if(payment == "payment-online" && SessionHelper.User.Balance >= SessionHelper.OrderPrice)
+            {
+                //Тут списание со счёта, если на нём достаточно средств
+                _user.SupplyBalance(SessionHelper.User.Id, -(SessionHelper.OrderPrice));
+                SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
+            }
+            else
+            {
+                if(payment == "payment-online" && SessionHelper.User.Balance < SessionHelper.OrderPrice)
+                {
+                    TempData["NotEnoughMoney"] = $"У вас недостаточно средств на счету. У вас на счету {SessionHelper.User.Balance.ToString("F2") ?? "0.00"}, а стоимость заказа {SessionHelper.OrderPrice}.";
+                    return RedirectToAction("Payment");
+                }
+            }
             SessionHelper.OrderMessage = orderMessage;
             var userId = SessionHelper.User.Id;
             var deliveryInfoDB = _delivery.GetDeliveryAddressByUserId(userId) ?? null;
@@ -191,6 +200,24 @@ namespace WebShop.Controllers
             orderInfo.Comment = orderMessage;
             var response = _order.CreateNewOrder(orderInfo, userId, productsIdList);
             var order = _order.GetOrderById(response.OrderId);
+
+            if(response.Status == false)
+            {
+                var errorResponse = _order.ModifyOrderStatus(order.Id, Domain.Enumerables.OrderStatus.Cancelled);
+                if(errorResponse.Status == false)
+                {
+                    return RedirectToAction("OrderError", "Error", new { message = errorResponse.StatusMsg + "Обязательно свяжитесь с нами, если произошла ошибка, приведшая к потере средств."});
+                }
+                if (order.IsPayed)
+                {
+                    _user.SupplyBalance(userId, order.Price);
+                    SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
+                    response.StatusMsg += " Средства были возвращены на ваш счёт. В случае обнаружения ошибок, пожалуйста, свяжитесь с нами.";
+                }
+                order =_order.UpdateOrderPrice(order.Id, 0m);
+                SessionHelper.ProductsInCartCount = _basket.GetBasketSize(userId);
+                return RedirectToAction("OrderError", "Order", new { message = response.StatusMsg });
+            }
             var model = new OrderModel
             {
                 Comment = order.Comment,
@@ -210,6 +237,7 @@ namespace WebShop.Controllers
             return View();
         }
         [HttpGet]
+        [UserOnly]
         public ActionResult Payment()
         {
             return View();
@@ -235,6 +263,14 @@ namespace WebShop.Controllers
             }
 
             return View();
+        }
+        [HttpPost]
+        [UserOnly]
+        public ActionResult SupplyBalance (decimal moneyToAdd)
+        {
+           var response  = _user.SupplyBalance(SessionHelper.User.Id, moneyToAdd);
+           SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
+           return RedirectToAction("Payment"); 
         }
     }
 }

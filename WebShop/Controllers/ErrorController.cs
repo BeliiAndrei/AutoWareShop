@@ -23,5 +23,10 @@ namespace WebShop.Controllers
         {
             return View();
         }
+
+        public ActionResult OrderError(string message)
+        {
+            return View(model: message);
+        }
     }
 }

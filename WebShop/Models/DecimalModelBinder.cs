@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace WebShop.Models
 {
-    public class DecimalModelBinder : DefaultModelBinder //: IModelBinder
+    public class DecimalModelBinder : DefaultModelBinder 
     {
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {

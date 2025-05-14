@@ -15,7 +15,6 @@ using WebShop.Domain.Order;
 using WebShop.Domain.Product;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Auth;
-using WebShop.Domain.User.Delivery;
 using WebShop.Domain.User.Modify;
 using WebShop.Domain.User.Registration;
 using WebShop.Domain.User.Session;
@@ -29,25 +28,36 @@ namespace WebShop.BusinessLogic.Core
         public UserApi() { }
 
         //===================== Login - Register - Edit Profile =======================
+
         internal UserLoginResponse UserLoginAction(UserLoginData data)
         {
-            UserDBTable user;
-            using (var db = new UserContext())
+            try
             {
-                user = db.Users.FirstOrDefault(u => u.Email == data.Email);
-
-            }
-
-            // !!! Отключена проверка пароля, вернуть потом обратно !!!  \\
-            // +++ Уже вернул обратно. Но если снова надо будет отключить, то закомментить следубщие 7 строк. +++  \\
-            var encPassword = LoginRegisterHelper.HashGen(data.Password);
-            if (user.Password != encPassword)
-                return new UserLoginResponse
+                UserDBTable user;
+                using (var db = new UserContext())
                 {
-                    Status = false,
-                    StatusMsg = "Wrong Password"
-                };
-            if (user != null)
+                    user = db.Users.FirstOrDefault(u => u.Email == data.Email);
+                }
+
+                if (user == null)
+                {
+                    return new UserLoginResponse
+                    {
+                        Status = false,
+                        StatusMsg = "UserNotFound"
+                    };
+                }
+
+                var encPassword = LoginRegisterHelper.HashGen(data.Password);
+                if (user.Password != encPassword)
+                {
+                    return new UserLoginResponse
+                    {
+                        Status = false,
+                        StatusMsg = "Wrong Password"
+                    };
+                }
+
                 return new UserLoginResponse
                 {
                     Status = true,
@@ -59,243 +69,362 @@ namespace WebShop.BusinessLogic.Core
                         UserLastName = user.Usersurname,
                         Email = user.Email,
                         PhoneNumber = user.PhoneNumber,
-                        Role = user.Level.ToString()
+                        Role = user.Level.ToString(),
+                        Balance = user.Balance
                     }
                 };
-            return new UserLoginResponse
+            }
+            catch (Exception ex)
             {
-                Status = false,
-                StatusMsg = "UserNotFound"
-            };
-
+                return new UserLoginResponse
+                {
+                    Status = false,
+                    StatusMsg = ex.Message
+                };
+            }
         }
-        
+
         internal UserRegistrationResponse UserRegistrationAction(UserRegistrationData data)
         {
-            using (var db = new UserContext())
+            try
             {
-                var isSuchEmail = db.Users.FirstOrDefault(u => u.Email == data.Email);
-                if (isSuchEmail != null)
-                    return new UserRegistrationResponse
-                    {
-                        Status = false,
-                        StatusMsg = "Such Email already exists"
-                    };
-                var encPassword = LoginRegisterHelper.HashGen(data.Password);
-                var user = new UserDBTable()
+                using (var db = new UserContext())
                 {
-                    Username = data.UserName,
-                    Usersurname = data.UserLastName,
-                    Password = encPassword,
-                    Email = data.Email,
-                    PhoneNumber = data.PhoneNumber,
-                    LoginTime = DateTime.Now,
-                    Level = Domain.Enumerables.UserRole.User
+                    var isSuchEmail = db.Users.FirstOrDefault(u => u.Email == data.Email);
+                    if (isSuchEmail != null)
+                    {
+                        return new UserRegistrationResponse
+                        {
+                            Status = false,
+                            StatusMsg = "Such Email already exists"
+                        };
+                    }
+
+                    var encPassword = LoginRegisterHelper.HashGen(data.Password);
+                    var user = new UserDBTable()
+                    {
+                        Username = data.UserName,
+                        Usersurname = data.UserLastName,
+                        Password = encPassword,
+                        Email = data.Email,
+                        PhoneNumber = data.PhoneNumber,
+                        LoginTime = DateTime.Now,
+                        Level = Domain.Enumerables.UserRole.User,
+                        Balance = 0m,
+                    };
+
+                    db.Users.Add(user);
+                    db.SaveChanges();
+
+                    // Проверка: Поиск пользователя в БД
+                    var savedUser = db.Users.FirstOrDefault(u => u.Id == user.Id);
+                    if (savedUser != null)
+                    {
+                        return new UserRegistrationResponse
+                        {
+                            Status = true,
+                            StatusMsg = "User added successfully",
+                            User = savedUser
+                        };
+                    }
+                    else
+                    {
+                        return new UserRegistrationResponse
+                        {
+                            Status = false,
+                            StatusMsg = "Something went wrong. User was not found after creation attempt"
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new UserRegistrationResponse
+                {
+                    Status = false,
+                    StatusMsg = ex.Message,
+                    User = null
                 };
+            }
+        }
 
-                db.Users.Add(user);
-                db.SaveChanges(); 
-
-                // Проверка: Поиск пользователя в БД
-                var savedUser = db.Users.FirstOrDefault(u => u.Id == user.Id);
-                if (savedUser != null)
+        public UserDBTable GetUserByIdAction(int id)
+        {
+            try
+            {
+                using (var db = new UserContext())
                 {
-                    return new UserRegistrationResponse
-                    {
-                        Status = true,
-                        StatusMsg = "User added successfully",
-                        User = savedUser
-                    };
+                    return db.Users.Find(id);
                 }
-                else
-                {
-                    return new UserRegistrationResponse
-                    {
-                        Status = false,
-                        StatusMsg = "Something went wrong. User was not found after creation attempt"
-                    };
-                }
+            }
+            catch
+            {
+                return null;
             }
         }
 
         internal UserDBTable EditUserProfileAction(UserInfo data)
         {
-            using (var db = new UserContext())
+            try
             {
-                var user = db.Users.SingleOrDefault(u => u.Id == data.Id); // или u.Email == model.Email
-                if (user == null)
+                using (var db = new UserContext())
                 {
-                    return null;
+                    var user = db.Users.SingleOrDefault(u => u.Id == data.Id); // или u.Email == model.Email
+                    if (user == null)
+                    {
+                        return null;
+                    }
+
+                    // Обновляем поля пользователя
+                    user.Username = data.UserName;
+                    user.Usersurname = data.UserLastName;
+                    user.PhoneNumber = data.PhoneNumber;
+                    user.Email = data.Email;
+                    user.Balance = data.Balance;
+
+                    db.SaveChanges();
+
+                    return user;
                 }
-
-                // Обновляем поля пользователя
-                user.Username = data.UserName;
-                user.Usersurname = data.UserLastName;
-                user.PhoneNumber = data.PhoneNumber;
-                user.Email = data.Email;
-
-                db.SaveChanges();
-
-                return user;
             }
-            ;
+            catch
+            {
+                return null;
+            }
         }
 
         internal bool ChangePasswordInDBAction(ChangePasswordClass pass)
         {
-            using (var db = new UserContext())
+            try
             {
-                var user = db.Users.FirstOrDefault(u => u.Id == pass.Id);
-                if (user == null)
-                    return false;
-                var encPasswordOld = LoginRegisterHelper.HashGen(pass.OldPassword);
-                if (user.Password != encPasswordOld)
-                    return false;
-                var encPasswordNew = LoginRegisterHelper.HashGen(pass.NewPassword);
-                user.Password = pass.NewPassword;
-                db.SaveChanges();
-                return true;
+                using (var db = new UserContext())
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id == pass.Id);
+                    if (user == null)
+                        return false;
+
+                    var encPasswordOld = LoginRegisterHelper.HashGen(pass.OldPassword);
+                    if (user.Password != encPasswordOld)
+                        return false;
+
+                    var encPasswordNew = LoginRegisterHelper.HashGen(pass.NewPassword);
+                    user.Password = encPasswordNew;
+
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
         //=========================== Basket ===========================
+
         internal List<BasketDTO> GetAllProductsInBasketAction(int userId)
         {
-            using (var cartDb = new CartContext())
+            try
             {
-                var userCarts = cartDb.Carts
-                                      .Where(c => c.UserId == userId)
-                                      .ToList();
-
-                var productIds = userCarts.Select(c => c.ProductInBasketId).ToList();
-
-                using (var productDb = new ProductContext())
+                using (var cartDb = new CartContext())
                 {
-                    var products = productDb.Products
-                                            .Where(p => productIds.Contains(p.Id))
-                                            .ToList();
+                    var userCarts = cartDb.Carts
+                                          .Where(c => c.UserId == userId)
+                                          .ToList();
 
-                    var result = userCarts.Select(cart =>
+                    var productIds = userCarts.Select(c => c.ProductInBasketId).ToList();
+
+                    using (var productDb = new ProductContext())
                     {
-                        var product = products.First(p => p.Id == cart.ProductInBasketId);
-                        return new BasketDTO
-                        {
-                            Product = new ProductDTO
-                            {
-                                Id = product.Id,
-                                Name = product.Name,
-                                Price = product.Price,
-                                Producer = product.Producer,
-                                Article = product.Article,
-                                Category = product.Category,
-                                Description = product.Description,
-                                Status = product.Status,
-                                ImageNumber = product.ImageString,
-                                Quantity = product.Quantity
-                            },
-                            Quantity = cart.Quantity
-                        };
-                    }).ToList();
+                        var products = productDb.Products
+                                                .Where(p => productIds.Contains(p.Id))
+                                                .ToList();
 
-                    return result;
+                        var result = userCarts.Select(cart =>
+                        {
+                            var product = products.First(p => p.Id == cart.ProductInBasketId);
+                            return new BasketDTO
+                            {
+                                Product = new ProductDTO
+                                {
+                                    Id = product.Id,
+                                    Name = product.Name,
+                                    Price = product.Price,
+                                    Producer = product.Producer,
+                                    Article = product.Article,
+                                    Category = product.Category,
+                                    Description = product.Description,
+                                    Status = product.Status,
+                                    ImageNumber = product.ImageString,
+                                    Quantity = product.Quantity
+                                },
+                                Quantity = cart.Quantity
+                            };
+                        }).ToList();
+
+                        return result;
+                    }
                 }
+            }
+            catch
+            {
+                return new List<BasketDTO>();
             }
         }
 
         internal BasketActionResponse AddToBasketAction(int userId, int productId, int quantity)
         {
-            using (var db = new CartContext())
+            try
             {
-                var existingItem = db.Carts
-                    .FirstOrDefault(c => c.UserId == userId && c.ProductInBasketId == productId);
+                using (var db = new CartContext())
+                {
+                    var existingItem = db.Carts
+                        .FirstOrDefault(c => c.UserId == userId && c.ProductInBasketId == productId);
 
-                if (existingItem != null)
-                {
-                    existingItem.Quantity += quantity;
-                    db.Carts.AddOrUpdate(existingItem);
-                }
-                else
-                {
-                    var newItem = new BasketBDTables
+                    if (existingItem != null)
                     {
-                        UserId = userId,
-                        ProductInBasketId = productId,
-                        Quantity = quantity
-                    };
-                    db.Carts.Add(newItem);
-                }
+                        existingItem.Quantity += quantity;
+                        db.Carts.AddOrUpdate(existingItem);
+                    }
+                    else
+                    {
+                        var newItem = new BasketBDTables
+                        {
+                            UserId = userId,
+                            ProductInBasketId = productId,
+                            Quantity = quantity
+                        };
+                        db.Carts.Add(newItem);
+                    }
 
-                db.SaveChanges();
-                return (new BasketActionResponse
+                    db.SaveChanges();
+                    return new BasketActionResponse
+                    {
+                        Status = true,
+                        StatusMsg = "Added successfully"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BasketActionResponse
                 {
-                    Status = true,
-                    StatusMsg = "Added successfully"
-                });
+                    Status = false,
+                    StatusMsg = ex.Message
+                };
             }
         }
 
         internal int GetBasketSizeAction(int userId)
         {
-            using (var db = new CartContext())
+            try
             {
-                int totalQuantity = db.Carts
-                                        .Where(c => c.UserId == userId)
-                                        .Sum(c => (int?)c.Quantity) ?? 0;
-                return totalQuantity;
+                using (var db = new CartContext())
+                {
+                    int totalQuantity = db.Carts
+                                          .Where(c => c.UserId == userId)
+                                          .Sum(c => (int?)c.Quantity) ?? 0;
+                    return totalQuantity;
+                }
+            }
+            catch
+            {
+                return 0;
             }
         }
 
         internal BasketActionResponse RemoveFromBasketAction(List<int> productIds, int userId)
         {
-            using (var db = new CartContext())
+            try
             {
-                var itemsToRemove = db.Carts
-                    .Where(c => c.UserId == userId && productIds.Contains(c.ProductInBasketId))
-                    .ToList();
+                using (var db = new CartContext())
+                {
+                    var itemsToRemove = db.Carts
+                        .Where(c => c.UserId == userId && productIds.Contains(c.ProductInBasketId))
+                        .ToList();
 
-                db.Carts.RemoveRange(itemsToRemove);
-                db.SaveChanges();
+                    db.Carts.RemoveRange(itemsToRemove);
+                    db.SaveChanges();
+
+                    return new BasketActionResponse
+                    {
+                        Status = true,
+                        StatusMsg = "Deleted successfully"
+                    };
+                }
             }
-
-            return new BasketActionResponse
+            catch (Exception ex)
             {
-                Status = true,
-                StatusMsg = "Deleted successfully"
-            };
+                return new BasketActionResponse
+                {
+                    Status = false,
+                    StatusMsg = ex.Message
+                };
+            }
+        }
+
+
+        //================================= Balance ==============================
+
+        internal bool SupplyBalanceAction(int userId, decimal moneyToAdd)  //Используется и для списания со счёта, но moneyToAdd приходит со знаком "-"
+        {
+            using (var db = new UserContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == userId);
+                if (user == null)
+                    return false;
+                user.Balance += moneyToAdd;
+                db.SaveChanges();
+                return true;
+            }
         }
 
         //================================= Order ================================
 
         internal OrderActionResponse CreateNewOrderAction(OrderDBTable order, int userId, List<int> productIds)
         {
-            using (var orderContext = new OrderContext())
-            using (var productsInOrderContext = new ProductsInOrderContext())
-            using (var basketContext = new CartContext())
+            int newOrderId;
+
+            try
             {
-                // 1. Сохраняем заказ
-                order.UserId = userId;
-                order.CreationDate = DateTime.Now.Date;
-                order.EstimatedDeliveryDate = DateTime.Now.AddDays(7).Date;
+                using (var orderContext = new OrderContext())
+                {
+                    // Сохраняем заказ
+                    order.UserId = userId;
+                    order.CreationDate = DateTime.Now.Date;
+                    order.EstimatedDeliveryDate = DateTime.Now.AddDays(7).Date;
 
-                orderContext.Orders.Add(order);
-                orderContext.SaveChanges();
+                    orderContext.Orders.Add(order);
+                    orderContext.SaveChanges();
 
-                var newOrderId = order.Id;
+                    newOrderId = order.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new OrderActionResponse
+                {
+                    Status = false,
+                    StatusMsg = "Ошибка при создании заказа: " + ex.Message
+                };
+            }
 
-                // 2. Получаем данные из корзины
-                var cartItems = basketContext.Carts
-                    .Where(c => c.UserId == userId && productIds.Contains(c.ProductInBasketId))
-                    .ToList();
-
-                // 3. Создаём записи для таблицы ProductsInOrderDBTable
+            try
+            {
+                using (var basketContext = new CartContext())
+                using (var productsInOrderContext = new ProductsInOrderContext())
                 using (var productContext = new ProductContext())
                 {
+                    // Получаем данные из корзины
+                    var cartItems = basketContext.Carts
+                        .Where(c => c.UserId == userId && productIds.Contains(c.ProductInBasketId))
+                        .ToList();
+
                     foreach (var cartItem in cartItems)
                     {
-                        // Получаем товар из базы по его ID
                         var productFromDb = productContext.Products.FirstOrDefault(p => p.Id == cartItem.ProductInBasketId);
 
-                        if (productFromDb != null && productFromDb.Status != ProductStatus.hidden && productFromDb.Quantity > 0)
+                        if (productFromDb != null && productFromDb.Status != ProductStatus.hidden && productFromDb.Quantity >= cartItem.Quantity)
                         {
                             var productInOrder = new ProductsInOrderDBTable
                             {
@@ -307,32 +436,62 @@ namespace WebShop.BusinessLogic.Core
                             };
 
                             productsInOrderContext.ProductsInOrder.Add(productInOrder);
+                            productFromDb.Quantity -= cartItem.Quantity;
                         }
-                        else {
+                        else
+                        {
+                            var product = productContext.Products.FirstOrDefault(p => p.Id == cartItem.ProductInBasketId);
                             return new OrderActionResponse
                             {
                                 OrderId = newOrderId,
                                 Status = false,
-                                StatusMsg = "Товар с id = " + cartItem.Id + "не доступен"
+                                StatusMsg = $"Товар {product.Name} с атрикулом  {product.Article} недоступен или его недостаточное количество."
                             };
                         }
                     }
+
+                    productContext.SaveChanges();
+                    productsInOrderContext.SaveChanges();
                 }
+            }
+            catch (Exception ex)
+            {
+                return new OrderActionResponse
+                {
+                    OrderId = newOrderId,
+                    Status = false,
+                    StatusMsg = "Ошибка при добавлении товаров в заказ: " + ex.Message
+                };
+            }
 
-                productsInOrderContext.SaveChanges();
-
+            try
+            {
                 var response = RemoveFromBasketAction(productIds, userId);
-                if(response.Status == true)
+                if (response.Status)
+                {
                     return new OrderActionResponse
                     {
                         Status = true,
                         StatusMsg = "Заказ успешно создан",
                         OrderId = newOrderId
                     };
+                }
+                else
+                {
+                    return new OrderActionResponse
+                    {
+                        Status = false,
+                        StatusMsg = "Заказ создан, но не удалось удалить товары из корзины: " + response.StatusMsg,
+                        OrderId = newOrderId
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
                 return new OrderActionResponse
                 {
                     Status = false,
-                    StatusMsg = "Где-то произошла ошибка",
+                    StatusMsg = "Ошибка при удалении товаров из корзины: " + ex.Message,
                     OrderId = newOrderId
                 };
             }
@@ -340,32 +499,46 @@ namespace WebShop.BusinessLogic.Core
 
         internal OrderDBTable GetOrderByIdAction(int id)
         {
-            using (var db = new OrderContext())
+            try
             {
-                var order = db.Orders.Find(id);
-                if (order == null)
+                using (var db = new OrderContext())
                 {
-                    return null;
+                    return db.Orders.Find(id);
                 }
-                return order;
+            }
+            catch
+            {
+                return null;
             }
         }
 
         internal List<OrderDBTable> GetUserOrdersAction(int userId)
         {
-            using (var db = new OrderContext())
+            try
             {
-                var orders = db.Orders.Where(o => o.UserId == userId).ToList();
-                return orders;
+                using (var db = new OrderContext())
+                {
+                    return db.Orders.Where(o => o.UserId == userId).ToList();
+                }
+            }
+            catch
+            {
+                return new List<OrderDBTable>();
             }
         }
 
         internal List<ProductsInOrderDBTable> GetOrderProductsByIdAction(int id)
         {
-            using (var db = new ProductsInOrderContext())
+            try
             {
-                var products = db.ProductsInOrder.Where(p => p.OrderId == id).ToList();
-                return products;
+                using (var db = new ProductsInOrderContext())
+                {
+                    return db.ProductsInOrder.Where(p => p.OrderId == id).ToList();
+                }
+            }
+            catch
+            {
+                return new List<ProductsInOrderDBTable>();
             }
         }
 
@@ -472,6 +645,7 @@ namespace WebShop.BusinessLogic.Core
 
             return userminimal;
         }
+
     }
 }
 

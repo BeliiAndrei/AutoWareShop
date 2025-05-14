@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Profile";
 }
-@model WebShop.Domain.User.Admin.UserInfo
+@model WebShop.Models.User.UserInfoModel
 
 <main class="main-content">
     @if (TempData["Message"] != null)
@@ -32,6 +32,10 @@
                 <dl class="manual-params__param">
                     <dt class="manual-params__value">Телефон</dt>
                     <dd class="manual-params__property">@Model.PhoneNumber</dd>
+                </dl>
+                <dl class="manual-params__param">
+                    <dt class="manual-params__value">Баланс</dt>
+                    <dd class="manual-params__property">@Model.Balance.ToString("F2") Лей</dd>
                 </dl>
                 <a class="manual-params__edit" href="javascript:void(0);" onclick="toggleEditMode()">
                     <svg class="icon icon-pen manual-params__edit-icon">

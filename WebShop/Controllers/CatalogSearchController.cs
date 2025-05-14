@@ -103,7 +103,6 @@ namespace WebShop.Controllers
             };
             PageInfo pageInfo = new PageInfo(searchResult.TotalCount, page, pageSize);
             SearchModel viewModel = new SearchModel(searchResult, pageInfo);
-            //viewModel.Result.AvailableBrands = new List<string> { "Filtron", "Bosh" };  // Тест!!!!
             return viewModel;
         }
 

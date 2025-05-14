@@ -47,7 +47,7 @@ namespace WebShop.BusinessLogic.Core
             {
                 using (var db = new ProductContext())
                 {
-                    var query = db.Products.AsQueryable();
+                    var query = db.Products.Where(p => p.Status != ProductStatus.hidden).AsQueryable();
 
                     // Фильтрация по цене
                     query = query.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
@@ -297,7 +297,7 @@ namespace WebShop.BusinessLogic.Core
                     {
                         products = products,
                         productsTotalCount = count,
-                        availableBrands = allBrands // новое свойство!
+                        availableBrands = allBrands 
                     };
                 }
             }

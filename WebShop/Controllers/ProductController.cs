@@ -18,7 +18,6 @@ namespace WebShop.Controllers
             var bl = new BusinessLogic.BusinessLogic();
             _product = bl.GetProductBl();
         }
-        // GET: Product
         public ActionResult Card(string value)
         {
             var item = _product.GetProductByArticle(value);

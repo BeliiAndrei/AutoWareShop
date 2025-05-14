@@ -42,13 +42,9 @@ namespace WebShop.Domain.User.Auth
         [Display(Name = "Role")]
         public Enumerables.UserRole Level { get; set; }
 
-      
+        [Display(Name = "Balance")]
+        public decimal Balance { get; set; }
 
-
-        //====================DeliveryLocation=========================
-       
-
-        //============================================================
 
 
     }
