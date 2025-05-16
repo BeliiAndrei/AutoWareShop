@@ -10,7 +10,7 @@ using WebShop.Models.Order;
 
 namespace WebShop.Controllers
 {
-    public class BasketPaymentController : Controller
+    public class BasketPaymentController : BaseController
     {
         IBasket _basket;
         IDelivery _delivery;

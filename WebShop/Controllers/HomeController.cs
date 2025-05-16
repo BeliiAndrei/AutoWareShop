@@ -10,7 +10,7 @@ using WebShop.Models.MainPageModels;
 
 namespace WebShop.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         IProduct _product;
         INews _news;

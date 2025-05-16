@@ -11,7 +11,7 @@ using WebShop.Models.Search;
 
 namespace WebShop.Controllers
 {
-    public class CatalogSearchController : Controller
+    public class CatalogSearchController : BaseController
     {
         IProduct _product;
         public CatalogSearchController()

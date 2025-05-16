@@ -9,7 +9,7 @@ using WebShop.Models;
 
 namespace WebShop.Controllers
 {
-    public class DeliveryController : Controller
+    public class DeliveryController : BaseController
     {
         //==============================Delivery=========================================
         

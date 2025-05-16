@@ -35,7 +35,7 @@
                                     <h1>Данные доставки</h1>
                                 </header>
 
-                                @using (Html.BeginForm("Delivery", "Auth", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                @using (Html.BeginForm("Delivery", "Delivery", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     @Html.Hidden("UserId", userId) 

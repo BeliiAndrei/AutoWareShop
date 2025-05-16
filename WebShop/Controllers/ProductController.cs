@@ -10,7 +10,7 @@ using WebShop.Models;
 namespace WebShop.Controllers
 {
 
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         IProduct _product;
         public ProductController()

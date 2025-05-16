@@ -7,10 +7,10 @@ using WebShop.Models;
 
 namespace WebShop.Controllers
 {
-    public class InformationalController : Controller
+    public class InformationalController : BaseController
 
 
-   
+
     {
         INews _news;
         public InformationalController()

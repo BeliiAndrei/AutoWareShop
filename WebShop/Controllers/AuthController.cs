@@ -10,7 +10,7 @@ using System.Web;
 
 namespace WebShop.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
 
         private readonly ISession _session;
