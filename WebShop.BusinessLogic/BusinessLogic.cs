@@ -31,6 +31,10 @@ namespace WebShop.BusinessLogic
         {
             return new ProductBL();
         }
+        public ISTO GetSTOBl()
+        {
+            return new STOBL();
+        }
 
         public IBasket GetBasketBL()
         {

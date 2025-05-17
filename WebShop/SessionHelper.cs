@@ -49,5 +49,11 @@ namespace WebShop
             get => (DeliveryViewModel)HttpContext.Current.Session["Delivery"];
             set => HttpContext.Current.Session["Delivery"] = value;
         }
+        public static STOViewModel STO
+        {
+            get => (STOViewModel)HttpContext.Current.Session["STO"];
+            set => HttpContext.Current.Session["STO"] = value;
+        }
+       
     }
 }

@@ -76,6 +76,8 @@
     <Compile Include="Product\SearchResponses\ProductSearchResponseDTO.cs" />
     <Compile Include="Product\SearchResponses\ProductSearchResponseDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="STO\Main\STO.cs" />
+    <Compile Include="STO\STODBTab.cs" />
     <Compile Include="User\Admin\UserInfo.cs" />
     <Compile Include="Delivery\DeliveryLocDBTable.cs" />
     <Compile Include="Delivery\Admin\DeliveryL.cs" />
