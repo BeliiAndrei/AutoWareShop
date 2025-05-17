@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web.Mvc;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Order;
+using WebShop.Domain.User.Delivery;
 using WebShop.Filter;
 using WebShop.Models;
 using WebShop.Models.Order;
+using WebShop.BusinessLogic.BLogic;
 
 namespace WebShop.Controllers
 {
@@ -115,41 +117,32 @@ namespace WebShop.Controllers
             SessionHelper.OrderPrice = orderPrice;
             return View();
         }
-        [HttpPost]
-        [UserOnly]
-        public ActionResult Basket_step_3(string payment, string orderMessage = "")
+       
+        public ActionResult Basket_step_3()
         {
-            SessionHelper.OrderPaymentType = payment;
-            if(payment == "payment-online" && SessionHelper.User.Balance >= SessionHelper.OrderPrice)
+            var user = SessionHelper.User;
+            if (user == null)
             {
-                //Тут списание со счёта, если на нём достаточно средств
-                _user.SupplyBalance(SessionHelper.User.Id, -(SessionHelper.OrderPrice));
-                SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
+                return RedirectToAction("Authorisation", "Auth");
             }
-            else
-            {
-                if(payment == "payment-online" && SessionHelper.User.Balance < SessionHelper.OrderPrice)
+
+            // Правильное получение сервиса доставки
+            var deliveryService = new DeliveryBL(); // Используем бизнес-логику, а не модель
+            var addresses = deliveryService.GetDeliveryAddressesByUserId(user.Id)
+                .Select(a => new DeliveryViewModel
                 {
-                    TempData["NotEnoughMoney"] = $"У вас недостаточно средств на счету. У вас на счету {SessionHelper.User.Balance.ToString("F2") ?? "0.00"}, а стоимость заказа {SessionHelper.OrderPrice}.";
-                    return RedirectToAction("Payment");
-                }
-            }
-            SessionHelper.OrderMessage = orderMessage;
-            var userId = SessionHelper.User.Id;
-            var deliveryInfoDB = _delivery.GetDeliveryAddressByUserId(userId) ?? null;
-            if (deliveryInfoDB != null)
-            {
-                var deliveryInfo = new DeliveryViewModel
-                {
-                    Apartment = deliveryInfoDB.Apartment,
-                    Block = deliveryInfoDB.Block,
-                    City = deliveryInfoDB.City,
-                    House = deliveryInfoDB.House,
-                    PostalCode = deliveryInfoDB.PostalCode,
-                    Street = deliveryInfoDB.Street
-                };
-                return View(deliveryInfo);
-            }
+                    Id = a.Id,
+                    City = a.City,
+                    Street = a.Street,
+                    House = a.House,
+                    Block = a.Block,
+                    Apartment = a.Apartment,
+                    PostalCode = a.PostalCode,
+                    Comment = a.Comment
+                }).ToList();
+
+            ViewBag.SavedAddresses = addresses;
+
             return View(new DeliveryViewModel());
         }
 
@@ -272,5 +265,6 @@ namespace WebShop.Controllers
            SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
            return RedirectToAction("Payment"); 
         }
+        
     }
 }

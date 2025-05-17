@@ -10,7 +10,7 @@ using WebShop.Domain.User.Delivery;
 
 namespace WebShop.BusinessLogic.BLogic
 {
-    internal class DeliveryBL:DeliveryApi, IDelivery
+    public class DeliveryBL:DeliveryApi, IDelivery
     {
         public bool AddDeliveryAddress(DeliveryL address)
         {
