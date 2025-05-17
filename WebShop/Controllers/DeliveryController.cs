@@ -11,9 +11,7 @@ namespace WebShop.Controllers
 {
     public class DeliveryController : Controller
     {
-        //==============================Delivery=========================================
-        
-        //!!! Перенёс из Auth в отдельный контроллер как мы говорили. Тут почему-то не нахожу EditDelivery. Надо бы добавить.
+      
 
 
         private readonly IDelivery _delivery;
@@ -76,10 +74,133 @@ namespace WebShop.Controllers
             }
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteDelivery(int id)
+        {
+            var user = SessionHelper.User;
+            if (user == null)
+            {
+                TempData["Message"] = "Для удаления адреса доставки необходимо авторизоваться";
+                TempData["AlertType"] = "danger";
+                return RedirectToAction("Authorisation", "Auth");
+            }
+
+            try
+            {
+                // Проверяем, что адрес принадлежит пользователю
+                var addresses = _delivery.GetDeliveryAddressesByUserId(user.Id);
+                if (!addresses.Any(a => a.Id == id))
+                {
+                    TempData["Message"] = "Адрес не найден или не принадлежит вам";
+                    TempData["AlertType"] = "danger";
+                    return RedirectToAction("DeliveryList");
+                }
+
+                var response = _delivery.DeleteDeliveryAddress(id);
+
+                if (response)
+                {
+                    TempData["Message"] = "Адрес доставки успешно удалён";
+                    TempData["AlertType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = "Не удалось удалить адрес доставки";
+                    TempData["AlertType"] = "danger";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(ex.Message);
+                TempData["Message"] = "Произошла ошибка при удалении адреса доставки";
+                TempData["AlertType"] = "danger";
+            }
+
+            return RedirectToAction("DeliveryList");
+        }
+
+        [HttpGet]
+        public ActionResult EditDelivery(int id)
+        {
+            var user = SessionHelper.User;
+            if (user == null)
+            {
+                TempData["Message"] = "Для редактирования адреса необходимо авторизоваться";
+                TempData["AlertType"] = "danger";
+                return RedirectToAction("Authorisation", "Auth");
+            }
+
+            try
+            {
+                var addresses = _delivery.GetDeliveryAddressesByUserId(user.Id);
+                var address = addresses.FirstOrDefault(a => a.Id == id);
+
+                if (address == null)
+                {
+                    TempData["Message"] = "Адрес не найден";
+                    TempData["AlertType"] = "danger";
+                    return RedirectToAction("DeliveryList");
+                }
+
+                return View(LToView(address));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(ex.Message);
+                TempData["Message"] = "Ошибка при загрузке адреса";
+                TempData["AlertType"] = "danger";
+                return RedirectToAction("DeliveryList");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditDelivery(DeliveryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = SessionHelper.User;
+            if (user == null)
+            {
+                TempData["Message"] = "Для редактирования адреса необходимо авторизоваться";
+                TempData["AlertType"] = "danger";
+                return RedirectToAction("Authorisation", "Auth");
+            }
+
+            try
+            {
+                var address = ViewToL(model);
+                var result = _delivery.EditDeliveryAddress(address, user.Id);
+
+                if (result)
+                {
+                    TempData["Message"] = "Адрес успешно обновлён";
+                    TempData["AlertType"] = "success";
+                    return RedirectToAction("DeliveryList");
+                }
+
+                TempData["Message"] = "Ошибка при обновлении адреса";
+                TempData["AlertType"] = "danger";
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(ex.Message);
+                TempData["Message"] = "Ошибка при обновлении адреса";
+                TempData["AlertType"] = "danger";
+            }
+
+            return View(model);
+        }
         public DeliveryL ViewToL(DeliveryViewModel view)
         {
             return new DeliveryL
             {
+                Id = view.Id,
                 UserId = view.UserId,
                 PostalCode = view.PostalCode,
                 City = view.City,
@@ -95,6 +216,7 @@ namespace WebShop.Controllers
         {
             return new DeliveryViewModel
             {
+                Id = delivery.Id,
                 UserId = delivery.UserId,
                 PostalCode = delivery.PostalCode,
                 City = delivery.City,
@@ -107,6 +229,5 @@ namespace WebShop.Controllers
         }
 
 
-        //==============================End_Delivery=====================================
     }
 }

@@ -412,7 +412,6 @@
     <Content Include="Views\Admin\NewsEditor.cshtml" />
     <Content Include="Views\Admin\NewsUpdate.cshtml" />
     <Content Include="Views\Delivery\Delivery.cshtml" />
-    <Content Include="Views\Delivery\DeliveryManager.cshtml" />
     <Content Include="Views\Shared\_PersonalLayout.cshtml" />
     <Content Include="Views\Delivery\DeliveryList.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
@@ -420,6 +419,7 @@
     <Content Include="Views\Admin\Orders.cshtml" />
     <Content Include="Views\Admin\OrderDetails.cshtml" />
     <Content Include="Views\Error\OrderError.cshtml" />
+    <Content Include="Views\Delivery\EditDelivery.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -427,10 +427,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Scripts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\WebShop.BusinessLogic\WebShop.BusinessLogic.csproj">
       <Project>{b7902a8e-91cd-4e46-bf72-a97672b1db68}</Project>
