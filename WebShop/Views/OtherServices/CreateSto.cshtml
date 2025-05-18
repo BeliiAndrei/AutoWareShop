@@ -1,237 +1,322 @@
-﻿@{
-    ViewBag.Title = "CreateSto";
+﻿@model WebShop.Models.STOViewModel
+
+@{
+    ViewBag.Title = "Запись на автосервис";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var tomorrow = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
 }
 
-<div class="container-fluid">
-    <main>
-        <div class="primary-layout">
-            <div class="main-heading">
-                <h1 class="main-heading__text">Онлайн-запись на СТО</h1>
+<div class="container">
+    <div class="sto-booking-header">
+        <h2 class="text-center">Запись на автосервис</h2>
+        <p class="text-center text-muted">Заполните форму ниже, и мы подберем для вас лучшее время для визита</p>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-@(TempData["Message"].ToString() == "Success" ? "success" : "danger") alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            @if (TempData["Message"].ToString() == "Success")
+            {
+                <p><i class="fas fa-check-circle"></i> Ваша заявка успешно создана! Мы свяжемся с вами для подтверждения.</p>
+            }
+            else
+            {
+                <p><i class="fas fa-exclamation-triangle"></i> @TempData["Message"]</p>
+            }
+        </div>
+    }
+
+    @using (Html.BeginForm("CreateSto", "OtherServices", FormMethod.Post, new { @class = "form-horizontal sto-booking-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-section">
+            <h4><i class="fas fa-car"></i> Информация об автомобиле</h4>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CarBrand, new { @class = "control-label" })
+                <div class="input-with-icon">
+                    <i class="fas fa-car-side"></i>
+                    @Html.DropDownListFor(model => model.CarBrand, new SelectList(new List<string>
+                    {
+                        "Audi", "BMW", "Chevrolet", "Ford", "Honda",
+                        "Hyundai", "Kia", "Lexus", "Mazda", "Mercedes-Benz",
+                        "Mitsubishi", "Nissan", "Opel", "Peugeot", "Renault",
+                        "Skoda", "Subaru", "Toyota", "Volkswagen", "Volvo"
+                    }), "Выберите марку", new { @class = "form-control" })
+                </div>
+                @Html.ValidationMessageFor(model => model.CarBrand, "", new { @class = "text-danger" })
             </div>
-            <form class="signup-sto" action="/" method="POST" name="signup-sto">
-                <fieldset class="signup-sto__car-data">
-                    <legend class="signup-sto__heading">Данные автомобиля</legend>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-4">
-                            <div class="signup-sto__field">
-                                <label class="signup-sto__label" for="u-car-vincode">Выберите марку <span>*</span></label>
-                                <select class="js-select-autocomplete" name="car-brand" id="u-car-vincode">
-                                    <option value="Acura">Acura</option>
-                                    <option value="Alfa Romeo">Alfa Romeo</option>
-                                    <option value="Audi">Audi</option>
-                                    <option value="BMW">BMW</option>
-                                    <option value="Chevrolet">Chevrolet</option>
-                                    <option value="Chrysler">Chrysler</option>
-                                    <option value="Citroen">Citroen</option>
-                                    <option value="Daewoo">Daewoo</option>
-                                    <option value="Dodge">Dodge</option>
-                                    <option value="Fiat">Fiat</option>
-                                    <option value="Ford">Ford</option>
-                                    <option value="Honda">Honda</option>
-                                    <option value="Hyundai">Hyundai</option>
-                                    <option value="Infiniti">Infiniti</option>
-                                    <option value="Jaguar">Jaguar</option>
-                                    <option value="Jeep">Jeep</option>
-                                    <option value="Kia">Kia</option>
-                                    <option value="Land Rover">Land Rover</option>
-                                    <option value="Lexus">Lexus</option>
-                                    <option value="Mazda">Mazda</option>
-                                    <option value="Mercedes-Benz">Mercedes-Benz</option>
-                                    <option value="Mitsubishi">Mitsubishi</option>
-                                    <option value="Nissan">Nissan</option>
-                                    <option value="Opel">Opel</option>
-                                    <option value="Peugeot">Peugeot</option>
-                                    <option value="Porsche">Porsche</option>
-                                    <option value="Renault">Renault</option>
-                                    <option value="Skoda">Skoda</option>
-                                    <option value="Subaru">Subaru</option>
-                                    <option value="Suzuki">Suzuki</option>
-                                    <option value="Toyota">Toyota</option>
-                                    <option value="Volkswagen">Volkswagen</option>
-                                    <option value="Volvo">Volvo</option>
-                                </select>
-                            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Year, new { @class = "control-label" })
+                        <div class="input-with-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                            @Html.DropDownListFor(model => model.Year, new SelectList(Enumerable.Range(1950, DateTime.Now.Year - 1949).Reverse()), "Выберите год", new { @class = "form-control" })
                         </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="signup-sto__field">
-                                <label class="signup-sto__label" for="u-car-model">Модель авто <span>*</span></label>
-                                <input class="signup-sto__input" id="u-car-model" type="text" name="car-model" placeholder="Введите модель автомобиля">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="signup-sto__field">
-                                <label class="signup-sto__label" for="u-car-engine">Объем и тип двигателя <span>*</span></label>
-                                <input class="signup-sto__input" id="u-car-engine" type="text" name="car-engine" placeholder="Например: 2.0 бензин">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="signup-sto__field">
-                                <label class="signup-sto__label" for="u-car-year">Год выпуска <span>*</span></label>
-                                <select class="js-select-autocomplete" name="car-year" id="u-car-year">
-                                    <option value="">Выберите год</option>
-                                    @for (int year = 1970; year <= 2025; year++)
-                                    {
-                                        <option value="@year">@year</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="signup-sto__field">
-                                <label class="signup-sto__label" for="user-car-vincode">VIN код автомобиля</label>
-                                <input class="signup-sto__input" id="user-car-vincode" type="text" name="user-car-vincode">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="signup-sto__field">
-                                <label class="signup-sto__label" for="user-car-number">Гос. номер автомобиля</label>
-                                <input class="signup-sto__input" id="user-car-number" type="text" name="user-car-number">
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset class="signup-sto__owner-data">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="signup-sto__heading">Время записи</div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="signup-sto__field">
-                                        <label class="signup-sto__label" for="date-from">Дата <span>*</span></label>
-                                        <div class="date-picker-main">
-                                            <input class="signup-sto__date-from" id="date-from" type="date" name="order-from"
-                                                   placeholder="Дата"
-                                                   min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")">
-                                                <use href="~/assets/images/svg/symbol/sprite.svg#calendar-alt"></use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="signup-sto__field">
-                                        <label class="signup-sto__label" for="u-signup-time">Время</label>
-                                        <select class="js-select-default" name="signup-time" id="u-signup-time">
-                                            <option value="10:00">10:00</option>
-                                            <option value="11:00">11:00</option>
-                                            <option value="12:00">12:00</option>
-                                            <option value="13:00">13:00</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="18:00">18:00</option>
-                                            <option value="19:00">19:00</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset class="signup-sto__service-data">
-                    <legend class="signup-sto__heading">Время записи <span>*</span></legend>
-                    <div class="radio-option">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-4">
-                                <div class="radio-opt active">
-                                    <div class="radio-opt__title">СТО Варница</div>
-                                    <div class="radio-opt__address">г. Кишинёв, ул. Варница 8/1</div>
-                                    <div class="radio-opt__footer">
-                                        <div class="radio-label">
-                                            <input class="radio-label__input" type="radio" name="payment" value="payment-online" checked id="opt-1">
-                                            <label class="radio-label__main" for="opt-1">Выбрать</label>
-                                        </div>
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-4">
-                                <div class="radio-opt">
-                                    <div class="radio-opt__title">СТО Каля Ешилор</div>
-                                    <div class="radio-opt__address">г. Кишинёв, ул. Каля Ешилор 14</div>
-                                    <div class="radio-opt__footer">
-                                        <div class="radio-label">
-                                            <input class="radio-label__input" type="radio" name="payment" value="payment-cash" id="opt-2">
-                                            <label class="radio-label__main" for="opt-2">Выбрать</label>
-                                        </div>
-                                      
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-4">
-                                <div class="radio-opt">
-                                    <div class="radio-opt__title">СТО Узинелор</div>
-                                    <div class="radio-opt__address">г. Кишинёв, ул. Узинелор, 88</div>
-                                    <div class="radio-opt__footer">
-                                        <div class="radio-label">
-                                            <input class="radio-label__input" type="radio" name="payment" value="payment-cash" id="opt-3">
-                                            <label class="radio-label__main" for="opt-3">Выбрать</label>
-                                        </div>
-                                      
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-4">
-                                <div class="radio-opt">
-                                    <div class="radio-opt__title">СТО Бельцы</div>
-                                    <div class="radio-opt__address">г. Бельцы, ул. Аэродромная 7а</div>
-                                    <div class="radio-opt__footer">
-                                        <div class="radio-label">
-                                            <input class="radio-label__input" type="radio" name="payment" value="payment-cash" id="opt-4">
-                                            <label class="radio-label__main" for="opt-4">Выбрать</label>
-                                        </div>
-                          
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-4">
-                                <div class="radio-opt">
-                                    <div class="radio-opt__title">СТО Комрат</div>
-                                    <div class="radio-opt__address">г. Комрат, ул. Победы 115</div>
-                                    <div class="radio-opt__footer">
-                                        <div class="radio-label">
-                                            <input class="radio-label__input" type="radio" name="payment" value="payment-cash" id="opt-5">
-                                            <label class="radio-label__main" for="opt-5">Выбрать</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-                <div class="signup-sto__footer">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <textarea class="signup-sto__msg" rows="1" name="user-msg" placeholder="Краткое описание проблемы"></textarea>
-                        </div>
-                        <div class="col-md-3">
-                            <input class="signup-sto__btn btn btn--main" type="submit" name="send-data" value="Записаться на СТО">
-                        </div>
+                        @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </form>
-        </div>
-    </main>
-    <div data-tooltip-content="params1">
-        <div class="tooltip-markup">
-            <div class="tooltip-markup__heading">Подробная информация</div>
-            <div class="tooltip-markup__body">
-                <div class="manual-params">
-                    <dl class="manual-params__param">
-                        <dt class="manual-params__value">Номер</dt>
-                        <dd class="manual-params__property">04112</dd>
-                    </dl>
-                    <dl class="manual-params__param">
-                        <dt class="manual-params__value">Наименование</dt>
-                        <dd class="manual-params__property">Комплект уплотнительных прокладок двигателя <small>Примечание: 2ZRFXE..ZVW30</small></dd>
-                    </dl>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EngineVolume, new { @class = "control-label" })
+                        <div class="input-with-icon">
+                            <i class="fas fa-gas-pump"></i>
+                            @Html.TextBoxFor(model => model.EngineVolume, new { @class = "form-control", placeholder = "Например: 1.6 или 2.0" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.EngineVolume, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vin, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Vin, new { @class = "form-control", placeholder = "VIN номер (если известен)" })
+                        <small class="form-text text-muted">Поможем точнее диагностировать проблему</small>
+                        @Html.ValidationMessageFor(model => model.Vin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Licenseplate, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Licenseplate, new { @class = "form-control", placeholder = "Гос. номер (если есть)" })
+                        @Html.ValidationMessageFor(model => model.Licenseplate, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div data-tooltip-content="params2">
-        <div class="tooltip-markup">
+
+        <div class="form-section">
+            <h4><i class="far fa-calendar-check"></i> Выбор даты и времени</h4>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RegistrationData, new { @class = "control-label" })
+                        <div class="input-with-icon">
+                            <i class="far fa-calendar-alt"></i>
+                            @Html.TextBoxFor(model => model.RegistrationData, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", min = tomorrow })
+                        </div>
+                        <small class="form-text text-muted">Мы работаем с 9:00 до 19:00</small>
+                        @Html.ValidationMessageFor(model => model.RegistrationData, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TimeOfRegistration, new { @class = "control-label" })
+                        <div class="input-with-icon">
+                            <i class="far fa-clock"></i>
+                            @Html.DropDownListFor(model => model.TimeOfRegistration, new SelectList(new List<string>
+                            {
+                                "09:00", "10:00", "11:00", "12:00", "13:00",
+                                "14:00", "15:00", "16:00", "17:00", "18:00"
+                            }), "Выберите удобное время", new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.TimeOfRegistration, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div class="form-section mb-4">
+            <h4 class="mb-4 d-flex align-items-center gap-2 text-primary">
+                <i class="fas fa-map-marker-alt"></i> Выберите автосервис
+            </h4>
+
+            <div class="row g-3">
+                <!-- Карточка 1 -->
+                <div class="col-sm-6 col-md-4">
+                    <div class="service-card active">
+                        <div class="service-card__content">
+                            <h5 class="service-card__title">СТО Варница</h5>
+                            <div class="service-card__address">
+                                <i class="fas fa-map-marker-alt me-2"></i>г. Кишинёв, ул. Варница 8/1
+                            </div>
+                        </div>
+                        <div class="service-card__radio">
+                            <input type="radio" name="BranchNumber" value="СТО Варница" checked id="opt-1">
+                            <label for="opt-1" class="service-card__label">Выбрать</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 2 -->
+                <div class="col-sm-6 col-md-4">
+                    <div class="service-card">
+                        <div class="service-card__content">
+                            <h5 class="service-card__title">СТО Каля Ешилор</h5>
+                            <div class="service-card__address">
+                                <i class="fas fa-map-marker-alt me-2"></i>г. Кишинёв, ул. Каля Ешилор 14
+                            </div>
+                        </div>
+                        <div class="service-card__radio">
+                            <input type="radio" name="BranchNumber" value="СТО Каля Ешилор" id="opt-2">
+                            <label for="opt-2" class="service-card__label">Выбрать</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Остальные карточки по аналогии -->
+                <div class="col-sm-6 col-md-4">
+                    <div class="service-card">
+                        <div class="service-card__content">
+                            <h5 class="service-card__title">СТО Узинелор</h5>
+                            <div class="service-card__address">
+                                <i class="fas fa-map-marker-alt me-2"></i>г. Кишинёв, ул. Узинелор, 88
+                            </div>
+                        </div>
+                        <div class="service-card__radio">
+                            <input type="radio" name="BranchNumber" value="СТО Узинелор" id="opt-3">
+                            <label for="opt-3" class="service-card__label">Выбрать</label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            @Html.ValidationMessageFor(model => model.BranchNumber, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-section">
+            <h4><i class="fas fa-comment-dots"></i> Дополнительная информация</h4>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Comment, new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Comment, new { @class = "form-control", rows = "4", placeholder = "Опишите проблему, симптомы или ваши пожелания..." })
+                <small class="form-text text-muted">Чем подробнее вы опишете проблему, тем точнее мы сможем подготовиться</small>
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-actions text-center">
+            <button type="submit" class="btn btn-lg" style="background-color: #4CAF50; color: white; border: none;">
+                <i class="fas fa-calendar-plus"></i> Записаться
+            </button>
+        </div>
+    }
 </div>
+
+<style>
+    .sto-booking-header {
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .form-section {
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 25px;
+        border-left: 4px solid #28a745;
+    }
+
+        .form-section h4 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+    .input-with-icon {
+        position: relative;
+    }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: #6c757d;
+        }
+
+        .input-with-icon select,
+        .input-with-icon input {
+            padding-left: 35px;
+        }
+
+    .form-actions {
+        margin-top: 30px;
+    }
+
+    .btn-lg {
+        padding: 10px 25px;
+        margin: 0 10px;
+    }
+
+    /* Стили для выбора СТО */
+    .radio-opt {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        transition: all 0.3s;
+        height: 100%;
+    }
+
+        .radio-opt:hover {
+            border-color: #28a745;
+        }
+
+        .radio-opt.active {
+            border: 2px solid #28a745;
+            background-color: #f8fff8;
+        }
+
+    .radio-opt__title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .radio-opt__address {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
+
+    .radio-opt__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .radio-label {
+        position: relative;
+    }
+
+    .radio-label__input {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .radio-label__main {
+        display: inline-block;
+        padding: 5px 15px;
+        background: #eee;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .radio-label__input:checked + .radio-label__main {
+        background: #28a745;
+        color: white;
+    }
+
+    .radio-opt__service {
+        color: #666;
+    }
+
+    .tooltip {
+        cursor: pointer;
+    }
+    .text-danger {
+        color: #dc3545 !important; /* Красный цвет из Bootstrap */
+        font-size: 0.875em;
+        margin-top: 5px;
+    }
+</style>

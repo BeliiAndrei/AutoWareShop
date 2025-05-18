@@ -40,7 +40,6 @@ namespace WebShop.BusinessLogic.Core
                     stoToUpdate.BranchNumber = updatedSTO.BranchNumber;
                     stoToUpdate.UserId = updatedSTO.UserId;
                     stoToUpdate.CarBrand = updatedSTO.CarBrand;
-                    stoToUpdate.Model = updatedSTO.Model;
                     stoToUpdate.EngineVolume = updatedSTO.EngineVolume;
                     stoToUpdate.Year = updatedSTO.Year;
                     stoToUpdate.Comment = updatedSTO.Comment;

@@ -51,8 +51,8 @@ namespace WebShop
         }
         public static STOViewModel STO
         {
-            get => (STOViewModel)HttpContext.Current.Session["STO"];
-            set => HttpContext.Current.Session["STO"] = value;
+            get => (STOViewModel)HttpContext.Current.Session["CreateSTO"];
+            set => HttpContext.Current.Session["CreateSTO"] = value;
         }
        
     }

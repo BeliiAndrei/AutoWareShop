@@ -5,14 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.User.Delivery;
+using WebShop.Filter;
 using WebShop.Models;
 
 namespace WebShop.Controllers
 {
+    [UserOnly]
     public class DeliveryController : Controller
     {
-      
-
 
         private readonly IDelivery _delivery;
         public DeliveryController()

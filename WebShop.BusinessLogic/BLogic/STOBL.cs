@@ -67,8 +67,17 @@ namespace WebShop.BusinessLogic.BLogic
         }
         public STO GetSTOById(int id)
         {
-            // Implementation for getting a single STO by ID can be added here.
-            throw new NotImplementedException();
+
+            try
+            {
+                var stoDb = GetSTOByIdApi(id);
+                return MapTOSTO(stoDb);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return null;
+            }
         }
         public STO MapTOSTO(STODBTab db)
         {
@@ -78,7 +87,6 @@ namespace WebShop.BusinessLogic.BLogic
                 Id = db.Id,
                 UserId = db.UserId,
                 CarBrand = db.CarBrand,
-                Model = db.Model,
                 EngineVolume = db.EngineVolume,
                 Year = db.Year,
                 Comment = db.Comment,
@@ -97,7 +105,6 @@ namespace WebShop.BusinessLogic.BLogic
                 Id = sto.Id,
                 UserId = sto.UserId,
                 CarBrand = sto.CarBrand,
-                Model = sto.Model,
                 EngineVolume = sto.EngineVolume,
                 Year = sto.Year,
                 Comment = sto.Comment,

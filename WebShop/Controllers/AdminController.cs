@@ -4,10 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.UI;
+using WebShop.BusinessLogic.DBModel;
 using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Enumerables;
 using WebShop.Domain.News;
 using WebShop.Domain.Product;
+using WebShop.Domain.STO;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Registration;
 
@@ -27,6 +29,8 @@ namespace WebShop.Controllers
         private readonly INews _news;
         private readonly IOrder _order;
         private readonly IDelivery _delivery;
+        private readonly ISTO _sto;
+
         public AdminController()
         {
             var bl = new BusinessLogic.BusinessLogic();
@@ -35,6 +39,7 @@ namespace WebShop.Controllers
             _news = bl.GetNewsBl();
             _order = bl.GetOrderBL();
             _delivery = bl.GetDeliveryBL();
+            _sto = bl.GetSTOBl();
         }
 
         // ========== NEWS ==========
@@ -546,6 +551,107 @@ namespace WebShop.Controllers
             //var Ne = NewsToView()
             //return newsList.Select(NewsToView).ToList();
             return News2;
+        }
+        //========================== STO =============================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSTO(int id)
+        {
+            var success = _sto.DeleteSTO(id);
+
+            if (success)
+            {
+                TempData["Message"] = "Запись успешно удалена.";
+            }
+            else
+            {
+                TempData["Message"] = "Ошибка при удалении записи.";
+            }
+
+            return RedirectToAction("UpdateSTOStatus"); // или куда у тебя отображаются записи
+        }
+
+
+
+        [HttpPost]
+        public ActionResult UpdateSTOStatus(int id, string status)
+        {
+            var sto = _sto.GetSTOById(id);
+            if (sto != null)
+            {
+                sto.Status = status;
+                if (_sto.UpdateSTO(sto))
+                {
+                    TempData["Message"] = "Status updated successfully!";
+                }
+                else
+                {
+                    TempData["Message"] = "Error updating status!";
+                }
+            }
+            return RedirectToAction("UpdateSTOStatus"); // Or whatever your admin STO view is called
+        }
+
+        public ActionResult UpdateSTOStatus()
+        {
+            var allSTOs = _sto.GetAllSTO();
+            var model = allSTOs.Select(STOToview).ToList();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ClientP(int userId)
+        {
+            var user = _admin.GetUserById(userId);
+            var model = new UserInfoModel
+            {
+                UserName = user.UserName,
+                UserLastName = user.UserLastName,
+                PhoneNumber = user.PhoneNumber,
+                Id = user.Id,
+                Email = user.Email,
+                Balance = user.Balance,
+                Role = user.Role
+            };
+            return user == null
+                ? View("../Error/Error_404")
+                : View(model);
+        }
+        public STO ViewToSTO(STOViewModel model)
+        {
+            return new STO
+            {
+                Id = model.Id,
+                UserId = model.UserId,
+                CarBrand = model.CarBrand,
+                EngineVolume = model.EngineVolume,
+                Year = model.Year,
+                Licenseplate = model.Licenseplate,
+                Vin = model.Vin,
+                BranchNumber = model.BranchNumber,
+                Comment = model.Comment,
+                Status = model.Status,
+                RegistrationData = model.RegistrationData,
+                TimeOfRegistration = model.TimeOfRegistration,
+            };
+
+        }
+        public STOViewModel STOToview(STO model)
+        {
+            return new STOViewModel
+            {
+                Id = model.Id,
+                UserId = model.UserId,
+                CarBrand = model.CarBrand,
+                EngineVolume = model.EngineVolume,
+                Year = model.Year,
+                Licenseplate = model.Licenseplate,
+                Vin = model.Vin,
+                BranchNumber = model.BranchNumber,
+                Comment = model.Comment,
+                Status = model.Status,
+                RegistrationData = model.RegistrationData,
+                TimeOfRegistration = model.TimeOfRegistration,
+            };
         }
 
     }

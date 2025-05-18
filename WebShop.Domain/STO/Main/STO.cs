@@ -11,7 +11,6 @@ namespace WebShop.Domain.STO
         public int Id { get; set; }
         public int UserId { get; set; }
         public string CarBrand { get; set; }
-        public string Model { get; set; }
         public string EngineVolume { get; set; }
         public string Year { get; set; }
         public string Licenseplate{ get; set; }
