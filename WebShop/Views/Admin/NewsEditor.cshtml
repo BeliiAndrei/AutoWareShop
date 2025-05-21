@@ -1,18 +1,20 @@
-@model IEnumerable<WebShop.Models.NewsViewModel>
+
 @{
-    ViewBag.Title = "Редактор новостей";
-    Layout = "~/Views/Shared/_PersonalLayout.cshtml"; // Убедитесь, что этот файл существует
+    ViewBag.Title = "УПРАВДЕНИЕ НОВОСТЯМИ";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
 }
-
-<div class="container mt-4">
-    <h2>Редактор новостей</h2>
-
+@model IEnumerable<WebShop.Models.NewsViewModel>
+<div class="main-heading">
     @if (TempData["Message"] != null)
     {
-        <div class="alert alert-@(TempData["AlertType"] ?? "info")">
+
+        <div class="alert alert-success" role="alert" style="color:red">
             @TempData["Message"]
         </div>
     }
+    <div class="main-heading">
+        <div class="main-heading__text">УПРАВЛЕНИЕ НОВОСТЯМИ</div>
+    </div>
 
     <table class="table table-striped">
         <thead>

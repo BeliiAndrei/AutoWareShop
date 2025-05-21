@@ -1,7 +1,6 @@
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Мои адреса доставки";
-
     var user = SessionHelper.User;
     var userId = user?.Id ?? 0;
 }
@@ -12,7 +11,7 @@
     <div class="main-content">
         @if (TempData["Message"] != null)
         {
-            <div class="alert @(TempData["AlertType"]?.ToString() == "danger" ? "alert-danger" : "alert-success")" role="alert">
+            <div class="alert @(TempData["AlertType"]?.ToString() == "danger" ? "alert-danger" : "alert-success")">
                 @TempData["Message"]
             </div>
         }
@@ -70,14 +69,20 @@
                                         </div>
                                     </div>
                                     <div class="address-actions">
-                                        <a href="@Url.Action("EditDelivery", "Delivery", new { id = address.UserId })"
+                                        <a href="@Url.Action("EditDelivery", "Delivery", new { id = address.Id })"
                                            class="btn btn-outline-primary">
                                             <i class="fas fa-edit"></i> Редактировать
                                         </a>
-                                        <button class="btn btn-outline-danger delete-address"
-                                                data-id="@address.UserId">
-                                            <i class="fas fa-trash"></i> Удалить
-                                        </button>
+
+                                        @using (Html.BeginForm("DeleteDelivery", "Delivery", FormMethod.Post, new { @class = "d-inline" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.Hidden("id", address.Id)
+                                            <button type="submit" class="btn btn-outline-danger"
+                                                    onclick="return confirm('Вы точно хотите удалить этот адрес?')">
+                                                <i class="fas fa-trash"></i> Удалить
+                                            </button>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -89,48 +94,30 @@
     </div>
 </div>
 
-@section Styles {
-    <style>
-        .delivery-addresses-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+<style>
+    .delivery-addresses-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
 
-        .address-info {
-            flex: 1;
-            padding-right: 20px;
-        }
+    .address-info {
+        flex: 1;
+        padding-right: 20px;
+    }
 
-        .address-actions {
-            display: flex;
-            gap: 10px;
-        }
+    .address-actions {
+        display: flex;
+        gap: 10px;
+    }
 
-        .list-group-item {
-            margin-bottom: 15px;
-            border-radius: 5px;
-            padding: 15px;
-            border: 1px solid #ddd;
-        }
+    .list-group-item {
+        margin-bottom: 15px;
+        border-radius: 5px;
+        padding: 15px;
+        border: 1px solid #ddd;
+    }
 
-        .address-details {
-            margin-top: 10px;
-        }
-    </style>
-}
-
-@section Scripts {
-    <script>
-        $(document).ready(function() {
-            // Подтверждение удаления адреса
-            $('.delete-address').click(function(e) {
-                e.preventDefault();
-                const addressId = $(this).data('id');
-
-                if (confirm('Вы уверены, что хотите удалить этот адрес?')) {
-                    // Здесь будет AJAX-запрос для 
-                }
-            });
-        });
-    </script>
-}
+    .address-details {
+        margin-top: 10px;
+    }
+</style>

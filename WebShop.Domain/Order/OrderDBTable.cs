@@ -34,7 +34,6 @@ namespace WebShop.Domain.Order
         public bool IsPayed { get; set; }
         [Required]
         public bool IsPickup { get; set; }
-        
         public string Comment { get; set; }
     }
 }
