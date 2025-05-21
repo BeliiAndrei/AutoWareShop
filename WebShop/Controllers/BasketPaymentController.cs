@@ -12,7 +12,7 @@ using WebShop.BusinessLogic.BLogic;
 
 namespace WebShop.Controllers
 {
-    public class BasketPaymentController : Controller
+    public class BasketPaymentController : BaseController
     {
         IBasket _basket;
         IDelivery _delivery;

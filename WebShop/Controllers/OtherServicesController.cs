@@ -12,8 +12,10 @@ using WebShop.Models;
 
 namespace WebShop.Controllers
 {
+
     [UserOnly]
-    public class OtherServicesController : Controller
+    public class OtherServicesController : BaseController
+
     {
 
         private readonly ISTO _sto;

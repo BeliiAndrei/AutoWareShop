@@ -10,8 +10,10 @@ using WebShop.Models;
 
 namespace WebShop.Controllers
 {
+
     [UserOnly]
-    public class DeliveryController : Controller
+    public class DeliveryController : BaseController
+
     {
 
         private readonly IDelivery _delivery;

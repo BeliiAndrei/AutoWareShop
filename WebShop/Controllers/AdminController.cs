@@ -22,7 +22,7 @@ using WebShop.Models.User;
 namespace WebShop.Controllers
 {
     [AdminOnly]
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         private readonly IAdmin _admin;
         private readonly IProduct _product;
