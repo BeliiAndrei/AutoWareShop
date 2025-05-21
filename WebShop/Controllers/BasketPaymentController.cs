@@ -163,9 +163,9 @@ namespace WebShop.Controllers
 
         [UserOnly]
         [HttpPost]
-        public ActionResult Basket_step_4(string deliveryType, string orderMessage, string userCity,
-                                           string userStreet, string userHouse, string userBlock, string userAppartment)
+        public ActionResult Basket_step_4(string deliveryType, string orderMessage, List<DeliveryViewModel> Addresses, int selectedAddressIndex)
         {
+            var selectedAddress = Addresses[selectedAddressIndex];
             var paymentType = SessionHelper.OrderPaymentType;
             var userId = SessionHelper.User.Id;
 
@@ -190,11 +190,11 @@ namespace WebShop.Controllers
             {
                 deliveryLocation = new DeliveryViewModel
                 {
-                    Apartment = userAppartment,
-                    Block = userBlock,
-                    City = userCity,
-                    Street = userStreet,
-                    House = userHouse
+                    Apartment = selectedAddress.Apartment,
+                    Block = selectedAddress.Block,
+                    City = selectedAddress.City,
+                    Street = selectedAddress.Street,
+                    House = selectedAddress.House
                 };
                 orderInfo.IsPickup = false;
                 SessionHelper.Delivery = deliveryLocation;
