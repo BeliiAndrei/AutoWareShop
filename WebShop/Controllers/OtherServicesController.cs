@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace WebShop.Controllers
 {
-    public class OtherServicesController : Controller
+    public class OtherServicesController : BaseController
     {
         // GET: OtherServices
         public ActionResult Sto()

@@ -12,7 +12,7 @@ namespace WebShop.Controllers
 {
 
     [UserOnly]
-    public class ProfileController : Controller
+    public class ProfileController : BaseController
     {
         IUser _user;
         IOrder _order;
