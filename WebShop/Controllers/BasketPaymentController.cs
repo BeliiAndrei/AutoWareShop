@@ -125,7 +125,7 @@ namespace WebShop.Controllers
             SessionHelper.OrderPaymentType = payment;
             if (payment == "payment-online" && SessionHelper.User.Balance >= SessionHelper.OrderPrice)
             {
-                //Тут списание со счёта, если на нём достаточно средств
+                //Тут списание со счёта, если на нём достаточно средств (параметр со знаком минус)
                 _user.SupplyBalance(SessionHelper.User.Id, -(SessionHelper.OrderPrice));
                 SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
             }
@@ -139,19 +139,24 @@ namespace WebShop.Controllers
             }
             SessionHelper.OrderMessage = orderMessage;
             var userId = SessionHelper.User.Id;
-            var deliveryInfoDB = _delivery.GetDeliveryAddressByUserId(userId) ?? null;
+            var deliveryInfoDB = _delivery.GetDeliveryAddressesByUserId(userId) ?? null;//.GetDeliveryAddressByUserId(userId) ?? null;
             if (deliveryInfoDB != null)
             {
-                var deliveryInfo = new DeliveryViewModel
+                List<DeliveryViewModel> allAdresses = new List<DeliveryViewModel>();
+                foreach(var adress in deliveryInfoDB)
                 {
-                    Apartment = deliveryInfoDB.Apartment,
-                    Block = deliveryInfoDB.Block,
-                    City = deliveryInfoDB.City,
-                    House = deliveryInfoDB.House,
-                    PostalCode = deliveryInfoDB.PostalCode,
-                    Street = deliveryInfoDB.Street
-                };
-                return View(deliveryInfo);
+                    var deliveryInfo = new DeliveryViewModel
+                    {
+                        Apartment = adress.Apartment,
+                        Block = adress.Block,
+                        City = adress.City,
+                        House = adress.House,
+                        PostalCode = adress.PostalCode,
+                        Street = adress.Street
+                    };
+                    allAdresses.Add(deliveryInfo);
+                }
+                return View(allAdresses);
             }
             return View(new DeliveryViewModel());
         }

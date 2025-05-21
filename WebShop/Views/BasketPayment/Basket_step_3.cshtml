@@ -1,5 +1,5 @@
 ﻿
-@model WebShop.Models.DeliveryViewModel
+@model List<WebShop.Models.DeliveryViewModel>
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Basket_step_3";
@@ -53,41 +53,53 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-24 col-md-8">
-                                        <div class="add-address__field">
-                                            <label class="add-address__label" for="user-city-location">Город <span>*</span></label>
-                                            <input type="text" class="add-address__input" name="userCity" id="user-city-location" value="@Model.City" />
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="add-address__field">
-                                            <label class="add-address__label" for="user-street">Улица <span>*</span></label>
-                                            <input class="add-address__input" type="text" name="userStreet" id="user-street" value="@Model.Street">
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-2">
-                                        <div class="add-address__field">
 
-                                            <label class="add-address__label" for="user-house"><br />Дом <span>*</span></label>
-                                            <input class="add-address__input" type="text" name="userHouse" id="user-house" value="@Model.House">
+                                @if (Model != null && Model.Any())
+                                {
+                                    <div class="col-md-24">
+                                        <div class="row">
+                                            @for (int i = 0; i < Model.Count; i++)
+                                            {
+                                                var addr = Model[i];
+                                                <div class="col-md-12">
+                                                    <div class="address-option" style="border: 1px solid #ccc; padding: 1em; margin-bottom: 1em; border-radius: 10px;">
+                                                        <label>
+                                                            <input type="radio" name="selectedAddressIndex" value="@i" @(i == 0 ? "checked" : "") />
+                                                            <strong>@addr.City, ул. @addr.Street, д. @addr.House</strong>
+                                                            @if (!string.IsNullOrWhiteSpace(addr.Block))
+                                                            {
+                                                                <span>, блок @addr.Block</span>
+                                                            }
+                                                            @if (!string.IsNullOrWhiteSpace(addr.Apartment))
+                                                            {
+                                                                <span>, кв. @addr.Apartment</span>
+                                                            }
+                                                        </label>
+                                                        <input type="hidden" name="Addresses[@i].City" value="@addr.City" />
+                                                        <input type="hidden" name="Addresses[@i].Street" value="@addr.Street" />
+                                                        <input type="hidden" name="Addresses[@i].House" value="@addr.House" />
+                                                        <input type="hidden" name="Addresses[@i].Block" value="@addr.Block" />
+                                                        <input type="hidden" name="Addresses[@i].Apartment" value="@addr.Apartment" />
+                                                    </div>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-2">
-                                        <div class="add-address__field">
-                                            <label class="add-address__label" for="user-box">Блок</label>
-                                            <input class="add-address__input" type="text" name="userBlock" id="user-box" value="@Model.Block">
+                                    <div class="alert alert-warning">
+                                        Или добавьте  <a href="@Url.Action("Delivery", "Delivery")">новый адрес</a> для оформления доставки.
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-24">
+                                        <div class="alert alert-warning">
+                                            У вас ещё нет сохранённых адресов. Пожалуйста, <a href="@Url.Action("Delivery", "Delivery")">добавьте адрес</a> для оформления доставки.
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-2">
-                                        <div class="add-address__field">
-                                            <label class="add-address__label" for="user-flat">Квартира</label>
-                                            <input class="add-address__input" type="text" name="userAppartment" id="user-flat" value="@Model.Apartment">
-                                        </div>
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
+
                         <div class="tabs__tab-pane">
                             <div class="location-desc">
                                 <p>Для того, чтобы забрать свой заказ, Вам нужно явиться в наше представительство по адресу, указанному ниже.</p>

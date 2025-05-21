@@ -14,19 +14,20 @@ namespace WebShop.BusinessLogic.Interfaces
         OrderActionResponse CreateNewOrder(OrderDTO order, int userId, List<int> products);
 
         List<OrderDTO> GetUserOrders(int userId);
+
         OrderGetAllResponse GetAllOrders(int page, int pageSize);
 
         OrderDTO GetOrderById(int id);
 
         OrderDTO UpdateOrderPrice(int orderId, decimal newPrice);
 
-        void DeleteOrder(int id);
+        //void DeleteOrder(int id);
 
         OrderActionResponse ModifyOrderStatus(int id, OrderStatus newStatus);
 
         decimal GetOrderPrice(int id);
 
-        List<OrderDTO> SortOrdersByDate(List<OrderDTO> orders);
+        //List<OrderDTO> SortOrdersByDate(List<OrderDTO> orders);
 
 
     }
