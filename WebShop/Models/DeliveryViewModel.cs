@@ -8,6 +8,7 @@ namespace WebShop.Models
 {
     public class DeliveryViewModel
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         [Required(ErrorMessage = "укажите код почты")]
         public string PostalCode { get; set; }

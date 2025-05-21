@@ -16,6 +16,7 @@
                     <ul class="category-nav__list">
                         @if (isAdmin)
                         {
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("UpdateSTOStatus", "Admin")">Управление записи СТО</a></li>
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Clients", "Admin")">Управление пользователями</a></li>
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Products", "Admin")">Управление товарами</a></li>
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("NewsEditor", "Admin")">Управление новостями</a></li>

@@ -1,0 +1,391 @@
+﻿@model List<WebShop.Models.STOViewModel>
+
+@{
+    ViewBag.Title = "Управление записями СТО";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+}
+
+<main class="main-content">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" role="alert" style="color:red">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="main-heading">
+        <div class="main-heading__text">Управление записями СТО</div>
+    </div>
+
+    <div class="sto-records-container">
+        @foreach (var sto in Model)
+        {
+            var dropdownId = $"status_{sto.Id}";
+            var deleteBtnId = $"deleteBtn_{sto.Id}";
+
+            <div class="sto-record-card">
+                <div class="record-header">
+                    <div class="car-info">
+                        <span class="car-brand">@sto.CarBrand</span>
+                        <span class="car-details">@sto.EngineVolume, @sto.Year</span>
+                    </div>
+                    <div class="car-identifiers">
+                        <span class="vin">VIN: @sto.Vin</span>
+                        <span class="license">Госномер: @sto.Licenseplate</span>
+                    </div>
+                </div>
+
+                <div class="record-details">
+                    <div class="appointment-info">
+                        <div class="appointment-date">
+                            <span class="label">Дата:</span>
+                            <span>@sto.RegistrationData.ToShortDateString()</span>
+                        </div>
+                        <div class="appointment-time">
+                            <span class="label">Время:</span>
+                            <span>@sto.TimeOfRegistration</span>
+                        </div>
+                        <div class="branch">
+                            <span class="label">Филиал:</span>
+                            <span>@sto.BranchNumber</span>
+                        </div>
+                    </div>
+
+                    <div class="status-control">
+                        @using (Html.BeginForm("UpdateSTOStatus", "Admin", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("id", sto.Id)
+                            <div class="status-selector">
+                                <select name="status" id="@dropdownId" class="form-control status-select" data-delete-id="@deleteBtnId">
+                                    <option value="Одобрено" @(sto.Status == "Одобрено" ? "selected" : "")>Одобрено</option>
+                                    <option value="Отклонено" @(sto.Status == "Отклонено" ? "selected" : "")>Отклонено</option>
+                                    <option value="Завершено" @(sto.Status == "Завершено" ? "selected" : "")>Завершено</option>
+                                    <option value="Ожидание" @(sto.Status == "Ожидание" ? "selected" : "")>Ожидание</option>
+                                </select>
+                                <button type="submit" class="btn-status-update" title="Обновить статус">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="actions">
+                        @using (Html.BeginForm("ClientProfile", "Admin", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="userId" value="@sto.UserId" />
+                            <button type="submit" class="btn-profile" title="Профиль пользователя">
+                                <i class="fas fa-user"></i>
+                            </button>
+                        }
+
+                        @using (Html.BeginForm("DeleteSTO", "Admin", FormMethod.Post, new { onsubmit = "return confirm('Удалить запись?');" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("id", sto.Id)
+                            <button type="submit" id="@deleteBtnId" class="btn-delete" style="display: @(sto.Status == "Завершено" ? "inline-block" : "none");" title="Удалить запись">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        }
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(sto.Comment))
+                {
+                    var maxLength = 150;
+                    string shortComment;
+
+                    if (sto.Comment.Length <= maxLength)
+                    {
+                        shortComment = sto.Comment;
+                    }
+                    else
+                    {
+                        var truncated = sto.Comment.Substring(0, maxLength);
+                        var lastSpace = truncated.LastIndexOf(' ');
+                        if (lastSpace > 0)
+                        {
+                            shortComment = truncated.Substring(0, lastSpace) + "...";
+                        }
+                        else
+                        {
+                            shortComment = truncated + "...";
+                        }
+                    }
+
+                    var commentId = $"comment_{sto.Id}";
+                    var btnId = $"toggleBtn_{sto.Id}";
+
+                    <div class="record-comment">
+                        <div class="comment-label">Комментарий:</div>
+                        <div id="@commentId" class="comment-text collapsed" style="white-space: pre-wrap;">
+                            @Html.Raw(shortComment.Replace("\r\n", "<br />").Replace("\n", "<br />"))
+                        </div>
+                        @if (sto.Comment.Length > maxLength)
+                        {
+                            <button id="@btnId" class="btn-toggle-comment" type="button"
+                                    data-full="@Html.Raw(sto.Comment.Replace("\r\n", "<br />").Replace("\n", "<br />"))"
+                                    data-short="@Html.Raw(shortComment.Replace("\r\n", "<br />").Replace("\n", "<br />"))"
+                                    aria-expanded="false"
+                                    aria-controls="@commentId"
+                                    title="Показать полный комментарий">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</main>
+
+@section Styles {
+    <style>
+        .comment-text.collapsed {
+            max-height: 4.5em; /* примерно 3 строки */
+            overflow: hidden;
+        }
+
+        .sto-records-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .sto-record-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .record-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .car-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .car-brand {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .car-details {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .car-identifiers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.9em;
+        }
+
+        .record-details {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .appointment-info {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            min-width: 250px;
+        }
+
+            .appointment-info > div {
+                display: flex;
+                gap: 5px;
+            }
+
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .status-control {
+            min-width: 200px;
+        }
+
+        .status-selector {
+            display: flex;
+            gap: 5px;
+        }
+
+            .status-selector select {
+                flex: 1;
+                min-width: 120px;
+            }
+
+        .btn-status-update {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 10px;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            gap: 5px;
+            min-width: 80px;
+        }
+
+        .btn-profile {
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .btn-delete {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .record-comment {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .comment-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .btn-toggle-comment {
+            background: transparent;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 0;
+            user-select: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+            .btn-toggle-comment:hover {
+                color: #333;
+            }
+
+            .btn-toggle-comment:focus {
+                outline: none;
+            }
+
+            .btn-toggle-comment .arrow {
+                display: inline-block;
+                transition: transform 0.3s ease;
+                font-size: 1.2em;
+                line-height: 1;
+                user-select: none;
+            }
+
+            .btn-toggle-comment.expanded .arrow {
+                transform: rotate(90deg);
+            }
+
+        .comment-text {
+            background: #f9f9f9;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #eee;
+            white-space: pre-wrap;
+            line-height: 1.4em;
+        }
+
+        @@media (max-width: 768px) {
+            .record-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .record-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .appointment-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        // Управление кнопкой удаления
+        document.querySelectorAll('.status-select').forEach(function (select) {
+            select.addEventListener('change', function () {
+                const deleteBtnId = this.getAttribute('data-delete-id');
+                const deleteBtn = document.getElementById(deleteBtnId);
+                deleteBtn.style.display = this.value === "Завершено" ? "inline-block" : "none";
+            });
+        });
+
+        // Управление комментариями
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.btn-toggle-comment').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const commentId = this.id.replace('toggleBtn_', 'comment_');
+                    const commentDiv = document.getElementById(commentId);
+                    const isCollapsed = commentDiv.classList.contains('collapsed');
+
+                    if (isCollapsed) {
+                        commentDiv.innerHTML = this.getAttribute('data-full');
+                        commentDiv.classList.remove('collapsed');
+                        this.setAttribute('aria-expanded', 'true');
+                        this.title = 'Свернуть комментарий';
+                        this.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                    } else {
+                        commentDiv.innerHTML = this.getAttribute('data-short');
+                        commentDiv.classList.add('collapsed');
+                        this.setAttribute('aria-expanded', 'false');
+                        this.title = 'Показать полный комментарий';
+                        this.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                    }
+                });
+            });
+        });
+    </script>
+}
