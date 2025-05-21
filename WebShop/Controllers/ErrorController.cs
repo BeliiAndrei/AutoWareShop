@@ -9,6 +9,7 @@ namespace WebShop.Controllers
     public class ErrorController : BaseController
     {
         // GET: Error
+        
         public ActionResult Error_404()
         {
             return View();

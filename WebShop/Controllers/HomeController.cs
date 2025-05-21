@@ -13,12 +13,12 @@ namespace WebShop.Controllers
     public class HomeController : BaseController
     {
         IProduct _product;
-        INews _news;
+        //INews _news;
         public HomeController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _product = bl.GetProductBl();
-            _news = bl.GetNewsBl();
+            //_news = bl.GetNewsBl();
         }
         public ActionResult Index()
         {
