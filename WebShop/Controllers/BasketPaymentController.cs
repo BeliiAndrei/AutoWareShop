@@ -224,7 +224,7 @@ namespace WebShop.Controllers
                 }
                 order = _order.UpdateOrderPrice(order.Id, 0m);
                 SessionHelper.ProductsInCartCount = _basket.GetBasketSize(userId);
-                return RedirectToAction("OrderError", "Order", new { message = response.StatusMsg });
+                return RedirectToAction("OrderError", "Error", new { message = response.StatusMsg });
             }
             var model = new OrderModel
             {
