@@ -117,39 +117,49 @@ namespace WebShop.Controllers
             SessionHelper.OrderPrice = orderPrice;
             return View();
         }
-       
-        public ActionResult Basket_step_3()
+
+        [HttpPost]
+        [UserOnly]
+        public ActionResult Basket_step_3(string payment, string orderMessage = "")
         {
-            var user = SessionHelper.User;
-            if (user == null)
+            SessionHelper.OrderPaymentType = payment;
+            if (payment == "payment-online" && SessionHelper.User.Balance >= SessionHelper.OrderPrice)
             {
-                return RedirectToAction("Authorisation", "Auth");
+                //Тут списание со счёта, если на нём достаточно средств
+                _user.SupplyBalance(SessionHelper.User.Id, -(SessionHelper.OrderPrice));
+                SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
             }
-
-            // Правильное получение сервиса доставки
-            var deliveryService = new DeliveryBL(); // Используем бизнес-логику, а не модель
-            var addresses = deliveryService.GetDeliveryAddressesByUserId(user.Id)
-                .Select(a => new DeliveryViewModel
+            else
+            {
+                if (payment == "payment-online" && SessionHelper.User.Balance < SessionHelper.OrderPrice)
                 {
-                    Id = a.Id,
-                    City = a.City,
-                    Street = a.Street,
-                    House = a.House,
-                    Block = a.Block,
-                    Apartment = a.Apartment,
-                    PostalCode = a.PostalCode,
-                    Comment = a.Comment
-                }).ToList();
-
-            ViewBag.SavedAddresses = addresses;
-
+                    TempData["NotEnoughMoney"] = $"У вас недостаточно средств на счету. У вас на счету {SessionHelper.User.Balance.ToString("F2") ?? "0.00"}, а стоимость заказа {SessionHelper.OrderPrice}.";
+                    return RedirectToAction("Payment");
+                }
+            }
+            SessionHelper.OrderMessage = orderMessage;
+            var userId = SessionHelper.User.Id;
+            var deliveryInfoDB = _delivery.GetDeliveryAddressByUserId(userId) ?? null;
+            if (deliveryInfoDB != null)
+            {
+                var deliveryInfo = new DeliveryViewModel
+                {
+                    Apartment = deliveryInfoDB.Apartment,
+                    Block = deliveryInfoDB.Block,
+                    City = deliveryInfoDB.City,
+                    House = deliveryInfoDB.House,
+                    PostalCode = deliveryInfoDB.PostalCode,
+                    Street = deliveryInfoDB.Street
+                };
+                return View(deliveryInfo);
+            }
             return View(new DeliveryViewModel());
         }
 
         [UserOnly]
         [HttpPost]
         public ActionResult Basket_step_4(string deliveryType, string orderMessage, string userCity,
-                                          string userStreet, string userHouse, string userBlock, string userAppartment)
+                                           string userStreet, string userHouse, string userBlock, string userAppartment)
         {
             var paymentType = SessionHelper.OrderPaymentType;
             var userId = SessionHelper.User.Id;
@@ -171,7 +181,7 @@ namespace WebShop.Controllers
                 : new List<int>();
 
             DeliveryViewModel deliveryLocation = new DeliveryViewModel();
-            if(deliveryType == "delivery")
+            if (deliveryType == "delivery")
             {
                 deliveryLocation = new DeliveryViewModel
                 {
@@ -184,7 +194,7 @@ namespace WebShop.Controllers
                 orderInfo.IsPickup = false;
                 SessionHelper.Delivery = deliveryLocation;
             }
-            if(deliveryType == "pickup")
+            if (deliveryType == "pickup")
             {
                 orderInfo.IsPickup = true;
             }
@@ -194,12 +204,12 @@ namespace WebShop.Controllers
             var response = _order.CreateNewOrder(orderInfo, userId, productsIdList);
             var order = _order.GetOrderById(response.OrderId);
 
-            if(response.Status == false)
+            if (response.Status == false)
             {
                 var errorResponse = _order.ModifyOrderStatus(order.Id, Domain.Enumerables.OrderStatus.Cancelled);
-                if(errorResponse.Status == false)
+                if (errorResponse.Status == false)
                 {
-                    return RedirectToAction("OrderError", "Error", new { message = errorResponse.StatusMsg + "Обязательно свяжитесь с нами, если произошла ошибка, приведшая к потере средств."});
+                    return RedirectToAction("OrderError", "Error", new { message = errorResponse.StatusMsg + "Обязательно свяжитесь с нами, если произошла ошибка, приведшая к потере средств." });
                 }
                 if (order.IsPayed)
                 {
@@ -207,7 +217,7 @@ namespace WebShop.Controllers
                     SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
                     response.StatusMsg += " Средства были возвращены на ваш счёт. В случае обнаружения ошибок, пожалуйста, свяжитесь с нами.";
                 }
-                order =_order.UpdateOrderPrice(order.Id, 0m);
+                order = _order.UpdateOrderPrice(order.Id, 0m);
                 SessionHelper.ProductsInCartCount = _basket.GetBasketSize(userId);
                 return RedirectToAction("OrderError", "Order", new { message = response.StatusMsg });
             }

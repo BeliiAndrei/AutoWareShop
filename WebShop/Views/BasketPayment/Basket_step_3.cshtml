@@ -1,14 +1,14 @@
-﻿@model WebShop.Models.DeliveryViewModel
+﻿
+@model WebShop.Models.DeliveryViewModel
 @{
     Layout = "~/Views/Shared/_PersonalLayout.cshtml";
     ViewBag.Title = "Basket_step_3";
     var comment = SessionHelper.OrderMessage;
-    decimal orderPrice = SessionHelper.OrderPrice;
-    var savedAddresses = ViewBag.SavedAddresses as List<WebShop.Models.DeliveryViewModel> ?? new List<WebShop.Models.DeliveryViewModel>();
+    decimal orderPrice = SessionHelper.OrderPrice /*?? 0m*/;
+
 }
 
 <main class="main-content">
-    <!-- Восстановленная панель шагов -->
     <div class="order-steps-wrap text-center">
         <ul class="order-steps">
             <li class="order-steps__item">
@@ -33,11 +33,8 @@
             </li>
         </ul>
     </div>
-
-    <form class="add-address" method="POST" action="@Url.Action("Basket_step_4", "BasketPayment")" name="add-address">
+    <form class="add-address" method="POST" action=@Url.Action("Basket_step_4", "BasketPayment") name="add-address">
         <input type="hidden" name="deliveryType" id="deliveryType" value="delivery" />
-        <input type="hidden" name="selectedAddressId" id="selectedAddressId" value="" />
-
         <div class="tabs-section">
             <div class="tabs tabs--secondary">
                 <div class="tabs__header">
@@ -47,61 +44,51 @@
                     </ul>
                     <div class="tabs__panes">
                         <div class="tabs__tab-pane is-active">
-                            <!-- Блок выбора сохраненных адресов -->
-                            <div class="saved-addresses mb-4">
-                                <h4>Выберите адрес доставки</h4>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="delivery-opt__field">
+                                        <label class="delivery-opt__label" for="delivery-type">Тип доставки</label>
+                                        <ul>
+                                            <li> Доставка автотранспортом</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-24 col-md-8">
+                                        <div class="add-address__field">
+                                            <label class="add-address__label" for="user-city-location">Город <span>*</span></label>
+                                            <input type="text" class="add-address__input" name="userCity" id="user-city-location" value="@Model.City" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="add-address__field">
+                                            <label class="add-address__label" for="user-street">Улица <span>*</span></label>
+                                            <input class="add-address__input" type="text" name="userStreet" id="user-street" value="@Model.Street">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-2">
+                                        <div class="add-address__field">
 
-                                @if (savedAddresses.Any())
-                                {
-                                    <div class="address-list">
-                                        @foreach (var address in savedAddresses)
-                                        {
-                                            <div class="address-item">
-                                                <label class="address-radio">
-                                                    <input type="radio" name="addressRadio" value="@address.Id"
-                                                           data-city="@address.City"
-                                                           data-street="@address.Street"
-                                                           data-house="@address.House"
-                                                           data-block="@address.Block"
-                                                           data-apartment="@address.Apartment" />
-                                                    <span class="address-text">
-                                                        @address.City, @address.Street, д.@address.House
-                                                        @if (!string.IsNullOrEmpty(address.Block))
-                                                        {<span>, корп.@address.Block</span>}
-                                                        @if (!string.IsNullOrEmpty(address.Apartment))
-                                                        {<span>, кв.@address.Apartment</span>}
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        }
+                                            <label class="add-address__label" for="user-house"><br />Дом <span>*</span></label>
+                                            <input class="add-address__input" type="text" name="userHouse" id="user-house" value="@Model.House">
+                                        </div>
                                     </div>
-                                    <div class="text-center mt-3">
-                                        <a href="@Url.Action("Delivery", "Delivery")" class="btn btn-outline-primary">
-                                            <i class="fas fa-plus"></i> Добавить новый адрес
-                                        </a>
+                                    <div class="col-6 col-md-2">
+                                        <div class="add-address__field">
+                                            <label class="add-address__label" for="user-box">Блок</label>
+                                            <input class="add-address__input" type="text" name="userBlock" id="user-box" value="@Model.Block">
+                                        </div>
                                     </div>
-                                }
-                                else
-                                {
-                                    <div class="alert alert-info text-center">
-                                        <p>У вас нет сохраненных адресов</p>
-                                        <a href="@Url.Action("Delivery", "Delivery")" class="btn btn-primary">
-                                            <i class="fas fa-plus"></i> Добавить адрес
-                                        </a>
+                                    <div class="col-6 col-md-2">
+                                        <div class="add-address__field">
+                                            <label class="add-address__label" for="user-flat">Квартира</label>
+                                            <input class="add-address__input" type="text" name="userAppartment" id="user-flat" value="@Model.Apartment">
+                                        </div>
                                     </div>
-                                }
+                                </div>
                             </div>
-
-                            <!-- Скрытые поля для адреса -->
-                            <input type="hidden" name="userCity" id="user-city-location" value="" />
-                            <input type="hidden" name="userStreet" id="user-street" value="" />
-                            <input type="hidden" name="userHouse" id="user-house" value="" />
-                            <input type="hidden" name="userBlock" id="user-box" value="" />
-                            <input type="hidden" name="userAppartment" id="user-flat" value="" />
                         </div>
-
                         <div class="tabs__tab-pane">
-                            <!-- Блок самовывоза (оставить как было) -->
                             <div class="location-desc">
                                 <p>Для того, чтобы забрать свой заказ, Вам нужно явиться в наше представительство по адресу, указанному ниже.</p>
                                 <p>Просим обратить внимание на время, с которого будет доступен заказ.</p>
@@ -149,76 +136,21 @@
                 </div>
             </div>
         </div>
-
         <div class="order-footer d-none d-md-flex">
             <a class="btn btn--reverse" href="@Url.Action("Basket_step_2", "BasketPayment")">Назад</a>
             <input type="text" class="order-footer__message" value="@comment" name="orderMessage" />
             <div class="footer-summary-price">
                 <div class="footer-summary-price__title">Сумма к оплате</div>
                 <div class="footer-summary-price__value">@orderPrice <span>Лей</span></div>
-            </div>
-            <input type="submit" class="btn btn--main" value="Далее">
+            </div><input type="submit" class="btn btn--main" value="Далее">
         </div>
     </form>
 </main>
 
-@section Styles {
-    <style>
-        .saved-addresses {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            border: 1px solid #dee2e6;
-        }
-
-        .address-list {
-            margin-bottom: 10px;
-        }
-
-        .address-item {
-            margin-bottom: 8px;
-            padding: 10px;
-            background: white;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-
-        .address-radio {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-            .address-radio input[type="radio"] {
-                margin-right: 10px;
-            }
-
-        .address-text {
-            flex: 1;
-        }
-    </style>
-}
-
-@section Scripts {
+@section Scripts
+{
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Обработчик выбора адреса
-            const addressRadios = document.querySelectorAll('input[name="addressRadio"]');
-            addressRadios.forEach(radio => {
-                radio.addEventListener('change', function () {
-                    if (this.checked) {
-                        document.getElementById('selectedAddressId').value = this.value;
-                        document.getElementById('user-city-location').value = this.dataset.city;
-                        document.getElementById('user-street').value = this.dataset.street;
-                        document.getElementById('user-house').value = this.dataset.house;
-                        document.getElementById('user-box').value = this.dataset.block || '';
-                        document.getElementById('user-flat').value = this.dataset.apartment || '';
-                    }
-                });
-            });
-
-            // Обработчики для вкладок
             const tabs = document.querySelectorAll(".tabs__link");
             const deliveryTypeInput = document.getElementById("deliveryType");
 
@@ -234,17 +166,30 @@
                     panes.forEach(p => p.classList.remove("is-active"));
                     panes[index].classList.add("is-active");
 
-                    deliveryTypeInput.value = index === 0 ? "delivery" : "pickup";
+                    if (index === 0) {
+                        deliveryTypeInput.value = "delivery";
+
+                        // Включаем поля адреса
+                        enableAddressFields(true);
+                    } else {
+                        deliveryTypeInput.value = "pickup";
+
+                        // Отключаем поля адреса
+                        enableAddressFields(false);
+                    }
                 });
             });
 
-            // Валидация при отправке формы
-            document.querySelector('form.add-address').addEventListener('submit', function (e) {
-                if (deliveryTypeInput.value === 'delivery' && !document.querySelector('input[name="addressRadio"]:checked')) {
-                    e.preventDefault();
-                    alert('Пожалуйста, выберите адрес доставки');
-                }
-            });
+            function enableAddressFields(enable) {
+                const fields = document.querySelectorAll("#user-city-location, #user-street, #user-house, #user-box, #user-flat");
+                fields.forEach(f => {
+                    if (enable) {
+                        f.removeAttribute("disabled");
+                    } else {
+                        f.setAttribute("disabled", "disabled");
+                    }
+                });
+            }
         });
     </script>
 }
