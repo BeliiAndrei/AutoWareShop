@@ -491,6 +491,18 @@ namespace WebShop.Controllers
             return RedirectToAction("OrderDetails", new { orderId });
         }
 
+        public ActionResult DeleteOrder(int orderId)
+        {
+            var result = _order.DeleteOrder(orderId);
+            if(result.Status == true)
+            {
+                TempData["OrderActionMessage"] = result.StatusMsg;
+                return RedirectToAction("Orders");
+            }
+            TempData["OrderActionMessage"] = result.StatusMsg;
+            return RedirectToAction("Error_500", "Error");
+        }
+
 
         // ========== HELPERS ===========
         public ActionResult GetNewsImage(int id)

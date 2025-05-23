@@ -223,8 +223,10 @@ namespace WebShop.Controllers
                     response.StatusMsg += " Средства были возвращены на ваш счёт. В случае обнаружения ошибок, пожалуйста, свяжитесь с нами.";
                 }
                 order = _order.UpdateOrderPrice(order.Id, 0m);
+                if (_order.GetOrderPrice(order.Id) != order.Price || order.Price != 0)
+                    response.StatusMsg += $"!Произошел сбой! {order.Price} - цена заказа. Должна была обнулиться";
                 SessionHelper.ProductsInCartCount = _basket.GetBasketSize(userId);
-                return RedirectToAction("OrderError", "Order", new { message = response.StatusMsg });
+                return RedirectToAction("OrderError", "Error", new { message = response.StatusMsg });
             }
             var model = new OrderModel
             {

@@ -69,7 +69,6 @@
     <Compile Include="Order\OrderDTO.cs" />
     <Compile Include="Order\OrderGetAllResponse.cs" />
     <Compile Include="Order\ProductsInOrderDBTable.cs" />
-    <Compile Include="Payment\ReceiptToPay.cs" />
     <Compile Include="Product\Admin\ProductActionResponse.cs" />
     <Compile Include="Product\ProductDBTable.cs" />
     <Compile Include="Product\ProductDTO.cs" />

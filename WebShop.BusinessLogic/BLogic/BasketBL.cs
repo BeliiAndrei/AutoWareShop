@@ -27,12 +27,6 @@ namespace WebShop.BusinessLogic.BLogic
             return GetBasketSizeAction(userId);
         }
 
-
-        public BasketActionResponse RemoveAll(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public BasketActionResponse RemoveFromBasket(List<string> productIdsAsString, int userId)
         {
             List<int> productIds = new List<int>();

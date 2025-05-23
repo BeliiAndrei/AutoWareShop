@@ -97,7 +97,7 @@
 
 <div class="order-details">
     <h2>Заказ #@Model.orderModel.OrderId</h2>
-
+    <a class="button-back" href="@Url.Action("DeleteOrder", "Admin", new {orderId = Model.orderModel.OrderId})">Удалить заказ</a>
     <div class="card">
         <h3>Информация о заказе</h3>
         <div class="info-grid">

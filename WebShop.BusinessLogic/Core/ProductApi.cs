@@ -382,7 +382,7 @@ namespace WebShop.BusinessLogic.Core
                     db.SaveChanges();
                 }
             }
-            catch (Exception)
+            catch (IndexOutOfRangeException)
             {
                 throw;
             }
