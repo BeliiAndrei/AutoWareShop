@@ -429,7 +429,7 @@ namespace WebShop.BusinessLogic.Core
 
         internal UserInfo GetUserIdBySessionKeyAction(string sessionKey)
         {
-
+            // NotImplemented
             return null;
 
         }

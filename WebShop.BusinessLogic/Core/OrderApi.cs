@@ -289,5 +289,42 @@ namespace WebShop.BusinessLogic.Core
                 return order;
             }
         }
+        internal decimal GetOrderPriceAction(int orderId)
+        {
+            using (var db = new OrderContext())
+            {
+                var order = db.Orders.FirstOrDefault(o => o.Id == orderId);
+                if (order != null)
+                {
+                    return order.Price;
+                }
+                return 0;
+            }
+        }
+
+        internal OrderActionResponse DeleteOrderAction(int orderId)
+        {
+            using (var db = new OrderContext())
+            {
+                var order = db.Orders.FirstOrDefault(o => o.Id == orderId);
+                if (order != null)
+                {
+                    db.Orders.Remove(order);
+                    db.SaveChanges();
+                    return new OrderActionResponse
+                    {
+                        OrderId = 0,
+                        Status = true,
+                        StatusMsg = $"Order {orderId} successfully deleted"
+                    };
+                }
+                return new OrderActionResponse
+                {
+                    OrderId = orderId,
+                    Status = false,
+                    StatusMsg = $"Order {orderId} not found"
+                };
+            }
+        }
     }
 }

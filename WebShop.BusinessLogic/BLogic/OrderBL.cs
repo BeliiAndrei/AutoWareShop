@@ -28,10 +28,10 @@ namespace WebShop.BusinessLogic.BLogic
             return CreateNewOrderAction(orderDB, userId,  products);
         }
 
-        //public void DeleteOrder(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public OrderActionResponse DeleteOrder(int id)
+        {
+            return DeleteOrderAction(id);
+        }
 
         public List<OrderDTO> GetUserOrders(int userId)
         {
@@ -82,7 +82,7 @@ namespace WebShop.BusinessLogic.BLogic
 
         public decimal GetOrderPrice(int id)
         {
-            throw new NotImplementedException();
+            return GetOrderPriceAction(id);
         }
 
         public OrderActionResponse ModifyOrderStatus(int id, OrderStatus newStatus)

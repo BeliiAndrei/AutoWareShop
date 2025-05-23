@@ -8,7 +8,6 @@ namespace WebShop.BusinessLogic.Interfaces
     public interface IAdmin
     {
         List<UserInfo> GetUsersList();
-        //List<ProductDTO> GetProductsList()
         UserInfo GetUserById(int id);
         UserInfo UpdateUser(UserInfo oldUser);
         UserRegistrationResponse RegisterUser(UserRegistrationData newUser);

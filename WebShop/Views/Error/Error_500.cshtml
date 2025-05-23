@@ -8,6 +8,10 @@
     <div class="inner-section__main inner-section__main--secondary">
         <div class="inner-section__header">
             <h1 class="inner-section__heading">Ошибка 500</h1>
+            @if (TempData["OrderActionMessage"] != null)
+            {
+                <h4 style="color:red">@TempData["OrderActionMessage"]</h4>
+            }
         </div>
         <figure class="error-notification">
             <div class="error-notification__img-wrap"><img class="error-notification__img img-responsive" src="~/assets/images/general/500.png" alt="Страница не найдена"></div>
