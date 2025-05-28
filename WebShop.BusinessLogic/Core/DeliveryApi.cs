@@ -64,6 +64,15 @@ namespace WebShop.BusinessLogic.Core
                 return db.Delivery.ToList();
             }
         }
+        public List<DeliveryLocDBTable> GetDeliveryAddressesByUserIdApi(int userId)
+        {
+            using (var db = new DeliveryContext())
+            {
+                return db.Delivery.Where(x => x.UserId == userId).ToList();
+            }
+        }
+
+
 
 
 
