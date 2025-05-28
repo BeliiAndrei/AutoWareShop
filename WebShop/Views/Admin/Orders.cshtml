@@ -65,6 +65,10 @@
     <div class="main-heading">
         <div class="main-heading__text">Управление заказами</div>
     </div>
+    @if (TempData["OrderActionMessage"] != null)
+        {
+            <h4 style="color:red">@TempData["OrderActionMessage"]</h4>
+        }
     <h2>Список заказов</h2>
 
     @{

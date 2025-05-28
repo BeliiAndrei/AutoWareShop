@@ -125,7 +125,7 @@ namespace WebShop.Controllers
             SessionHelper.OrderPaymentType = payment;
             if (payment == "payment-online" && SessionHelper.User.Balance >= SessionHelper.OrderPrice)
             {
-                //Тут списание со счёта, если на нём достаточно средств
+                //Тут списание со счёта, если на нём достаточно средств (параметр со знаком минус)
                 _user.SupplyBalance(SessionHelper.User.Id, -(SessionHelper.OrderPrice));
                 SessionHelper.User = _user.GetUserInfoById(SessionHelper.User.Id);
             }
@@ -139,28 +139,33 @@ namespace WebShop.Controllers
             }
             SessionHelper.OrderMessage = orderMessage;
             var userId = SessionHelper.User.Id;
-            var deliveryInfoDB = _delivery.GetDeliveryAddressByUserId(userId) ?? null;
+            var deliveryInfoDB = _delivery.GetDeliveryAddressesByUserId(userId) ?? null;//.GetDeliveryAddressByUserId(userId) ?? null;
             if (deliveryInfoDB != null)
             {
-                var deliveryInfo = new DeliveryViewModel
+                List<DeliveryViewModel> allAdresses = new List<DeliveryViewModel>();
+                foreach(var adress in deliveryInfoDB)
                 {
-                    Apartment = deliveryInfoDB.Apartment,
-                    Block = deliveryInfoDB.Block,
-                    City = deliveryInfoDB.City,
-                    House = deliveryInfoDB.House,
-                    PostalCode = deliveryInfoDB.PostalCode,
-                    Street = deliveryInfoDB.Street
-                };
-                return View(deliveryInfo);
+                    var deliveryInfo = new DeliveryViewModel
+                    {
+                        Apartment = adress.Apartment,
+                        Block = adress.Block,
+                        City = adress.City,
+                        House = adress.House,
+                        PostalCode = adress.PostalCode,
+                        Street = adress.Street
+                    };
+                    allAdresses.Add(deliveryInfo);
+                }
+                return View(allAdresses);
             }
             return View(new DeliveryViewModel());
         }
 
         [UserOnly]
         [HttpPost]
-        public ActionResult Basket_step_4(string deliveryType, string orderMessage, string userCity,
-                                           string userStreet, string userHouse, string userBlock, string userAppartment)
+        public ActionResult Basket_step_4(string deliveryType, string orderMessage, List<DeliveryViewModel> Addresses, int selectedAddressIndex)
         {
+            var selectedAddress = Addresses[selectedAddressIndex];
             var paymentType = SessionHelper.OrderPaymentType;
             var userId = SessionHelper.User.Id;
 
@@ -185,11 +190,11 @@ namespace WebShop.Controllers
             {
                 deliveryLocation = new DeliveryViewModel
                 {
-                    Apartment = userAppartment,
-                    Block = userBlock,
-                    City = userCity,
-                    Street = userStreet,
-                    House = userHouse
+                    Apartment = selectedAddress.Apartment,
+                    Block = selectedAddress.Block,
+                    City = selectedAddress.City,
+                    Street = selectedAddress.Street,
+                    House = selectedAddress.House
                 };
                 orderInfo.IsPickup = false;
                 SessionHelper.Delivery = deliveryLocation;
@@ -218,8 +223,10 @@ namespace WebShop.Controllers
                     response.StatusMsg += " Средства были возвращены на ваш счёт. В случае обнаружения ошибок, пожалуйста, свяжитесь с нами.";
                 }
                 order = _order.UpdateOrderPrice(order.Id, 0m);
+                if (_order.GetOrderPrice(order.Id) != order.Price || order.Price != 0)
+                    response.StatusMsg += $"!Произошел сбой! {order.Price} - цена заказа. Должна была обнулиться";
                 SessionHelper.ProductsInCartCount = _basket.GetBasketSize(userId);
-                return RedirectToAction("OrderError", "Order", new { message = response.StatusMsg });
+                return RedirectToAction("OrderError", "Error", new { message = response.StatusMsg });
             }
             var model = new OrderModel
             {

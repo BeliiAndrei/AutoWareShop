@@ -10,6 +10,5 @@ namespace WebShop.BusinessLogic.Interfaces
         int GetBasketSize(int userId);
         BasketActionResponse RemoveFromBasket(List <string> productIds, int userId);
         BasketActionResponse AddToBasket(int userId, int productId, int quantity);
-        BasketActionResponse RemoveAll(int userId);
     }
 }

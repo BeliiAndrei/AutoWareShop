@@ -65,6 +65,7 @@
     <Compile Include="BLogic\UserBL.cs" />
     <Compile Include="BusinessLogic.cs" />
     <Compile Include="Core\AdminApi.cs" />
+    <Compile Include="Core\OrderApi.cs" />
     <Compile Include="Core\DeliveryApi.cs" />
     <Compile Include="Core\NewsApi.cs" />
     <Compile Include="Core\ProductApi.cs" />

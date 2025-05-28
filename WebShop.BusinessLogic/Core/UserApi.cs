@@ -364,7 +364,7 @@ namespace WebShop.BusinessLogic.Core
         }
 
 
-        //================================= Balance ==============================
+        //================================= Balance / Payment ==============================
 
         internal bool SupplyBalanceAction(int userId, decimal moneyToAdd)  //Используется и для списания со счёта, но moneyToAdd приходит со знаком "-"
         {
@@ -379,196 +379,8 @@ namespace WebShop.BusinessLogic.Core
             }
         }
 
-        //================================= Order ================================
 
-        internal OrderActionResponse CreateNewOrderAction(OrderDBTable order, int userId, List<int> productIds)
-        {
-            int newOrderId;
-
-            try
-            {
-                using (var orderContext = new OrderContext())
-                {
-                    // Сохраняем заказ
-                    order.UserId = userId;
-                    order.CreationDate = DateTime.Now.Date;
-                    order.EstimatedDeliveryDate = DateTime.Now.AddDays(7).Date;
-
-                    orderContext.Orders.Add(order);
-                    orderContext.SaveChanges();
-
-                    newOrderId = order.Id;
-                }
-            }
-            catch (Exception ex)
-            {
-                return new OrderActionResponse
-                {
-                    Status = false,
-                    StatusMsg = "Ошибка при создании заказа: " + ex.Message
-                };
-            }
-
-            try
-            {
-                using (var basketContext = new CartContext())
-                using (var productsInOrderContext = new ProductsInOrderContext())
-                using (var productContext = new ProductContext())
-                {
-                    // Получаем данные из корзины
-                    var cartItems = basketContext.Carts
-                        .Where(c => c.UserId == userId && productIds.Contains(c.ProductInBasketId))
-                        .ToList();
-
-                    foreach (var cartItem in cartItems)
-                    {
-                        var productFromDb = productContext.Products.FirstOrDefault(p => p.Id == cartItem.ProductInBasketId);
-
-                        if (productFromDb != null && productFromDb.Status != ProductStatus.hidden && productFromDb.Quantity >= cartItem.Quantity)
-                        {
-                            var productInOrder = new ProductsInOrderDBTable
-                            {
-                                ProductId = cartItem.ProductInBasketId,
-                                UserId = userId,
-                                OrderId = newOrderId,
-                                Quantity = cartItem.Quantity,
-                                PositionPrice = cartItem.Quantity * productFromDb.Price
-                            };
-
-                            productsInOrderContext.ProductsInOrder.Add(productInOrder);
-                            productFromDb.Quantity -= cartItem.Quantity;
-                        }
-                        else
-                        {
-                            var product = productContext.Products.FirstOrDefault(p => p.Id == cartItem.ProductInBasketId);
-                            return new OrderActionResponse
-                            {
-                                OrderId = newOrderId,
-                                Status = false,
-                                StatusMsg = $"Товар {product.Name} с атрикулом  {product.Article} недоступен или его недостаточное количество."
-                            };
-                        }
-                    }
-
-                    productContext.SaveChanges();
-                    productsInOrderContext.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                return new OrderActionResponse
-                {
-                    OrderId = newOrderId,
-                    Status = false,
-                    StatusMsg = "Ошибка при добавлении товаров в заказ: " + ex.Message
-                };
-            }
-
-            try
-            {
-                var response = RemoveFromBasketAction(productIds, userId);
-                if (response.Status)
-                {
-                    return new OrderActionResponse
-                    {
-                        Status = true,
-                        StatusMsg = "Заказ успешно создан",
-                        OrderId = newOrderId
-                    };
-                }
-                else
-                {
-                    return new OrderActionResponse
-                    {
-                        Status = false,
-                        StatusMsg = "Заказ создан, но не удалось удалить товары из корзины: " + response.StatusMsg,
-                        OrderId = newOrderId
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-                return new OrderActionResponse
-                {
-                    Status = false,
-                    StatusMsg = "Ошибка при удалении товаров из корзины: " + ex.Message,
-                    OrderId = newOrderId
-                };
-            }
-        }
-
-        internal OrderDBTable GetOrderByIdAction(int id)
-        {
-            try
-            {
-                using (var db = new OrderContext())
-                {
-                    return db.Orders.Find(id);
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        internal List<OrderDBTable> GetUserOrdersAction(int userId)
-        {
-            try
-            {
-                using (var db = new OrderContext())
-                {
-                    return db.Orders.Where(o => o.UserId == userId).ToList();
-                }
-            }
-            catch
-            {
-                return new List<OrderDBTable>();
-            }
-        }
-
-        internal List<ProductsInOrderDBTable> GetOrderProductsByIdAction(int id)
-        {
-            try
-            {
-                using (var db = new ProductsInOrderContext())
-                {
-                    return db.ProductsInOrder.Where(p => p.OrderId == id).ToList();
-                }
-            }
-            catch
-            {
-                return new List<ProductsInOrderDBTable>();
-            }
-        }
-
-        internal bool IsProductValidAction(int id)
-        {
-            return true;
-        }
-
-        internal UserInfo GetUserIdBySessionKeyAction(string sessionKey)
-        {
-
-            return null; 
-
-        }
-
-
-
-        //---------------------------------PAYMENT-------------------------------
-
-        internal ReceiptToPay GetReceiptToPayByUserIdAction(int uId)
-        {
-
-
-            return new ReceiptToPay();
-
-        }
-
-
-
-        //-----------------------------------------------------------------------
+        //----------------------------------Cookie------------------------------------
 
         internal HttpCookie Cookie(string loginCredential)
         {
@@ -615,6 +427,13 @@ namespace WebShop.BusinessLogic.Core
             return apiCookie;
         }
 
+        internal UserInfo GetUserIdBySessionKeyAction(string sessionKey)
+        {
+            // NotImplemented
+            return null;
+
+        }
+
         internal UserInfo UserCookie(string cookie)
         {
             Session session;
@@ -645,6 +464,8 @@ namespace WebShop.BusinessLogic.Core
 
             return userminimal;
         }
+
+
 
     }
 }
