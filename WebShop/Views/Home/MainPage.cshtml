@@ -65,43 +65,27 @@
     <section class="news-section news-section--column section">
         <div class="container-fluid">
             <div class="news-section__area">
-                <div class="news-section__title section__heading"><a href="@Url.Action("News", "Informational")">Новости</a></div>
+                <div class="news-section__title section__heading"><a href="@Url.Action("ViewNews", "Informational")">Новости</a></div>
                 <div class="row">
-                    <div class="col-sm-6 col-md-3">
-                        <article class="news">
-                            <a class="news__img-wrap" href="#"><img class="news__img" src="~/assets/images/content/news-2.jpg" alt="News Title"></a>
-                            <div class="news__body">
-                                <time class="news__date" datetime="2019-08-16">28 мая 2019</time>
-                                <div class="news__title"><a class="news__title-link" href="#">Открытие филиала в г. Орша</a></div>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <article class="news">
-                            <a class="news__img-wrap" href="#"><img class="news__img" src="~/assets/images/content/news-2.jpg" alt="News Title"></a>
-                            <div class="news__body">
-                                <time class="news__date" datetime="2019-08-16">28 мая 2019</time>
-                                <div class="news__title"><a class="news__title-link" href="#">Открытие филиала в г. Орша</a></div>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <article class="news">
-                            <a class="news__img-wrap" href="#"><img class="news__img" src="~/assets/images/content/news-3.jpg" alt="News Title"></a>
-                            <div class="news__body">
-                                <time class="news__date" datetime="2019-08-16">28 мая 2019</time>
-                                <div class="news__title"><a class="news__title-link" href="#">Конкурс на лучший фото/видеосюжет на тему «Почему «БИГ»?»</a></div>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <article class="news">
-                            <a class="news__img-wrap" href="#"><img class="news__img" src="~/assets/images/content/news-4.jpg" alt="News Title"></a>
-                            <div class="news__body">
-                                <time class="news__date" datetime="2019-07-24">28 мая 2019</time>
-                                <div class="news__title"><a class="news__title-link" href="#">Тормозные колодки Textar с пластинами Q+: развитие ассортимента</a></div>
-                            </div>
-                        </article>
+                    <div class="row">
+                        @if (Model.News != null && Model.News.Any())
+                        {
+                            foreach (var news in Model.News.Take(4)) 
+                            {
+                                <div class="col-sm-6 col-md-3">
+                                    <article class="news">
+                                        <a class="news__img-wrap" href="@Url.Action("ViewNews", "Informational", new { id = news.Id })">
+                                            <img class="news__img" src="@Url.Action("GetNewsImage", "Home", new { newsId = news.Id })" alt="@news.Title">
+                                        </a>
+                                        <div class="news__body">
+                                            <div class="news__title">
+                                                <a class="news__title-link" href="@Url.Action("ViewNews", "Informational", new { id = news.Id })">@news.Title</a>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
             </div>
