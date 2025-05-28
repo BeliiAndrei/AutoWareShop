@@ -59,15 +59,10 @@ namespace WebShop.BusinessLogic.BLogic
 
         public List<DeliveryL> GetDeliveryAddressesByUserId(int uid)
         {
-            using (var db = new DeliveryContext())
-            {
-                var dbAddresses = db.Delivery
-                                  .Where(x => x.UserId == uid)
-                                  .ToList();
-
-                return dbAddresses.Select(MapToL).ToList();
-            }
+            var dbAddresses = GetDeliveryAddressesByUserIdApi(uid);
+            return dbAddresses.Select(MapToL).ToList();
         }
+
         public DeliveryLocDBTable MapToDB(DeliveryL adress)
         {
 

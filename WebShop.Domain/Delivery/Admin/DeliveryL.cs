@@ -19,5 +19,7 @@ namespace WebShop.Domain.User.Delivery
         public string Block { get; set; }
         public string Apartment { get; set; }
         public string Comment { get; set; }
+
+
     }
 }
