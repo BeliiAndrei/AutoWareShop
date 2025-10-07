@@ -9,6 +9,7 @@ using WebShop.BusinessLogic.Interfaces;
 using WebShop.Domain.Enumerables;
 using WebShop.Domain.News;
 using WebShop.Domain.Product;
+using WebShop.Domain.ResBook;
 using WebShop.Domain.STO;
 using WebShop.Domain.User.Admin;
 using WebShop.Domain.User.Registration;
@@ -31,6 +32,8 @@ namespace WebShop.Controllers
         private readonly IDelivery _delivery;
         private readonly ISTO _sto;
 
+        private readonly IResBook _resBook;
+
         public AdminController()
         {
             var bl = new BusinessLogic.BusinessLogic();
@@ -40,8 +43,101 @@ namespace WebShop.Controllers
             _order = bl.GetOrderBL();
             _delivery = bl.GetDeliveryBL();
             _sto = bl.GetSTOBl();
+            _resBook = bl.GetResBookBl(); // Добавь эту строку
         }
 
+        // GET: Управление бронированиями книг
+        public ActionResult BookReservations()
+        {
+            try
+            {
+                var reservations = _resBook.GetAllReservations();
+                return View(reservations);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка при загрузке бронирований: {ex}");
+                TempData["Message"] = "Ошибка при загрузке списка бронирований";
+                TempData["AlertType"] = "danger";
+                return View(new List<ResBook>());
+            }
+        }
+
+        // POST: Удаление бронирования
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteBookReservation(int id)
+        {
+            try
+            {
+                var result = _resBook.DeleteReservation(id);
+
+                if (result)
+                {
+                    TempData["Message"] = "Бронирование успешно удалено";
+                    TempData["AlertType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = "Не удалось удалить бронирование";
+                    TempData["AlertType"] = "warning";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка при удалении бронирования: {ex}");
+                TempData["Message"] = "Ошибка при удалении бронирования";
+                TempData["AlertType"] = "danger";
+            }
+
+            return RedirectToAction("BookReservations");
+        }
+
+        // POST: Подтверждение бронирования
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmBookReservation(int id)
+        {
+            try
+            {
+                // Здесь можно добавить логику подтверждения
+                // Например, отправка email пользователю или изменение статуса
+
+                TempData["Message"] = "Бронирование подтверждено. Пользователь уведомлен.";
+                TempData["AlertType"] = "success";
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка при подтверждении бронирования: {ex}");
+                TempData["Message"] = "Ошибка при подтверждении бронирования";
+                TempData["AlertType"] = "danger";
+            }
+
+            return RedirectToAction("BookReservations");
+        }
+
+        // GET: Детали бронирования
+        public ActionResult BookReservationDetails(int id)
+        {
+            try
+            {
+                var reservation = _resBook.GetReservationById(id);
+                if (reservation == null)
+                {
+                    TempData["Message"] = "Бронирование не найдено";
+                    TempData["AlertType"] = "warning";
+                    return RedirectToAction("BookReservations");
+                }
+                return View(reservation);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка при загрузке бронирования: {ex}");
+                TempData["Message"] = "Ошибка при загрузке данных бронирования";
+                TempData["AlertType"] = "danger";
+                return RedirectToAction("BookReservations");
+            }
+        }
         // ========== NEWS ==========
 
         [HttpGet]

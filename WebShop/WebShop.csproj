@@ -346,11 +346,14 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasketPaymentController.cs" />
+    <Compile Include="BusinessLogic\ProductService.cs" />
     <Compile Include="Controllers\CatalogSearchController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationalController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\OtherServicesController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -454,6 +457,8 @@
     <Content Include="Views\Admin\UpdateSTOStatus.cshtml" />
     <Content Include="Views\OtherServices\StudyRooms.cshtml" />
     <Content Include="Views\Informational\ReserveBook.cshtml" />
+    <Content Include="Views\Admin\BookReservations.cshtml" />
+    <Content Include="Views\Admin\BookReservationDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -461,7 +466,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="assets\images\bin\roslyn\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebShop.BusinessLogic\WebShop.BusinessLogic.csproj">
       <Project>{b7902a8e-91cd-4e46-bf72-a97672b1db68}</Project>

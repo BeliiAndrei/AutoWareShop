@@ -1,0 +1,128 @@
+﻿@model WebShop.Domain.ResBook.ResBook
+
+@{
+    ViewBag.Title = "Детали бронирования книги";
+    Layout = "~/Views/Shared/_PersonalLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-header">
+                <h1>📖 Детали бронирования книги</h1>
+                <p class="lead">Подробная информация о заявке на бронирование</p>
+            </div>
+
+            <!-- Кнопка назад -->
+            <div class="mb-3">
+                <a href="@Url.Action("BookReservations")" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+
+            <div class="row">
+                <!-- Информация о книге -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-book"></i> Информация о книге
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-4">Название:</dt>
+                                <dd class="col-sm-8"><strong>@Model.Name</strong></dd>
+
+                                <dt class="col-sm-4">Автор:</dt>
+                                <dd class="col-sm-8">@(string.IsNullOrEmpty(Model.Author) ? "Не указан" : Model.Author)</dd>
+
+                                <dt class="col-sm-4">Жанр:</dt>
+                                <dd class="col-sm-8">@(string.IsNullOrEmpty(Model.Genre) ? "Не указан" : Model.Genre)</dd>
+
+                                <dt class="col-sm-4">Доп. информация:</dt>
+                                <dd class="col-sm-8">@(string.IsNullOrEmpty(Model.Info) ? "Не указана" : Model.Info)</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Информация о клиенте -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-user"></i> Информация о клиенте
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-4">Имя:</dt>
+                                <dd class="col-sm-8"><strong>@Model.YouName</strong></dd>
+
+                                <dt class="col-sm-4">Телефон:</dt>
+                                <dd class="col-sm-8">
+                                    <a href="tel:@Model.PhoneNumber" class="text-decoration-none">
+                                        @Model.PhoneNumber
+                                    </a>
+                                </dd>
+
+                                <dt class="col-sm-4">Email:</dt>
+                                <dd class="col-sm-8">
+                                    @if (!string.IsNullOrEmpty(Model.Email))
+                                    {
+                                        <a href="mailto:@Model.Email" class="text-decoration-none">
+                                            @Model.Email
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Не указан</span>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Действия -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-warning">
+                            <h5 class="card-title mb-0 text-white">
+                                <i class="fas fa-cogs"></i> Действия
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="btn-group" role="group">
+                                <!-- Подтвердить -->
+                                @using (Html.BeginForm("ConfirmBookReservation", "Admin", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("id", Model.Id)
+                                    <button type="submit" class="btn btn-success me-2"
+                                            onclick="return confirm('Подтвердить бронирование книги для @Model.YouName?')">
+                                        <i class="fas fa-check"></i> Подтвердить бронирование
+                                    </button>
+                                }
+
+                                <!-- Удалить -->
+                                @using (Html.BeginForm("DeleteBookReservation", "Admin", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("id", Model.Id)
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Вы уверены, что хотите удалить эту заявку на бронирование?')">
+                                        <i class="fas fa-trash"></i> Удалить заявку
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
