@@ -61,6 +61,7 @@
     <Compile Include="BLogic\OrderBL.cs" />
     <Compile Include="BLogic\NewsBL.cs" />
     <Compile Include="BLogic\ProductBL.cs" />
+    <Compile Include="BLogic\ResBookBL.cs" />
     <Compile Include="BLogic\STOBL.cs" />
     <Compile Include="BLogic\UserBL.cs" />
     <Compile Include="BusinessLogic.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Core\DeliveryApi.cs" />
     <Compile Include="Core\NewsApi.cs" />
     <Compile Include="Core\ProductApi.cs" />
+    <Compile Include="Core\ResBookApi.cs" />
     <Compile Include="Core\STOApi.cs" />
     <Compile Include="Core\UserApi.cs" />
     <Compile Include="DBModel\CartContext.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="DBModel\OrderContext.cs" />
     <Compile Include="DBModel\ProductContext.cs" />
     <Compile Include="DBModel\ProductsInOrderContext.cs" />
+    <Compile Include="DBModel\ResBookContext.cs" />
     <Compile Include="DBModel\SessionCont.cs" />
     <Compile Include="DBModel\STOCoontext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="Interfaces\IOrder.cs" />
     <Compile Include="Interfaces\INews.cs" />
     <Compile Include="Interfaces\IPruoduct.cs" />
+    <Compile Include="Interfaces\IResBook.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="Interfaces\ISTO.cs" />
     <Compile Include="Interfaces\IUser.cs" />

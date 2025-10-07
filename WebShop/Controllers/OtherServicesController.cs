@@ -13,7 +13,7 @@ using WebShop.Models;
 namespace WebShop.Controllers
 {
 
-    [UserOnly]
+   
     public class OtherServicesController : BaseController
 
     {
@@ -25,6 +25,10 @@ namespace WebShop.Controllers
             _sto = bl.GetSTOBl();
         }
         public ActionResult CreateSto()
+        {
+            return View();
+        }
+        public ActionResult StudyRooms()
         {
             return View();
         }

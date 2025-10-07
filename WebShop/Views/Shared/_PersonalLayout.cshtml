@@ -16,19 +16,21 @@
                     <ul class="category-nav__list">
                         @if (isAdmin)
                         {
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("UpdateSTOStatus", "Admin")">Управление записи СТО</a></li>
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Clients", "Admin")">Управление пользователями</a></li>
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Products", "Admin")">Управление товарами</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("UpdateStudyRoomStatus", "Admin")">Управление читальными залами</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Clients", "Admin")">Управление читателями</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Products", "Admin")">Управление книгами</a></li>
                             <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("NewsEditor", "Admin")">Управление новостями</a></li>
-                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Admin")">Управление заказами</a></li>
+                            <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Admin")">Управление заказами книг</a></li>
                         }
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Basket_step_1", "BasketPayment")">Корзина</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Profile")">Заказы</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Payment", "BasketPayment")">Оплата</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("ProfileUser", "Profile")">Профиль</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "CatalogSearch", new {Result_SearchString = "bonus"})">Акции</a></li>
-                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("DeliveryList", "Delivery")">Адрес доставки</a></li>
-
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Basket_step_1", "BasketPayment")">Мои книги</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Orders", "Profile")">История заказов</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Payment", "BasketPayment")">Продление книг</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("ProfileUser", "Profile")">Профиль читателя</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Search_result", "CatalogSearch", new {Result_SearchString = "new"})">Новинки</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("DeliveryList", "Delivery")">Адрес для доставки</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("MyBooks", "CatalogSearch")">Взятые книги</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("StudyRooms", "OtherServices")">Бронирование залов</a></li>
+                        <li class="category-nav__item"><a class="category-nav__link" href="@Url.Action("Faq", "Informational")">Помощь</a></li>
                     </ul>
                 </div>
             </div>

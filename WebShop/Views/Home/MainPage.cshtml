@@ -1,238 +1,353 @@
 ﻿
-@{
-    ViewBag.Title = "MainPage";
-
-}
-@section Styles
+    @{
+        ViewBag.Title = "Библиотека Знание - Главная";
+    }
+    @section Styles
 {
-    <style>
-        .news__description {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.4em;
-            max-height: 3em;
-            min-height: 3em;
-        }
-        .news__title {
-            font-size: 1.6rem;
-            line-height: 1.4;
-            position: relative;
-            margin-bottom: 0;
-            font-weight: bold;
-        }
-    </style>
+        <style>
+            .news__description {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: 1.4em;
+                max-height: 3em;
+                min-height: 3em;
+            }
 
-}
-@model WebShop.Models.MainPageModels.MainPageModel 
-<div class="main-carousel">
-    <div class="swiper-container main-carousel__container js-main-carousel">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <figure class="main-carousel__slide" style="background-image: url('/assets/images/content/slide-3.jpg')">
-                    <figcaption class="main-carousel__desc">
-                        <div class="main-carousel__title">Лучший аккуммулятор <span class="main-carousel__title-emphasis">для зимнего времени года</span></div>
-                        <p class="main-carousel__desc-small">Не подведёт вас на морозе</p><a class="main-carousel__btn btn btn--main" href="@Url.Action("Card", "Product", new { value = "AKK2"})">Заказать</a>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure class="main-carousel__slide is-white" style="background-image: url('/assets/images/content/slide-1.jpg')">
-                    <figcaption class="main-carousel__desc">
-                        <div class="main-carousel__logo-wrap"><img class="main-carousel__logo img-responsive" src="~/assets/images/content/apollo-tyres-logo.svg" alt="Apollo" width="140" height="50"></div>
-                        <div class="main-carousel__title">Шины для <strong class="main-carousel__title-emphasis">победителей</strong></div>
-                        <p class="main-carousel__desc-small">Доступные цены</p><a class="main-carousel__btn btn btn--main" href="@Url.Action("Card", "Product", new { value = "APP001"})">Заказать</a>
-                    </figcaption>
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure class="main-carousel__slide is-white" style="background-image: url('/assets/images/content/slide-2.jpg')">
-                    <figcaption class="main-carousel__desc">
-                        <div class="main-carousel__logo-wrap"><img class="main-carousel__logo img-responsive" src="~/assets/images/content/apollo-tyres-logo.svg" alt="Apollo" width="140" height="50"></div>
-                        <div class="main-carousel__title">Тормози всегда <strong class="main-carousel__title-emphasis">вовремя</strong></div>
-                        <p class="main-carousel__desc-small">Лучший выбор тормозных колодок</p><a class="main-carousel__btn btn btn--main" href="@Url.Action("SearchMethod", "CatalogSearch", new { searchType = "name", value = "колодки"})">Просмотреть</a>
-                    </figcaption>
-                </figure>
+            .news__title {
+                font-size: 1.6rem;
+                line-height: 1.4;
+                position: relative;
+                margin-bottom: 0;
+                font-weight: bold;
+            }
+
+            .welcome-section {
+                background: url('/assets/images/content/books/main.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                color: white;
+                padding: 250px 0;
+                text-align: center;
+                margin-bottom: 40px;
+                position: relative;
+                min-height: 60vh;
+                display: flex;
+                align-items: center;
+            }
+
+            .welcome-content {
+                background: rgba(255, 255, 255, 0.85); /* Полупрозрачный белый фон */
+                padding: 40px;
+                border-radius: 15px;
+                backdrop-filter: blur(5px);
+                max-width: 700px;
+                margin: 0 auto;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+
+            .welcome-title {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                font-weight: bold;
+                color: #2c3e50; /* Темный цвет для контраста */
+            }
+
+            .welcome-subtitle {
+                font-size: 1.4rem;
+                margin-bottom: 30px;
+                color: #5d6d7e; /* Серый цвет для подзаголовка */
+                line-height: 1.5;
+            }
+
+            .welcome-btn {
+                background: #667eea;
+                color: white;
+                padding: 15px 30px;
+                border-radius: 25px;
+                font-weight: bold;
+                text-decoration: none;
+                display: inline-block;
+                transition: all 0.3s ease;
+            }
+
+                .welcome-btn:hover {
+                    background: #5a6fd8;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+                    color: white;
+                    text-decoration: none;
+                }
+
+            .feature-card {
+                background: white;
+                border-radius: 15px;
+                padding: 30px;
+                text-align: center;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                margin-bottom: 30px;
+                height: 100%;
+                transition: transform 0.3s ease;
+            }
+
+                .feature-card:hover {
+                    transform: translateY(-5px);
+                }
+
+            .feature-icon {
+                font-size: 3rem;
+                margin-bottom: 20px;
+            }
+
+            .feature-title {
+                font-size: 1.4rem;
+                font-weight: bold;
+                margin-bottom: 15px;
+                color: #2c3e50;
+            }
+
+            .feature-description {
+                color: #7f8c8d;
+                line-height: 1.6;
+            }
+
+            .section-heading {
+                text-align: center;
+                margin: 60px 0 40px;
+                font-size: 2.2rem;
+                color: #2c3e50;
+                font-weight: bold;
+            }
+
+            .quick-links {
+                background: #f8f9fa;
+                padding: 60px 0;
+            }
+
+            .quick-link-card {
+                background: white;
+                border-radius: 12px;
+                padding: 25px;
+                text-align: center;
+                margin-bottom: 25px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                transition: all 0.3s ease;
+            }
+
+                .quick-link-card:hover {
+                    text-decoration: none;
+                    color: inherit;
+                    transform: translateY(-3px);
+                    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+                }
+
+            .quick-link-icon {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+
+            .quick-link-title {
+                font-size: 1.3rem;
+                font-weight: bold;
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+
+            .quick-link-desc {
+                color: #7f8c8d;
+                font-size: 0.95rem;
+            }
+
+            .stats-section {
+                background: linear-gradient(135deg, #2c3e50, #3498db);
+                color: white;
+                padding: 60px 0;
+                text-align: center;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .stat-label {
+                font-size: 1.2rem;
+                opacity: 0.9;
+            }
+
+            .book-recommendation {
+                background: white;
+                border-radius: 12px;
+                padding: 25px;
+                margin-bottom: 25px;
+                border-left: 5px solid #3498db;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            }
+
+            .book-title {
+                font-size: 1.3rem;
+                font-weight: bold;
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+
+            .book-author {
+                color: #7f8c8d;
+                font-style: italic;
+                margin-bottom: 15px;
+            }
+
+            .book-description {
+                color: #5d6d7e;
+                line-height: 1.6;
+            }
+
+            .event-card {
+                background: white;
+                border-radius: 12px;
+                padding: 25px;
+                margin-bottom: 25px;
+                border-left: 5px solid #e74c3c;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            }
+
+            .event-date {
+                background: #e74c3c;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+                display: inline-block;
+                margin-bottom: 15px;
+            }
+
+            .event-title {
+                font-size: 1.3rem;
+                font-weight: bold;
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+
+            .event-description {
+                color: #5d6d7e;
+                line-height: 1.6;
+            }
+
+            /* Убрали старый стиль для book-cover в welcome-section */
+            .welcome-section .book-cover {
+                display: none;
+            }
+        </style>
+    }
+
+    <div class="welcome-section">
+        <div class="container-fluid">
+            <div class="welcome-content">
+                <h1 class="welcome-title">Добро пожаловать в Библиотеку</h1>
+                <p class="welcome-subtitle">Ваш надежный партнер в мире знаний и открытий</p>
+                <a href="@Url.Action("Catalog", "CatalogSearch")" class="welcome-btn">Начать исследовать каталог</a>
             </div>
         </div>
-        <div class="main-carousel__pagination"></div>
     </div>
-</div>
 
-<main class="main">
-    <section class="news-section news-section--column section">
-        <div class="container-fluid">
-            <div class="news-section__area">
-                <div class="news-section__title section__heading"><a href="@Url.Action("ViewNews", "Informational")">Новости</a></div>
+    <main class="main">
+        <!-- Особенности библиотеки -->
+        <section class="section">
+            <div class="container-fluid">
+                <h2 class="section-heading">Почему выбирают нашу библиотеку?</h2>
                 <div class="row">
-                    <div class="row">
-                        @if (Model.News != null && Model.News.Any())
-                        {
-                            foreach (var news in Model.News.Take(4)) 
-                            {
-                                <div class="col-sm-6 col-md-3">
-                                    <article class="news">
-                                        <a class="news__img-wrap" href="@Url.Action("ViewNews", "Informational", new { id = news.Id })">
-                                            <img class="news__img" src="@Url.Action("GetNewsImage", "Home", new { newsId = news.Id })" alt="@news.Title">
-                                        </a>
-                                        <div class="news__body">
-                                            <div class="news__title">
-                                                <a class="news__title-link" href="@Url.Action("ViewNews", "Informational", new { id = news.Id })">@news.Title</a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            }
-                        }
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">📚</div>
+                            <h3 class="feature-title">Обширная коллекция</h3>
+                            <p class="feature-description">Более 50,000 книг различных жанров и направлений для всех возрастов и интересов</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">💻</div>
+                            <h3 class="feature-title">Современные технологии</h3>
+                            <p class="feature-description">Электронный каталог, онлайн-бронирование и доступ к цифровым ресурсам</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <div class="feature-icon">🏛️</div>
+                            <h3 class="feature-title">Уютные пространства</h3>
+                            <p class="feature-description">Комфортные читальные залы и зоны для индивидуальной и групповой работы</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="news-section__area">
-                <div class="news-section__title section__heading"><a href="@Url.Action("Catalog", "CatalogSearch")">Акции</a></div>
+        </section>
+
+     
+
+        <!-- Статистика -->
+        <section class="stats-section">
+            <div class="container-fluid">
                 <div class="row">
-                    @if (Model.SearchResults != null)
-                    {
-                        foreach (var product in Model.SearchResults)
-                        {
-                            if (product.Status != "hidden")
-                            {
-                                <div class="col-sm-6 col-md-3">
-                                    <article class="news">
-                                        <a class="news__img-wrap" href="@Url.Action("Card", "Product", new { value = product.Article })">
-                                            <img class="news__img" src="@Url.Content(string.IsNullOrEmpty(product.Image) ? "~/assets/images/content/news-2.jpg" : "~/assets/images/content/product-main-promo-slider-" + product.Image + ".jpg")" alt="@product.ProductName">
-                                        </a>
-                                        <div class="news__body">
-                                            <div class="news__date">@DateTime.Now.ToString("dd.MM.yyyy")</div>
-                                            <div class="news__title">
-                                                <a class="news__title-link" href="@Url.Action("Card", "Product", new { value = product.Article})">@product.ProductName</a>
-                                            </div>
-                                            <div class="news__description">@product.Description</div>
-                                            <div class="news__price">Цена: @product.Price.ToString("0.00")</div>
-                                            <div class="news__brand">Бренд: @product.BrandName</div>
-                                            <a class="news__more-btn btn btn--main" href="@Url.Action("Card", "Product", new { value = product.Article})">Подробнее</a>
-                                        </div>
-                                    </article>
-                                </div>
-                            }
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section section--gray categories">
-        <div class="container-fluid">
-            <div class="categories__heading section__heading">Популярные категории</div>
-            <div class="categories__division-section">
-                <div class="row">
-                    <div class="col-6 col-md-3">
-                        <a class="category-division" href="@Url.Action("SearchMethod", "CatalogSearch", new { searchType = "name", value = "Шины"})">
-                            <figure class="category-division__main">
-                                <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-1.jpg" alt="Шины"></div>
-                                <figcaption class="category-division__caption">Шины</figcaption>
-                            </figure>
-                        </a>
+                    <div class="col-md-3">
+                        <div class="stat-number">50,000+</div>
+                        <div class="stat-label">Книг в фонде</div>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Колёса", Path_Subcategory = "Диски"})">
-                            <figure class="category-division__main">
-                                <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-2.jpg" alt="Диски"></div>
-                                <figcaption class="category-division__caption">Диски</figcaption>
-                            </figure>
-                        </a>
+                    <div class="col-md-3">
+                        <div class="stat-number">1,200+</div>
+                        <div class="stat-label">Активных читателей</div>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Автохимия", Path_Subcategory = "Очистители инжектора"})">
-                            <figure class="category-division__main">
-                                <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-3.jpg" alt="Автохимия"></div>
-                                <figcaption class="category-division__caption">Автохимия</figcaption>
-                            </figure>
-                        </a>
+                    <div class="col-md-3">
+                        <div class="stat-number">75+</div>
+                        <div class="stat-label">Лет работы</div>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <a class="category-division" href="@Url.Action("Search_result", "CatalogSearch", new {Path_Category = "Автозапчасти", Path_Subcategory = "Колодки"})">
-                            <figure class="category-division__main">
-                                <div class="category-division__img-wrap"><img class="category-division__img" src="~/assets/images/content/category-2.jpg" alt="Диски"></div>
-                                <figcaption class="category-division__caption">Колодки</figcaption>
-                            </figure>
-                        </a>
+                    <div class="col-md-3">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Мероприятий в год</div>
                     </div>
                 </div>
             </div>
-            <div class="categories__nav-section">
-                <div class="row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="categories-nav">
-                            <a class="categories-nav__heading" href="#">
-                                <span class="categories-nav__heading-icon-wrap">
-                                    <svg class="icon icon-tools categories-nav__heading-icon">
-                                        <use href="~/assets/images/svg/symbol/sprite.svg#tools"></use>
-                                    </svg>
-                                </span><span class="categories-nav__heading-text">Инструменты</span>
-                            </a>
-                            <ul class="categories-nav__list">
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Домкраты</a></li>
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Наборы</a></li>
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Ключи балонные</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="categories-nav">
-                            <a class="categories-nav__heading" href="#">
-                                <span class="categories-nav__heading-icon-wrap">
-                                    <svg class="icon icon-tools categories-nav__heading-icon">
-                                        <use href="~/assets/images/svg/symbol/sprite.svg#tools"></use>
-                                    </svg>
-                                </span><span class="categories-nav__heading-text">Аксессуары</span>
-                            </a>
-                            <ul class="categories-nav__list">
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Оплётки на руль</a></li>
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Провода пусковые</a></li>
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Очистка от снега и льда</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="categories-nav">
-                            <a class="categories-nav__heading" href="#">
-                                <span class="categories-nav__heading-icon-wrap">
-                                    <svg class="icon icon-tools categories-nav__heading-icon">
-                                        <use href="~/assets/images/svg/symbol/sprite.svg#tools"></use>
-                                    </svg>
-                                </span><span class="categories-nav__heading-text">Инструменты</span>
-                            </a>
-                            <ul class="categories-nav__list">
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Домкраты</a></li>
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Наборы</a></li>
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Ключи балонные</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="categories-nav">
-                            <a class="categories-nav__heading" href="#">
-                                <span class="categories-nav__heading-icon-wrap">
-                                    <svg class="icon icon-tools categories-nav__heading-icon">
-                                        <use href="~/assets/images/svg/symbol/sprite.svg#tools"></use>
-                                    </svg>
-                                </span><span class="categories-nav__heading-text">Аксессуары</span>
-                            </a>
-                            <ul class="categories-nav__list">
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Оплётки на руль</a></li>
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Провода пусковые</a></li>
-                                <li class="categories-nav__item"><a class="categories-nav__link" href="#">Очистка от снега и льда</a></li>
-                            </ul>
-                        </div>
-                    </div>
+        </section>
 
-                    <div class="categories__heading section__heading"><a href="@Url.Action("Catalog_brands", "CatalogSearch")">Каталог брендов</a></div>
+        <!-- Новости (без изменений) -->
+
+
+        <!-- Рекомендации книг и события -->
+        <section class="section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="section-heading">Книжные рекомендации</h2>
+                        <div class="book-recommendation">
+                            <div class="book-title">"Искусство мыслить ясно"</div>
+                            <div class="book-author">Рольф Добелли</div>
+                            <div class="book-description">Увлекательное исследование когнитивных искажений и того, как они влияют на наши решения в повседневной жизни.</div>
+                        </div>
+                        <div class="book-recommendation">
+                            <div class="book-title">"Sapiens: Краткая история человечества"</div>
+                            <div class="book-author">Юваль Ной Харари</div>
+                            <div class="book-description">Масштабный труд, охватывающий всю историю человечества от каменного века до современных технологий.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="section-heading">Новые поступления</h2>
+                        <div class="book-recommendation">
+                            <div class="book-title">"Тайная жизнь деревьев"</div>
+                            <div class="book-author">Петер Вольлебен</div>
+                            <div class="book-description">Удивительное путешествие в мир леса, где деревья общаются, помогают друг другу и обладают памятью.</div>
+                        </div>
+                        <div class="book-recommendation">
+                            <div class="book-title">"Атомные привычки"</div>
+                            <div class="book-author">Джеймс Клир</div>
+                            <div class="book-description">Практическое руководство по формированию хороших привычек и избавлению от плохих с помощью малых изменений.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-</main>
-
-
+   
+    </main>

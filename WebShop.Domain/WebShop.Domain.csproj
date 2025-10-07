@@ -58,6 +58,7 @@
     <Compile Include="Basket\BasketActionResponse.cs" />
     <Compile Include="Basket\BasketBDTables.cs" />
     <Compile Include="Basket\BasketDTO.cs" />
+    <Compile Include="Books\Admin\Book.cs" />
     <Compile Include="Enumerables\OrderStatus.cs" />
     <Compile Include="Enumerables\PaymentType.cs" />
     <Compile Include="Enumerables\ProductStatus.cs" />
@@ -75,6 +76,8 @@
     <Compile Include="Product\SearchResponses\ProductSearchResponseDTO.cs" />
     <Compile Include="Product\SearchResponses\ProductSearchResponseDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResBook\admin\ResBook.cs" />
+    <Compile Include="ResBook\ResBookDBTab.cs" />
     <Compile Include="STO\Main\STO.cs" />
     <Compile Include="STO\STODBTab.cs" />
     <Compile Include="User\Admin\UserInfo.cs" />

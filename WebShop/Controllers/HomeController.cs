@@ -24,6 +24,10 @@ namespace WebShop.Controllers
         {
             return RedirectPermanent("MainPage");
         }
+        public ActionResult LHomePage()
+        {
+            return View();
+        }
 
         public ActionResult MainPage()
         {

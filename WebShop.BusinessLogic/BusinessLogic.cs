@@ -50,5 +50,10 @@ namespace WebShop.BusinessLogic
         {
             return new AdminBL();
         }
+
+        public IResBook GetResBookBl()
+        {
+            return new ResBookBL();
+        }
     }
 }

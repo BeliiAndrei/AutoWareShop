@@ -11,6 +11,7 @@ namespace WebShop.BusinessLogic.Core
 {
     public class NewsApi 
     {
+
         public List<NewsDBTab> GetNewsListAPI()
         {
             using (var context = new NewsContext())

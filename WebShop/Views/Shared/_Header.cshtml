@@ -10,27 +10,26 @@
     <div class="header-top-area">
         <div class="container-fluid">
             <div class="header-top-area-main">
-
                 <button class="navigation-trigger js-dropdown-toggle d-md-none">
                     <svg class="icon icon-menu-dots navigation-trigger__icon">
                         <use href="~/assets/images/svg/symbol/sprite.svg#menu-dots"></use>
                     </svg>
                 </button>
                 <div class="header__informers d-none d-md-flex">
-                    <div class="header__informer">Кишинев, улица Studenților 9/9, <br> торгово-складской комплекс №1.</div>
-                    <div class="header__informer">График работы: <br> 8.00 - 19.00 понедельник - суббота</div>
+                    <div class="header__informer">Вулканешты, ул. Ленина №103 <br> Biblioteca publică oraşenească "A.S.Puşkin" or. Vulcăneşti </div>
+                    <div class="header__informer">График работы: <br> 9.00 - 17.00 понедельник - суббота</div>
                 </div>
                 @if (isBanned)
                 {
                     <div class="alert alert-danger" role="alert" style="color:red">
-                        Ваш аккаунт заблокирован! Обратитесь к администратору для разблокировки, иначе вы не сможете полноценно пользоваться нашими услугами.
+                        Ваш аккаунт заблокирован! Обратитесь к администратору для разблокировки.
                     </div>
                 }
                 <div class="tiny-contacts">
-                    <a class="tiny-contacts__wrap" href="tel:+37379637411">
+                    <a class="tiny-contacts__wrap" href="tel:029393207">
                         <svg class="icon icon-phone-call tiny-contacts__icon">
                             <use href="~/assets/images/svg/symbol/sprite.svg#phone-call"></use>
-                        </svg><span class="tiny-contacts__phone">+373 79-637-411</span>
+                        </svg><span class="tiny-contacts__phone">029393207</span>
                     </a>
                 </div>
             </div>
@@ -41,20 +40,21 @@
             <div class="header-main__body">
                 <div class="logo">
                     <a href="@Url.Action("MainPage", "Home")" class="logo__wrap">
-                        <img class="logo__img img-responsive" src="~/assets/images/general/logo.png" alt="AutoWares" width="155" height="60" />
+                        <div class="logo__text" style="background: linear-gradient(135deg, #2c3e50, #3498db); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 18px;">Biblioteca </div>
                     </a>
                 </div>
                 <nav class="section-nav d-none d-md-block">
                     <ul class="section-nav__list">
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Search_result", "CatalogSearch", new {Result_SearchString = "bonus"})"><span class="section-nav__text">Акции</span></a></li>
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Payment", "BasketPayment")"><span class="section-nav__text">Оплата </span></a></li>
                         @if (isAdmin)
                         {
-                            <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Clients", "Admin")"><span class="section-nav__text">Админ Панель</span></a></li>
+                            <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Clients", "Admin")"><span class="section-nav__text">⚙️ Админ Панель</span></a></li>
                         }
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("ViewNews", "Informational")"><span class="section-nav__text">Новости</span></a></li>
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("MySTORecords", "OtherServices")"><span class="section-nav__text">СТО</span></a></li>
-                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("ProfileUser", "Profile")"><span class="section-nav__text">Профиль</span></a></li>
+
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("ViewNews", "Informational")"><span class="section-nav__text">📰 Новости</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("ReserveBook", "Informational")"><span class="section-nav__text">📌 Забронировать книгу</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("Catalog", "CatalogSearch")"><span class="section-nav__text">📖 Каталог</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("StudyRooms", "OtherServices")"><span class="section-nav__text">🏛️ Читальные залы</span></a></li>
+                        <li class="section-nav__item"><a class="section-nav__link" href="@Url.Action("ProfileUser", "Profile")"><span class="section-nav__text">👤 Профиль</span></a></li>
                     </ul>
                 </nav>
                 @if (SessionHelper.User == null)
@@ -62,15 +62,14 @@
                     <div class="authorize">
                         <ul class="authorize__list">
                             <li class="authorize__item">
-                                <a class="authorize__link authorize__link--login" href="@Url.Action("Authorisation", "Auth")">
+                                <a class="authorize__link authorize__link--login" href="@Url.Action("Authorisation", "Auth")" );">
                                     <svg class="icon icon-login authorize__icon">
                                         <use href="~/assets/images/svg/symbol/sprite.svg#login"></use>
                                     </svg> Вход
                                 </a>
                             </li>
-                            <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Registration", "Auth")">Регистрация</a></li>
+                            <li class="authorize__item"><a class="authorize__link authorize__link--register" href="@Url.Action("Registration", "Auth")" );">Регистрация</a></li>
                         </ul>
-
 
                         <div class="authorize__dropdown">
                             <div class="authorize__dropdown-body">
@@ -87,11 +86,7 @@
                                             <input class="auth-form__input" type="password" name="Password" placeholder="Пароль">
                                         </div>
                                         <div class="auth-form__field">
-                                            @*<div class="auth-form__checkbox checkbox-label">
-                                                    <input class="checkbox-label__input" type="checkbox" name="is-remember" id="remember">
-                                                    <label class="checkbox-label__main" for="remember">Запомнить</label>
-                                                </div>*@
-                                            <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти">
+                                            <input class="auth-form__btn btn btn--main" name="send-data" type="submit" value="Войти" style="background: linear-gradient(135deg, #2980b9, #3498db);">
                                         </div>
                                     }
                                 }
@@ -101,8 +96,7 @@
                 }
                 else
                 {
-
-                    <a class="auth-form__btn btn btn--main" name="log-out" href="@Url.Action("LogOut", "Auth")">
+                    <a class="auth-form__btn btn btn--main" name="log-out" href="@Url.Action("LogOut", "Auth")" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
                         <div class="logged-in__username">@name</div>
                         Выйти
                     </a>
@@ -110,294 +104,5 @@
             </div>
         </div>
     </div>
-    <div class="header-meta-area">
-        <div class="container-fluid">
-            <div class="header-meta-area__body">
-                <div class="logo">
-                    <a href="@Url.Action("MainPage", "Home")"><span class="logo__wrap"><img class="logo__img img-responsive" src="~/assets/images/general/logo.png" alt="AutoWares" width="155" height="60" /></span></a>
-                </div>
-                <button class="catalog-nav-toggle d-md-none">
-                    <svg class="icon icon-burger catalog-nav-toggle__icon">
-                        <use href="~/assets/images/svg/symbol/sprite.svg#burger"></use>
-                    </svg>Каталог
-                </button>
-                <nav class="main-nav">
-                    <ul class="main-nav__point-container">
-                        <li class="main-nav__point-item">
-                            <a class="main-nav__point-link" href="/CatalogSearch/Catalog">
-                                <svg class="icon icon-burger main-nav__icon">
-                                    <use href="/assets/images/svg/symbol/sprite.svg#burger"></use>
-                                </svg>Каталог товаров
-                                <div class="main-nav__close-nav-wrap">
-                                    <svg class="icon icon-close main-nav__close-nav">
-                                        <use href="/assets/images/svg/symbol/sprite.svg#close"></use>
-                                    </svg>
-                                </div>
-                            </a>                            <ul class="main-nav__container">
-                                <li class="main-nav__item">
-                                    <span class="main-nav__link">Масла и смазки</span>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link"
-                                               href="@Url.Action("Search_result", "CatalogSearch", new {
-                                                    Path_Category = "Масла и смазки",
-                                                    Path_Subcategory = "Моторное масло",
-                                                    Result_SearchString = ""
-                               })">
-                                                Моторное масло
-                                            </a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link"
-                                               href="@Url.Action("Search_result", "CatalogSearch", new {
-                                                    Path_Category = "Масла и смазки",
-                                                    Path_Subcategory = "Трансмиссионная жидкость",
-                                                    Result_SearchString = ""
-                               })">
-                                                Трансмиссионная жидкость
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="main-nav__item">
-                                    <span class="main-nav__link">Автохимия</span>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link"
-                                               href="@Url.Action("Search_result", "CatalogSearch", new {
-                                                    Path_Category = "Автохимия",
-                                                    Path_Subcategory = "Очистители инжектора",
-                                                    Result_SearchString = ""
-                               })">
-                                                Очистители инжектора
-                                            </a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link"
-                                               href="@Url.Action("Search_result", "CatalogSearch", new {
-                                                    Path_Category = "Автохимия",
-                                                    Path_Subcategory = "Присадки к дизтопливу",
-                                                    Result_SearchString = ""
-                               })">
-                                                Присадки к дизтопливу
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="main-nav__item">
-                                    <span class="main-nav__link">Автозапчасти</span>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Автозапчасти",
-                Path_Subcategory = "Фильтры",
-                Result_SearchString = ""
-            })">Фильтры</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Автозапчасти",
-                Path_Subcategory = "Тормозные колодки",
-                Result_SearchString = ""
-            })">Тормозные колодки</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Автозапчасти",
-                Path_Subcategory = "Амортизаторы",
-                Result_SearchString = ""
-            })">Амортизаторы</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="main-nav__item">
-                                    <span class="main-nav__link">Аксессуары</span>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Аксессуары",
-                Path_Subcategory = "Коврики",
-                Result_SearchString = ""
-            })">Коврики</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Аксессуары",
-                Path_Subcategory = "Автодержатели",
-                Result_SearchString = ""
-            })">Автодержатели</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-    Path_Category = "Аксессуары",
-    Path_Subcategory = "Аптечки",
-    Result_SearchString = ""
-})">Аптечки</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="main-nav__item">
-                                    <span class="main-nav__link">Инструменты</span>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Инструменты",
-                Path_Subcategory = "Домкраты",
-                Result_SearchString = ""
-            })">Домкраты</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Инструменты",
-                Path_Subcategory = "Наборы ключей",
-                Result_SearchString = ""
-            })">Наборы ключей</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Инструменты",
-                Path_Subcategory = "Компрессоры",
-                Result_SearchString = ""
-            })">Компрессоры</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="main-nav__item">
-                                    <span class="main-nav__link">Шины и диски</span>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Шины и диски",
-                Path_Subcategory = "Зимние шины",
-                Result_SearchString = ""
-            })">Зимние шины</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Шины и диски",
-                Path_Subcategory = "Летние шины",
-                Result_SearchString = ""
-            })">Летние шины</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Шины и диски",
-                Path_Subcategory = "Литые диски",
-                Result_SearchString = ""
-            })">Литые диски</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="main-nav__item">
-                                    <span class="main-nav__link">Электроника</span>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Электроника",
-                Path_Subcategory = "Видеорегистраторы",
-                Result_SearchString = ""
-            })">Видеорегистраторы</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Электроника",
-                Path_Subcategory = "GPS-навигаторы",
-                Result_SearchString = ""
-            })">GPS-навигаторы</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Электроника",
-                Path_Subcategory = "Автоакустика",
-                Result_SearchString = ""
-            })">Автоакустика</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="main-nav__item">
-                                    <span class="main-nav__link">Освещение</span>
-                                    <ul class="main-nav__sub-container">
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Освещение",
-                Path_Subcategory = "Лампы головного света",
-                Result_SearchString = ""
-            })">Лампы головного света</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Освещение",
-                Path_Subcategory = "Светодиодные лампы",
-                Result_SearchString = ""
-            })">Светодиодные лампы</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Освещение",
-                Path_Subcategory = "Противотуманные фары",
-                Result_SearchString = ""
-            })">Противотуманные фары</a>
-                                        </li>
-                                        <li class="main-nav__sub-item">
-                                            <a class="main-nav__sub-link" href="@Url.Action("Search_result", "CatalogSearch", new {
-                Path_Category = "Освещение",
-                Path_Subcategory = "Габаритные огни",
-                Result_SearchString = ""
-            })">Габаритные огни</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-                <button class="search-form-toggle">
-                    <svg class="icon icon-search search-form-toggle__icon">
-                        <use href="~/assets/images/svg/symbol/sprite.svg#search"></use>
-                    </svg>
-                </button>
-                <form class="search-form" method="GET" action="@Url.Action("SearchMethod", "CatalogSearch")" name="search-form">
-                    <div class="search-form__field search-form__field--choices">
-                        <select class="js-select-default" name="searchType">
-                            <option value="article">Поиск по артикулу</option>
-                            <option value="name">Поиск по названию</option>
-                            @*<option value="number">По номеру детали</option>*@
-                        </select>
-                    </div>
-                    <div class="search-form__field search-form__field--input">
-                        <input class="search-form__input" type="search" name="value" placeholder="Артикул детали. Например “gbl199”">
-                        <button class="search-form__submit" type="submit" @*name="send-data"*@>
-                            <svg class="icon icon-magnifying-zoom-glass search-form__submit-icon">
-                                <use href="~/assets/images/svg/symbol/sprite.svg#magnifying-zoom-glass"></use>
-                            </svg>
-                        </button>
-                    </div>
-                </form>
-                <div class="header__meta-link">
-                    <a class="brand-catalogs header-meta-area__brand-catalogs" href="@Url.Action("Select_car", "CatalogSearch")">
-                        <svg class="icon icon-warehouse brand-catalogs__icon">
-                            <use href="~/assets/images/svg/symbol/sprite.svg#warehouse"></use>
-                        </svg><span class="brand-catalogs__title">Гараж</span>
-                    </a>
-                </div>
-                <div class="header-utilities">
-
-                    <div class="header-utility">
-                        <div class="header-utility__main">
-                            <a class="header-utility__link" href="@Url.Action("Basket_step_1", "BasketPayment")">
-                                <svg class="icon icon-shopping-cart-main header-utility__icon">
-                                    <use href="~/assets/images/svg/symbol/sprite.svg#shopping-cart-main"></use>
-                                </svg><span class="header-utility__count">(@basketCount)</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </header>

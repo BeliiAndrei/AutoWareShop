@@ -130,6 +130,14 @@
     <Content Include="assets\css\styles.min.css" />
     <Content Include="assets\fonts\lg.svg" />
     <Content Include="assets\images\content\apollo-tyres-logo.svg" />
+    <Content Include="assets\images\content\books\1984.jpg" />
+    <Content Include="assets\images\content\books\brave-new-world.jpg" />
+    <Content Include="assets\images\content\books\master-i-margarita.jpg" />
+    <Content Include="assets\images\content\books\prestuplenie-i-nakazanie.jpg" />
+    <Content Include="assets\images\content\books\pride-and-prejudice.jpg" />
+    <Content Include="assets\images\content\books\sherlock-holmes.jpg" />
+    <Content Include="assets\images\content\books\tri-mushketera.jpg" />
+    <Content Include="assets\images\content\books\voyna-i-mir.jpg" />
     <Content Include="assets\images\content\category-1.jpg" />
     <Content Include="assets\images\content\category-2.jpg" />
     <Content Include="assets\images\content\category-3.jpg" />
@@ -361,6 +369,7 @@
     <Compile Include="Models\Order\OrderModel.cs" />
     <Compile Include="Models\ProductCardViewModel.cs" />
     <Compile Include="Models\Order\AdminOrdersModel.cs" />
+    <Compile Include="Models\ResBookModel.cs" />
     <Compile Include="Models\Search\AdminProductsModel.cs" />
     <Compile Include="Models\Search\PageInfo.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
@@ -443,6 +452,8 @@
     <Content Include="Views\Delivery\EditDelivery.cshtml" />
     <Content Include="Views\OtherServices\MySTORecords.cshtml" />
     <Content Include="Views\Admin\UpdateSTOStatus.cshtml" />
+    <Content Include="Views\OtherServices\StudyRooms.cshtml" />
+    <Content Include="Views\Informational\ReserveBook.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
